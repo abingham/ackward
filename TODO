@@ -1,0 +1,19 @@
+* rename to ackward::logging
+* Quash console output in tests
+* LoggerAdapter
+* Various handler subclasses
+* StreamHandler: construct from things like cout, cerr...any ostream?
+
+Next Version
+============
+
+* Subclassing C++ interfaces
+  For example::
+  
+  class MyFormatter : public Formatter
+  {
+  private:
+     // Reimplements standard format() method
+     std::wstring format_impl(const LogRecord&) const;
+  };
+

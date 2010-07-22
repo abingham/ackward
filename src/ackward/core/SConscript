@@ -1,0 +1,14 @@
+Import('env')
+
+sources = [
+    'Exceptions.cpp',
+    'ExceptionTranslator.cpp',
+    'GetClass.cpp',
+    'Object.cpp',
+    'PythonModule.cpp',
+    'Util.cpp'
+]
+
+lib = env.SharedLibrary('ackward_core', sources)
+env['products']['ackward_core'] = lib
+env.Alias('all', lib)

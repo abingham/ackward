@@ -1,0 +1,13 @@
+syntax: glob
+
+*~
+*.o
+*.os
+*.pyc
+*.so
+.scon*
+build/*
+config.log
+custom.py
+*.db.log*
+*.env.log*

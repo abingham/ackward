@@ -1,0 +1,10 @@
+Import(['env'])
+
+subdirs = [
+    'core',
+    'logging'
+    ]
+
+SConscript(dirs=subdirs, 
+           exports='env')
+

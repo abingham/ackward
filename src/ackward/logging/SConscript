@@ -1,0 +1,18 @@
+Import(['env'])
+
+sources = [
+    'Config.cpp',
+    'Filter.cpp',
+    'Formatter.cpp',
+    'Handler.cpp',
+    'Initialize.cpp',
+    'Logger.cpp',
+    'LoggerAdapter.cpp',
+    'LogRecord.cpp',
+    'Module.cpp',
+    'Types.cpp',
+    ]
+
+lib = env.SharedLibrary('ackward_logging', sources)
+env['products']['ackward_logging'] = lib
+env.Alias('all', lib)
