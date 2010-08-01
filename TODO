@@ -1,8 +1,16 @@
+Logging
+=======
+
 * rename to ackward::logging
 * Quash console output in tests
 * LoggerAdapter
 * Various handler subclasses
 * StreamHandler: construct from things like cout, cerr...any ostream?
+
+Datetime
+========
+
+* Do this!
 
 Next Version
 ============

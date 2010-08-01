@@ -1,4 +1,8 @@
+import os
+
 def init_vars():
+    '''Initialize the build variables
+    '''
     vars = Variables('custom.py')
     vars.Add('BOOST_INCLUDE_DIR', 'Location of boost headers', '/usr/include')
     vars.Add('BOOST_LIB_DIR', 'Location of boost libraries', '/usr/lib')
@@ -10,13 +14,15 @@ def init_vars():
     vars.Add('PYTHON_LIB_DIR', 'Location of Python libraries', '/usr/lib')
     vars.Add('PYTHON_LIBS', 'Python libraries to link', ['python2.6'])
 
-    vars.Add('DEBUG', 'Compile with debugging', False)
+    vars.Add('VARIANT', 'Compile with debugging', 'release')
 
     vars.Add('CXX', 'C++ compiler to use', None)
 
     return vars
 
 def check_config(env):
+    '''Check the system configuration, build variables, etc.
+    '''
     conf = Configure(env)
 
     for header, package in { 'boost/python.hpp' : 'boost.python',
@@ -33,6 +39,17 @@ def check_config(env):
 
     return conf.Finish()
 
+def configure_debug(env):
+    '''Debug-specific build settings
+    '''
+    env.AppendUnique(CXXFLAGS=['-g', '-O0'])
+
+# Maps from variant names to variant-specific configuration functions
+variant_config = {
+    'release' : lambda env: None,
+    'debug' : configure_debug
+    }
+
 vars = init_vars()
 
 env = Environment(variables=vars)
@@ -41,8 +58,13 @@ env['products'] = {}
 
 Help(vars.GenerateHelpText(env))
 
-if env['DEBUG']:
-    env.AppendUnique(CXXFLAGS=['-g', '-O0'])
+# Run variant-specific configuration
+try:
+    variant_config[env['VARIANT']](env)
+except KeyError:
+    print 'ERROR: Invalid variant "%s". Valid options are %s' % (env['VARIANT'],
+                                                                 variant_config.keys())
+    Exit(1)
 
 env.AppendUnique(CPPPATH=['$BOOST_INCLUDE_DIR',
                           '$PYTHON_INCLUDE_DIR'])
@@ -63,6 +85,13 @@ subdirs = [
     'src/test'
     ]
 
-env.SConscript(dirs=subdirs, exports='env')
+for subdir in subdirs:
+    env.SConscript(
+        os.path.join(subdir, 
+                     'SConscript'), 
+        exports='env',
+        build_dir=os.path.join('build', 
+                               env['VARIANT'], 
+                               subdir))
 
 env.Default('all')
