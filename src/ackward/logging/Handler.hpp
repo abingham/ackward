@@ -4,10 +4,10 @@
 #include <boost/python/make_function.hpp>
 #include <boost/python/object.hpp>
 
-#include <ackward/logging/LogRecord.hpp>
-#include <ackward/logging/Types.hpp>
 #include <ackward/core/Object.hpp>
-#include <ackward/core/PythonModule.hpp>
+#include <ackward/logging/LogRecord.hpp>
+#include <ackward/logging/Module.hpp>
+#include <ackward/logging/Types.hpp>
 
 namespace ackward { namespace logging 
 {
@@ -101,7 +101,7 @@ class Handler_ : public Handler
 {
 public:
     Handler_() :
-        Handler ( core::module().attr("Handler")() )
+        Handler ( module().attr("Handler")() )
         {
             boost::python::object func = 
                 boost::python::make_function(Functor::emit);

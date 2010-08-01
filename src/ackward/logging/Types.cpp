@@ -1,8 +1,9 @@
 #include <ackward/logging/Types.hpp>
 
 #include <boost/python/extract.hpp>
+#include <boost/python/object.hpp>
 
-#include <ackward/core/PythonModule.hpp>
+#include <ackward/logging/Module.hpp>
 
 using namespace boost::python;
 
@@ -13,7 +14,7 @@ Level DEBUG()
 {
     static Level l = 
         extract<Level>(
-            core::module().attr("DEBUG"));
+            module().attr("DEBUG"));
     return l;
 }
 
@@ -21,7 +22,7 @@ Level INFO()
 {
     static Level l = 
         extract<Level>(
-            core::module().attr("INFO"));
+            module().attr("INFO"));
     return l;
 }
 
@@ -29,7 +30,7 @@ Level WARNING()
 {
     static Level l = 
         extract<Level>(
-            core::module().attr("WARNING"));
+            module().attr("WARNING"));
     return l;
 }
 
@@ -37,7 +38,7 @@ Level ERROR()
 {
     static Level l = 
         extract<Level>(
-            core::module().attr("ERROR"));
+            module().attr("ERROR"));
     return l;
 }
 
@@ -45,7 +46,7 @@ Level CRITICAL()
 {
     static Level l = 
         extract<Level>(
-            core::module().attr("CRITICAL"));
+            module().attr("CRITICAL"));
     return l;
 }
 

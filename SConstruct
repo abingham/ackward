@@ -18,6 +18,8 @@ def init_vars():
 
     vars.Add('CXX', 'C++ compiler to use', None)
 
+    vars.Add('BUILD_DIR', 'Build-product directory', None)
+
     return vars
 
 def check_config(env):
@@ -86,12 +88,17 @@ subdirs = [
     ]
 
 for subdir in subdirs:
+    try:
+        bdir = os.path.join(env['BUILD_DIR'], 
+                            env['VARIANT'], 
+                            subdir)
+    except KeyError:
+        bdir = None
+
     env.SConscript(
         os.path.join(subdir, 
                      'SConscript'), 
         exports='env',
-        build_dir=os.path.join('build', 
-                               env['VARIANT'], 
-                               subdir))
+        build_dir=bdir)
 
 env.Default('all')

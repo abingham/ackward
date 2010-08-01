@@ -1,3 +1,5 @@
+import build_utils
+
 Import('env')
 
 sources = [
@@ -5,10 +7,9 @@ sources = [
     'ExceptionTranslator.cpp',
     'GetClass.cpp',
     'Object.cpp',
-    'PythonModule.cpp',
     'Util.cpp'
 ]
 
-lib = env.SharedLibrary('ackward_core', sources)
-env['products']['ackward_core'] = lib
-env.Alias('all', lib)
+build_utils.build_shared_library(env,
+                                 'core',
+                                 sources)

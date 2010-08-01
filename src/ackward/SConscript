@@ -2,6 +2,7 @@ Import(['env'])
 
 subdirs = [
     'core',
+    'datetime',
     'logging'
     ]
 

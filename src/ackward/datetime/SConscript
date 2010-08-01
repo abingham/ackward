@@ -1,0 +1,11 @@
+import build_utils
+
+Import(['env'])
+
+sources = [
+    'Module.cpp'
+    ]
+
+build_utils.build_shared_library(env,
+                                 'datetime',
+                                 sources)

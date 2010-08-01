@@ -3,7 +3,7 @@
 #include <boost/python/dict.hpp>
 
 #include <ackward/logging/Logger.hpp>
-#include <ackward/core/PythonModule.hpp>
+#include <ackward/logging/Module.hpp>
 
 using namespace boost::python;
 
@@ -13,7 +13,7 @@ namespace ackward { namespace logging
 LoggerAdapter::LoggerAdapter(const Logger& logger,
                              boost::python::dict extra) :
     Object (
-        core::module().attr("LoggerAdapter")(
+        module().attr("LoggerAdapter")(
             logger, extra) )
 {}
 

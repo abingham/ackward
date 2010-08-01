@@ -3,7 +3,7 @@
 #include <boost/python/extract.hpp>
 #include <boost/python/tuple.hpp>
 
-#include <ackward/core/PythonModule.hpp>
+#include <ackward/logging/Module.hpp>
 
 using namespace boost::python;
 
@@ -17,7 +17,7 @@ LogRecord::LogRecord(const std::wstring& name,
                      const std::wstring& msg, 
                      boost::python::tuple args) :
     Object(
-        core::module().attr("LogRecord")(
+        module().attr("LogRecord")(
             name, lvl, pathname, lineno, msg, args,
             make_tuple(object(), object(), object())))
 {}
@@ -30,7 +30,7 @@ LogRecord::LogRecord(const std::wstring& name,
                      boost::python::tuple args, 
                      boost::python::tuple exc_info) :
     Object(
-        core::module().attr("LogRecord")(
+        module().attr("LogRecord")(
             name, lvl, pathname, lineno, msg, args, exc_info))
 {}
 

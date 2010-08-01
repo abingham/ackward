@@ -1,5 +1,5 @@
-#ifndef INCLUDE_BA_LOGGER_MODULE_LEVEL_HPP
-#define INCLUDE_BA_LOGGER_MODULE_LEVEL_HPP
+#ifndef INCLUDE_ACKWARD_LOGGER_MODULE_LEVEL_HPP
+#define INCLUDE_ACKWARD_LOGGER_MODULE_LEVEL_HPP
 
 #include <string>
 
@@ -17,6 +17,9 @@ namespace ackward { namespace logging
 {
 
 class Logger;
+
+/** Get the `logging` python module */
+boost::python::object module();
 
 /**
    Return a logger with the specified name or, if no name is

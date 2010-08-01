@@ -7,3 +7,7 @@
 # PYTHON_LIBS = ...
 
 # CXX='g++-4.4'
+
+# VARIANT='release'
+
+# BUILD_DIR=None

@@ -4,7 +4,7 @@
 
 #include <ackward/logging/Filter.hpp>
 #include <ackward/logging/Formatter.hpp>
-#include <ackward/core/PythonModule.hpp>
+#include<ackward/logging/Module.hpp>
 
 using namespace boost::python;
 
@@ -51,11 +51,11 @@ void Handler::emit(const LogRecord& r) const
 }
 
 StreamHandler::StreamHandler() :
-    Handler ( core::module().attr("StreamHandler")() )
+    Handler ( module().attr("StreamHandler")() )
 {}
 
 StreamHandler::StreamHandler(boost::python::object stream) :
-    Handler ( core::module().attr("StreamHandler")(stream) )
+    Handler ( module().attr("StreamHandler")(stream) )
 {}
 
 FileHandler::FileHandler(const std::wstring& filename,
@@ -63,7 +63,7 @@ FileHandler::FileHandler(const std::wstring& filename,
                          const std::string& encoding,
                          bool delay) :
     Handler (
-        core::module().attr("FileHandler")(
+        module().attr("FileHandler")(
             filename,
             mode,
             encoding.empty() 

@@ -3,7 +3,7 @@
 #include <boost/python.hpp>
 
 #include <ackward/logging/LogRecord.hpp>
-#include <ackward/core/PythonModule.hpp>
+#include <ackward/logging/Module.hpp>
 
 using namespace boost::python;
 
@@ -12,7 +12,7 @@ namespace ackward { namespace logging
 
 Formatter::Formatter() :
     Object(
-        core::module().attr("Formatter")())
+        module().attr("Formatter")())
 {}
 
 Formatter::Formatter(boost::python::object o) :

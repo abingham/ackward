@@ -1,3 +1,5 @@
+import build_utils
+
 Import(['env'])
 
 sources = [
@@ -13,6 +15,6 @@ sources = [
     'Types.cpp',
     ]
 
-lib = env.SharedLibrary('ackward_logging', sources)
-env['products']['ackward_logging'] = lib
-env.Alias('all', lib)
+build_utils.build_shared_library(env,
+                                 'logging',
+                                 sources)

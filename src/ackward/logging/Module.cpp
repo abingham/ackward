@@ -1,35 +1,49 @@
 #include <ackward/logging/Module.hpp>
 
 #include <boost/python/dict.hpp>
+#include <boost/python/import.hpp>
 
 #include <ackward/logging/Logger.hpp>
-#include <ackward/core/PythonModule.hpp>
 
 using namespace boost::python;
 
 namespace ackward { namespace logging 
 {
 
+object module()
+{
+    static object mod;
+    static bool initialized = false;
+
+    if (!initialized)
+    {
+        mod = import("logging");
+        initialized = true;
+    }
+
+    return mod;
+}
+
 Logger getLogger()
 {
     return Logger(
-        core::module().attr("getLogger")());
+        module().attr("getLogger")());
 }
 
 Logger getLogger(const std::wstring& name)
 {
     return Logger(
-        core::module().attr("getLogger")(name));
+        module().attr("getLogger")(name));
 }
 
 void basicConfig()
 {
-    core::module().attr("basicConfig")();
+    module().attr("basicConfig")();
 }
 
 void basicConfig(dict kwargs)
 {
-    core::module().attr("basicConfig")(kwargs);
+    module().attr("basicConfig")(kwargs);
 }
 
 }}
