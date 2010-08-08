@@ -3,7 +3,8 @@ import build_utils
 Import(['env'])
 
 sources = [
-    'Module.cpp'
+    'Module.cpp',
+    'TimeDelta.cpp'
     ]
 
 build_utils.build_shared_library(env,

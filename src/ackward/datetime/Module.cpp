@@ -3,36 +3,35 @@
 #include <boost/python/extract.hpp>
 #include <boost/python/import.hpp>
 
-namespace
+using namespace boost::python;
+
+namespace ackward { namespace datetime
 {
 
-int MINYEAR = 0;
-int MAXYEAR = 0;
-
-void initialize()
+object module()
 {
-    using namespace boost::python;
-
+    static object mod;
     static bool initialized = false;
+
     if (!initialized)
     {
-        object mod = import("datetime");
-        MINYEAR = extract<int>(mod.attr("MINYEAR"));
-        MAXYEAR = extract<int>(mod.attr("MAXYEAR"));
+        mod = import("datetime");
         initialized = true;
     }
+
+    return mod;
 }
 
-}
-
-int ackward::datetime::MINYEAR()
+int MINYEAR()
 {
-    ::initialize();
-    return ::MINYEAR;
+    return extract<int>(
+        module().attr("MINYEAR"));
 }
 
-int ackward::datetime::MAXYEAR()
+int MAXYEAR()
 {
-    ::initialize();
-    return ::MAXYEAR;
+    return extract<int>(
+        module().attr("MAXYEAR"));
 }
+
+}}

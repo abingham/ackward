@@ -4,7 +4,9 @@ Import('env')
 
 local_env = env.Clone()
 
-for libname in ['core', 'logging']:
+for libname in ['core', 
+                'datetime', 
+                'logging']:
     toks = os.path.split(str(local_env['products']['ackward_%s' % libname][0]))
     libpath, lib = os.path.join(toks[:-1]), toks[-1]
     local_env.AppendUnique(LIBS=[lib])
@@ -23,6 +25,7 @@ sources = [
     'logger_test.cpp',
     'log_record_test.cpp',
     'module_test.cpp',
+    'timedelta_test.cpp',
     'types_test.cpp',
     'test.cpp',
     'util.cpp'
