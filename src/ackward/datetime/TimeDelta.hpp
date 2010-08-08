@@ -28,17 +28,19 @@ public:
     unsigned int seconds() const; // 	Between 0 and 86399 inclusive
     unsigned int microseconds() const; //	Between 0 and 999999 inclusive
 
-    // t1 = t2 + t3	Sum of t2 and t3. Afterwards t1-t2 == t3 and t1-t3 == t2 are true. (1)
-    //     t1 = t2 - t3	Difference of t2 and t3. Afterwards t1 == t2 - t3 and t2 == t1 + t3 are true. (1)
-    //     t1 = t2 * i or t1 = i * t2	Delta multiplied by an integer or long. Afterwards t1 // i == t2 is true, provided i != 0.
-    //     In general, t1 * i == t1 * (i-1) + t1 is true. (1)
-    //     t1 = t2 // i	The floor is computed and the remainder (if any) is thrown away. (3)
-    //     +t1	Returns a timedelta object with the same value. (2)
-    //     -t1	equivalent to timedelta(-t1.days, -t1.seconds, -t1.microseconds), and to t1* -1. (1)(4)
-    //     abs(t)
+    bool operator==(const TimeDelta&) const;
+    bool operator!=(const TimeDelta&) const;
 
     using core::Object::obj;
 };
+
+TimeDelta operator+(const TimeDelta&, const TimeDelta&);
+TimeDelta operator-(const TimeDelta&, const TimeDelta&);
+TimeDelta operator*(const TimeDelta&, unsigned long);
+TimeDelta operator*(unsigned long, const TimeDelta&);
+TimeDelta operator/(const TimeDelta&, long);
+TimeDelta operator-(const TimeDelta&);
+TimeDelta abs(const TimeDelta&);
 
 }}
 

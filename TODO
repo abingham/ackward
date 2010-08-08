@@ -1,3 +1,12 @@
+-*- rst -*-
+
+General
+=======
+
+* create (or find) "type()" method for python objects
+* Check for proper type on C++ object construction, e.g. TimeDelta
+  should check the obj parameter, at least in debug mode
+
 Logging
 =======
 
@@ -11,6 +20,7 @@ Datetime
 ========
 
 * Do this!
+* Rich comparison for TimeDelta
 
 Next Version
 ============

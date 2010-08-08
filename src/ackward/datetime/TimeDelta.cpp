@@ -61,3 +61,62 @@ unsigned int TimeDelta::microseconds() const
     return extract<unsigned int>(
         obj().attr("microseconds"));
 }
+
+TimeDelta 
+ackward::datetime::operator+(const TimeDelta& lhs,
+                             const TimeDelta& rhs)
+{
+    return TimeDelta(lhs.obj() + rhs.obj());
+}
+
+TimeDelta 
+ackward::datetime::operator-(const TimeDelta& lhs,
+                             const TimeDelta& rhs)
+{
+    return TimeDelta(lhs.obj() - rhs.obj());
+}
+
+TimeDelta 
+ackward::datetime::operator*(const TimeDelta& lhs,
+                             unsigned long rhs)
+{
+    return TimeDelta(lhs.obj() * rhs);
+}
+
+TimeDelta 
+ackward::datetime::operator*(unsigned long lhs,
+                             const TimeDelta& rhs)
+{
+    return rhs * lhs;
+}
+
+TimeDelta 
+ackward::datetime::operator/(const TimeDelta& lhs, 
+                             long rhs)
+{
+    return lhs.obj() / rhs;
+}
+
+TimeDelta
+ackward::datetime::operator-(const TimeDelta& d)
+{
+    return TimeDelta(
+        d.obj().attr("__neg__")());
+}
+
+TimeDelta
+ackward::datetime::abs(const TimeDelta& d)
+{
+    return TimeDelta(
+        d.obj().attr("__abs__")());
+}
+
+bool TimeDelta::operator==(const TimeDelta& other) const
+{
+    return obj() == other.obj();
+}
+
+bool TimeDelta::operator!=(const TimeDelta& other) const
+{
+    return obj() != other.obj();
+}
