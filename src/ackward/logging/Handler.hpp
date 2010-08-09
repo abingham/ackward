@@ -1,6 +1,7 @@
-#ifndef INCLUDE_BA_LOG_HANDLER_HPP
-#define INCLUDE_BA_LOG_HANDLER_HPP
+#ifndef INCLUDE_ACKWARD_LOGGING_HANDLER_HPP
+#define INCLUDE_ACKWARD_LOGGING_HANDLER_HPP
 
+#include <boost/python/extract.hpp>
 #include <boost/python/make_function.hpp>
 #include <boost/python/object.hpp>
 
@@ -96,7 +97,7 @@ public:
                   unsigned int port);
 };
 
-template <typename Functor>
+template <typename Impl>
 class Handler_ : public Handler
 {
 public:
@@ -104,17 +105,24 @@ public:
         Handler ( module().attr("Handler")() )
         {
             boost::python::object func = 
-                boost::python::make_function(Functor::emit);
+                boost::python::make_function(
+                    Handler_<Impl>::emit_impl);
             obj().attr("emit") = func;
+        }
+
+private:
+    static void emit_impl(boost::python::object o)
+        {
+            LogRecord lr(o);
+            Impl::emit_(lr);
         }
 };
 
-struct NullFunctor
+class NullHandler : public Handler_<NullHandler>
 {
-    static void emit(const LogRecord&) {}
+public:
+    static void emit_(const LogRecord&) {}
 };
-
-typedef Handler_<NullFunctor> NullHandler;
 
 }}
 

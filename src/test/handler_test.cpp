@@ -1,7 +1,8 @@
-#include <ackward/logging/Handler.hpp>
-
 #include <boost/python.hpp>
 #include <boost/test/unit_test.hpp>
+
+#include <ackward/logging/Handler.hpp>
+#include <ackward/logging/Logger.hpp>
 
 using namespace ackward::logging;
 using namespace boost::python;
@@ -16,13 +17,13 @@ BOOST_AUTO_TEST_SUITE( Handlers )
 // void flush() const;
 // void close();
 
-BOOST_AUTO_TEST_CASE( StreamHandler_factory )
+BOOST_AUTO_TEST_CASE( StreamHandler_test )
 {
     StreamHandler h;
     StreamHandler h2(import("sys").attr("stdout"));
 }
 
-BOOST_AUTO_TEST_CASE( FileHandler_factory )
+BOOST_AUTO_TEST_CASE( FileHandler_test )
 {
     FileHandler(L"delete_me.log");
     FileHandler(L"delete_me2.log",
@@ -36,7 +37,7 @@ BOOST_AUTO_TEST_CASE( FileHandler_factory )
                 true);
 }
 
-BOOST_AUTO_TEST_CASE( WatchedFileHandler_factory )
+BOOST_AUTO_TEST_CASE( WatchedFileHandler_test )
 {
     WatchedFileHandler(L"delete_me.log");
     WatchedFileHandler(L"delete_me2.log",
@@ -50,14 +51,23 @@ BOOST_AUTO_TEST_CASE( WatchedFileHandler_factory )
                        true);
 }
 
-BOOST_AUTO_TEST_CASE( SocketHandler_factory )
+BOOST_AUTO_TEST_CASE( SocketHandler_test )
 {
-    SocketHandler(L"localhost", 1234);
+    SocketHandler h(L"localhost", 1234);
 }
 
-BOOST_AUTO_TEST_CASE( NullHandler )
+BOOST_AUTO_TEST_CASE( NullHandler_test )
 {
     NullHandler h;
+    Logger l = getLogger();
+    l.addHandler(h);
+    try{
+        l.debug(L"Hola!");
+    } catch (...)
+    {
+        PyErr_Print();
+        throw;
+    }
 }
 
 BOOST_AUTO_TEST_SUITE_END()

@@ -1,5 +1,5 @@
-#ifndef INCLUDE_BA_LOG_TYPES_HPP
-#define INCLUDE_BA_LOG_TYPES_HPP
+#ifndef INCLUDE_ACKWARD_LOGGING_TYPES_HPP
+#define INCLUDE_ACKWARD_LOGGING_TYPES_HPP
 
 namespace ackward { namespace logging 
 {
