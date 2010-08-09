@@ -3,8 +3,11 @@ import build_utils
 Import(['env'])
 
 sources = [
+    'DateTime.cpp',
+    'Initialize.cpp',
     'Module.cpp',
-    'TimeDelta.cpp'
+    'TimeDelta.cpp',
+    'TZInfo.cpp',
     ]
 
 build_utils.build_shared_library(env,
