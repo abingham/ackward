@@ -30,6 +30,10 @@ public:
 
     bool operator==(const TimeDelta&) const;
     bool operator!=(const TimeDelta&) const;
+    bool operator<(const TimeDelta&) const;
+    bool operator<=(const TimeDelta&) const;
+    bool operator>(const TimeDelta&) const;
+    bool operator>=(const TimeDelta&) const;
 
     using core::Object::obj;
 };

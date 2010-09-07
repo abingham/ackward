@@ -11,6 +11,6 @@ void ackward::datetime::initialize()
         "datetime.datetime");
     ackward::core::initializePythonConverter<TimeDelta>(
         "datetime.timedelta");
-    ackward::core::initializePythonConverter<TZInfo>(
-        "datetime.tzinfo");
+    // ackward::core::initializePythonConverter<TZInfo>(
+    //    "datetime.tzinfo");
 }

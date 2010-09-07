@@ -13,6 +13,8 @@ class DateTime : private ackward::core::Object
 public:
     DateTime(boost::python::object);
 
+    static DateTime now();
+
     using Object::obj;
 };
 

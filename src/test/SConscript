@@ -17,6 +17,7 @@ local_env.AppendUnique(CPPDEFINES=['BOOST_TEST_DYN_LINK'])
 local_env.AppendUnique(LIBS=['boost_unit_test_framework'])
 
 sources = [
+    'date_test.cpp',
     'filter_test.cpp',
     'formatter_test.cpp',
     'handler_test.cpp',
@@ -27,6 +28,7 @@ sources = [
     'module_test.cpp',
     'timedelta_test.cpp',
     'types_test.cpp',
+    'tzinfo_test.cpp',
     'test.cpp',
     'util.cpp'
     ]

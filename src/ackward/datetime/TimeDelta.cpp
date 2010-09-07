@@ -120,3 +120,23 @@ bool TimeDelta::operator!=(const TimeDelta& other) const
 {
     return obj() != other.obj();
 }
+
+bool TimeDelta::operator<(const TimeDelta& other) const
+{
+    return obj() < other.obj();
+}
+
+bool TimeDelta::operator<=(const TimeDelta& other) const
+{
+    return obj() <= other.obj();
+}
+
+bool TimeDelta::operator>(const TimeDelta& other) const
+{
+    return obj() > other.obj();
+}
+
+bool TimeDelta::operator>=(const TimeDelta& other) const
+{
+    return obj() >= other.obj();
+}

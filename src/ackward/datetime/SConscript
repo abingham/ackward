@@ -3,6 +3,7 @@ import build_utils
 Import(['env'])
 
 sources = [
+    'Date.cpp',
     'DateTime.cpp',
     'Initialize.cpp',
     'Module.cpp',

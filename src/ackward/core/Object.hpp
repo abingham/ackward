@@ -1,5 +1,5 @@
-#ifndef BA_LOG_OBJECT_HPP
-#define BA_LOG_OBJECT_HPP
+#ifndef INCLUDE_ACKWARD_CORE_OBJECT_HPP
+#define INCLUDE_ACKWARD_CORE_OBJECT_HPP
 
 #include <boost/python/object.hpp>
 

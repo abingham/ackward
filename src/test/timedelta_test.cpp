@@ -127,9 +127,56 @@ BOOST_AUTO_TEST_CASE( equal )
     
     BOOST_ASSERT(td1 == td2);
     BOOST_ASSERT(!(td1 == td3));
+}
 
+BOOST_AUTO_TEST_CASE( not_equal )
+{
+    TimeDelta td1(123, 456);
+    TimeDelta td2(123, 456);
+    TimeDelta td3(456, 123);
+    
     BOOST_ASSERT(td1 != td3);
     BOOST_ASSERT(!(td1 != td2));
+}
+
+BOOST_AUTO_TEST_CASE( less_than )
+{
+    TimeDelta td1(123, 456);
+    TimeDelta td2(456, 123);
+
+    BOOST_ASSERT(td1 < td2);
+    BOOST_ASSERT(!(td2 < td1));
+}
+
+BOOST_AUTO_TEST_CASE( less_than_equal )
+{
+    TimeDelta td1(123, 456);
+    TimeDelta td2(123, 456);
+    TimeDelta td3(456, 123);
+    
+    BOOST_ASSERT(td1 <= td2);
+    BOOST_ASSERT(td1 <= td3);
+    BOOST_ASSERT(!(td3 <= td1));
+}
+
+BOOST_AUTO_TEST_CASE( greater_than )
+{
+    TimeDelta td1(123, 456);
+    TimeDelta td2(456, 123);
+
+    BOOST_ASSERT(td2 > td1);
+    BOOST_ASSERT(!(td1 > td2));
+}
+
+BOOST_AUTO_TEST_CASE( greater_than_equal )
+{
+    TimeDelta td1(123, 456);
+    TimeDelta td2(123, 456);
+    TimeDelta td3(456, 123);
+    
+    BOOST_ASSERT(td1 >= td2);
+    BOOST_ASSERT(td3 >= td1);
+    BOOST_ASSERT(!(td1 >= td3));
 }
 
 BOOST_AUTO_TEST_SUITE_END()
