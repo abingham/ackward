@@ -21,6 +21,7 @@ class Exception : public virtual boost::exception,
                   public virtual std::exception
 {};
 class AttributeError : public Exception {};
+class ImportError : public Exception {};
 class IndexError : public Exception {};
 class IOError : public Exception {};
 class KeyError : public Exception {};

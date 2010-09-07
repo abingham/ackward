@@ -10,7 +10,7 @@ class TypedObject : public Object
 {
 public:
     TypedObject(boost::python::object obj,
-                std::wstring typeName);
+                const std::string& typeName);
 };
 
 }}

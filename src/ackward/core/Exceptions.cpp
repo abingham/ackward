@@ -23,6 +23,8 @@ void translatePythonException(tuple einfo)
     {
         ex.add(import("exceptions").attr("AttributeError"),
                &throw_with_python_info<AttributeError>);
+        ex.add(import("exceptions").attr("ImportError"),
+               &throw_with_python_info<ImportError>);
         ex.add(import("exceptions").attr("IndexError"),
                &throw_with_python_info<IndexError>);
         ex.add(import("exceptions").attr("IOError"),
