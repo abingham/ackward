@@ -17,6 +17,7 @@ def init_vars():
     vars.Add('VARIANT', 'Compile with debugging', 'release')
 
     vars.Add('CXX', 'C++ compiler to use', None)
+    vars.Add('CXXFLAGS', 'C++ compiler flags', [])
 
     vars.Add('BUILD_DIR', 'Build-product directory', None)
 

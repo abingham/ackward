@@ -21,4 +21,12 @@ BOOST_AUTO_TEST_CASE( isInstance_test )
         isInstance(obj, "datetime.datetime"));
 }
 
+BOOST_AUTO_TEST_CASE( verifyType_test )
+{
+    bp::str foo;
+    verifyType(foo, "str");
+    BOOST_CHECK_THROW(verifyType(foo, "int"), ValueError);
+    BOOST_CHECK_THROW(verifyType<TypeError>(foo, "int"), TypeError);
+}
+
 BOOST_AUTO_TEST_SUITE_END()

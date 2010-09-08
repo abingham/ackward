@@ -3,6 +3,7 @@
 #include <boost/python.hpp>
 
 #include <ackward/core/Exceptions.hpp>
+#include <ackward/core/Util.hpp>
 #include <ackward/datetime/Module.hpp>
 #include <ackward/datetime/TimeDelta.hpp>
 
@@ -13,7 +14,9 @@ namespace ackward { namespace datetime
 
 Date::Date(boost::python::object obj) :
     core::Object (obj)
-{}
+{
+    core::verifyType(obj, "datetime.date");
+}
 
 Date::Date(unsigned int year, unsigned int month, unsigned int day) 
 try :
