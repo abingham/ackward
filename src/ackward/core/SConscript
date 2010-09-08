@@ -6,6 +6,7 @@ sources = [
     'Exceptions.cpp',
     'ExceptionTranslator.cpp',
     'GetClass.cpp',
+    'Import.cpp',
     'Object.cpp',
     'TypedObject.cpp',
     'Util.cpp'

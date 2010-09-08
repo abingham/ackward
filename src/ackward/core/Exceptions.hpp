@@ -1,3 +1,6 @@
+#ifndef INCLUDE_ACKWARD_CORE_EXCEPTIONS_HPP
+#define INCLUDE_ACKWARD_CORE_EXCEPTIONS_HPP
+
 #include <exception>
 
 #include <boost/exception.hpp>
@@ -31,3 +34,5 @@ class ValueError : public Exception {};
 class StopIteration : public Exception {};
 
 }}
+
+#endif
