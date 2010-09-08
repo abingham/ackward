@@ -21,6 +21,7 @@ sources = [
     'filter_test.cpp',
     'formatter_test.cpp',
     'handler_test.cpp',
+    'import_test.cpp',
     'LoggerFixture.cpp',
     'logger_adapter_test.cpp',
     'logger_test.cpp',
