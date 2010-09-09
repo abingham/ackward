@@ -7,8 +7,7 @@ namespace ackward { namespace datetime
 
 DateTime::DateTime(boost::python::object o) :
     Object (o)
-{
-}
+{}
 
 DateTime DateTime::now()
 {

@@ -4,7 +4,7 @@
 
 #include <ackward/logging/Filter.hpp>
 #include <ackward/logging/Formatter.hpp>
-#include<ackward/logging/Module.hpp>
+#include <ackward/logging/Module.hpp>
 
 using namespace boost::python;
 

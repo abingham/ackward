@@ -10,13 +10,29 @@
 
 #include "util.hpp"
 
+namespace bfs=boost::filesystem;
+
+namespace
+{
+
+bfs::path scrubFilename(bfs::path filename)
+{
+    bfs::remove(filename);
+    return filename;
+}
+
+}
+
 using namespace ackward::logging;
 
 LoggerFixture::LoggerFixture() :
     filename ("logger_test.log"),
     logger (getLogger()),
-    handler (FileHandler(::toWString(filename.string()),
-                         "a", "", false))
+    handler (
+        FileHandler(
+            ::toWString(
+                scrubFilename(filename).string()),
+            "a", "", false))
 {
     logger.addHandler(handler);
     

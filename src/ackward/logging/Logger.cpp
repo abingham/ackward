@@ -14,9 +14,7 @@ namespace ackward { namespace logging
 
 Logger::Logger(object l) :
     Object (l)
-{
-    // TODO: assert(type(l) == 'logger') or something like that
-}
+{}
 
 bool Logger::propagate() const
 {

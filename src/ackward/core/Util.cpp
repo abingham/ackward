@@ -60,7 +60,8 @@ bool isInstance(boost::python::object obj,
     object typeObj = findObject(typeName);
 
     int rslt = PyObject_IsInstance(
-        obj.ptr(), typeObj.ptr());
+        obj.ptr(), 
+        typeObj.ptr());
 
     switch (rslt)
     {

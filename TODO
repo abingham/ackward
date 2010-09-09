@@ -8,10 +8,13 @@ General
   shared_ptr is also a good option.
 * create (or find) "type()" method for python objects
 * Check for proper type on C++ object construction, e.g. TimeDelta
-  should check the obj parameter, at least in debug mode
-* TypedObject
-  * Finish implementation
-  * Use this for appropriate classes
+  should check the obj parameter, at least in debug mode.
+  * We have this functionality, but it doesn't always work e.g. for
+    Filter and Handler. The reason, I assume, is that we're passing in
+    objects which meet the duck-type but aren't actually
+    subclasses. Is it just a bad idea to do this kind of checking at
+    all? Maybe we should just warn about mismatches in debug mode or
+    something?
 
 Logging
 =======

@@ -8,7 +8,6 @@ sources = [
     'GetClass.cpp',
     'Import.cpp',
     'Object.cpp',
-    'TypedObject.cpp',
     'Util.cpp'
 ]
 

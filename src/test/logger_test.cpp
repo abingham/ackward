@@ -11,6 +11,7 @@
 #include <ackward/logging/LogRecord.hpp>
 #include <ackward/logging/Module.hpp>
 
+#include "LoggerFixture.hpp"
 #include "util.hpp"
 
 using namespace ackward::logging;
@@ -18,39 +19,6 @@ namespace bfs=boost::filesystem;
 
 // Logger method
 BOOST_AUTO_TEST_SUITE( Logger_methods )
-
-struct LoggerFixture
-{
-    LoggerFixture() :
-        filename ("logger_test.log"),
-        logger (getLogger()),
-        handler (FileHandler(::toWString(filename.string()),
-                             "a", "", false))
-        {
-            logger.addHandler(handler);
-
-            BOOST_REQUIRE(::lineCount(filename) == 0);
-        }
-
-    ~LoggerFixture()
-        {
-            BOOST_FOREACH(Filter f, logger.filters())
-            {
-                logger.removeFilter(f);
-            }
-
-            BOOST_FOREACH(Handler h, logger.handlers())
-            {
-                logger.removeHandler(h);
-            }
-
-            bfs::remove(filename);
-        }
-
-    bfs::path filename;
-    Logger logger;
-    Handler handler;
-};
 
 BOOST_AUTO_TEST_CASE( propagate )
 {

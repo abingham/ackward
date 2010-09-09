@@ -28,7 +28,6 @@ sources = [
     'log_record_test.cpp',
     'module_test.cpp',
     'timedelta_test.cpp',
-    'typed_object_test.cpp',
     'types_test.cpp',
     'tzinfo_test.cpp',
     'test.cpp',

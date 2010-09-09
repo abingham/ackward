@@ -46,6 +46,7 @@ def configure_debug(env):
     '''Debug-specific build settings
     '''
     env.AppendUnique(CXXFLAGS=['-g', '-O0'])
+    env.AppendUnique(CPPDEFINES=['ACKWARD_DEBUG'])
 
 # Maps from variant names to variant-specific configuration functions
 variant_config = {
