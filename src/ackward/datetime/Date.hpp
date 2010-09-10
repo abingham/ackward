@@ -2,6 +2,7 @@
 #define INCLUDE_ACKWARD_DATETIME_DATE_HPP
 
 #include <ctime>
+#include <iostream>
 
 #include <boost/python/object_fwd.hpp>
 #include <boost/tuple/tuple.hpp>
@@ -19,7 +20,7 @@ public:
     Date(boost::python::object);
 
     /**
-       @param year MINYEAR <= year <= MAXYEAR
+       @#param year MINYEAR <= year <= MAXYEAR
        @param month 1 <= month <= 12
        @param day 1 <= day <= number of days in the given month and 
 
@@ -124,17 +125,19 @@ public:
     /** Return a string representing the date in ISO 8601 format,
      * ‘YYYY-MM-DD’. For example, date(2002, 12, 4).isoformat() ==
      * '2002-12-04'. */
-    std::wstring isoformat() const;
+    std::string isoformat() const;
 
-// date.__str__()
-// For a date d, str(d) is equivalent to d.isoformat().
-// date.ctime()
 // Return a string representing the date, for example date(2002, 12, 4).ctime() == 'Wed Dec 4 00:00:00 2002'. d.ctime() is equivalent to time.ctime(time.mktime(d.timetuple())) on platforms where the native C ctime() function (which time.ctime() invokes, but which date.ctime() does not invoke) conforms to the C standard.
+// date.ctime()
+
 // date.strftime(format)
 // Return a string representing the date, controlled by an explicit format string. Format codes referring to hours, minutes or seconds will see 0 values. See section strftime() Behavior.
 
     using Object::obj;
 };
+
+/** Writes the date's isoformat to the stream */
+std::ostream& operator<<(std::ostream&, const Date&);
 
 bool operator==(const Date&, const Date&);
 

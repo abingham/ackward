@@ -1,5 +1,6 @@
 #include <ctime>
 #include <limits>
+#include <sstream>
 #include <vector>
 
 #include <boost/foreach.hpp>
@@ -172,7 +173,15 @@ BOOST_AUTO_TEST_CASE( isocalendar_test )
 
 BOOST_AUTO_TEST_CASE( isoformat_test )
 {
-    std::wstring fmt = Date::today().isoformat();
+    std::string fmt = Date::today().isoformat();
+}
+
+BOOST_AUTO_TEST_CASE( stream_test )
+{
+    Date d = Date::today();
+    std::ostringstream oss;
+    oss << d;
+    BOOST_ASSERT(oss.str() == d.isoformat());
 }
 
 BOOST_AUTO_TEST_SUITE_END()
