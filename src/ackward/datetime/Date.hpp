@@ -95,8 +95,11 @@ public:
      * a Wednesday. See also isoweekday(). */
     int weekday() const;
 
-// date.isoweekday()
-// Return the day of the week as an integer, where Monday is 1 and Sunday is 7. For example, date(2002, 12, 4).isoweekday() == 3, a Wednesday. See also weekday(), isocalendar().
+    /** Return the day of the week as an integer, where Monday is 1
+     * and Sunday is 7. For example, date(2002, 12, 4).isoweekday() ==
+     * 3, a Wednesday. See also weekday(), isocalendar(). */
+    int isoweekday() const;
+
 // date.isocalendar()
 // Return a 3-tuple, (ISO year, ISO week number, ISO weekday).
 

@@ -158,4 +158,10 @@ BOOST_AUTO_TEST_CASE( weekday_test )
     int wd = d.weekday();
 }
 
+BOOST_AUTO_TEST_CASE( isoweekday_test )
+{
+    Date d = Date::today();
+    int wd = d.isoweekday();
+}
+
 BOOST_AUTO_TEST_SUITE_END()

@@ -125,6 +125,11 @@ int Date::weekday() const
     return extract<int>(obj().attr("weekday")());
 }
 
+int Date::isoweekday() const
+{
+    return extract<int>(obj().attr("isoweekday")());
+}
+
 bool operator==(const Date& lhs, const Date& rhs)
 {
     return (lhs.year() == rhs.year() &&
