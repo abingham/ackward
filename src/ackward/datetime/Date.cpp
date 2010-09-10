@@ -130,6 +130,15 @@ int Date::isoweekday() const
     return extract<int>(obj().attr("isoweekday")());
 }
 
+boost::tuple<int, int, int> Date::isocalendar() const
+{
+    tuple t = extract<tuple>(obj().attr("isocalendar")());
+    return boost::make_tuple(
+        extract<int>(t[0])(),
+        extract<int>(t[1])(),
+        extract<int>(t[2])());
+}
+
 bool operator==(const Date& lhs, const Date& rhs)
 {
     return (lhs.year() == rhs.year() &&

@@ -4,6 +4,7 @@
 #include <ctime>
 
 #include <boost/python/object_fwd.hpp>
+#include <boost/tuple/tuple.hpp>
 
 #include <ackward/core/Object.hpp>
 
@@ -100,8 +101,9 @@ public:
      * 3, a Wednesday. See also weekday(), isocalendar(). */
     int isoweekday() const;
 
-// date.isocalendar()
-// Return a 3-tuple, (ISO year, ISO week number, ISO weekday).
+    /** Return a 3-tuple, (ISO year, ISO week number, ISO weekday). */
+    boost::tuple<int, int, int> isocalendar() const;
+
 
 // The ISO calendar is a widely used variant of the Gregorian calendar. See http://www.phys.uu.nl/~vgent/calendar/isocalendar.htm for a good explanation.
 

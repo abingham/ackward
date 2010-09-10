@@ -164,4 +164,10 @@ BOOST_AUTO_TEST_CASE( isoweekday_test )
     int wd = d.isoweekday();
 }
 
+BOOST_AUTO_TEST_CASE( isocalendar_test )
+{
+    boost::tuple<int, int, int> ic =
+        Date::today().isocalendar();
+}
+
 BOOST_AUTO_TEST_SUITE_END()
