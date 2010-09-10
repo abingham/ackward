@@ -144,6 +144,11 @@ std::string Date::isoformat() const
     return extract<std::string>(obj().attr("isoformat")());
 }
 
+std::string Date::ctime() const
+{
+    return extract<std::string>(obj().attr("ctime")());
+}
+
 std::ostream& operator<<(std::ostream& os, const Date& d)
 {
     os << d.isoformat();

@@ -184,4 +184,9 @@ BOOST_AUTO_TEST_CASE( stream_test )
     BOOST_ASSERT(oss.str() == d.isoformat());
 }
 
+BOOST_AUTO_TEST_CASE( ctime_test )
+{
+    std::string ct = Date::today().ctime();
+}
+
 BOOST_AUTO_TEST_SUITE_END()

@@ -127,8 +127,13 @@ public:
      * '2002-12-04'. */
     std::string isoformat() const;
 
-// Return a string representing the date, for example date(2002, 12, 4).ctime() == 'Wed Dec 4 00:00:00 2002'. d.ctime() is equivalent to time.ctime(time.mktime(d.timetuple())) on platforms where the native C ctime() function (which time.ctime() invokes, but which date.ctime() does not invoke) conforms to the C standard.
-// date.ctime()
+    /** Return a string representing the date, for example date(2002,
+     * 12, 4).ctime() == 'Wed Dec 4 00:00:00 2002'. d.ctime() is
+     * equivalent to time.ctime(time.mktime(d.timetuple())) on
+     * platforms where the native C ctime() function (which
+     * time.ctime() invokes, but which date.ctime() does not invoke)
+     * conforms to the C standard. */
+    std::string ctime() const;
 
 // date.strftime(format)
 // Return a string representing the date, controlled by an explicit format string. Format codes referring to hours, minutes or seconds will see 0 values. See section strftime() Behavior.
