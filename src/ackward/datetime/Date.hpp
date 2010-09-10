@@ -101,18 +101,31 @@ public:
      * 3, a Wednesday. See also weekday(), isocalendar(). */
     int isoweekday() const;
 
-    /** Return a 3-tuple, (ISO year, ISO week number, ISO weekday). */
+    /** Return a 3-tuple, (ISO year, ISO week number, ISO weekday).
+
+        The ISO calendar is a widely used variant of the Gregorian
+        calendar. See
+        http://www.phys.uu.nl/~vgent/calendar/isocalendar.htm for a
+        good explanation.
+
+        The ISO year consists of 52 or 53 full weeks, and where a week
+        starts on a Monday and ends on a Sunday. The first week of an
+        ISO year is the first (Gregorian) calendar week of a year
+        containing a Thursday. This is called week number 1, and the
+        ISO year of that Thursday is the same as its Gregorian year.
+
+        For example, 2004 begins on a Thursday, so the first week of
+        ISO year 2004 begins on Monday, 29 Dec 2003 and ends on
+        Sunday, 4 Jan 2004, so that date(2003, 12, 29).isocalendar()
+        == (2004, 1, 1) and date(2004, 1, 4).isocalendar() == (2004,
+        1, 7). */
     boost::tuple<int, int, int> isocalendar() const;
 
+    /** Return a string representing the date in ISO 8601 format,
+     * ‘YYYY-MM-DD’. For example, date(2002, 12, 4).isoformat() ==
+     * '2002-12-04'. */
+    std::wstring isoformat() const;
 
-// The ISO calendar is a widely used variant of the Gregorian calendar. See http://www.phys.uu.nl/~vgent/calendar/isocalendar.htm for a good explanation.
-
-// The ISO year consists of 52 or 53 full weeks, and where a week starts on a Monday and ends on a Sunday. The first week of an ISO year is the first (Gregorian) calendar week of a year containing a Thursday. This is called week number 1, and the ISO year of that Thursday is the same as its Gregorian year.
-
-// For example, 2004 begins on a Thursday, so the first week of ISO year 2004 begins on Monday, 29 Dec 2003 and ends on Sunday, 4 Jan 2004, so that date(2003, 12, 29).isocalendar() == (2004, 1, 1) and date(2004, 1, 4).isocalendar() == (2004, 1, 7).
-
-// date.isoformat()
-// Return a string representing the date in ISO 8601 format, ‘YYYY-MM-DD’. For example, date(2002, 12, 4).isoformat() == '2002-12-04'.
 // date.__str__()
 // For a date d, str(d) is equivalent to d.isoformat().
 // date.ctime()

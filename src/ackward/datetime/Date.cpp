@@ -139,6 +139,11 @@ boost::tuple<int, int, int> Date::isocalendar() const
         extract<int>(t[2])());
 }
 
+std::wstring Date::isoformat() const
+{
+    return extract<std::wstring>(obj().attr("isoformat")());
+}
+
 bool operator==(const Date& lhs, const Date& rhs)
 {
     return (lhs.year() == rhs.year() &&

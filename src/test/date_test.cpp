@@ -170,4 +170,9 @@ BOOST_AUTO_TEST_CASE( isocalendar_test )
         Date::today().isocalendar();
 }
 
+BOOST_AUTO_TEST_CASE( isoformat_test )
+{
+    std::wstring fmt = Date::today().isoformat();
+}
+
 BOOST_AUTO_TEST_SUITE_END()
