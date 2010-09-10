@@ -189,4 +189,11 @@ BOOST_AUTO_TEST_CASE( ctime_test )
     std::string ct = Date::today().ctime();
 }
 
+BOOST_AUTO_TEST_CASE( strftime_test )
+{
+    std::wstring s =
+        Date::today().strftime(L"This is a test");
+    // TODO: A more realistic test?
+}
+
 BOOST_AUTO_TEST_SUITE_END()

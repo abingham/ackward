@@ -135,8 +135,11 @@ public:
      * conforms to the C standard. */
     std::string ctime() const;
 
-// date.strftime(format)
-// Return a string representing the date, controlled by an explicit format string. Format codes referring to hours, minutes or seconds will see 0 values. See section strftime() Behavior.
+    /** Return a string representing the date, controlled by an
+     * explicit format string. Format codes referring to hours,
+     * minutes or seconds will see 0 values. See section strftime()
+     * Behavior. */
+    std::wstring strftime(const std::wstring& fmt) const;
 
     using Object::obj;
 };

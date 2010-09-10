@@ -149,6 +149,11 @@ std::string Date::ctime() const
     return extract<std::string>(obj().attr("ctime")());
 }
 
+std::wstring Date::strftime(const std::wstring& fmt) const
+{
+    return extract<std::wstring>(obj().attr("strftime")(fmt));
+}
+
 std::ostream& operator<<(std::ostream& os, const Date& d)
 {
     os << d.isoformat();
