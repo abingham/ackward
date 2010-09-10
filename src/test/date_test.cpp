@@ -152,4 +152,10 @@ BOOST_AUTO_TEST_CASE( timetuple_test )
     tm ttuple = d.timetuple();
 }
 
+BOOST_AUTO_TEST_CASE( weekday_test )
+{
+    Date d = Date::today();
+    int wd = d.weekday();
+}
+
 BOOST_AUTO_TEST_SUITE_END()

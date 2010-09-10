@@ -120,6 +120,11 @@ tm Date::timetuple() const
     return rval;
 }
 
+int Date::weekday() const
+{
+    return extract<int>(obj().attr("weekday")());
+}
+
 bool operator==(const Date& lhs, const Date& rhs)
 {
     return (lhs.year() == rhs.year() &&
