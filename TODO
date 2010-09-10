@@ -39,6 +39,8 @@ Datetime
   * start/implement this
 * DateTime
   * Finish API
+* Consider writing general-use tm <-> time.struct_time
+  converters...useful?
 
 UUID
 ====

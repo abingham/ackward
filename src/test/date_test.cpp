@@ -146,4 +146,10 @@ BOOST_AUTO_TEST_CASE( replace_test )
     BOOST_ASSERT( d.replace(0, 0, 26) == Date(2002, 12, 26) );
 }
 
+BOOST_AUTO_TEST_CASE( timetuple_test )
+{
+    Date d = Date::today();
+    tm ttuple = d.timetuple();
+}
+
 BOOST_AUTO_TEST_SUITE_END()

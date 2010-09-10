@@ -1,6 +1,8 @@
 #ifndef INCLUDE_ACKWARD_DATETIME_DATE_HPP
 #define INCLUDE_ACKWARD_DATETIME_DATE_HPP
 
+#include <ctime>
+
 #include <boost/python/object_fwd.hpp>
 
 #include <ackward/core/Object.hpp>
@@ -75,8 +77,13 @@ public:
                  unsigned int month=0, 
                  unsigned int day=0) const;
 
-// date.timetuple()
-// Return a time.struct_time such as returned by time.localtime(). The hours, minutes and seconds are 0, and the DST flag is -1. d.timetuple() is equivalent to time.struct_time((d.year, d.month, d.day, 0, 0, 0, d.weekday(), d.toordinal() - date(d.year, 1, 1).toordinal() + 1, -1))
+    /** Return a time.struct_time such as returned by
+     * time.localtime(). The hours, minutes and seconds are 0, and the
+     * DST flag is -1. d.timetuple() is equivalent to
+     * time.struct_time((d.year, d.month, d.day, 0, 0, 0, d.weekday(),
+     * d.toordinal() - date(d.year, 1, 1).toordinal() + 1, -1)) */
+    tm timetuple() const;
+
 
     /** Return the proleptic Gregorian ordinal of the date, where
      * January 1 of year 1 has ordinal 1. For any date object d,
