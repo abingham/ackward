@@ -62,13 +62,13 @@ public:
     static TimeDelta resolution();
 
     /** Between MINYEAR and MAXYEAR inclusive. */
-    unsigned int year() const;
+    ACKWARD_ATTR(unsigned int, year);
 
     /** Between 1 and 12 inclusive. */
-    unsigned int month() const;
+    ACKWARD_ATTR(unsigned int, month);
 
     /** Between 1 and the number of days in the given month of the given year. */
-    unsigned int day() const;
+    ACKWARD_ATTR(unsigned int, day);
 
     /** Return a date with the same value, except for those members
      *  given new values by whichever arguments are not equal to
@@ -90,7 +90,7 @@ public:
     /** Return the proleptic Gregorian ordinal of the date, where
      * January 1 of year 1 has ordinal 1. For any date object d,
      * date.fromordinal(d.toordinal()) == d. */
-    unsigned int toordinal() const;
+    ACKWARD_METHOD(unsigned int, toordinal);
 
     /** Return the day of the week as an integer, where Monday is 0
      * and Sunday is 6. For example, date(2002, 12, 4).weekday() == 2,

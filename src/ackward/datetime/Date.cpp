@@ -66,29 +66,6 @@ TimeDelta Date::resolution()
     return TimeDelta(module().attr("date").attr("resolution"));
 }
 
-unsigned int Date::year() const
-{
-    return extract<unsigned int>(
-        obj().attr("year"));
-}
-
-unsigned int Date::month() const
-{
-    return extract<unsigned int>(
-        obj().attr("month"));
-}
-
-unsigned int Date::day() const
-{
-    return extract<unsigned int>(
-        obj().attr("day"));
-}
-
-unsigned int Date::toordinal() const
-{
-    return extract<unsigned int>(obj().attr("toordinal")());
-}
-
 Date Date::replace(unsigned int y,
                    unsigned int m,
                    unsigned int d) const

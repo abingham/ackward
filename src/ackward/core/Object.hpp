@@ -1,6 +1,7 @@
 #ifndef INCLUDE_ACKWARD_CORE_OBJECT_HPP
 #define INCLUDE_ACKWARD_CORE_OBJECT_HPP
 
+#include <boost/python/extract.hpp>
 #include <boost/python/object.hpp>
 
 namespace ackward { namespace core
@@ -20,7 +21,16 @@ private:
 
 }}
 
-// TEMPLATES GO HERE
+#define ACKWARD_ATTR(result_type, name)        \
+    result_type name() const {                        \
+        return boost::python::extract<result_type>(   \
+            obj().attr(#name));                       \
+    }
 
+#define ACKWARD_METHOD(result_type, name) \
+    result_type name() const {                  \
+    return boost::python::extract<result_type>( \
+        obj().attr(#name)());                   \
+    }
 
 #endif
