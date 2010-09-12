@@ -103,21 +103,8 @@ Date Date::replace(unsigned int y,
 
 tm Date::timetuple() const
 {
-    object tt = obj().attr("timetuple")();
-    // time.struct_time(tm_year=2010, tm_mon=9, tm_mday=10, tm_hour=0, tm_min=0, tm_sec=0, tm_wday=4, tm_yday=253, tm_isdst=-1)
-
-    tm rval;
-    rval.tm_sec = extract<int>(tt.attr("tm_sec"));
-    rval.tm_min = extract<int>(tt.attr("tm_min"));
-    rval.tm_hour = extract<int>(tt.attr("tm_hour"));
-    rval.tm_mday = extract<int>(tt.attr("tm_mday"));
-    rval.tm_mon = extract<int>(tt.attr("tm_mon"));  
-    rval.tm_year = extract<int>(tt.attr("tm_year"));
-    rval.tm_wday = extract<int>(tt.attr("tm_wday"));
-    rval.tm_yday = extract<int>(tt.attr("tm_yday"));
-    rval.tm_isdst = extract<int>(tt.attr("tm_isdst"));
-    
-    return rval;
+    return extract<tm>(
+        obj().attr("timetuple")());
 }
 
 int Date::weekday() const

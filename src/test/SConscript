@@ -6,7 +6,8 @@ local_env = env.Clone()
 
 for libname in ['core', 
                 'datetime', 
-                'logging']:
+                'logging',
+                'time']:
     toks = os.path.split(str(local_env['products']['ackward_%s' % libname][0]))
     libpath, lib = os.path.join(toks[:-1]), toks[-1]
     local_env.AppendUnique(LIBS=[lib])
