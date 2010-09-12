@@ -20,4 +20,7 @@ private:
 
 }}
 
+// TEMPLATES GO HERE
+
+
 #endif
