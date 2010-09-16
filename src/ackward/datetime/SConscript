@@ -13,4 +13,5 @@ sources = [
 
 build_utils.build_shared_library(env,
                                  'datetime',
-                                 sources)
+                                 sources,
+                                 deps=['time'])

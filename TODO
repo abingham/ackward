@@ -15,6 +15,12 @@ General
     subclasses. Is it just a bad idea to do this kind of checking at
     all? Maybe we should just warn about mismatches in debug mode or
     something?
+* Need a way to get class object which doesn't decref them
+  incorrectly. I believe this is the problem with getClass and
+  findObject wrt getting class objects. Needs investigation and a good
+  fix.
+  * Remember that from_python_object_::convertible() is using
+    getClass...I think this is the source of problems.
 
 Logging
 =======

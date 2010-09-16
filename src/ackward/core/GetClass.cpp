@@ -30,7 +30,13 @@ object getClass(const std::string& name)
         modName = "__builtin__";
 
     object mod = import(modName.c_str());
-    object cls = mod.attr(className.c_str());
+    // object cls = mod.attr(className.c_str());
+    object cls = 
+        object(
+            handle<>(
+                PyObject_GetAttrString(
+                    mod.ptr(), 
+                    className.c_str())));
     return cls;
 }
 
