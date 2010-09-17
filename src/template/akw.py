@@ -71,8 +71,8 @@ ${class_name}($signature) try :
 catch (const boost::python::error_already_set&)
 {
   core::translatePythonException();
-}
-''')
+  throw;
+}''')
 
     rslt = []
     for ctor in descr[constructors]:
@@ -87,9 +87,14 @@ catch (const boost::python::error_already_set&)
 def translate_classmethods(descr):
     tmpl = Template('''
 $result_type $method_name($signature) const {
-    return boost::python::extract<$result_type>(core::getClass("$wrapped_class").attr("$method_name")());
-}
-''')
+    try {
+        return boost::python::extract<$result_type>(
+            core::getClass("$wrapped_class").attr("$method_name")());
+    } catch (const boost::python::error_already_set&) {
+        core::translatePythonException();
+        throw;
+    }
+}''')
 
     rslt = []
     for name, definition in descr[classmethods].items():
@@ -101,30 +106,58 @@ $result_type $method_name($signature) const {
                 wrapped_class=descr[wrapped_class]))
     return rslt
 
-def translate(descr):
-    # s = Template('$who likes $what')
-    # s.substitute(who='tim', what='kung pao')
+def translate_properties(descr):
+    tmpl = Template('''
+$result_type $property_name() const {
+    try {
+        return boost::python::extract<$result_type>(
+            core::getClass("$wrapped_class").attr("$property_name"));
+    } catch (const boost::python::error_already_set&) {
+        core::translatePythonException();
+        throw;
+    }
+}''')
 
+    rslt = []
+    for name, definition in descr[properties].items():
+        rslt.append(
+            tmpl.substitute(
+                result_type=definition[0],
+                property_name=name,
+                wrapped_class=descr[wrapped_class]))
+    return rslt
+
+def translate(descr):
     body = '\n'.join(
         itertools.chain(
                 translate_constructors(descr),
-                translate_classmethods(descr)
+                translate_classmethods(descr),
+                translate_properties(descr),
                 ))
 
     cls = _class.substitute(
         class_name=descr[class_name],
         body=body)
 
-    f = _file.substitute(
+    rslt = _file.substitute(
         module_name=descr[module_name],
         class_name=descr[class_name],
         class_definition=cls)
 
-    print f
+    return rslt
 
-def translate_file(filename):
-    with open(filename, 'r') as f:
-        return translate(eval(f.read()))
+def translate_file(infile, outfile=None):
+    with open(infile, 'r') as f:
+        rslt = translate(eval(f.read()))
+
+    if outfile:
+        with open(outfile, 'w') as f:
+            f.write(rslt)
+    else:
+        sys.stdout.write(rslt)
 
 if __name__ == '__main__':
-    translate_file(sys.argv[1])
+    outfile = sys.argv[2] if len(sys.argv) > 2 else None
+    infile = sys.argv[1]
+
+    translate_file(infile, outfile)
