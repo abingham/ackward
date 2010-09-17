@@ -86,10 +86,10 @@ catch (const boost::python::error_already_set&)
 
 def translate_classmethods(descr):
     tmpl = Template('''
-$result_type $method_name($signature) const {
+static $result_type $method_name($signature) {
     try {
         return boost::python::extract<$result_type>(
-            core::getClass("$wrapped_class").attr("$method_name")());
+            core::getClass("$wrapped_class").attr("$method_name")($parameters));
     } catch (const boost::python::error_already_set&) {
         core::translatePythonException();
         throw;
@@ -103,15 +103,26 @@ $result_type $method_name($signature) const {
                 result_type=definition[0],
                 method_name=name,
                 signature=build_signature(definition[1]),
+                parameters=build_parameters(definition[1]),
                 wrapped_class=descr[wrapped_class]))
     return rslt
 
 def translate_properties(descr):
-    tmpl = Template('''
+    getter_tmpl = Template('''
 $result_type $property_name() const {
     try {
         return boost::python::extract<$result_type>(
-            core::getClass("$wrapped_class").attr("$property_name"));
+            obj().attr("$property_name"));
+    } catch (const boost::python::error_already_set&) {
+        core::translatePythonException();
+        throw;
+    }
+}''')
+
+    setter_tmpl = Template('''
+void $property_name($result_type val) {
+    try {
+        obj().attr("$property_name") = val;
     } catch (const boost::python::error_already_set&) {
         core::translatePythonException();
         throw;
@@ -120,11 +131,48 @@ $result_type $property_name() const {
 
     rslt = []
     for name, definition in descr[properties].items():
+        flags = definition[1]
+
         rslt.append(
-            tmpl.substitute(
+            getter_tmpl.substitute(
                 result_type=definition[0],
                 property_name=name,
                 wrapped_class=descr[wrapped_class]))
+
+        if not const in flags:
+            rslt.append(
+                setter_tmpl.substitute(
+                    result_type=definition[0],
+                    property_name=name))
+            
+    return rslt
+
+def translate_methods(descr):
+    tmpl = Template('''
+$result_type $method_name($signature) $const {
+    try {
+        return boost::python::extract<$result_type>(
+            obj().attr("$method_name")($parameters));
+    } catch (const boost::python::error_already_set&) {
+        core::translatePythonException();
+        throw;
+    }
+}''')
+
+    rslt = []
+    for name, definition in descr[methods].items():
+        flags = definition[2]
+
+        cnst = 'const' if const in flags else ''
+
+        rslt.append(
+            tmpl.substitute(
+                result_type=definition[0],
+                method_name=name,
+                signature=build_signature(definition[1]),
+                parameters=build_parameters(definition[1]),
+                const=cnst))
+
     return rslt
 
 def translate(descr):
@@ -133,6 +181,7 @@ def translate(descr):
                 translate_constructors(descr),
                 translate_classmethods(descr),
                 translate_properties(descr),
+                translate_methods(descr),
                 ))
 
     cls = _class.substitute(
