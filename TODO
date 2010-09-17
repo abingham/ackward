@@ -22,6 +22,12 @@ General
   * Remember that from_python_object_::convertible() is using
     getClass...I think this is the source of problems.
 
+akw
+===
+
+* Support for specifiying headers to include
+* Need to add boilerplate "object" constructor
+
 Logging
 =======
 
