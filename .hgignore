@@ -11,3 +11,4 @@ config.log
 custom.py
 *.db.log*
 *.env.log*
+*.akwc
