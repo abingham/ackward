@@ -1,6 +1,6 @@
 import imp, os
 
-import akw
+import ackward as akw
 
 def init_vars():
     '''Initialize the build variables

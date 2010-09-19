@@ -1,6 +1,6 @@
 # -*- python -*-
 
-import akw
+import ackward as akw
 
 def classDef():
     c = akw.Class(name='Date',
