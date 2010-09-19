@@ -1,5 +1,7 @@
 import os
 
+import akw
+
 def init_vars():
     '''Initialize the build variables
     '''
@@ -56,7 +58,13 @@ variant_config = {
 
 vars = init_vars()
 
-env = Environment(variables=vars)
+# akw compiler builder
+akw_bld = Builder(action = lambda target, source, env: akw.translate_file(str(source[0]), str(target[0])),
+                  suffix = '.ipp',
+                  src_suffix = '.akw')
+
+env = Environment(variables=vars,
+                  BUILDERS = {'Akw' : akw_bld})
 
 env['products'] = {}
 

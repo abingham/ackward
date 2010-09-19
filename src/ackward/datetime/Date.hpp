@@ -7,7 +7,9 @@
 #include <boost/python/object_fwd.hpp>
 #include <boost/tuple/tuple.hpp>
 
+#include <ackward/core/GetClass.hpp>
 #include <ackward/core/Object.hpp>
+#include <ackward/datetime/TimeDelta.hpp>
 
 namespace ackward { namespace datetime
 {
@@ -17,131 +19,15 @@ class TimeDelta;
 class Date : private core::Object
 {
 public:
-    Date(boost::python::object);
 
-    /**
-       @#param year MINYEAR <= year <= MAXYEAR
-       @param month 1 <= month <= 12
-       @param day 1 <= day <= number of days in the given month and 
+    Date(boost::python::object obj) :
+        core::Object (obj)
+        {}
 
-       @except ValueError If an argument outside those ranges is
-         given, ValueError is raised.
-    */
-    Date(unsigned int year, 
-         unsigned int month, 
-         unsigned int day);
+#include <ackward/datetime/DateBase.ipp>
 
-    /** Return the current local date. This is equivalent to
-     * \code fromtimestamp(time()) \endcode
-     */
-    static Date today();
-
-    /** Return the local date corresponding to the POSIX timestamp,
-     * such as is returned by \code time() \endcode. This may raise ValueError,
-     * if the timestamp is out of the range of values supported by the
-     * platform C localtime() function. It’s common for this to be
-     * restricted to years from 1970 through 2038. Note that on
-     * non-POSIX systems that include leap seconds in their notion of
-     * a timestamp, leap seconds are ignored by fromtimestamp(). */
-    static Date fromtimestamp(double timestamp);
-
-    /** Return the date corresponding to the proleptic Gregorian
-     * ordinal, where January 1 of year 1 has ordinal 1. ValueError is
-     * raised unless 1 <= ordinal <= date.max.toordinal(). For any
-     * date d, date.fromordinal(d.toordinal()) == d. */
-    static Date fromordinal(unsigned int ordinal);
-
-    /** The earliest representable date, Date(MINYEAR, 1, 1). */
-    static Date min();
-
-    /** The latest representable date, date(MAXYEAR, 12, 31). */
-    static Date max();
-
-    /** The smallest possible difference between non-equal date
-     * objects, timedelta(days=1). */
-    static TimeDelta resolution();
-
-    /** Between MINYEAR and MAXYEAR inclusive. */
-    ACKWARD_ATTR(unsigned int, year);
-
-    /** Between 1 and 12 inclusive. */
-    ACKWARD_ATTR(unsigned int, month);
-
-    /** Between 1 and the number of days in the given month of the given year. */
-    ACKWARD_ATTR(unsigned int, day);
-
-    /** Return a date with the same value, except for those members
-     *  given new values by whichever arguments are not equal to
-     *  0. For example, if d == date(2002, 12, 31), then d.replace(0,
-     *  0, 26) == date(2002, 12, 26).
-     */
-    Date replace(unsigned int year=0, 
-                 unsigned int month=0, 
-                 unsigned int day=0) const;
-
-    /** Return a time.struct_time such as returned by
-     * time.localtime(). The hours, minutes and seconds are 0, and the
-     * DST flag is -1. d.timetuple() is equivalent to
-     * time.struct_time((d.year, d.month, d.day, 0, 0, 0, d.weekday(),
-     * d.toordinal() - date(d.year, 1, 1).toordinal() + 1, -1)) */
-    tm timetuple() const;
-
-
-    /** Return the proleptic Gregorian ordinal of the date, where
-     * January 1 of year 1 has ordinal 1. For any date object d,
-     * date.fromordinal(d.toordinal()) == d. */
-    ACKWARD_METHOD(unsigned int, toordinal);
-
-    /** Return the day of the week as an integer, where Monday is 0
-     * and Sunday is 6. For example, date(2002, 12, 4).weekday() == 2,
-     * a Wednesday. See also isoweekday(). */
-    int weekday() const;
-
-    /** Return the day of the week as an integer, where Monday is 1
-     * and Sunday is 7. For example, date(2002, 12, 4).isoweekday() ==
-     * 3, a Wednesday. See also weekday(), isocalendar(). */
-    int isoweekday() const;
-
-    /** Return a 3-tuple, (ISO year, ISO week number, ISO weekday).
-
-        The ISO calendar is a widely used variant of the Gregorian
-        calendar. See
-        http://www.phys.uu.nl/~vgent/calendar/isocalendar.htm for a
-        good explanation.
-
-        The ISO year consists of 52 or 53 full weeks, and where a week
-        starts on a Monday and ends on a Sunday. The first week of an
-        ISO year is the first (Gregorian) calendar week of a year
-        containing a Thursday. This is called week number 1, and the
-        ISO year of that Thursday is the same as its Gregorian year.
-
-        For example, 2004 begins on a Thursday, so the first week of
-        ISO year 2004 begins on Monday, 29 Dec 2003 and ends on
-        Sunday, 4 Jan 2004, so that date(2003, 12, 29).isocalendar()
-        == (2004, 1, 1) and date(2004, 1, 4).isocalendar() == (2004,
-        1, 7). */
     boost::tuple<int, int, int> isocalendar() const;
 
-    /** Return a string representing the date in ISO 8601 format,
-     * ‘YYYY-MM-DD’. For example, date(2002, 12, 4).isoformat() ==
-     * '2002-12-04'. */
-    std::string isoformat() const;
-
-    /** Return a string representing the date, for example date(2002,
-     * 12, 4).ctime() == 'Wed Dec 4 00:00:00 2002'. d.ctime() is
-     * equivalent to time.ctime(time.mktime(d.timetuple())) on
-     * platforms where the native C ctime() function (which
-     * time.ctime() invokes, but which date.ctime() does not invoke)
-     * conforms to the C standard. */
-    std::string ctime() const;
-
-    /** Return a string representing the date, controlled by an
-     * explicit format string. Format codes referring to hours,
-     * minutes or seconds will see 0 values. See section strftime()
-     * Behavior. */
-    std::wstring strftime(const std::wstring& fmt) const;
-
-    using Object::obj;
 };
 
 /** Writes the date's isoformat to the stream */

@@ -37,7 +37,7 @@ struct from_python_object_
         {
             boost::python::object cls = 
                 ackward::core::getClass(className_);
-            if (!PyObject_IsSubclass(obj_ptr, cls.ptr())) return 0;
+            if (!PyObject_IsInstance(obj_ptr, cls.ptr())) return 0;
             return obj_ptr;
         }
     
@@ -56,7 +56,8 @@ struct from_python_object_
             new (storage) T(
                 object(
                     handle<>(
-                        obj_ptr)));
+                        borrowed(
+                            obj_ptr))));
             
             // Stash the memory chunk pointer for later use by boost.python
             data->convertible = storage;
