@@ -2,7 +2,7 @@ import build_utils
 
 Import(['env'])
 
-env.Akw('DateBase.akw')
+env.Akw('Date.akw')
 
 sources = [
     'Date.cpp',

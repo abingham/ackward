@@ -5,6 +5,7 @@
 #include <iostream>
 
 #include <boost/python/object_fwd.hpp>
+#include <boost/python/tuple.hpp>
 #include <boost/tuple/tuple.hpp>
 
 #include <ackward/core/GetClass.hpp>
@@ -24,10 +25,12 @@ public:
         core::Object (obj)
         {}
 
-#include <ackward/datetime/DateBase.ipp>
+    #include <ackward/datetime/Date.ipp>
 
     boost::tuple<int, int, int> isocalendar() const;
-
+    Date replace(unsigned int year, 
+                 unsigned int month,
+                 unsigned int day) const;
 };
 
 /** Writes the date's isoformat to the stream */
