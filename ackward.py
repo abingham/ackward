@@ -10,17 +10,17 @@ def trace(f, *args, **kw):
 
 @trace
 def build_signature(sig):
-    return ', '.join(['%s %s' % (t,n) for (t,n) in sig])
+    return ', '.join(['const %s& %s' % (t,n) for (t,n) in sig])
 
 @trace
 def build_parameters(sig):
     return ', '.join([n for (t,n) in sig])
 
 class Class(object):
-    template = Template('''
-    $body
+    header_template = Template('''
+$body
 
-    using Object::obj;
+using Object::obj;
 ''')
 
     @trace
@@ -33,16 +33,25 @@ class Class(object):
         self.elements = []
 
     @trace
-    def generate(self):
-        body = '\n'.join([e.generate() for e in self.elements])
+    def generate_header(self):
+        body = '\n'.join([e.generate_header() for e in self.elements])
 
-        return Class.template.substitute(
+        return Class.header_template.substitute(
             body=body)
 
+    @trace
+    def generate_impl(self):
+        return '\n'.join([e.generate_impl() for e in self.elements])
+    
 class Element(object):
-    def __init__(self, cls, template, args):
+    def __init__(self, 
+                 cls, 
+                 header_template, 
+                 impl_template,
+                 args):
         self.cls = cls
-        self.template = template
+        self.header_template = header_template
+        self.impl_template = impl_template
         self.args = args
 
         self.args.update({
@@ -52,12 +61,18 @@ class Element(object):
 
         self.cls.elements.append(self)
 
-    def generate(self):
-        return self.template.substitute(**self.args)
+    def generate_header(self):
+        return self.header_template.substitute(**self.args)
+
+    def generate_impl(self):
+        return self.impl_template.substitute(**self.args)
 
 class Constructor(Element):
-    template = Template('''
-${class_name}($signature) try :
+    header_template = Template(
+        '${class_name}($signature);')
+
+    impl_template = Template('''
+${class_name}::${class_name}($signature) try :
   core::Object (
     core::getClass("$wrapped_class")($parameters) )
 {
@@ -74,7 +89,8 @@ catch (const boost::python::error_already_set&)
                  signature=[]):
         super(Constructor, self).__init__(
             cls = cls,
-            template = Constructor.template,
+            header_template = Constructor.header_template,
+            impl_template = Constructor.impl_template,
             args = {
                 'signature' : build_signature(signature),
                 'parameters' : build_parameters(signature)
@@ -82,8 +98,11 @@ catch (const boost::python::error_already_set&)
     
 class ClassMethod(Element):
 
-    template = Template('''
-static $return_type $name($signature) {
+    header_template = Template(
+        'static $return_type $name($signature);')
+
+    impl_template = Template('''
+$return_type $class_name::$name($signature) {
     try {
         return boost::python::extract<$return_type>(
             core::getClass("$wrapped_class").attr("$python_name")($parameters));
@@ -102,7 +121,8 @@ static $return_type $name($signature) {
                  signature=[]):
         super(ClassMethod, self).__init__(
             cls=cls,
-            template=ClassMethod.template,
+            header_template=ClassMethod.header_template,
+            impl_template=ClassMethod.impl_template,
             args = {
                 'name' : name,
                 'python_name' : name if python_name is None else python_name,
@@ -112,31 +132,35 @@ static $return_type $name($signature) {
                 })
 
 class ClassProperty(Element):
-    getter = '''
-static $type $name() {
+    header_getter = 'static $type $name();'
+
+    header_setter = 'static void $name(const $type& val);'
+
+    impl_getter = '''
+$type $class_name::$name() {
     using namespace boost::python;
     try {
         object cls = 
             core::getClass("$wrapped_class");
-        boost::python::object prop = 
+        object prop = 
             cls.attr("$name");
-        return boost::python::extract<$type>(prop);
+        return extract<$type>(prop);
     } catch (const boost::python::error_already_set&) {
         core::translatePythonException();
         throw;
     }
 }'''
 
-    setter = '''
-static void $name(const $type& val) {
+    impl_setter = '''
+void $class_name::$name(const $type& val) {
     using namespace boost::python;
     try {
         object cls = 
             core::getClass("$wrapped_class");
-        boost::python::object prop = 
+        object prop = 
             cls.attr("$name");
         prop = val;
-    } catch (const boost::python::error_already_set&) {
+    } catch (const error_already_set&) {
         core::translatePythonException();
         throw;
     }
@@ -148,21 +172,28 @@ static void $name(const $type& val) {
                  name,
                  type,
                  read_only=False):
-        t = ClassProperty.getter
+        header = ClassProperty.header_getter
+        impl = ClassProperty.impl_getter
         if not read_only:
-            t = '\n'.join([t, ClassProperty.setter])
+            header = '\n'.join([header, ClassProperty.header_setter])
+            impl = '\n'.join([impl, ClassProperty.impl_setter])
 
         super(ClassProperty, self).__init__(
             cls=cls,
-            template=Template(t),
+            header_template=Template(header),
+            impl_template=Template(impl),
             args={
                 'name' : name,
                 'type' : type,
                 })
                  
 class Property(Element):
-    getter = '''
-$type $name() const {
+    header_getter = '$type $name() const;'
+
+    header_setter = 'void $name(const $type& val);'
+
+    impl_getter = '''
+$type $class_name::$name() const {
     try {
         return boost::python::extract<$type>(
             obj().attr("$name"));
@@ -172,8 +203,8 @@ $type $name() const {
     }
 }'''
 
-    setter = '''
-void $name(const $type& val) {
+    impl_setter = '''
+void $class_name::$name(const $type& val) {
     try {
         obj().attr("$name") = val;
     } catch (const boost::python::error_already_set&) {
@@ -188,21 +219,27 @@ void $name(const $type& val) {
                  name,
                  type,
                  read_only=False):
-        t = Property.getter
+        header = Property.header_getter
+        impl = Property.impl_getter
         if not read_only:
-            t  = '\n'.join([t, Property.setter])
+            header  = '\n'.join([header, Property.header_setter])
+            impl = '\n'.join([impl, Property.impl_setter])
             
         super(Property, self).__init__(
             cls=cls,
-            template=Template(t),
+            header_template=Template(header),
+            impl_template=Template(impl),
             args={
                 'name' : name,
                 'type' : type,
                 })
 
 class Method(Element):
-    template = Template('''
-$return_type $name($signature) $const {
+    header_template = Template(
+        '$return_type $name($signature) $const;')
+
+    impl_template = Template('''
+$return_type $class_name::$name($signature) $const {
     try {
         return boost::python::extract<$return_type>(
             obj().attr("$python_name")($parameters));
@@ -222,7 +259,8 @@ $return_type $name($signature) $const {
                  python_name=None):
         super(Method, self).__init__(
             cls,
-            template=Method.template,
+            header_template=Method.header_template,
+            impl_template=Method.impl_template,
             args={
                 'name' : name,
                 'return_type' : return_type,
@@ -232,7 +270,7 @@ $return_type $name($signature) $const {
                 'const' : 'const' if const else ''
                 })
 
-def translate_file(infile, outfile=None):
+def translate_file(method, infile, outfile=None):
     with open(infile, 'r') as f:
         mod = imp.load_module('akw_input', 
                               f, 
@@ -240,15 +278,29 @@ def translate_file(infile, outfile=None):
                               ('', 'r', imp.PY_SOURCE))
 
     cls = mod.classDef()
+    text = method(cls)
 
     if outfile:
         with open(outfile, 'w') as f:
-            f.write(cls.generate())
+            f.write(text)
     else:
-        sys.stdout.write(cls.generate())
+        sys.stdout.write(text)
+
+def translate_header_file(infile, outfile=None):
+    translate_file(
+        lambda cls: cls.generate_header(),
+        infile, outfile)
+
+
+def translate_impl_file(infile, outfile=None):
+    translate_file(
+        lambda cls: cls.generate_impl(),
+        infile, outfile)
 
 if __name__ == '__main__':
-    outfile = sys.argv[2] if len(sys.argv) > 2 else None
+    outheader = sys.argv[2] if len(sys.argv) > 2 else None
+    outimpl = sys.argv[3] if len(sys.argv) > 3 else None
     infile = sys.argv[1]
 
-    translate_file(infile, outfile)
+    translate_header_file(infile, outheader)
+    translate_impl_file(infile, outimpl)

@@ -3,6 +3,8 @@
 General
 =======
 
+* Update to using ackward compiler wherever possible!
+
 * Consider adding "isNone" or some other way of checking Object
   subclasses for None...or if this is even a reasonable idea. Using
   shared_ptr is also a good option.
@@ -22,11 +24,6 @@ General
   * Remember that from_python_object_::convertible() is using
     getClass...I think this is the source of problems.
 
-akw
-===
-
-* Support for specifiying headers to include
-* Need to add boilerplate "object" constructor
 
 Logging
 =======

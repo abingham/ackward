@@ -8,6 +8,8 @@ using namespace boost::python;
 namespace ackward { namespace datetime
 {
 
+#include <ackward/datetime/Date_akw.ipp>
+
 Date Date::replace(unsigned int y,
                    unsigned int m,
                    unsigned int d) const

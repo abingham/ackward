@@ -25,7 +25,7 @@ public:
         core::Object (obj)
         {}
 
-    #include <ackward/datetime/Date.ipp>
+    #include <ackward/datetime/Date_akw.hpp>
 
     boost::tuple<int, int, int> isocalendar() const;
     Date replace(unsigned int year, 

@@ -1,0 +1,25 @@
+# -*- python -*-
+
+import ackward as akw
+
+def classDef():
+    c = akw.Class(name='DateTime',
+                  wrapped_class='datetime.datetime')
+
+    akw.ClassMethod(
+        cls=c,
+        name='today',
+        return_type='DateTime')
+
+    akw.ClassMethod(
+        cls=c,
+        name='now',
+        return_type='DateTime')
+
+    akw.ClassMethod(
+        cls=c,
+        name='now',
+        return_type='DateTime',
+        signature=[('TZInfo', 'tz')])
+
+    return c
