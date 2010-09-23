@@ -59,10 +59,15 @@ variant_config = {
 vars = init_vars()
 
 # akw compiler builder
-akw_header = Builder(action = lambda target, source, env: akw.translate_header_file(str(source[0]), str(target[0])),
-                  suffix = '_akw.hpp',
-                  src_suffix = '.akw')
-akw_impl = Builder(action = lambda target, source, env: akw.translate_impl_file(str(source[0]), str(target[0])),
+def akw_header(target, source, env): 
+    return akw.translate_header_file(str(source[0]), str(target[0]))
+akw_header = Builder(action = akw_header,
+                     suffix = '_akw.hpp',
+                     src_suffix = '.akw')
+
+def akw_impl(target, source, env):
+    return akw.translate_impl_file(str(source[0]), str(target[0]))
+akw_impl = Builder(action = akw_impl,
                   suffix = '_akw.ipp',
                   src_suffix = '.akw')
 
