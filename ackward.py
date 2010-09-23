@@ -18,9 +18,19 @@ def build_parameters(sig):
 
 class Class(object):
     header_template = Template('''
+$class_name(boost::python::object);
+
 $body
 
 using Object::obj;
+''')
+
+    impl_template = Template('''
+$class_name::$class_name(boost::python::object o) :
+  Object (o)
+{}
+
+$body
 ''')
 
     @trace
@@ -37,11 +47,15 @@ using Object::obj;
         body = '\n'.join([e.generate_header() for e in self.elements])
 
         return Class.header_template.substitute(
+            class_name=self.name,
             body=body)
 
     @trace
     def generate_impl(self):
-        return '\n'.join([e.generate_impl() for e in self.elements])
+        body = '\n'.join([e.generate_impl() for e in self.elements])
+        return Class.impl_template.substitute(
+            class_name=self.name,
+            body=body)
     
 class Element(object):
     def __init__(self, 

@@ -8,14 +8,12 @@
 namespace ackward { namespace datetime
 {
 
+class TZInfo;
+
 class DateTime : private ackward::core::Object
 {
 public:
-    DateTime(boost::python::object);
-
-    static DateTime now();
-
-    using Object::obj;
+    #include <ackward/datetime/DateTime_akw.hpp>
 };
 
 }}

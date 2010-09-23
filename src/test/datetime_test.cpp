@@ -18,7 +18,7 @@ BOOST_AUTO_TEST_CASE( objectConstructor)
 
 BOOST_AUTO_TEST_CASE( today )
 {
-    // DateTime d = DateTime::today();
+    DateTime d = DateTime::today();
 }
 
 BOOST_AUTO_TEST_CASE( now )
