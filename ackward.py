@@ -9,12 +9,31 @@ def trace(f, *args, **kw):
     return f(*args, **kw)
 
 @trace
-def build_signature(sig):
-    return ', '.join(['const %s& %s' % (t,n) for (t,n) in sig])
+def build_signature(sig, header):
+    '''Builds a method parameter signature given an akw signature
+
+    Args:
+      sig: A sequence of signature tuples (type, name[, default])
+      header: Whether to generate for a header or not. This
+        determines, for example, if default values are included in the
+        output.
+        
+    Raises:
+      ValueError: The signature input was invalid.
+    '''
+    def arg(a):
+        if len(a) == 3 and header:
+            return 'const %s& %s = %s' % (a[0], a[1], a[2])
+        elif len(a) == 2 or len(a) == 3:
+            return 'const %s& %s' % (a[0], a[1])
+        else:
+            raise ValueError('Signatures must be of the form (type, name[, default])')
+
+    return ', '.join([arg(a) for a in sig])
 
 @trace
 def build_parameters(sig):
-    return ', '.join([n for (t,n) in sig])
+    return ', '.join([s[1] for s in sig])
 
 class Class(object):
     header_template = Template('''
@@ -68,6 +87,15 @@ class Element(object):
         self.impl_template = impl_template
         self.args = args
 
+        try:
+            sig = self.args['signature']
+            self.args.update({
+                    'header_signature' : build_signature(sig, True),
+                    'impl_signature' : build_signature(sig, False),
+                    'parameters' : build_parameters(sig)})
+        except KeyError:
+            pass
+
         self.args.update({
                 'wrapped_class' : cls.wrapped_class,
                 'class_name' : cls.name
@@ -83,10 +111,10 @@ class Element(object):
 
 class Constructor(Element):
     header_template = Template(
-        '${class_name}($signature);')
+        '${class_name}($header_signature);')
 
     impl_template = Template('''
-${class_name}::${class_name}($signature) try :
+${class_name}::${class_name}($impl_signature) try :
   core::Object (
     core::getClass("$wrapped_class")($parameters) )
 {
@@ -106,17 +134,16 @@ catch (const boost::python::error_already_set&)
             header_template = Constructor.header_template,
             impl_template = Constructor.impl_template,
             args = {
-                'signature' : build_signature(signature),
-                'parameters' : build_parameters(signature)
+                'signature' : signature,
                 })
     
 class ClassMethod(Element):
 
     header_template = Template(
-        'static $return_type $name($signature);')
+        'static $return_type $name($header_signature);')
 
     impl_template = Template('''
-$return_type $class_name::$name($signature) {
+$return_type $class_name::$name($impl_signature) {
     try {
         return boost::python::extract<$return_type>(
             core::getClass("$wrapped_class").attr("$python_name")($parameters));
@@ -141,8 +168,7 @@ $return_type $class_name::$name($signature) {
                 'name' : name,
                 'python_name' : name if python_name is None else python_name,
                 'return_type' : return_type,
-                'signature' : build_signature(signature),
-                'parameters' : build_parameters(signature)
+                'signature' : signature,
                 })
 
 class ClassProperty(Element):
@@ -250,10 +276,10 @@ void $class_name::$name(const $type& val) {
 
 class Method(Element):
     header_template = Template(
-        '$return_type $name($signature) $const;')
+        '$return_type $name($header_signature) $const;')
 
     impl_template = Template('''
-$return_type $class_name::$name($signature) $const {
+$return_type $class_name::$name($impl_signature) $const {
     try {
         return boost::python::extract<$return_type>(
             obj().attr("$python_name")($parameters));
@@ -278,8 +304,7 @@ $return_type $class_name::$name($signature) $const {
             args={
                 'name' : name,
                 'return_type' : return_type,
-                'signature' : build_signature(signature),
-                'parameters' : build_parameters(signature),
+                'signature' : signature,
                 'python_name' : name if python_name is None else python_name,
                 'const' : 'const' if const else ''
                 })

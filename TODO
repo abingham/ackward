@@ -23,6 +23,8 @@ General
   fix.
   * Remember that from_python_object_::convertible() is using
     getClass...I think this is the source of problems.
+* Can the akw generated code use boost type-traits to use references
+  vs. value parameters at the correct times?
 
 
 Logging
