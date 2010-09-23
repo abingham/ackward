@@ -12,3 +12,5 @@ custom.py
 *.db.log*
 *.env.log*
 *.akwc
+*_akw.hpp
+*_akw.ipp

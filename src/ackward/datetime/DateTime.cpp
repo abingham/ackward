@@ -1,18 +1,12 @@
 #include <ackward/datetime/DateTime.hpp>
 
+#include <ackward/core/GetClass.hpp>
 #include <ackward/datetime/Module.hpp>
+#include <ackward/datetime/TZInfo.hpp>
 
 namespace ackward { namespace datetime
 {
 
-DateTime::DateTime(boost::python::object o) :
-    Object (o)
-{}
-
-DateTime DateTime::now()
-{
-    return DateTime(
-        module().attr("datetime").attr("now")());
-}
+#include <ackward/datetime/DateTime_akw.ipp>
 
 }}

@@ -2,7 +2,14 @@ import build_utils
 
 Import(['env'])
 
-env.Akw('Date.akw')
+akw_files = [
+    'Date.akw',
+    'DateTime.akw'
+    ]
+
+for akw in akw_files:
+    env.AkwHeader(akw)
+    env.AkwImpl(akw)
 
 sources = [
     'Date.cpp',
