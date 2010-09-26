@@ -56,6 +56,8 @@ object module()
 
   return mod;
 }
+
+$body
 ''')
 
     @trace
@@ -77,7 +79,6 @@ object module()
         return Module.impl_template.substitute(
             module_name=self.name,
             body=body)
-
 
 class Class(object):
     header_template = Template('''
@@ -122,11 +123,11 @@ $body
     
 class Element(object):
     def __init__(self, 
-                 cls, 
+                 parent, 
                  header_template, 
                  impl_template,
                  args):
-        self.cls = cls
+        self.parent = parent
         self.header_template = header_template
         self.impl_template = impl_template
         self.args = args
@@ -140,12 +141,7 @@ class Element(object):
         except KeyError:
             pass
 
-        self.args.update({
-                'wrapped_class' : cls.wrapped_class,
-                'class_name' : cls.name
-                })
-
-        self.cls.elements.append(self)
+        self.parent.elements.append(self)
 
     def generate_header(self):
         return self.header_template.substitute(**self.args)
@@ -153,7 +149,56 @@ class Element(object):
     def generate_impl(self):
         return self.impl_template.substitute(**self.args)
 
-class Constructor(Element):
+class ClassElement(Element):
+    def __init__(self, 
+                 cls, 
+                 header_template, 
+                 impl_template,
+                 args):
+        args.update({
+                'wrapped_class' : cls.wrapped_class,
+                'class_name' : cls.name
+                })
+        
+        super(ClassElement, self).__init__(cls,
+                                           header_template,
+                                           impl_template,
+                                           args)
+
+class Function(Element):
+    header_template = Template(
+        '$return_type $name($header_signature);')
+
+    impl_template = Template('''
+$return_type $name($impl_signature) {
+  try {
+    return boost::python::extract<$return_type>(
+      module().attr("$python_name")($parameters));
+  } catch (const boost::python::error_already_set&) {
+      core::translatePythonException();
+      throw;
+  }
+}''')
+
+    @trace
+    def __init__(self,
+                 mod,
+                 name,
+                 return_type='void',
+                 signature=[],
+                 python_name=None):
+        super(Function, self).__init__(
+            parent=mod,
+            header_template=Function.header_template,
+            impl_template=Function.impl_template,
+            args={
+                'name' : name,
+                'return_type' : return_type,
+                'signature' : signature,
+                'python_name' : name if python_name is None else python_name,
+                })
+
+class Constructor(ClassElement):
     header_template = Template(
         '${class_name}($header_signature);')
 
@@ -181,7 +226,7 @@ catch (const boost::python::error_already_set&)
                 'signature' : signature,
                 })
     
-class ClassMethod(Element):
+class ClassMethod(ClassElement):
 
     header_template = Template(
         'static $return_type $name($header_signature);')
@@ -215,7 +260,7 @@ $return_type $class_name::$name($impl_signature) {
                 'signature' : signature,
                 })
 
-class ClassProperty(Element):
+class ClassProperty(ClassElement):
     header_getter = 'static $type $name();'
 
     header_setter = 'static void $name(const $type& val);'
@@ -271,7 +316,7 @@ void $class_name::$name(const $type& val) {
                 'type' : type,
                 })
                  
-class Property(Element):
+class Property(ClassElement):
     header_getter = '$type $name() const;'
 
     header_setter = 'void $name(const $type& val);'
@@ -318,7 +363,7 @@ void $class_name::$name(const $type& val) {
                 'type' : type,
                 })
 
-class Method(Element):
+class Method(ClassElement):
     header_template = Template(
         '$return_type $name($header_signature) $const;')
 
