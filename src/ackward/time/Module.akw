@@ -5,4 +5,9 @@ import ackward as akw
 def classDef():
     m = akw.Module(name="time")
 
+    akw.Function(
+        mod=m,
+        name='time',
+        return_type='float')
+
     return m

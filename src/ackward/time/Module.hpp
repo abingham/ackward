@@ -8,8 +8,6 @@ namespace ackward { namespace time
 
 #include <ackward/time/Module_akw.hpp>
 
-float time();
-
 }}
 
 #endif
