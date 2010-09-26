@@ -1,0 +1,8 @@
+# -*- python -*-
+
+import ackward as akw
+
+def classDef():
+    m = akw.Module(name="time")
+
+    return m

@@ -29,6 +29,7 @@ sources = [
     'logger_test.cpp',
     'log_record_test.cpp',
     'module_test.cpp',
+    'time_test.cpp',
     'timedelta_test.cpp',
     'types_test.cpp',
     'tzinfo_test.cpp',

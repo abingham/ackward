@@ -34,4 +34,17 @@ def classDef():
         return_type='DateTime',
         signature=[('TZInfo', 'tz')])
 
+    akw.ClassMethod(
+        cls=c,
+        name='utcnow',
+        return_type='DateTime')
+
+    akw.ClassMethod(
+        cls=c,
+        name='fromtimestamp',
+        return_type='DateTime',
+        signature=[('float', 'timestamp'),
+                   # tzinfo,
+                   ])
+
     return c

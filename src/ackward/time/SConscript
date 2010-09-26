@@ -2,8 +2,17 @@ import build_utils
 
 Import(['env'])
 
+akw_files = [
+    'Module.akw'
+    ]
+
+for akw in akw_files:
+    env.AkwHeader(akw)
+    env.AkwImpl(akw)
+
 sources = [
     'Initialize.cpp',
+    'Module.cpp'
     ]
 
 build_utils.build_shared_library(env,

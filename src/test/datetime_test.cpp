@@ -3,6 +3,7 @@
 
 #include <ackward/datetime/DateTime.hpp>
 #include <ackward/datetime/Module.hpp>
+#include <ackward/time/Module.hpp>
 
 using namespace ackward::core;
 using namespace ackward::datetime;
@@ -24,6 +25,16 @@ BOOST_AUTO_TEST_CASE( today )
 BOOST_AUTO_TEST_CASE( now )
 {
     DateTime d = DateTime::now();
+}
+
+BOOST_AUTO_TEST_CASE( utcnow )
+{
+    DateTime d = DateTime::utcnow();
+}
+
+BOOST_AUTO_TEST_CASE( fromtimestamp )
+{
+    DateTime d = DateTime::fromtimestamp(ackward::time::time());
 }
 
 BOOST_AUTO_TEST_SUITE_END()
