@@ -4,7 +4,7 @@ General
 =======
 
 * Update to using ackward compiler wherever possible!
-
+* Replace "classDef" with something more general
 * Consider adding "isNone" or some other way of checking Object
   subclasses for None...or if this is even a reasonable idea. Using
   shared_ptr is also a good option.
