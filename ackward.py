@@ -23,17 +23,61 @@ def build_signature(sig, header):
     '''
     def arg(a):
         if len(a) == 3 and header:
-            return 'const %s& %s = %s' % (a[0], a[1], a[2])
+            return '\tboost::call_traits<%s>::const_reference %s = %s' % (a[0], a[1], a[2])
         elif len(a) == 2 or len(a) == 3:
-            return 'const %s& %s' % (a[0], a[1])
+            return '\tboost::call_traits<%s>::const_reference %s' % (a[0], a[1])
         else:
             raise ValueError('Signatures must be of the form (type, name[, default])')
 
-    return ', '.join([arg(a) for a in sig])
+    return ',\n'.join([arg(a) for a in sig])
 
 @trace
 def build_parameters(sig):
     return ', '.join([s[1] for s in sig])
+
+class Module(object):
+    header_template = Template('''
+boost::python::object module();
+
+$body
+''')
+
+    impl_template = Template('''
+object module()
+{
+  static object mod;
+  static bool initialized = false;
+
+  if (!initialized)
+  {
+    mod = import("$module_name");
+    initialized = true;
+  }
+
+  return mod;
+}
+''')
+
+    @trace
+    def __init__(self,
+                 name):
+        self.name = name
+        self.elements = []
+
+    @trace
+    def generate_header(self):
+        body = '\n'.join([e.generate_header() for e in self.elements])
+
+        return Module.header_template.substitute(
+            body=body)
+
+    @trace
+    def generate_impl(self):
+        body = '\n'.join([e.generate_impl() for e in self.elements])
+        return Module.impl_template.substitute(
+            module_name=self.name,
+            body=body)
+
 
 class Class(object):
     header_template = Template('''
