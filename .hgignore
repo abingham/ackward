@@ -14,3 +14,7 @@ custom.py
 *.akwc
 *_akw.hpp
 *_akw.ipp
+
+src/TAGS
+src/test/ackward_test
+src/test/sample
