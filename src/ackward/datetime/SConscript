@@ -4,7 +4,8 @@ Import(['env'])
 
 akw_files = [
     'Date.akw',
-    'DateTime.akw'
+    'DateTime.akw',
+    'Time.akw'
     ]
 
 for akw in akw_files:
@@ -16,6 +17,7 @@ sources = [
     'DateTime.cpp',
     'Initialize.cpp',
     'Module.cpp',
+    'Time.cpp',
     'TimeDelta.cpp',
     'TZInfo.cpp',
     ]

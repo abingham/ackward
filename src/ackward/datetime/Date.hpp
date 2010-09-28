@@ -22,6 +22,7 @@ class Date : private core::Object
 public:
     #include <ackward/datetime/Date_akw.hpp>
 
+public:
     boost::tuple<int, int, int> isocalendar() const;
     Date replace(unsigned int year, 
                  unsigned int month,

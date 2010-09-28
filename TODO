@@ -3,6 +3,9 @@
 General
 =======
 
+* compiler should generated private cls() method for classes.
+  * possibly mod() for modules...
+
 * Update to using ackward compiler wherever possible!
 * Replace "classDef" with something more general
 * Consider adding "isNone" or some other way of checking Object
@@ -45,7 +48,7 @@ Datetime
     customization. Standard tzinfo members are read-only and can't be
     replaced
 * Date:
-  * finish API
+  * Done?
 * Time
   * start/implement this
 * DateTime

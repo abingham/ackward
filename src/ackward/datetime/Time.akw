@@ -1,0 +1,95 @@
+# -*- python -*-
+
+import ackward as akw
+
+def classDef():
+    c = akw.Class(name='Time',
+                  wrapped_class='datetime.time')
+
+    akw.Constructor(
+        cls=c,
+        signature=[('unsigned int', 'hour'),
+                   ('unsigned int', 'minute', '0'),
+                   ('unsigned int', 'second', '0'),
+                   ('unsigned int', 'microsecond', '0'),
+                   #[, tzinfo]]]])
+                   ])
+
+    akw.ClassProperty(
+        cls=c,
+        name='min',
+        type='Time',
+        read_only=True)
+
+
+    akw.ClassProperty(
+        cls=c,
+        name='max',
+        type='Time',
+        read_only=True)
+
+    akw.ClassProperty(
+        cls=c,
+        name='resolution',
+        type='TimeDelta',
+        read_only=True)
+
+    akw.Property(
+        cls=c,
+        name='hour',
+        type='unsigned int',
+        read_only=True)
+
+    akw.Property(
+        cls=c,
+        name='minute',
+        type='unsigned int',
+        read_only=True)
+
+    akw.Property(
+        cls=c,
+        name='second',
+        type='unsigned int',
+        read_only=True)
+
+    akw.Property(
+        cls=c,
+        name='microsecond',
+        type='unsigned int',
+        read_only=True)
+
+# time.hour
+# In range(24).
+# time.minute
+# In range(60).
+# time.second
+# In range(60).
+# time.microsecond
+# In range(1000000).
+
+# time.tzinfo
+# The object passed as the tzinfo argument to the time constructor, or None if none was passed.
+# Supported operations:
+
+# comparison of time to time, where a is considered less than b when a precedes b in time. If one comparand is naive and the other is aware, TypeError is raised. If both comparands are aware, and have the same tzinfo member, the common tzinfo member is ignored and the base times are compared. If both comparands are aware and have different tzinfo members, the comparands are first adjusted by subtracting their UTC offsets (obtained from self.utcoffset()). In order to stop mixed-type comparisons from falling back to the default comparison by object address, when a time object is compared to an object of a different type, TypeError is raised unless the comparison is == or !=. The latter cases return False or True, respectively.
+# hash, use as dict key
+# efficient pickling
+# in Boolean contexts, a time object is considered to be true if and only if, after converting it to minutes and subtracting utcoffset() (or 0 if that's None), the result is non-zero.
+# Instance methods:
+
+# time.replace([hour[, minute[, second[, microsecond[, tzinfo]]]]])
+# Return a time with the same value, except for those members given new values by whichever keyword arguments are specified. Note that tzinfo=None can be specified to create a naive time from an aware time, without conversion of the time members.
+# time.isoformat()
+# Return a string representing the time in ISO 8601 format, HH:MM:SS.mmmmmm or, if self.microsecond is 0, HH:MM:SS If utcoffset() does not return None, a 6-character string is appended, giving the UTC offset in (signed) hours and minutes: HH:MM:SS.mmmmmm+HH:MM or, if self.microsecond is 0, HH:MM:SS+HH:MM
+# time.__str__()
+# For a time t, str(t) is equivalent to t.isoformat().
+# time.strftime(format)
+# Return a string representing the time, controlled by an explicit format string. See section strftime() Behavior.
+# time.utcoffset()
+# If tzinfo is None, returns None, else returns self.tzinfo.utcoffset(None), and raises an exception if the latter doesn't return None or a timedelta object representing a whole number of minutes with magnitude less than one day.
+# time.dst()
+# If tzinfo is None, returns None, else returns self.tzinfo.dst(None), and raises an exception if the latter doesn't return None, or a timedelta object representing a whole number of minutes with magnitude less than one day.
+# time.tzname()
+# If tzinfo is None, returns None, else returns self.tzinfo.tzname(None), or raises an exception if the latter doesn't return None or a string object.
+    
+    return c

@@ -87,6 +87,9 @@ $class_name(boost::python::object);
 $body
 
 using Object::obj;
+
+private:
+    static boost::python::object cls();
 ''')
 
     impl_template = Template('''
@@ -95,6 +98,17 @@ $class_name::$class_name(boost::python::object o) :
 {}
 
 $body
+
+boost::python::object $class_name::cls() {
+        static boost::python::object c;
+        static bool initialized = false;
+        if (!initialized)
+        {
+            c = ackward::core::getClass("$wrapped_class");
+            initialized = true;
+        }
+        return c;
+}
 ''')
 
     @trace
@@ -112,6 +126,7 @@ $body
 
         return Class.header_template.substitute(
             class_name=self.name,
+            wrapped_class=self.wrapped_class,
             body=body)
 
     @trace
@@ -119,6 +134,7 @@ $body
         body = '\n'.join([e.generate_impl() for e in self.elements])
         return Class.impl_template.substitute(
             class_name=self.name,
+            wrapped_class=self.wrapped_class,
             body=body)
     
 class Element(object):
@@ -205,7 +221,7 @@ class Constructor(ClassElement):
     impl_template = Template('''
 ${class_name}::${class_name}($impl_signature) try :
   core::Object (
-    core::getClass("$wrapped_class")($parameters) )
+    ${class_name}::cls()($parameters) )
 {
 }
 catch (const boost::python::error_already_set&)
@@ -235,7 +251,7 @@ class ClassMethod(ClassElement):
 $return_type $class_name::$name($impl_signature) {
     try {
         return boost::python::extract<$return_type>(
-            core::getClass("$wrapped_class").attr("$python_name")($parameters));
+            $class_name::cls().attr("$python_name")($parameters));
     } catch (const boost::python::error_already_set&) {
         core::translatePythonException();
         throw;
@@ -269,10 +285,8 @@ class ClassProperty(ClassElement):
 $type $class_name::$name() {
     using namespace boost::python;
     try {
-        object cls = 
-            core::getClass("$wrapped_class");
         object prop = 
-            cls.attr("$name");
+            $class_name::cls().attr("$name");
         return extract<$type>(prop);
     } catch (const boost::python::error_already_set&) {
         core::translatePythonException();
@@ -284,10 +298,8 @@ $type $class_name::$name() {
 void $class_name::$name(const $type& val) {
     using namespace boost::python;
     try {
-        object cls = 
-            core::getClass("$wrapped_class");
         object prop = 
-            cls.attr("$name");
+            $class_name::cls().attr("$name");
         prop = val;
     } catch (const error_already_set&) {
         core::translatePythonException();
