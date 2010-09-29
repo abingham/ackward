@@ -83,4 +83,30 @@ BOOST_AUTO_TEST_CASE( microsecond )
     }
 }
 
+BOOST_AUTO_TEST_CASE( lt )
+{
+    Time t1(1);
+    Time t2(2);
+    BOOST_CHECK( t1 < t2 );
+}
+
+BOOST_AUTO_TEST_CASE( replace )
+{
+    Time t(1,1,1,1);
+    BOOST_CHECK( t.replace(2) == Time(2,1,1,1) );
+}
+
+BOOST_AUTO_TEST_CASE( isoformat )
+{
+    Time t(1, 2, 3, 4);
+    std::string f = t.isoformat();
+}
+
+BOOST_AUTO_TEST_CASE( strftime )
+{
+    Time t(1,2,3,4);
+    std::wstring s = 
+        t.strftime(L"%c");
+}
+
 BOOST_AUTO_TEST_SUITE_END()
