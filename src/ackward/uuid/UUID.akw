@@ -6,6 +6,82 @@ def definition():
     c = akw.Class(name='UUID',
                   wrapped_class='uuid.UUID')
 
+    akw.Property(
+        cls=c,
+        name='bytes',
+        type='std::string',
+        read_only=True)
+
+    akw.Property(
+        cls=c,
+        name='bytes_le',
+        type='std::string',
+        read_only=True)
+
+    # akw.Property(
+    #     cls=c,
+    #     name='fields',
+    #     type='ackward::uuid::Fields',
+    #     read_only=True)
+
+    akw.Property(
+        cls=c,
+        name='hex',
+        type='std::string',
+        read_only=True)
+
+    # akw.Property(
+    #     cls=c,
+    #     name='integer',
+    #     type='uint128_t',
+    #     read_only=True)
+
+    akw.Property(
+        cls=c,
+        name='urn',
+        type='std::string',
+        read_only=True)
+
+    # akw.Property(
+    #     cls=c,
+    #     name='variant',
+    #     type='ackward::uuid::Variant',
+    #     read_only=True)
+
+    akw.Property(
+        cls=c,
+        name='version',
+        type='unsigned short',
+        read_only=True)
+
+
+# UUID.bytes
+# The UUID as a 16-byte string (containing the six integer fields in big-endian byte order).
+# UUID.bytes_le
+# The UUID as a 16-byte string (with time_low, time_mid, and time_hi_version in little-endian byte order).
+# UUID.fields
+# A tuple of the six integer fields of the UUID, which are also available as six individual attributes and two derived attributes:
+
+# Field	Meaning
+# time_low	the first 32 bits of the UUID
+# time_mid	the next 16 bits of the UUID
+# time_hi_version	the next 16 bits of the UUID
+# clock_seq_hi_variant	the next 8 bits of the UUID
+# clock_seq_low	the next 8 bits of the UUID
+# node	the last 48 bits of the UUID
+# time	the 60-bit timestamp
+# clock_seq	the 14-bit sequence number
+# UUID.hex
+# The UUID as a 32-character hexadecimal string.
+# UUID.int
+# The UUID as a 128-bit integer.
+# UUID.urn
+# The UUID as a URN as specified in RFC 4122.
+# UUID.variant
+# The UUID variant, which determines the internal layout of the UUID. This will be one of the integer constants RESERVED_NCS, RFC_4122, RESERVED_MICROSOFT, or RESERVED_FUTURE.
+# UUID.version
+# The UUID version number (1 through 5, meaningful only when the variant is RFC_4122).
+
     return c
 
 '''class uuid.UUID([hex[, bytes[, bytes_le[, fields[, int[, version]]]]]])
