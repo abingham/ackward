@@ -1,5 +1,7 @@
 import os
 
+import build_utils.names as names
+
 Import('env')
 
 local_env = env.Clone()
@@ -8,9 +10,9 @@ for libname in ['core',
                 'datetime', 
                 'logging',
                 'time']:
-    toks = os.path.split(str(local_env['products']['ackward_%s' % libname][0]))
+    toks = os.path.split(str(local_env['products'][names.libname(libname)][0]))
     libpath, lib = os.path.join(toks[:-1]), toks[-1]
-    local_env.AppendUnique(LIBS=[lib])
+    local_env.AppendUnique(LIBS=[names.liblinkname(local_env, libname)])
     local_env.AppendUnique(LIBPATH=libpath)
     local_env.AppendUnique(RPATH=libpath)
 
