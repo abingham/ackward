@@ -16,5 +16,5 @@ sources = [
     ]
 
 build_utils.build_shared_library(env,
-                                 'time',
+                                 'ackward_time',
                                  sources)

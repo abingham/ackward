@@ -12,5 +12,5 @@ sources = [
 ]
 
 build_utils.build_shared_library(env,
-                                 'core',
+                                 'ackward_core',
                                  sources)

@@ -2,9 +2,9 @@ Import(['env'])
 
 subdirs = [
     'core',
+    'time',
     'datetime',
     'logging',
-    'time'
     ]
 
 SConscript(dirs=subdirs, 

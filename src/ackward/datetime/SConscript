@@ -23,6 +23,6 @@ sources = [
     ]
 
 build_utils.build_shared_library(env,
-                                 'datetime',
+                                 'ackward_datetime',
                                  sources,
-                                 deps=['time'])
+                                 deps=['ackward_time'])

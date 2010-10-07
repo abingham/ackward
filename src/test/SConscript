@@ -10,11 +10,7 @@ for libname in ['core',
                 'datetime', 
                 'logging',
                 'time']:
-    toks = os.path.split(str(local_env['products'][names.libname(libname)][0]))
-    libpath, lib = os.path.join(toks[:-1]), toks[-1]
-    local_env.AppendUnique(LIBS=[names.liblinkname(local_env, libname)])
-    local_env.AppendUnique(LIBPATH=libpath)
-    local_env.AppendUnique(RPATH=libpath)
+    local_env['products']['ackward_%s' % libname].configure(local_env, rpath=True)
 
 local_env.AppendUnique(CPPDEFINES=['BOOST_TEST_DYN_LINK'])
 local_env.AppendUnique(LIBS=['boost_unit_test_framework'])
