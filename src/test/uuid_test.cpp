@@ -29,4 +29,15 @@ BOOST_AUTO_TEST_CASE( uuid_fromHex )
         ValueError);
 }
 
+BOOST_AUTO_TEST_CASE( uuid_fromBytes )
+{
+    UUID uuid = UUID::fromBytes("\x12\x34\x56\x78\x12\x34\x56\x78\x12\x34\x56\x78\x12\x34\x56\x78");
+    BOOST_CHECK(uuid.bytes() == "\x12\x34\x56\x78\x12\x34\x56\x78\x12\x34\x56\x78\x12\x34\x56\x78");
+    BOOST_CHECK(uuid.hex() == "12345678123456781234567812345678");
+
+    BOOST_CHECK_THROW(
+        UUID::fromBytes("\xasdfadfadfadadf"),
+        ValueError);
+}
+
 BOOST_AUTO_TEST_SUITE_END()

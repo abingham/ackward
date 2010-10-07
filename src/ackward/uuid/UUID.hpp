@@ -18,7 +18,7 @@ class UUID : private ackward::core::Object
 {
 public:
     static UUID fromHex(const std::string&);
-    // static UUID fromBytes(const std::string&);
+    static UUID fromBytes(const std::string&);
     //static UUID fromBytes_LE(const std::string&_le);
     //static UUID fromFields(const Fields&);
     //static UUID fromInt(const uint128_t);
