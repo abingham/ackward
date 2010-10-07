@@ -1,0 +1,20 @@
+import build_utils
+
+Import(['env'])
+
+akw_files = [
+    'UUID.akw',
+    ]
+
+for akw in akw_files:
+    env.AkwHeader(akw)
+    env.AkwImpl(akw)
+
+sources = [
+    'UUID.cpp',
+    ]
+
+build_utils.build_shared_library(env,
+                                 'ackward_uuid',
+                                 sources,
+                                 deps=[])

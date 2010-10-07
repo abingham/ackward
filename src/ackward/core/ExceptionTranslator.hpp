@@ -100,4 +100,10 @@ void throw_with_python_info(boost::python::object type,
 
 }}
 
+#define TRANSLATE_PYTHON_EXCEPTION()                \
+catch (const boost::python::error_already_set&) {   \
+    ackward::core::translatePythonException();      \
+    throw;                                          \
+}
+
 #endif

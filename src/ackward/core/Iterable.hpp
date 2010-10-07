@@ -6,7 +6,7 @@
 #include <boost/type_traits/is_const.hpp>
 #include <boost/type_traits/remove_const.hpp>
 
-#include <ackward/core/Exceptions.hpp>
+#include <ackward/core/ExceptionTranslator.hpp>
 #include <ackward/core/Object.hpp>
 #include <ackward/core/Util.hpp>
 

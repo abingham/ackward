@@ -14,12 +14,6 @@ void translatePythonException();
 void translatePythonException(boost::python::tuple);
 boost::python::tuple getExceptionInfo();
 
-#define TRANSLATE_PYTHON_EXCEPTION()                \
-catch (const boost::python::error_already_set&) {   \
-    translatePythonException();                     \
-    throw;                                          \
-}
-
 class Exception : public virtual boost::exception,
                   public virtual std::exception
 {};

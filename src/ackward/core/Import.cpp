@@ -2,6 +2,8 @@
 
 #include <boost/tokenizer.hpp>
 
+#include <ackward/core/ExceptionTranslator.hpp>
+
 using namespace boost::python;
 
 namespace ackward { namespace core

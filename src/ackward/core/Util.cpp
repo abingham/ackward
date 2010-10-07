@@ -2,7 +2,7 @@
 
 #include <boost/python/object.hpp>
 
-#include <ackward/core/Exceptions.hpp>
+#include <ackward/core/ExceptionTranslator.hpp>
 #include <ackward/core/Import.hpp>
 
 using namespace boost::python;
