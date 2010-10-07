@@ -13,10 +13,12 @@ class SharedLib(object):
             env.AppendUnique(RPATH=[os.path.split(self.node.path)][0])
 
 def build_shared_library(env, name, sources, deps=[]):
+    from . import products
+    
     local_env = env.Clone()
     lib = local_env.SharedLibrary(name, sources)
     for dep in deps:
-        env['products'][dep].configure(local_env)
+        products(env)[dep].configure(local_env)
 
-    env['products'][name] = SharedLib(lib[0])
+    products(env)[name] = SharedLib(lib[0])
     env.Alias('all', lib)

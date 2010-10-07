@@ -1,6 +1,7 @@
 import os
 
 import build_utils.names as names
+from build_utils import products
 
 Import('env')
 
@@ -10,7 +11,7 @@ for libname in ['core',
                 'datetime', 
                 'logging',
                 'time']:
-    local_env['products']['ackward_%s' % libname].configure(local_env, rpath=True)
+    products(env)['ackward_%s' % libname].configure(local_env, rpath=True)
 
 local_env.AppendUnique(CPPDEFINES=['BOOST_TEST_DYN_LINK'])
 local_env.AppendUnique(LIBS=['boost_unit_test_framework'])
