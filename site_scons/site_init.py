@@ -1,8 +1,6 @@
 import ackward as akw
 
 def TOOL_ACKWARD(env):
-    print 'llamas!'
-
     def akw_header(target, source, env): 
         return akw.translate_header_file(str(source[0]), str(target[0]))
     akw_header = Builder(action = akw_header,
