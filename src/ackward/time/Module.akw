@@ -2,7 +2,7 @@
 
 import ackward as akw
 
-def classDef():
+def definition():
     m = akw.Module(name="time")
 
     akw.Function(

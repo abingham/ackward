@@ -2,7 +2,7 @@
 
 import ackward as akw
 
-def classDef():
+def definition():
     c = akw.Class(name='Date',
                   wrapped_class='datetime.date')
 

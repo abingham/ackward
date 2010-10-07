@@ -417,7 +417,7 @@ def translate_file(method, infile, outfile=None):
                               infile, 
                               ('', 'r', imp.PY_SOURCE))
 
-    cls = mod.classDef()
+    cls = mod.definition()
     text = method(cls)
 
     if outfile:

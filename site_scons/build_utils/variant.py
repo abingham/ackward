@@ -1,3 +1,5 @@
+import sys
+
 class Variant(object):
     def __init__(self, name):
         self.name = name
@@ -33,5 +35,5 @@ def configure_variant(env, variant):
     except KeyError:
         print 'ERROR: Invalid variant "%s". Valid options are %s.' % (variant,
                                                                       variants.keys())
-        Exit(1)
+        sys.exit(1)
 
