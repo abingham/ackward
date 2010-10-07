@@ -1,15 +1,15 @@
 import imp, os
 
-import build_utils.config as config
+import build_utils
 import variables
 
 # Create and register our own debug variant
-class DebugVariant(config.DebugVariant):
+class DebugVariant(build_utils.DebugVariant):
     def configure(self, env):
         super(DebugVariant, self).configure(env)
         env.AppendUnique(CPPDEFINES=['ACKWARD_DEBUG'])
 
-config.variants['debug'] = DebugVariant()
+build_utils.variants['debug'] = DebugVariant()
 
 # Initialize the custom build variables
 vars = Variables('custom.py')
@@ -21,7 +21,7 @@ env = Environment(variables=vars,
 Help(vars.GenerateHelpText(env))
 
 # Run variant-specific configuration
-config.configure_variant(env, env['VARIANT'])
+build_utils.configure_variant(env, env['VARIANT'])
 
 env.AppendUnique(CPPPATH=['$BOOST_INCLUDE_DIR',
                           '$PYTHON_INCLUDE_DIR'])

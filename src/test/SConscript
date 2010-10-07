@@ -1,6 +1,5 @@
 import os
 
-import build_utils.names as names
 from build_utils import products
 
 Import('env')
