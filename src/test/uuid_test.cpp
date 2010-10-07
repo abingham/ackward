@@ -40,4 +40,14 @@ BOOST_AUTO_TEST_CASE( uuid_fromBytes )
         ValueError);
 }
 
+BOOST_AUTO_TEST_CASE( uuid_fromBytes_LE )
+{
+    UUID uuid = UUID::fromBytes_LE("\x78\x56\x34\x12\x34\x12\x78\x56\x12\x34\x56\x78\x12\x34\x56\x78");
+    BOOST_CHECK(uuid.bytes_le() == "\x78\x56\x34\x12\x34\x12\x78\x56\x12\x34\x56\x78\x12\x34\x56\x78");
+    
+    BOOST_CHECK_THROW(
+        UUID::fromBytes("\xde\xad\xbe\xef"),
+        ValueError);
+}
+
 BOOST_AUTO_TEST_SUITE_END()
