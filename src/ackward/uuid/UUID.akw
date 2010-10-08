@@ -18,12 +18,6 @@ def definition():
         type='std::string',
         read_only=True)
 
-    # akw.Property(
-    #     cls=c,
-    #     name='fields',
-    #     type='ackward::uuid::Fields',
-    #     read_only=True)
-
     akw.Property(
         cls=c,
         name='hex',

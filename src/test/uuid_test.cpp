@@ -1,5 +1,6 @@
 #include <boost/foreach.hpp>
 #include <boost/test/unit_test.hpp>
+#include <boost/tuple/tuple_comparison.hpp>
 
 #include <ackward/core/Exceptions.hpp>
 #include <ackward/uuid/UUID.hpp>
@@ -48,6 +49,37 @@ BOOST_AUTO_TEST_CASE( uuid_fromBytes_LE )
     BOOST_CHECK_THROW(
         UUID::fromBytes("\xde\xad\xbe\xef"),
         ValueError);
+}
+
+BOOST_AUTO_TEST_CASE( uuid_fromFields )
+{
+    Fields f = boost::make_tuple(
+        0x12345678, 
+        0x1234, 
+        0x5678, 
+        0x12, 
+        0x34, 
+        0x0000567812345678);
+    
+    UUID uuid = UUID::fromFields(f);
+
+    Fields f2 = uuid.fields();
+
+    BOOST_CHECK(uuid.fields() == f);
+    BOOST_CHECK(uuid.hex() == "12345678123456781234567812345678");
+
+    // NOTE: I kinda expect uuid to throw if values were out of range,
+    //       but apparently it doesn't.
+    // BOOST_CHECK_THROW(
+    //     UUID::fromFields(
+    //         boost::make_tuple(
+    //             0x12345678, 
+    //             0x1234, 
+    //             0x5678, 
+    //             0x12, 
+    //             0x34, 
+    //             0xFFFFFFFFFFFF)),
+    //     ValueError);
 }
 
 BOOST_AUTO_TEST_SUITE_END()

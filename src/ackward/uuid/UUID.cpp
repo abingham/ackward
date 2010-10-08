@@ -3,6 +3,7 @@
 #include <boost/python/object.hpp>
 
 #include <ackward/core/ExceptionTranslator.hpp>
+#include <ackward/core/Tuple.hpp>
 
 using namespace boost::python;
 
@@ -35,8 +36,30 @@ UUID UUID::fromBytes_LE(const std::string& bytes_le)
     } TRANSLATE_PYTHON_EXCEPTION();
 }
 
-// static UUID fromFields(const Fields&);
+UUID UUID::fromFields(const Fields& f)
+{
+    try {
+        object obj = UUID::cls()(object(), 
+                                 object(),
+                                 object(),
+                                 core::convertTuple(f));
+        return UUID(obj);
+    } TRANSLATE_PYTHON_EXCEPTION();
+}
+
 // static UUID fromInt(const uint128_t);
+
+Fields UUID::fields() const
+{
+    try {
+        return core::convertTuple<Fields>(
+            boost::python::extract<boost::python::tuple>(
+                obj().attr("fields")));
+    } catch (const boost::python::error_already_set&) {
+        core::translatePythonException();
+        throw;
+    }
+}
 
 #include <ackward/uuid/UUID_akw.ipp>
 
