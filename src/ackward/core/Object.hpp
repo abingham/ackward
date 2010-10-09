@@ -37,10 +37,12 @@ private:
 
 // Getter/Setter
 
+/*
 // #define ACKWARD_CLASS_METHOD(result_type, mod, cls, name)  \
 //     static result_type name() {                           \
 //         return boost::python::extract<result_type>(       \
 //             ackward::core::findObject(#mod, #cls).attr(#name)); \
 //     }
+*/
 
 #endif

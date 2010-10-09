@@ -1,6 +1,6 @@
 #include <ackward/datetime/Time.hpp>
 
-#include <ackward/core/Exceptions.hpp>
+#include <ackward/core/ExceptionTranslator.hpp>
 #include <ackward/core/GetClass.hpp>
 #include <ackward/datetime/TimeDelta.hpp>
 
@@ -26,10 +26,7 @@ bool Time::operator<(const Time& other) const
 {
     try {
         return obj() < other.obj();
-    }
-    catch (const boost::python::error_already_set&) {
-        core::translatePythonException();
-    }
+    } TRANSLATE_PYTHON_EXCEPTION();
 }
 
 bool operator==(const Time& lhs, const Time& rhs)

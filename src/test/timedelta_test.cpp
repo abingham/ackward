@@ -49,7 +49,7 @@ BOOST_AUTO_TEST_CASE( days )
 
 BOOST_AUTO_TEST_CASE( seconds )
 {
-    for (int i = 0; i < 2000; ++i)
+    for (unsigned int i = 0; i < 2000; ++i)
     {
         TimeDelta td(0, i);
         BOOST_ASSERT(td.seconds() == i);
@@ -58,7 +58,7 @@ BOOST_AUTO_TEST_CASE( seconds )
 
 BOOST_AUTO_TEST_CASE( microseconds )
 {
-    for (int i = 0; i < 2000; ++i)
+    for (unsigned int i = 0; i < 2000; ++i)
     {
         TimeDelta td(0, 0, i);
         BOOST_ASSERT(td.microseconds() == i);

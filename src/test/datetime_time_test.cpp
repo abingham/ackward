@@ -50,7 +50,7 @@ BOOST_AUTO_TEST_CASE( resolution )
 
 BOOST_AUTO_TEST_CASE( hour )
 {
-    for (int i = 0; i < 24; ++i) {
+    for (unsigned int i = 0; i < 24; ++i) {
         Time t(i);
         BOOST_CHECK(t.hour() == i);
     }
@@ -58,7 +58,7 @@ BOOST_AUTO_TEST_CASE( hour )
 
 BOOST_AUTO_TEST_CASE( minute )
 {
-    for (int i = 0; i < 60; ++i)
+    for (unsigned int i = 0; i < 60; ++i)
     {
         Time t(1, i);
         BOOST_CHECK(t.minute() == i);
@@ -67,7 +67,7 @@ BOOST_AUTO_TEST_CASE( minute )
 
 BOOST_AUTO_TEST_CASE( second )
 {
-    for (int i = 0; i < 60; ++i)
+    for (unsigned int i = 0; i < 60; ++i)
     {
         Time t(1, 1, i);
         BOOST_CHECK(t.second() == i);
@@ -76,7 +76,7 @@ BOOST_AUTO_TEST_CASE( second )
 
 BOOST_AUTO_TEST_CASE( microsecond )
 {
-    for (int i = 0; i < 1000000; i += 1000)
+    for (unsigned int i = 0; i < 1000000; i += 1000)
     {
         Time t(1,1,1,i);
         BOOST_CHECK(t.microsecond() == i);

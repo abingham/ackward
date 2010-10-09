@@ -156,13 +156,13 @@ BOOST_AUTO_TEST_CASE( timetuple_test )
 BOOST_AUTO_TEST_CASE( weekday_test )
 {
     Date d = Date::today();
-    int wd = d.weekday();
+    d.weekday();
 }
 
 BOOST_AUTO_TEST_CASE( isoweekday_test )
 {
     Date d = Date::today();
-    int wd = d.isoweekday();
+    d.isoweekday();
 }
 
 BOOST_AUTO_TEST_CASE( isocalendar_test )

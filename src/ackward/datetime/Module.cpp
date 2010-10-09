@@ -22,15 +22,15 @@ object module()
     return mod;
 }
 
-int MINYEAR()
+unsigned int MINYEAR()
 {
-    return extract<int>(
+    return extract<unsigned int>(
         module().attr("MINYEAR"));
 }
 
-int MAXYEAR()
+unsigned int MAXYEAR()
 {
-    return extract<int>(
+    return extract<unsigned int>(
         module().attr("MAXYEAR"));
 }
 

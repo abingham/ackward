@@ -173,7 +173,7 @@ BOOST_AUTO_TEST_CASE( filters )
     
     BOOST_CHECK(f.logger.filters().size() == 0);
 
-    for (int i = 0; i < 10; ++i)
+    for (unsigned int i = 0; i < 10; ++i)
     {
         f.logger.addFilter(Filter());
         BOOST_CHECK(f.logger.filters().size() == i + 1);

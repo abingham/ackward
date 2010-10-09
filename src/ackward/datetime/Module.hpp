@@ -8,8 +8,8 @@ namespace ackward { namespace datetime
 
 boost::python::object module();
 
-int MINYEAR();
-int MAXYEAR();
+unsigned int MINYEAR();
+unsigned int MAXYEAR();
 
 }}
 
