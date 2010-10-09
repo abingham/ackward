@@ -44,16 +44,16 @@ def definition():
 
     akw.Property(
         cls=c,
-        name='version',
-        type='unsigned short',
-        read_only=True)
-
-    akw.Property(
-        cls=c,
         name='variant',
         type='ackward::uuid::Variant',
         read_only=True)
 
+    akw.Property(
+        cls=c,
+        name='_version',
+        python_name='version',
+        type='uint8_t',
+        read_only=True)
 # UUID.version
 # The UUID version number (1 through 5, meaningful only when the variant is RFC_4122).
 

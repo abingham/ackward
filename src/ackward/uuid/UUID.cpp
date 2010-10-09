@@ -2,6 +2,7 @@
 
 #include <boost/python/object.hpp>
 
+#include <ackward/core/Exceptions.hpp>
 #include <ackward/core/ExceptionTranslator.hpp>
 #include <ackward/core/Tuple.hpp>
 
@@ -68,6 +69,15 @@ Fields UUID::fields() const
     } catch (const boost::python::error_already_set&) {
         core::translatePythonException();
         throw;
+    }
+}
+
+uint8_t UUID::version() const
+{
+    try {
+        return _version();
+    } catch (const core::TypeError&) {
+        return 0;
     }
 }
 

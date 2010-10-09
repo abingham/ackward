@@ -337,7 +337,7 @@ class Property(ClassElement):
 $type $class_name::$name() const {
     try {
         return boost::python::extract<$type>(
-            obj().attr("$name"));
+            obj().attr("$python_name"));
     } catch (const boost::python::error_already_set&) {
         core::translatePythonException();
         throw;
@@ -347,7 +347,7 @@ $type $class_name::$name() const {
     impl_setter = '''
 void $class_name::$name(const $type& val) {
     try {
-        obj().attr("$name") = val;
+        obj().attr("$python_name") = val;
     } catch (const boost::python::error_already_set&) {
         core::translatePythonException();
         throw;
@@ -359,6 +359,7 @@ void $class_name::$name(const $type& val) {
                  cls,
                  name,
                  type,
+                 python_name=None,
                  read_only=False):
         header = Property.header_getter
         impl = Property.impl_getter
@@ -373,6 +374,7 @@ void $class_name::$name(const $type& val) {
             args={
                 'name' : name,
                 'type' : type,
+                'python_name' : name if python_name is None else python_name,
                 })
 
 class Method(ClassElement):
