@@ -3,24 +3,22 @@
 
 #include <string>
 
+// #include <boost/call_traits.hpp>
 #include <boost/cstdint.hpp>
+// #include <boost/integer.hpp>
 #include <boost/tuple/tuple.hpp>
 
 #include <ackward/core/GetClass.hpp>
 #include <ackward/core/Object.hpp>
+#include <ackward/uuid/Variant.hpp>
 
 namespace ackward
 {
 namespace uuid
 {
 
-// typedef boost::tuple<boost::uint32_t, // time_low
-//                      boost::uint16_t, // time_mid
-//                      boost::uint16_t, // time_hi_version
-//                      boost::uint8_t,  // clock_seq_hi_variant
-//                      boost::uint8_t,  // clock_seq_low_variant
-//                      boost::uint64_t> // node
-//     Fields;
+// typedef boost::uint_t<128> uint128_t;
+// typedef boost::call_traits<uint128_t::fast>::const_reference uint128_ref;
 
 typedef boost::tuple<unsigned long, // time_low
                      unsigned long, // time_mid
@@ -30,9 +28,6 @@ typedef boost::tuple<unsigned long, // time_low
                      unsigned long> // node
     Fields;
 
-// class Fields;
-// class unit128_t;
-
 class UUID : private ackward::core::Object
 {
 public:
@@ -40,7 +35,7 @@ public:
     static UUID fromBytes(const std::string&);
     static UUID fromBytes_LE(const std::string&_le);
     static UUID fromFields(const Fields&);
-    //static UUID fromInt(const uint128_t);
+    // static UUID fromInt(uint128_ref);
 
     Fields fields() const;
 

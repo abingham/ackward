@@ -11,6 +11,8 @@ for akw in akw_files:
     env.AkwImpl(akw)
 
 sources = [
+    'Initialize.cpp',
+    'Module.cpp',
     'UUID.cpp',
     ]
 

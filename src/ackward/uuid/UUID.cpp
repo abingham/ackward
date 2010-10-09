@@ -47,7 +47,17 @@ UUID UUID::fromFields(const Fields& f)
     } TRANSLATE_PYTHON_EXCEPTION();
 }
 
-// static UUID fromInt(const uint128_t);
+// UUID UUID::fromInt(uint128_ref i)
+// {
+//     try {
+//         object obj = UUID::cls()(object(), 
+//                                  object(),
+//                                  object(),
+//                                  object(),
+//                                  i);
+//         return UUID(obj);
+//     } TRANSLATE_PYTHON_EXCEPTION();
+// }
 
 Fields UUID::fields() const
 {

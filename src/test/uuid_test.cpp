@@ -59,7 +59,7 @@ BOOST_AUTO_TEST_CASE( uuid_fromFields )
         0x5678, 
         0x12, 
         0x34, 
-        0x0000567812345678);
+        0x567812345678);
     
     UUID uuid = UUID::fromFields(f);
 
@@ -80,6 +80,12 @@ BOOST_AUTO_TEST_CASE( uuid_fromFields )
     //             0x34, 
     //             0xFFFFFFFFFFFF)),
     //     ValueError);
+}
+
+BOOST_AUTO_TEST_CASE( uuid_variant )
+{
+    UUID uuid = UUID::fromHex("12345678123456781234567812345678");
+    uuid.variant();
 }
 
 BOOST_AUTO_TEST_SUITE_END()

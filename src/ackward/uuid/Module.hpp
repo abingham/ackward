@@ -1,7 +1,7 @@
 #ifndef INCLUDE_ACKWARD_UUID_MODULE_HPP
 #define INCLUDE_ACKWARD_UUID_MODULE_HPP
 
-#include <boost/pyton/object_fwd.hpp>
+#include <boost/python/object_fwd.hpp>
 
 namespace ackward {
 namespace uuid {
