@@ -75,7 +75,7 @@ struct ConvertTuple<T, 6>
 {
     T operator()(boost::python::tuple t)
         {
-            T rval = boost::make_tuple(
+            return boost::make_tuple(
                 boost::python::extract<typename boost::tuples::element<0, T>::type>(
                     t[0])(),
                 boost::python::extract<typename boost::tuples::element<1, T>::type>(
@@ -88,8 +88,6 @@ struct ConvertTuple<T, 6>
                     t[4])(),
                 boost::python::extract<typename boost::tuples::element<5, T>::type>(
                     t[5])());
-
-            return rval;
         }   
 
     boost::python::tuple operator()(const T& t)
