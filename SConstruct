@@ -31,6 +31,7 @@ env.AppendUnique(LIBPATH=['$BOOST_LIB_DIR',
 
 env.AppendUnique(LIBS=['$BOOST_LIBS',
                        '$PYTHON_LIBS'])
+env.AppendUnique(CXXFLAGS=['-Wall'])
 
 if not env.GetOption('clean') and not env.GetOption('help'):
     env = variables.check_config(env)
