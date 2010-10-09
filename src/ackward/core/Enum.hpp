@@ -7,6 +7,7 @@
 
 #include <boost/foreach.hpp>
 #include <boost/python/object.hpp>
+#include <boost/python/to_python_converter.hpp>
 
 #include <ackward/core/Exceptions.hpp>
 
