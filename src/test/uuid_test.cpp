@@ -88,10 +88,13 @@ BOOST_AUTO_TEST_CASE( uuid_variant )
     uuid.variant();
 }
 
-BOOST_AUTO_TEST_CASE( uuid_version )
+BOOST_AUTO_TEST_CASE( uuid_version_hex )
 {
-    UUID uuid = UUID::fromHex("12345678123456781234567812345678");
-    uuid.version();
+    for (uint8_t i = 1; i < 6; ++i)
+    {
+        UUID uuid = UUID::fromHex("12345678123456781234567812345678", i);
+        BOOST_CHECK(uuid.version() == i);
+    }
 }
 
 BOOST_AUTO_TEST_SUITE_END()

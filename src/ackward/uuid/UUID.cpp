@@ -18,6 +18,19 @@ UUID UUID::fromHex(const std::string& hex) {
     } TRANSLATE_PYTHON_EXCEPTION();
 }
 
+UUID UUID::fromHex(const std::string& hex,
+                   uint8_t version) {
+    try {
+        object obj = UUID::cls()(hex,
+                                 object(),
+                                 object(),
+                                 object(),
+                                 object(),
+                                 version);
+        return UUID(obj);
+    } TRANSLATE_PYTHON_EXCEPTION();
+}
+
 UUID UUID::fromBytes(const std::string& bytes)
 {
     try {
