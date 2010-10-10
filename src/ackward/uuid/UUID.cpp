@@ -89,6 +89,20 @@ UUID UUID::fromFields(const Fields& f)
     } TRANSLATE_PYTHON_EXCEPTION();
 }
 
+UUID UUID::fromFields(const Fields& f,
+                      uint8_t version)
+{
+    try {
+        object obj = UUID::cls()(object(), 
+                                 object(),
+                                 object(),
+                                 core::convertTuple(f),
+                                 object(),
+                                 version);
+        return UUID(obj);
+    } TRANSLATE_PYTHON_EXCEPTION();
+}
+
 // UUID UUID::fromInt(uint128_ref i)
 // {
 //     try {

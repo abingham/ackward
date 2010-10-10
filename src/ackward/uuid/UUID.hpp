@@ -44,12 +44,10 @@ public:
                              uint8_t version);
 
     static UUID fromFields(const Fields&);
-    // static UUID fromInt(uint128_ref);
+    static UUID fromFields(const Fields&,
+                           uint8_t version);
 
-    // static UUID fromBytes_LE(const std::string&_le,
-    //                          uint8_t version);
-    // static UUID fromFields(const Fields&,
-    //                        uint8_t version);
+    // static UUID fromInt(uint128_ref);
     // static UUID fromInt(uint128_ref,
     //                     uint8_t version);
 

@@ -139,4 +139,29 @@ BOOST_AUTO_TEST_CASE( uuid_version_bytes_le )
         ValueError);
 }
 
+BOOST_AUTO_TEST_CASE( uuid_version_fields )
+{
+    Fields f = boost::make_tuple(
+        0x12345678, 
+        0x1234, 
+        0x5678, 
+        0x12, 
+        0x34, 
+        0x567812345678);
+
+    for (uint8_t i = 1; i < 6; ++i)
+    {
+        UUID uuid = UUID::fromFields(f, i);
+        BOOST_CHECK(uuid.version() == i);
+    }
+
+    BOOST_CHECK_THROW(
+        UUID::fromFields(f, 0),
+        ValueError);
+
+    BOOST_CHECK_THROW(
+        UUID::fromFields(f, 6),
+        ValueError);
+}
+
 BOOST_AUTO_TEST_SUITE_END()
