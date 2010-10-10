@@ -90,8 +90,24 @@ BOOST_AUTO_TEST_CASE( uuid_variant )
 
 BOOST_AUTO_TEST_CASE( uuid_version )
 {
-    UUID uuid = UUID::fromHex("12345678123456781234567812345678");
-    BOOST_CHECK( uuid.version() == 0 );
+    BOOST_CHECK(
+        UUID::fromHex("12345678123456781234567812345678").version() == 0);
+
+    BOOST_CHECK(
+        UUID::fromBytes("\x12\x34\x56\x78\x12\x34\x56\x78\x12\x34\x56\x78\x12\x34\x56\x78").version() == 0);
+
+    BOOST_CHECK(
+        UUID::fromBytes_LE("\x78\x56\x34\x12\x34\x12\x78\x56\x12\x34\x56\x78\x12\x34\x56\x78").version() == 0);
+
+    BOOST_CHECK(
+        UUID::fromFields(
+            boost::make_tuple(
+                0x12345678, 
+                0x1234, 
+                0x5678, 
+                0x12, 
+                0x34, 
+                0x567812345678)).version() == 0);
 }
 
 BOOST_AUTO_TEST_CASE( uuid_version_hex )
