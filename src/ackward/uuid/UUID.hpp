@@ -34,14 +34,15 @@ public:
     static UUID fromHex(const std::string&);
     static UUID fromHex(const std::string&, 
                         uint8_t version);
+
     static UUID fromBytes(const std::string&);
+    static UUID fromBytes(const std::string&,
+                          uint8_t version);
+
     static UUID fromBytes_LE(const std::string&_le);
     static UUID fromFields(const Fields&);
     // static UUID fromInt(uint128_ref);
 
-
-    // static UUID fromBytes(const std::string&,
-    //                       uint8_t version);
     // static UUID fromBytes_LE(const std::string&_le,
     //                          uint8_t version);
     // static UUID fromFields(const Fields&,

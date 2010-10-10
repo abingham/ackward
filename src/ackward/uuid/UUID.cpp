@@ -40,6 +40,20 @@ UUID UUID::fromBytes(const std::string& bytes)
     } TRANSLATE_PYTHON_EXCEPTION();
 }
 
+UUID UUID::fromBytes(const std::string& bytes,
+                     uint8_t version)
+{
+    try {
+        object obj = UUID::cls()(object(), 
+                                 bytes,
+                                 object(),
+                                 object(),
+                                 object(),
+                                 version);
+        return UUID(obj);
+    } TRANSLATE_PYTHON_EXCEPTION();
+}
+
 UUID UUID::fromBytes_LE(const std::string& bytes_le)
 {
     try {
