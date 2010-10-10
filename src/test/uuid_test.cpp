@@ -122,4 +122,21 @@ BOOST_AUTO_TEST_CASE( uuid_version_bytes )
         ValueError);
 }
 
+BOOST_AUTO_TEST_CASE( uuid_version_bytes_le )
+{
+    for (uint8_t i = 1; i < 6; ++i)
+    {
+        UUID uuid = UUID::fromBytes_LE("\x12\x34\x56\x78\x12\x34\x56\x78\x12\x34\x56\x78\x12\x34\x56\x78", i);
+        BOOST_CHECK(uuid.version() == i);
+    }
+
+    BOOST_CHECK_THROW(
+        UUID::fromBytes_LE("\x12\x34\x56\x78\x12\x34\x56\x78\x12\x34\x56\x78\x12\x34\x56\x78", 0),
+        ValueError);
+
+    BOOST_CHECK_THROW(
+        UUID::fromBytes_LE("\x12\x34\x56\x78\x12\x34\x56\x78\x12\x34\x56\x78\x12\x34\x56\x78", 6),
+        ValueError);
+}
+
 BOOST_AUTO_TEST_SUITE_END()
