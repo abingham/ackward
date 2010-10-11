@@ -1,6 +1,8 @@
 #ifndef INCLUDE_ACKWARD_UUID_MODULE_HPP
 #define INCLUDE_ACKWARD_UUID_MODULE_HPP
 
+#include <string>
+
 #include <boost/call_traits.hpp>
 #include <boost/integer.hpp>
 #include <boost/python/object_fwd.hpp>

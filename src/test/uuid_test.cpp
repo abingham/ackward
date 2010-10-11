@@ -216,4 +216,11 @@ BOOST_AUTO_TEST_CASE( uuid_uuid1_2 )
     uuid.hex();
 }
 
+BOOST_AUTO_TEST_CASE( uuid_uuid3 )
+{
+    UUID ns = ackward::uuid::uuid1(1234, 4321);
+    UUID uuid = ackward::uuid::uuid3(ns, "monkey");
+    uuid.hex();
+}
+
 BOOST_AUTO_TEST_SUITE_END()
