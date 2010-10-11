@@ -276,6 +276,38 @@ $return_type $class_name::$name($impl_signature) {
                 'signature' : signature,
                 })
 
+class ModuleProperty(Element):
+    header_template = '$type $name();'
+
+    impl_template = '''
+$type $name() {
+    using namespace boost::python;
+    try {
+        object prop = 
+            module().attr("$python_name");
+        return extract<$type>(prop);
+    } catch (const boost::python::error_already_set&) {
+        core::translatePythonException();
+        throw;
+    }
+}'''
+
+    @trace
+    def __init__(self, 
+                 mod,
+                 name,
+                 type,
+                 python_name=None):
+        super(ModuleProperty, self).__init__(
+            parent=mod,
+            header_template=Template(ModuleProperty.header_template),
+            impl_template=Template(ModuleProperty.impl_template),
+            args={
+                'name' : name,
+                'type' : type,
+                'python_name' : name if python_name is None else python_name,
+                })
+
 class ClassProperty(ClassElement):
     header_getter = 'static $type $name();'
 
@@ -327,7 +359,7 @@ void $class_name::$name(const $type& val) {
                 'name' : name,
                 'type' : type,
                 })
-                 
+
 class Property(ClassElement):
     header_getter = '$type $name() const;'
 
