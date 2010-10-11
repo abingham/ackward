@@ -218,8 +218,8 @@ BOOST_AUTO_TEST_CASE( uuid_uuid1_2 )
 
 BOOST_AUTO_TEST_CASE( uuid_uuid3 )
 {
-    UUID ns = ackward::uuid::uuid1(1234, 4321);
-    UUID uuid = ackward::uuid::uuid3(ns, "monkey");
+    UUID uuid = ackward::uuid::uuid3(
+        ackward::uuid::NAMESPACE_DNS(), "monkey");
     uuid.hex();
 }
 
@@ -231,9 +231,14 @@ BOOST_AUTO_TEST_CASE( uuid_uuid4 )
 
 BOOST_AUTO_TEST_CASE( uuid_uuid5 )
 {
-    UUID ns = ackward::uuid::uuid1(8765, 4321);
-    UUID uuid = ackward::uuid::uuid5(ns, "llama");
+    UUID uuid = ackward::uuid::uuid5(
+        ackward::uuid::NAMESPACE_DNS(), "llama");
     uuid.hex();
+}
+
+BOOST_AUTO_TEST_CASE( uuid_namespace_dns )
+{
+    ackward::uuid::NAMESPACE_DNS().hex();
 }
 
 BOOST_AUTO_TEST_SUITE_END()

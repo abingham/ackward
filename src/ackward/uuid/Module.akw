@@ -60,14 +60,23 @@ def definition():
                    ('std::string', 'name')],
         return_type='ackward::uuid::UUID')
 
-# The uuid module defines the following namespace identifiers for use with uuid3() or uuid5().
+    # The uuid module defines the following namespace identifiers for
+    # use with uuid3() or uuid5().
 
-# uuid.NAMESPACE_DNS
-# When this namespace is specified, the name string is a fully-qualified domain name.
+    # uuid.NAMESPACE_DNS
+    # When this namespace is specified, the name string is a
+    # fully-qualified domain name.
+    akw.ModuleProperty(
+        mod=m,
+        name='NAMESPACE_DNS',
+        type='ackward::uuid::UUID')
+
 # uuid.NAMESPACE_URL
 # When this namespace is specified, the name string is a URL.
+
 # uuid.NAMESPACE_OID
 # When this namespace is specified, the name string is an ISO OID.
+
 # uuid.NAMESPACE_X500
 # When this namespace is specified, the name string is an X.500 DN in DER or a text output format.
 
