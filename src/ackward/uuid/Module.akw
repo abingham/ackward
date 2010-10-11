@@ -36,20 +36,30 @@ def definition():
                    ('unsigned int', 'clock_seq')],
         return_type='ackward::uuid::UUID')
 
-# uuid.uuid3(namespace, name)
-# Generate a UUID based on the MD5 hash of a namespace identifier
-# (which is a UUID) and a name (which is a string).
+    # uuid.uuid3(namespace, name)
+    # Generate a UUID based on the MD5 hash of a namespace identifier
+    # (which is a UUID) and a name (which is a string).
     akw.Function(
         mod=m,
         name='uuid3',
         signature=[('ackward::uuid::UUID', 'name_space'),
                    ('std::string', 'name')],
-        return_type='UUID')
+        return_type='ackward::uuid::UUID')
 
-# uuid.uuid4()
-# Generate a random UUID.
-# uuid.uuid5(namespace, name)
-# Generate a UUID based on the SHA-1 hash of a namespace identifier (which is a UUID) and a name (which is a string).
+    # uuid.uuid4()
+    # Generate a random UUID.
+    akw.Function(
+        mod=m,
+        name='uuid4',
+        return_type='ackward::uuid::UUID')
+
+    akw.Function(
+        mod=m,
+        name='uuid5',
+        signature=[('ackward::uuid::UUID', 'name_space'),
+                   ('std::string', 'name')],
+        return_type='ackward::uuid::UUID')
+
 # The uuid module defines the following namespace identifiers for use with uuid3() or uuid5().
 
 # uuid.NAMESPACE_DNS
