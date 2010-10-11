@@ -23,9 +23,9 @@ def build_signature(sig, header):
     '''
     def arg(a):
         if len(a) == 3 and header:
-            return '\tboost::call_traits<%s>::const_reference %s = %s' % (a[0], a[1], a[2])
+            return 'boost::call_traits<%s>::const_reference %s = %s' % (a[0], a[1], a[2])
         elif len(a) == 2 or len(a) == 3:
-            return '\tboost::call_traits<%s>::const_reference %s' % (a[0], a[1])
+            return 'boost::call_traits<%s>::const_reference %s' % (a[0], a[1])
         else:
             raise ValueError('Signatures must be of the form (type, name[, default])')
 
