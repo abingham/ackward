@@ -3,6 +3,7 @@ import build_utils
 Import(['env'])
 
 akw_files = [
+    'Module.akw',
     'UUID.akw',
     ]
 

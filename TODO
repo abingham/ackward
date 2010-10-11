@@ -56,7 +56,7 @@ Datetime
 
 UUID
 ====
-* implement this
+* Figure out why getnode segfaults when not under the debugger.
 
 Next Version
 ============

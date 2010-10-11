@@ -3,6 +3,7 @@
 #include <boost/tuple/tuple_comparison.hpp>
 
 #include <ackward/core/Exceptions.hpp>
+#include <ackward/uuid/Module.hpp>
 #include <ackward/uuid/UUID.hpp>
 
 #include <iostream>
@@ -184,6 +185,35 @@ BOOST_AUTO_TEST_CASE( uuid_version_fields )
     BOOST_CHECK_THROW(
         UUID::fromFields(f, 6),
         ValueError);
+}
+
+BOOST_AUTO_TEST_CASE( uuid_getnode )
+{
+    // TODO: Figure out why getnode() kills the test program.
+
+    // std::cout << ackward::uuid::getnode() << std::endl;
+}
+
+BOOST_AUTO_TEST_CASE( uuid_uuid1_0 )
+{
+    // TODO: This implicitly calls getnode(). Figure out why getnode()
+    // kills the test program.
+
+    // UUID uuid = ackward::uuid::uuid1();
+    // uuid.hex(); // Just to give the instance something to do and avoid
+                // a compiler warning.
+}
+
+BOOST_AUTO_TEST_CASE( uuid_uuid1_1 )
+{
+    UUID uuid = ackward::uuid::uuid1(1234);
+    uuid.hex();
+}
+
+BOOST_AUTO_TEST_CASE( uuid_uuid1_2 )
+{
+    UUID uuid = ackward::uuid::uuid1(1234, 5678);
+    uuid.hex();
 }
 
 BOOST_AUTO_TEST_SUITE_END()
