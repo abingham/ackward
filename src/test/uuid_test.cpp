@@ -1,3 +1,6 @@
+#include <list>
+
+#include <boost/assign/list_of.hpp>
 #include <boost/foreach.hpp>
 #include <boost/test/unit_test.hpp>
 #include <boost/tuple/tuple_comparison.hpp>
@@ -218,9 +221,19 @@ BOOST_AUTO_TEST_CASE( uuid_uuid1_2 )
 
 BOOST_AUTO_TEST_CASE( uuid_uuid3 )
 {
-    UUID uuid = ackward::uuid::uuid3(
-        ackward::uuid::NAMESPACE_DNS(), "monkey");
-    uuid.hex();
+    const std::list<UUID> namespaces = 
+        boost::assign::list_of
+        (NAMESPACE_DNS())
+        (NAMESPACE_URL())
+        (NAMESPACE_OID())
+        (NAMESPACE_X500());
+
+    BOOST_FOREACH(UUID u, namespaces)
+    {
+        UUID uuid = ackward::uuid::uuid3(
+            u, "monkey");
+        uuid.hex();
+    }
 }
 
 BOOST_AUTO_TEST_CASE( uuid_uuid4 )
@@ -231,14 +244,39 @@ BOOST_AUTO_TEST_CASE( uuid_uuid4 )
 
 BOOST_AUTO_TEST_CASE( uuid_uuid5 )
 {
-    UUID uuid = ackward::uuid::uuid5(
-        ackward::uuid::NAMESPACE_DNS(), "llama");
-    uuid.hex();
+    const std::list<UUID> namespaces = 
+        boost::assign::list_of
+        (NAMESPACE_DNS())
+        (NAMESPACE_URL())
+        (NAMESPACE_OID())
+        (NAMESPACE_X500());
+
+    BOOST_FOREACH( UUID u, namespaces )
+    {
+        UUID uuid = ackward::uuid::uuid5(
+            u, "llama");
+        uuid.hex();
+    }
 }
 
 BOOST_AUTO_TEST_CASE( uuid_namespace_dns )
 {
     ackward::uuid::NAMESPACE_DNS().hex();
+}
+
+BOOST_AUTO_TEST_CASE( uuid_namespace_url )
+{
+    ackward::uuid::NAMESPACE_URL().hex();
+}
+
+BOOST_AUTO_TEST_CASE( uuid_namespace_oid )
+{
+    ackward::uuid::NAMESPACE_OID().hex();
+}
+
+BOOST_AUTO_TEST_CASE( uuid_namespace_x500 )
+{
+    ackward::uuid::NAMESPACE_X500().hex();
 }
 
 BOOST_AUTO_TEST_SUITE_END()

@@ -66,13 +66,18 @@ def definition():
     # uuid.NAMESPACE_DNS
     # When this namespace is specified, the name string is a
     # fully-qualified domain name.
-    akw.ModuleProperty(
-        mod=m,
-        name='NAMESPACE_DNS',
-        type='ackward::uuid::UUID')
+    for ns in ['DNS', 'URL', 'OID', 'X500']:
+        akw.ModuleProperty(
+            mod=m,
+            name='NAMESPACE_%s' % ns,
+            type='ackward::uuid::UUID')
 
-# uuid.NAMESPACE_URL
-# When this namespace is specified, the name string is a URL.
+    # uuid.NAMESPACE_URL
+    # When this namespace is specified, the name string is a URL.
+    # akw.ModuleProperty(
+    #     mod=m,
+    #     name='NAMESPACE_DNS',
+    #     type='ackward::uuid::UUID')
 
 # uuid.NAMESPACE_OID
 # When this namespace is specified, the name string is an ISO OID.
