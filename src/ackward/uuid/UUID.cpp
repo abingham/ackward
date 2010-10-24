@@ -1,10 +1,14 @@
 #include <ackward/uuid/UUID.hpp>
 
+#include <sstream>
+
+#include <boost/foreach.hpp>
 #include <boost/python/object.hpp>
 
 #include <ackward/core/Exceptions.hpp>
 #include <ackward/core/ExceptionTranslator.hpp>
 #include <ackward/core/Tuple.hpp>
+#include <ackward/core/Util.hpp>
 
 using namespace boost::python;
 
@@ -31,7 +35,7 @@ UUID UUID::fromHex(const std::string& hex,
     } TRANSLATE_PYTHON_EXCEPTION();
 }
 
-UUID UUID::fromBytes(const std::string& bytes)
+UUID UUID::fromBytes(const Bytes& bytes)
 {
     try {
         object obj = UUID::cls()(object(), 
@@ -40,7 +44,7 @@ UUID UUID::fromBytes(const std::string& bytes)
     } TRANSLATE_PYTHON_EXCEPTION();
 }
 
-UUID UUID::fromBytes(const std::string& bytes,
+UUID UUID::fromBytes(const Bytes& bytes,
                      uint8_t version)
 {
     try {
@@ -54,7 +58,7 @@ UUID UUID::fromBytes(const std::string& bytes,
     } TRANSLATE_PYTHON_EXCEPTION();
 }
 
-UUID UUID::fromBytes_LE(const std::string& bytes_le)
+UUID UUID::fromBytes_LE(const Bytes& bytes_le)
 {
     try {
         object obj = UUID::cls()(object(), 
@@ -64,7 +68,7 @@ UUID UUID::fromBytes_LE(const std::string& bytes_le)
     } TRANSLATE_PYTHON_EXCEPTION();
 }
 
-UUID UUID::fromBytes_LE(const std::string& bytes_le,
+UUID UUID::fromBytes_LE(const Bytes& bytes_le,
                         uint8_t version)
 {
     try {
@@ -137,6 +141,13 @@ uint8_t UUID::version() const
 }
 
 #include <ackward/uuid/UUID_akw.ipp>
+
+std::wostream& operator<<(std::wostream& os,
+                          const UUID& uuid)
+{
+    os << ackward::core::str(uuid.obj());
+    return os;
+}
 
 } // namespace uuid
 } // namespace ackward

@@ -1,8 +1,10 @@
 #ifndef INCLUDE_ACKWARD_UUID_UUID_HPP
 #define INCLUDE_ACKWARD_UUID_UUID_HPP
 
+#include <iosfwd>
 #include <string>
 
+#include <boost/array.hpp>
 // #include <boost/call_traits.hpp>
 #include <boost/cstdint.hpp>
 // #include <boost/integer.hpp>
@@ -28,6 +30,8 @@ typedef boost::tuple<unsigned long, // time_low
                      unsigned long> // node
     Fields;
 
+typedef boost::array<unsigned char, 16> Bytes;
+
 class UUID : private ackward::core::Object
 {
 public:
@@ -35,12 +39,12 @@ public:
     static UUID fromHex(const std::string&, 
                         uint8_t version);
 
-    static UUID fromBytes(const std::string&);
-    static UUID fromBytes(const std::string&,
+    static UUID fromBytes(const Bytes&);
+    static UUID fromBytes(const Bytes&,
                           uint8_t version);
 
-    static UUID fromBytes_LE(const std::string&_le);
-    static UUID fromBytes_LE(const std::string&_le,
+    static UUID fromBytes_LE(const Bytes& le);
+    static UUID fromBytes_LE(const Bytes& le,
                              uint8_t version);
 
     static UUID fromFields(const Fields&);
@@ -59,6 +63,8 @@ public:
 public:
     #include <ackward/uuid/UUID_akw.hpp>
 };
+
+std::wostream& operator<<(std::wostream&, const UUID&);
 
 } // namespace uuid
 } // namespace ackward

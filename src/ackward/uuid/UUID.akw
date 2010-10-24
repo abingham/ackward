@@ -9,13 +9,13 @@ def definition():
     akw.Property(
         cls=c,
         name='bytes',
-        type='std::string',
+        type='Bytes',
         read_only=True)
 
     akw.Property(
         cls=c,
         name='bytes_le',
-        type='std::string',
+        type='Bytes',
         read_only=True)
 
     akw.Property(

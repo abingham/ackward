@@ -54,6 +54,13 @@ std::wstring repr(object obj)
     return std::wstring(sz.begin(), sz.end());
 }
 
+std::wstring str(object obj)
+{
+    object r = object(handle<>(PyObject_Str(obj.ptr())));
+    std::string sz(PyString_AsString(r.ptr()));
+    return std::wstring(sz.begin(), sz.end());
+}
+
 bool isInstance(boost::python::object obj,
                 const std::string& typeName)
 {

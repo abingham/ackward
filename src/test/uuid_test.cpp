@@ -6,6 +6,7 @@
 #include <boost/tuple/tuple_comparison.hpp>
 
 #include <ackward/core/Exceptions.hpp>
+#include <ackward/core/Util.hpp>
 #include <ackward/uuid/Module.hpp>
 #include <ackward/uuid/UUID.hpp>
 
@@ -36,23 +37,25 @@ BOOST_AUTO_TEST_CASE( uuid_fromHex )
 
 BOOST_AUTO_TEST_CASE( uuid_fromBytes )
 {
-    UUID uuid = UUID::fromBytes("\x12\x34\x56\x78\x12\x34\x56\x78\x12\x34\x56\x78\x12\x34\x56\x78");
-    BOOST_CHECK(uuid.bytes() == "\x12\x34\x56\x78\x12\x34\x56\x78\x12\x34\x56\x78\x12\x34\x56\x78");
-    BOOST_CHECK(uuid.hex() == "12345678123456781234567812345678");
+    Bytes b;
 
-    BOOST_CHECK_THROW(
-        UUID::fromBytes("\xasdfadfadfadadf"),
-        ValueError);
+    std::string val("\x12\x34\x56\x78\x12\x34\x56\x78\x12\x34\x56\x78\x12\x34\x56\x78");
+    std::copy(val.begin(), val.end(), b.begin());
+
+    UUID uuid = UUID::fromBytes(b);
+    BOOST_CHECK(uuid.bytes() == b);
+    BOOST_CHECK(uuid.hex() == "12345678123456781234567812345678");
 }
 
 BOOST_AUTO_TEST_CASE( uuid_fromBytes_LE )
 {
-    UUID uuid = UUID::fromBytes_LE("\x78\x56\x34\x12\x34\x12\x78\x56\x12\x34\x56\x78\x12\x34\x56\x78");
-    BOOST_CHECK(uuid.bytes_le() == "\x78\x56\x34\x12\x34\x12\x78\x56\x12\x34\x56\x78\x12\x34\x56\x78");
-    
-    BOOST_CHECK_THROW(
-        UUID::fromBytes("\xde\xad\xbe\xef"),
-        ValueError);
+    Bytes b;
+
+    std::string val("\x78\x56\x34\x12\x34\x12\x78\x56\x12\x34\x56\x78\x12\x34\x56\x78");
+    std::copy(val.begin(), val.end(), b.begin());
+
+    UUID uuid = UUID::fromBytes_LE(b);
+    BOOST_CHECK(uuid.bytes_le() == b);
 }
 
 BOOST_AUTO_TEST_CASE( uuid_fromFields )
@@ -98,10 +101,10 @@ BOOST_AUTO_TEST_CASE( uuid_version )
         UUID::fromHex("12345678123456781234567812345678").version() == 0);
 
     BOOST_CHECK(
-        UUID::fromBytes("\x12\x34\x56\x78\x12\x34\x56\x78\x12\x34\x56\x78\x12\x34\x56\x78").version() == 0);
+        UUID::fromBytes(Bytes()).version() == 0);
 
     BOOST_CHECK(
-        UUID::fromBytes_LE("\x78\x56\x34\x12\x34\x12\x78\x56\x12\x34\x56\x78\x12\x34\x56\x78").version() == 0);
+        UUID::fromBytes_LE(Bytes()).version() == 0);
 
     BOOST_CHECK(
         UUID::fromFields(
@@ -133,35 +136,43 @@ BOOST_AUTO_TEST_CASE( uuid_version_hex )
 
 BOOST_AUTO_TEST_CASE( uuid_version_bytes )
 {
+    Bytes b;
+    std::string val("\x12\x34\x56\x78\x12\x34\x56\x78\x12\x34\x56\x78\x12\x34\x56\x78");
+    std::copy(val.begin(), val.end(), b.begin());
+
     for (uint8_t i = 1; i < 6; ++i)
     {
-        UUID uuid = UUID::fromBytes("\x12\x34\x56\x78\x12\x34\x56\x78\x12\x34\x56\x78\x12\x34\x56\x78", i);
+        UUID uuid = UUID::fromBytes(b, i);
         BOOST_CHECK(uuid.version() == i);
     }
 
     BOOST_CHECK_THROW(
-        UUID::fromBytes("\x12\x34\x56\x78\x12\x34\x56\x78\x12\x34\x56\x78\x12\x34\x56\x78", 0),
+        UUID::fromBytes(b, 0),
         ValueError);
 
     BOOST_CHECK_THROW(
-        UUID::fromBytes("\x12\x34\x56\x78\x12\x34\x56\x78\x12\x34\x56\x78\x12\x34\x56\x78", 6),
+        UUID::fromBytes(b, 6),
         ValueError);
 }
 
 BOOST_AUTO_TEST_CASE( uuid_version_bytes_le )
 {
+    Bytes b;
+    std::string val("\x12\x34\x56\x78\x12\x34\x56\x78\x12\x34\x56\x78\x12\x34\x56\x78");
+    std::copy(val.begin(), val.end(), b.begin());
+
     for (uint8_t i = 1; i < 6; ++i)
     {
-        UUID uuid = UUID::fromBytes_LE("\x12\x34\x56\x78\x12\x34\x56\x78\x12\x34\x56\x78\x12\x34\x56\x78", i);
+        UUID uuid = UUID::fromBytes_LE(b, i);
         BOOST_CHECK(uuid.version() == i);
     }
 
     BOOST_CHECK_THROW(
-        UUID::fromBytes_LE("\x12\x34\x56\x78\x12\x34\x56\x78\x12\x34\x56\x78\x12\x34\x56\x78", 0),
+        UUID::fromBytes_LE(b, 0),
         ValueError);
 
     BOOST_CHECK_THROW(
-        UUID::fromBytes_LE("\x12\x34\x56\x78\x12\x34\x56\x78\x12\x34\x56\x78\x12\x34\x56\x78", 6),
+        UUID::fromBytes_LE(b, 6),
         ValueError);
 }
 
@@ -194,7 +205,7 @@ BOOST_AUTO_TEST_CASE( uuid_getnode )
 {
     // TODO: Figure out why getnode() kills the test program.
 
-    // std::cout << ackward::uuid::getnode() << std::endl;
+    // ackward::uuid::getnode();
 }
 
 BOOST_AUTO_TEST_CASE( uuid_uuid1_0 )
@@ -277,6 +288,37 @@ BOOST_AUTO_TEST_CASE( uuid_namespace_oid )
 BOOST_AUTO_TEST_CASE( uuid_namespace_x500 )
 {
     ackward::uuid::NAMESPACE_X500().hex();
+}
+
+BOOST_AUTO_TEST_CASE( uuid_example_test )
+{
+    Bytes b;
+    for (int i = 0; i < 16; ++i) { b[i] = i; }
+
+    // make a UUID based on the host ID and current time
+    // uuid1(); // TODO: Fails in implicit getnode()
+
+    // make a UUID using an MD5 hash of a namespace UUID and a name
+    uuid3(NAMESPACE_DNS(), "python.org");
+
+    // make a random UUID
+    uuid4();
+
+    // make a UUID using a SHA-1 hash of a namespace UUID and a name
+    uuid5(NAMESPACE_DNS(), "python.org");
+
+    // make a UUID from a string of hex digits (braces and hyphens
+    // ignored)
+    UUID x = UUID::fromHex("{00010203-0405-0607-0809-0a0b0c0d0e0f}");
+    BOOST_CHECK( ackward::core::str(x) == L"00010203-0405-0607-0809-0a0b0c0d0e0f" );
+    
+    x = UUID::fromBytes(b);
+    BOOST_CHECK( x.bytes() == b );
+
+    // # make a UUID from a 16-byte string
+    UUID::fromBytes(x.bytes());
+    
+    UUID::fromHex("00010203-0405-0607-0809-0a0b0c0d0e0f");
 }
 
 BOOST_AUTO_TEST_SUITE_END()

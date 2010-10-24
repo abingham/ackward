@@ -56,6 +56,12 @@ Datetime
 
 UUID
 ====
+* Bytes v. str issue
+  * To-python: we need to convert from array<16> to str directly
+    without passing through any sort of zero-terminated string. Just
+    write a converter.
+  * From-python: Same basic issue...we don't want a zero-terminated
+    string anywhere. Another direct converter.
 * Figure out why getnode segfaults when not under the debugger.
 
 Next Version

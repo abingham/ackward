@@ -19,6 +19,9 @@ boost::python::object
 next(boost::python::object iterator);
 
 std::wstring repr(boost::python::object);
+std::wstring str(boost::python::object);
+template <typename T>
+std::wstring str(const T& t) { return ackward::core::str(t.obj()); }
 
 /** Determine if an object is of a specified type.
 

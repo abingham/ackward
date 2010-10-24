@@ -1,5 +1,6 @@
 #include <ackward/uuid/Initialize.hpp>
 
+#include <ackward/core/ByteArray.hpp>
 #include <ackward/core/Enum.hpp>
 #include <ackward/core/PythonConverter.hpp>
 #include <ackward/uuid/Module.hpp>
@@ -20,6 +21,8 @@ void initialize()
         .add(RESERVED_MICROSOFT, module().attr("RESERVED_MICROSOFT"))
         .add(RESERVED_FUTURE, module().attr("RESERVED_FUTURE"))
         ;
+
+    ackward::core::ByteArray_python_converter<16> temp;
 }
 
 } // namespace uuid
