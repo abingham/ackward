@@ -2,9 +2,12 @@
 #define INCLUDE_ACKWARD_CORE_TUPLE_HPP
 
 #include <Python.h>
-#include <boost/tuple/tuple.hpp>
+#include <boost/preprocessor/repetition/enum.hpp>
+#include <boost/preprocessor/repetition/repeat_from_to.hpp>
 #include <boost/python/extract.hpp>
+#include <boost/python/to_python_converter.hpp>
 #include <boost/python/tuple.hpp>
+#include <boost/tuple/tuple.hpp>
 
 #include <iostream>
 
@@ -137,6 +140,117 @@ convertTuple(const T& t)
 {
     return detail::ConvertTuple<T, boost::tuples::length<T>::value>()(t);
 }
+
+namespace detail {
+
+template <typename Tuple, int Size>
+struct convert_tuple {
+    static PyObject* convert(const Tuple& t);
+};
+
+// template <typename Tuple>
+// PyObject* convert<Tuple, 1>(const Tuple& t) { ... }
+
+// template <typename Tuple>
+// PyObject* convert<Tuple, 2>(const Tuple& t) { ... }
+
+#define CONVERT_ELEMENT(z, n, _) boost::get<n>(t)
+
+#define CONVERT_TUPLE(z, size, _)                    \
+template <typename Tuple>                            \
+struct convert_tuple<Tuple, size> {                  \
+    static PyObject* convert(const Tuple& t) {       \
+        using namespace boost::python;               \
+                                                     \
+        tuple rval =                                 \
+            make_tuple(                              \
+                BOOST_PP_ENUM(size, CONVERT_ELEMENT, _) \
+                );                                      \
+                                                        \
+        return incref(rval.ptr());                      \
+    }                                                   \
+};
+
+// define DECL(z, n, text) text ## n = n;
+
+#ifndef TUPLE_CONVERTER_SIZE_LIMIT
+#define TUPLE_CONVERTER_SIZE_LIMIT 11
+#endif
+
+BOOST_PP_REPEAT_FROM_TO(1, TUPLE_CONVERTER_SIZE_LIMIT, CONVERT_TUPLE, _)
+
+} // namespace detail
+
+template <typename Tuple>
+class TupleConverter {
+public:
+    /* The convert function for boost.python's converter system
+     */
+    static PyObject* convert(const Tuple& t)
+        {
+            return ackward::core::detail::convert_tuple<Tuple, boost::tuples::length<Tuple>::value>::convert(t);
+        }
+
+    /* initialize the boost.python conversion system. This can be
+       called as many times as you want; only the first one has any
+       effect.
+    */
+    static void initialize()
+        {
+            static bool initialized = false;
+            
+            if (initialized) return;
+            
+            initialized = true;
+            
+            boost::python::to_python_converter<
+            Tuple, ackward::core::TupleConverter<Tuple> >();
+            
+            //boost::python::converter::registry::push_back(
+            //    &convertible,
+            //    &construct,
+            //    boost::python::type_id<Tuple>());
+        }
+
+// private:
+//     /* The convertible function for boost.python's converter system
+//      */
+//     static void* convertible(PyObject* obj_ptr)
+//         {
+//             BOOST_FOREACH(const typename Entries::value_type& entry, entries_)
+//             {
+//                 if (PyObject_Compare(entry.second.ptr(), obj_ptr) == 0)
+//                     return obj_ptr;
+//             }
+
+//             return 0;
+//         }
+
+//     /* The construct function for boost.python's converter system
+//      */
+//     static void construct(
+//         PyObject* obj_ptr,
+//         boost::python::converter::rvalue_from_python_stage1_data* data)
+//         {
+//             using namespace boost::python;
+
+//             BOOST_FOREACH(const typename Entries::value_type& entry, entries_)
+//             {
+//                 if (PyObject_Compare(entry.second.ptr(), obj_ptr) == 0)
+//                 {
+//                     void* storage = (
+//                         (converter::rvalue_from_python_storage<E>*)
+//                         data)->storage.bytes;
+//                     new (storage) E(entry.first);
+//                     data->convertible = storage;
+                    
+//                     return;
+//                 }
+//             }
+
+//             throw error_already_set();
+//         }
+};
 
 } // namespace core
 } // namespace ackward
