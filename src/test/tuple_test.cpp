@@ -35,10 +35,10 @@ BOOST_AUTO_TEST_CASE( round_trip )
     BOOST_CHECK(extract<float>(pytup[1])() == float(6.9));
     BOOST_CHECK(extract<std::string>(pytup[2])() == "hola bili!");
 
-    // Tuple t2 = extract<Tuple>(obj);
-    // BOOST_CHECK(boost::get<0>(t2) == 42);
-    // BOOST_CHECK(boost::get<1>(t2) == 6.9);
-    // BOOST_CHECK(boost::get<2>(t2) == "hola bili!");
+    Tuple t2 = extract<Tuple>(obj);
+    BOOST_CHECK(boost::get<0>(t2) == 42);
+    BOOST_CHECK(boost::get<1>(t2) == float(6.9));
+    BOOST_CHECK(boost::get<2>(t2) == "hola bili!");
 }
 
 BOOST_AUTO_TEST_SUITE_END()

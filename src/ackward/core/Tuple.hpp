@@ -154,7 +154,18 @@ struct convert_tuple {
 // template <typename Tuple>
 // PyObject* convert<Tuple, 2>(const Tuple& t) { ... }
 
-#define CONVERT_ELEMENT(z, n, _) boost::get<n>(t)
+#define CONVERT_TUPLE_ELEMENT_TO(z, n, _) boost::get<n>(t)
+
+#define CHECK_TUPLE_ELEMENT_CONVERTIBLE(z, n, _)      \
+{                                                     \
+    PyObject* elem_ptr = PyTuple_GetItem(obj_ptr, n); \
+}
+// if (!canConvertTo<boost::tuples::element<Tuple, n>::type>(elem_ptr))
+//     return 0;                                                     
+// }
+
+#define CONVERT_TUPLE_ELEMENT_FROM(z, n, _) \
+extract<typename boost::tuples::element<n, Tuple>::type>(object(handle<>(borrowed(PyTuple_GetItem(obj_ptr, n)))))
 
 #define CONVERT_TUPLE(z, size, _)                    \
 template <typename Tuple>                            \
@@ -162,13 +173,41 @@ struct convert_tuple<Tuple, size> {                  \
     static PyObject* convert(const Tuple& t) {       \
         using namespace boost::python;               \
                                                      \
-        tuple rval =                                 \
-            make_tuple(                              \
-                BOOST_PP_ENUM(size, CONVERT_ELEMENT, _) \
-                );                                      \
-                                                        \
-        return incref(rval.ptr());                      \
-    }                                                   \
+        tuple rval =                                             \
+            make_tuple(                                          \
+                BOOST_PP_ENUM(size, CONVERT_TUPLE_ELEMENT_TO, _) \
+                );                                               \
+                                                                 \
+        return incref(rval.ptr());                               \
+    }                                                            \
+                                                                 \
+    static void* convertible(PyObject* obj_ptr) {                \
+        using namespace boost::python;                           \
+                                                                 \
+        if (!PyTuple_Check(obj_ptr)) return 0;                   \
+        if (!PyTuple_Size(obj_ptr) == size) return 0;                   \
+                                                                        \
+        BOOST_PP_REPEAT(size, CHECK_TUPLE_ELEMENT_CONVERTIBLE, _)       \
+                                                                        \
+        return obj_ptr;                                                 \
+    }                                                                   \
+                                                                        \
+    static void construct(                                              \
+        PyObject* obj_ptr,                                              \
+        boost::python::converter::rvalue_from_python_stage1_data* data) \
+    {                                                                   \
+        using namespace boost::python;                                  \
+                                                                        \
+        void* storage = (                                               \
+            (converter::rvalue_from_python_storage<Tuple>*)             \
+            data)->storage.bytes;                                       \
+                                                                        \
+        new (storage) Tuple(                                            \
+            BOOST_PP_ENUM(size, CONVERT_TUPLE_ELEMENT_FROM, _)          \
+            );                                                          \
+                                                                        \
+        data->convertible = storage;                                    \
+    }                                                                   \
 };
 
 #ifndef TUPLE_CONVERTER_SIZE_LIMIT
@@ -206,44 +245,28 @@ public:
             boost::python::to_python_converter<
             Tuple, ackward::core::TupleConverter<Tuple> >();
             
-            //boost::python::converter::registry::push_back(
-            //    &convertible,
-            //    &construct,
-            //    boost::python::type_id<Tuple>());
+            boost::python::converter::registry::push_back(
+                &convertible,
+                &construct,
+                boost::python::type_id<Tuple>());
         }
 
 private:
     /* The convertible function for boost.python's converter system
      */
-    // static void* convertible(PyObject* obj_ptr)
-    //     {
-    //         return Impl::convertible(obj_ptr);
-    //     }
-
-//     /* The construct function for boost.python's converter system
-//      */
-//     static void construct(
-//         PyObject* obj_ptr,
-//         boost::python::converter::rvalue_from_python_stage1_data* data)
-//         {
-//             using namespace boost::python;
-
-//             BOOST_FOREACH(const typename Entries::value_type& entry, entries_)
-//             {
-//                 if (PyObject_Compare(entry.second.ptr(), obj_ptr) == 0)
-//                 {
-//                     void* storage = (
-//                         (converter::rvalue_from_python_storage<E>*)
-//                         data)->storage.bytes;
-//                     new (storage) E(entry.first);
-//                     data->convertible = storage;
-                    
-//                     return;
-//                 }
-//             }
-
-//             throw error_already_set();
-//         }
+    static void* convertible(PyObject* obj_ptr)
+        {
+            return Impl::convertible(obj_ptr);
+        }
+    
+     /* The construct function for boost.python's converter system
+      */
+     static void construct(
+         PyObject* obj_ptr,
+         boost::python::converter::rvalue_from_python_stage1_data* data)
+         {
+             return Impl::construct(obj_ptr, data);
+         }
 };
 
 } // namespace core
