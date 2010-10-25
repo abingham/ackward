@@ -171,8 +171,6 @@ struct convert_tuple<Tuple, size> {                  \
     }                                                   \
 };
 
-// define DECL(z, n, text) text ## n = n;
-
 #ifndef TUPLE_CONVERTER_SIZE_LIMIT
 #define TUPLE_CONVERTER_SIZE_LIMIT 11
 #endif
@@ -184,11 +182,13 @@ BOOST_PP_REPEAT_FROM_TO(1, TUPLE_CONVERTER_SIZE_LIMIT, CONVERT_TUPLE, _)
 template <typename Tuple>
 class TupleConverter {
 public:
+    typedef detail::convert_tuple<Tuple, boost::tuples::length<Tuple>::value> Impl;
+
     /* The convert function for boost.python's converter system
      */
     static PyObject* convert(const Tuple& t)
         {
-            return ackward::core::detail::convert_tuple<Tuple, boost::tuples::length<Tuple>::value>::convert(t);
+            return Impl::convert(t);
         }
 
     /* initialize the boost.python conversion system. This can be
@@ -212,19 +212,13 @@ public:
             //    boost::python::type_id<Tuple>());
         }
 
-// private:
-//     /* The convertible function for boost.python's converter system
-//      */
-//     static void* convertible(PyObject* obj_ptr)
-//         {
-//             BOOST_FOREACH(const typename Entries::value_type& entry, entries_)
-//             {
-//                 if (PyObject_Compare(entry.second.ptr(), obj_ptr) == 0)
-//                     return obj_ptr;
-//             }
-
-//             return 0;
-//         }
+private:
+    /* The convertible function for boost.python's converter system
+     */
+    // static void* convertible(PyObject* obj_ptr)
+    //     {
+    //         return Impl::convertible(obj_ptr);
+    //     }
 
 //     /* The construct function for boost.python's converter system
 //      */
