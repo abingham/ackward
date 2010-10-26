@@ -45,16 +45,16 @@ subdirs = [
 
 for subdir in subdirs:
     try:
-        bdir = os.path.join(env['BUILD_DIR'], 
+        vdir = os.path.join(env['BUILD_DIR'], 
                             env['VARIANT'], 
                             subdir)
     except KeyError:
-        bdir = None
+        vdir = None
 
     env.SConscript(
         os.path.join(subdir, 
                      'SConscript'), 
         exports='env',
-        build_dir=bdir)
+        variant_dir=vdir)
 
 env.Default('all')

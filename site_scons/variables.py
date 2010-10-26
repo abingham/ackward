@@ -31,12 +31,12 @@ def check_config(env):
                              'Python.h' : 'python' }.items():
         if not conf.CheckCXXHeader(header):
             print 'Missing header %s. %s must be installed!' % (header, package)
-            Exit(1)
+            env.Exit(1)
 
     for libs, package in [ (env['BOOST_LIBS'], 'boost.python'),
                            (env['PYTHON_LIBS'], 'python')]:
         if not conf.CheckLib(libs, language='C++'):
             print 'Missing library/ies %s. %s must be installed!' % (libs, package)
-            Exit(1)
+            env.Exit(1)
 
     return conf.Finish()
