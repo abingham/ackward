@@ -16,7 +16,10 @@ namespace detail {
 #endif
 
 #define ACKWARD_CORE_DETAIL_TUPLE_CONVERT_ELEMENT_FROM_PYOBJECT(z, n, _) \
-extract<typename boost::tuples::element<n, Tuple>::type>(object(handle<>(borrowed(PyTuple_GetItem(obj_ptr, n)))))
+boost::python::extract<typename boost::tuples::element<n, Tuple>::type>(boost::python::object(boost::python::handle<>(boost::python::borrowed(PyTuple_GetItem(obj_ptr, n)))))
+
+#define ACKWARD_CORE_DETAIL_TUPLE_CONVERT_ELEMENT_FROM_OBJECT(z, n, _) \
+boost::python::extract<typename boost::tuples::element<n, Tuple>::type>(t[n])
 
 #define ACKWARD_CORE_DETAIL_GET_TUPLE_ELEMENT_CPP(z, n, _) boost::get<n>(t)
 
@@ -24,83 +27,26 @@ extract<typename boost::tuples::element<n, Tuple>::type>(object(handle<>(borrowe
  * ackward/core/Tuple.hpp for the public functions.
  */
 
-template <typename T, int Length>
+template <typename Tuple, int Length>
 class ConvertTuple {};
 
-template <typename T>
-struct ConvertTuple<T, 2>
-{
-    T operator()(boost::python::tuple t)
-        {
-            return boost::make_tuple(
-                boost::python::extract<typename boost::tuples::element<0, T>::type>(
-                    t[0])(),
-                boost::python::extract<typename boost::tuples::element<1, T>::type>(
-                    t[1])());
-        }   
-    
-    boost::python::tuple operator()(const T& t)
-        {
-            return boost::python::make_tuple(
-                boost::tuples::get<0>(t),
-                boost::tuples::get<1>(t));
-        }
+#define ACKWARD_CORE_DETAIL_CONVERT_TUPLE(z, size, _) \
+template <typename Tuple>                                 \
+struct ConvertTuple<Tuple, size> {                        \
+    Tuple operator()(boost::python::tuple t) {            \
+        return Tuple(                                                   \
+            BOOST_PP_ENUM(size, ACKWARD_CORE_DETAIL_TUPLE_CONVERT_ELEMENT_FROM_OBJECT, 1) \
+            );                                                          \
+    }                                                                   \
+                                                                        \
+    boost::python::tuple operator()(const Tuple&  t) {                  \
+        return boost::python::make_tuple(                               \
+            BOOST_PP_ENUM(size, ACKWARD_CORE_DETAIL_GET_TUPLE_ELEMENT_CPP, 1) \
+            );                                                          \
+    }                                                                   \
 };
 
-template <typename T>
-struct ConvertTuple<T, 3>
-{
-    T operator()(boost::python::tuple t)
-        {
-            return boost::make_tuple(
-                boost::python::extract<typename boost::tuples::element<0, T>::type>(
-                    t[0])(),
-                boost::python::extract<typename boost::tuples::element<1, T>::type>(
-                    t[1])(),
-                boost::python::extract<typename boost::tuples::element<2, T>::type>(
-                    t[2])());
-        }   
-
-    boost::python::tuple operator()(const T& t)
-        {
-            return boost::python::make_tuple(
-                boost::tuples::get<0>(t),
-                boost::tuples::get<1>(t),
-                boost::tuples::get<2>(t));
-        }
-};
-
-template <typename T>
-struct ConvertTuple<T, 6>
-{
-    T operator()(boost::python::tuple t)
-        {
-            return boost::make_tuple(
-                boost::python::extract<typename boost::tuples::element<0, T>::type>(
-                    t[0])(),
-                boost::python::extract<typename boost::tuples::element<1, T>::type>(
-                    t[1])(),
-                boost::python::extract<typename boost::tuples::element<2, T>::type>(
-                    t[2])(),
-                boost::python::extract<typename boost::tuples::element<3, T>::type>(
-                    t[3])(),
-                boost::python::extract<typename boost::tuples::element<4, T>::type>(
-                    t[4])(),
-                boost::python::extract<typename boost::tuples::element<5, T>::type>(
-                    t[5])());
-        }   
-
-    boost::python::tuple operator()(const T& t)
-        {
-            return boost::python::make_tuple(
-                boost::tuples::get<0>(t),
-                boost::tuples::get<1>(t),
-                boost::tuples::get<2>(t),
-                boost::tuples::get<3>(t),
-                boost::tuples::get<4>(t),
-                boost::tuples::get<5>(t));
-        }
-};
+BOOST_PP_REPEAT_FROM_TO(1, ACKWARD_CORE_TUPLE_CONVERTER_SIZE_LIMIT, ACKWARD_CORE_DETAIL_CONVERT_TUPLE, _)
 
 template <typename Tuple, int Size>
 struct convert_tuple {
