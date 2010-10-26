@@ -2,9 +2,6 @@
 #define INCLUDE_ACKWARD_CORE_TUPLE_HPP
 
 #include <Python.h>
-#include <boost/preprocessor/repetition/enum.hpp>
-#include <boost/preprocessor/repetition/repeat_from_to.hpp>
-#include <boost/python/extract.hpp>
 #include <boost/python/to_python_converter.hpp>
 #include <boost/python/tuple.hpp>
 #include <boost/tuple/tuple.hpp>
@@ -64,11 +61,11 @@ public:
             return Impl::convert(t);
         }
 
-    /* initialize the boost.python conversion system. This can be
+    /* Register this converter with boost.python. This can be
        called as many times as you want; only the first one has any
        effect.
     */
-    static void initialize()
+    static void registerConverter()
         {
             static bool initialized = false;
             

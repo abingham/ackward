@@ -21,12 +21,12 @@ BOOST_AUTO_TEST_SUITE( Core_tuple )
 
 BOOST_AUTO_TEST_CASE( initialize )
 {
-    TupleConverter< ::Tuple >::initialize();
+    TupleConverter< ::Tuple >::registerConverter();
 }
 
 BOOST_AUTO_TEST_CASE( round_trip )
 {
-    TupleConverter< ::Tuple >::initialize();
+    TupleConverter< ::Tuple >::registerConverter();
 
     Tuple t(42, 6.9, "hola bili!");
     object obj(t);

@@ -1,6 +1,10 @@
 #ifndef INCLUDE_ACKWARD_CORE_DETAIL_TUPLE_HPP
 #define INCLUDE_ACKWARD_CORE_DETAIL_TUPLE_HPP
 
+#include <boost/preprocessor/repetition/enum.hpp>
+#include <boost/preprocessor/repetition/repeat_from_to.hpp>
+#include <boost/python/extract.hpp>
+
 #include <ackward/core/Util.hpp>
 
 namespace ackward {
@@ -107,7 +111,7 @@ struct convert_tuple {
 #define ACKWARD_CORE_TUPLE_CONVERT_ELEMENT_FROM(z, n, _)                \
 extract<typename boost::tuples::element<n, Tuple>::type>(object(handle<>(borrowed(PyTuple_GetItem(obj_ptr, n)))))
 
-#define CONVERT_TUPLE(z, size, _)                                       \
+#define ACKWARD_CORE_CONVERT_TUPLE(z, size, _)                          \
 template <typename Tuple>                                               \
 struct convert_tuple<Tuple, size> {                                     \
     static PyObject* convert(const Tuple& t) {                          \
@@ -150,11 +154,11 @@ struct convert_tuple<Tuple, size> {                                     \
         }                                                               \
 };
 
-#ifndef TUPLE_CONVERTER_SIZE_LIMIT
-#define TUPLE_CONVERTER_SIZE_LIMIT 11
+#ifndef ACKWARD_CORE_TUPLE_CONVERTER_SIZE_LIMIT
+#define ACKWARD_CORE_TUPLE_CONVERTER_SIZE_LIMIT 11
 #endif
 
-BOOST_PP_REPEAT_FROM_TO(1, TUPLE_CONVERTER_SIZE_LIMIT, CONVERT_TUPLE, _)
+BOOST_PP_REPEAT_FROM_TO(1, ACKWARD_CORE_TUPLE_CONVERTER_SIZE_LIMIT, ACKWARD_CORE_CONVERT_TUPLE, _)
 
 } // namespace detail
 } // namespace core
