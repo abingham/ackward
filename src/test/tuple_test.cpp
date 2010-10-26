@@ -19,7 +19,7 @@ typedef boost::tuple<int, float, std::string> Tuple;
 
 BOOST_AUTO_TEST_SUITE( Core_tuple )
 
-BOOST_AUTO_TEST_CASE( initialize )
+BOOST_AUTO_TEST_CASE( register_converter )
 {
     TupleConverter< ::Tuple >::registerConverter();
 }
