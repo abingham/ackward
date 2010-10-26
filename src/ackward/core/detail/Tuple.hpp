@@ -11,6 +11,15 @@ namespace ackward {
 namespace core {
 namespace detail {
 
+#ifndef ACKWARD_CORE_TUPLE_CONVERTER_SIZE_LIMIT
+#define ACKWARD_CORE_TUPLE_CONVERTER_SIZE_LIMIT 11
+#endif
+
+#define ACKWARD_CORE_DETAIL_TUPLE_CONVERT_ELEMENT_FROM_PYOBJECT(z, n, _) \
+extract<typename boost::tuples::element<n, Tuple>::type>(object(handle<>(borrowed(PyTuple_GetItem(obj_ptr, n)))))
+
+#define ACKWARD_CORE_DETAIL_GET_TUPLE_ELEMENT_CPP(z, n, _) boost::get<n>(t)
+
 /* These are the details of the tuple conversion process. See
  * ackward/core/Tuple.hpp for the public functions.
  */
@@ -98,9 +107,7 @@ struct convert_tuple {
     static PyObject* convert(const Tuple& t);
 };
 
-#define ACKWARD_CORE_TUPLE_CONVERT_ELEMENT_TO(z, n, _) boost::get<n>(t)
-
-#define ACKWARD_CORE_TUPLE_CHECK_ELEMENT_CONVERTIBLE(z, n, _) \
+#define ACKWARD_CORE_DETAIL_TUPLE_CHECK_ELEMENT_CONVERTIBLE(z, n, _) \
     {                                                         \
         PyObject* elem_ptr = PyTuple_GetItem(obj_ptr, n);               \
                                                                         \
@@ -108,10 +115,7 @@ struct convert_tuple {
             return 0;                                                   \
     }
 
-#define ACKWARD_CORE_TUPLE_CONVERT_ELEMENT_FROM(z, n, _)                \
-extract<typename boost::tuples::element<n, Tuple>::type>(object(handle<>(borrowed(PyTuple_GetItem(obj_ptr, n)))))
-
-#define ACKWARD_CORE_CONVERT_TUPLE(z, size, _)                          \
+#define ACKWARD_CORE_DETAIL_AUTO_CONVERT_TUPLE(z, size, _)                          \
 template <typename Tuple>                                               \
 struct convert_tuple<Tuple, size> {                                     \
     static PyObject* convert(const Tuple& t) {                          \
@@ -119,7 +123,7 @@ struct convert_tuple<Tuple, size> {                                     \
                                                                         \
         tuple rval =                                                    \
             make_tuple(                                                 \
-                BOOST_PP_ENUM(size, ACKWARD_CORE_TUPLE_CONVERT_ELEMENT_TO, _) \
+                BOOST_PP_ENUM(size, ACKWARD_CORE_DETAIL_GET_TUPLE_ELEMENT_CPP, _) \
                 );                                                      \
                                                                         \
         return incref(rval.ptr());                                      \
@@ -131,7 +135,7 @@ struct convert_tuple<Tuple, size> {                                     \
         if (!PyTuple_Check(obj_ptr)) return 0;                          \
         if (!PyTuple_Size(obj_ptr) == size) return 0;                   \
                                                                         \
-        BOOST_PP_REPEAT(size, ACKWARD_CORE_TUPLE_CHECK_ELEMENT_CONVERTIBLE, _) \
+        BOOST_PP_REPEAT(size, ACKWARD_CORE_DETAIL_TUPLE_CHECK_ELEMENT_CONVERTIBLE, _) \
                                                                         \
             return obj_ptr;                                             \
     }                                                                   \
@@ -147,18 +151,14 @@ struct convert_tuple<Tuple, size> {                                     \
                 data)->storage.bytes;                                   \
                                                                         \
             new (storage) Tuple(                                        \
-                BOOST_PP_ENUM(size, ACKWARD_CORE_TUPLE_CONVERT_ELEMENT_FROM, _) \
+                BOOST_PP_ENUM(size, ACKWARD_CORE_DETAIL_TUPLE_CONVERT_ELEMENT_FROM_PYOBJECT, _) \
                 );                                                      \
                                                                         \
             data->convertible = storage;                                \
         }                                                               \
 };
 
-#ifndef ACKWARD_CORE_TUPLE_CONVERTER_SIZE_LIMIT
-#define ACKWARD_CORE_TUPLE_CONVERTER_SIZE_LIMIT 11
-#endif
-
-BOOST_PP_REPEAT_FROM_TO(1, ACKWARD_CORE_TUPLE_CONVERTER_SIZE_LIMIT, ACKWARD_CORE_CONVERT_TUPLE, _)
+BOOST_PP_REPEAT_FROM_TO(1, ACKWARD_CORE_TUPLE_CONVERTER_SIZE_LIMIT, ACKWARD_CORE_DETAIL_AUTO_CONVERT_TUPLE, _)
 
 } // namespace detail
 } // namespace core
