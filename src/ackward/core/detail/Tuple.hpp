@@ -1,6 +1,8 @@
 #ifndef INCLUDE_ACKWARD_CORE_DETAIL_TUPLE_HPP
 #define INCLUDE_ACKWARD_CORE_DETAIL_TUPLE_HPP
 
+#include <ackward/core/Util.hpp>
+
 namespace ackward {
 namespace core {
 namespace detail {
@@ -95,12 +97,12 @@ struct convert_tuple {
 #define ACKWARD_CORE_TUPLE_CONVERT_ELEMENT_TO(z, n, _) boost::get<n>(t)
 
 #define ACKWARD_CORE_TUPLE_CHECK_ELEMENT_CONVERTIBLE(z, n, _) \
-{                                                             \
-    PyObject* elem_ptr = PyTuple_GetItem(obj_ptr, n);         \
-}
-// if (!canConvertTo<boost::tuples::element<Tuple, n>::type>(elem_ptr))
-//     return 0;                                                     
-// }
+    {                                                         \
+        PyObject* elem_ptr = PyTuple_GetItem(obj_ptr, n);               \
+                                                                        \
+        if (!fromPythonConvertible<typename boost::tuples::element<n, Tuple>::type>(elem_ptr)) \
+            return 0;                                                   \
+    }
 
 #define ACKWARD_CORE_TUPLE_CONVERT_ELEMENT_FROM(z, n, _)                \
 extract<typename boost::tuples::element<n, Tuple>::type>(object(handle<>(borrowed(PyTuple_GetItem(obj_ptr, n)))))

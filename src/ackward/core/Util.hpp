@@ -46,6 +46,38 @@ void verifyType(boost::python::object obj,
         throw ExcType();
 }
 
+/** Determines if a python object can be converted to a particular C++
+    type.
+
+    @param obj_ptr The python object to check
+    @tparam T The C++ type to convert `obj_ptr` into.
+    @return true if there is a registered converter that can convert
+            `obj_ptr` into an object of type `T`; false otherwise.
+ */
+template <typename T>
+bool fromPythonConvertible(PyObject* obj_ptr)
+{
+    namespace bp = boost::python;
+
+    const bp::converter::registration* reg =
+        bp::converter::registry::query(
+            bp::type_id<T>());
+
+    if (!reg) return false;
+    
+    bp::converter::rvalue_from_python_chain* link = 
+        reg->rvalue_chain;
+
+    while (link)
+    {
+        if (link->convertible(obj_ptr))
+            return true;
+        link = link->next;
+    }
+
+    return false;
+}
+
 }}
 
 #endif
