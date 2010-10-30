@@ -1,3 +1,4 @@
+#include <csignal>
 #include <list>
 
 #include <boost/assign/list_of.hpp>
@@ -14,6 +15,32 @@
 
 using namespace ackward::core;
 using namespace ackward::uuid;
+
+namespace
+{
+
+struct DisableSignal
+{
+    struct sigaction temp_;
+    struct sigaction orig_;
+    int sig_;
+
+    DisableSignal(int sig) :
+        sig_ (sig)
+        {
+                temp_.sa_handler = SIG_IGN;
+                sigemptyset(&temp_.sa_mask);
+                temp_.sa_flags = 0;
+                sigaction(sig_, &temp_, &orig_);
+        }
+
+    ~DisableSignal()
+        {
+            sigaction(sig_, &orig_, NULL);
+        }
+};
+
+}
 
 BOOST_AUTO_TEST_SUITE( UUID_methods )
 
@@ -203,18 +230,25 @@ BOOST_AUTO_TEST_CASE( uuid_version_fields )
 
 BOOST_AUTO_TEST_CASE( uuid_getnode )
 {
-    // TODO: Figure out why getnode() kills the test program.
+    // Boost.Test sets up a handler for SIGCHLD and freaks out when
+    // getnode() is called because getnode() can use an external
+    // process.  So, we disable the sigchld handler for our call, and
+    // then set it back when we're done.
+    DisableSignal d(SIGCHLD);
 
-    // ackward::uuid::getnode();
+    ackward::uuid::getnode();
 }
 
 BOOST_AUTO_TEST_CASE( uuid_uuid1_0 )
 {
-    // TODO: This implicitly calls getnode(). Figure out why getnode()
-    // kills the test program.
+    // Boost.Test sets up a handler for SIGCHLD and freaks out when
+    // getnode() is called because getnode() can use an external
+    // process.  So, we disable the sigchld handler for our call, and
+    // then set it back when we're done.
+    DisableSignal d(SIGCHLD);
 
-    // UUID uuid = ackward::uuid::uuid1();
-    // uuid.hex(); // Just to give the instance something to do and avoid
+    UUID uuid = ackward::uuid::uuid1();
+    uuid.hex(); // Just to give the instance something to do and avoid
                 // a compiler warning.
 }
 
