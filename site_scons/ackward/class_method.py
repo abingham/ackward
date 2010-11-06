@@ -15,6 +15,8 @@ $return_type $class_name::$name($impl_signature) {
 }'''
 
 class ClassMethod(ClassElement):
+    '''A normal method on a class.
+    '''
     @trace
     def __init__(self,
                  cls,
@@ -22,6 +24,18 @@ class ClassMethod(ClassElement):
                  python_name=None,
                  return_type='void',
                  signature=[]):
+        '''Construct a new method on a class.
+
+        If `python_name` is None (default), it takes the value of `name`.
+
+        Args:
+          * cls: The `Class` object parent of this method.
+          * name: The C++ name of this method.
+          * python_name: The Python name of this method.
+          * return_type: The C++ return type of the method.
+          * signature: A sequence of method-signature tuples (see
+              `signature` module.)
+        '''
         super(ClassMethod, self).__init__(
             cls=cls,
             header_template=header_template,
