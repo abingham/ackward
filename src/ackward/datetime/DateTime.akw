@@ -1,12 +1,12 @@
 # -*- python -*-
 
-import ackward as akw
+from ackward import *
 
 def definition():
-    c = akw.Class(name='DateTime',
-                  wrapped_class='datetime.datetime')
+    c = Class(name='DateTime',
+              wrapped_class='datetime.datetime')
 
-    akw.Constructor(
+    Constructor(
         cls=c,
         signature=[('unsigned int', 'year'),
                    ('unsigned int', 'month'),
@@ -18,28 +18,28 @@ def definition():
                    #[, tzinfo
                    ])
 
-    akw.ClassMethod(
-        cls=c,
-        name='today',
+    ClassMethod(
+        cls=c, 
+        name='today', 
         return_type='DateTime')
 
-    akw.ClassMethod(
+    ClassMethod(
         cls=c,
         name='now',
         return_type='DateTime')
 
-    akw.ClassMethod(
+    ClassMethod(
         cls=c,
         name='now',
         return_type='DateTime',
         signature=[('TZInfo', 'tz')])
 
-    akw.ClassMethod(
+    ClassMethod(
         cls=c,
         name='utcnow',
         return_type='DateTime')
 
-    akw.ClassMethod(
+    ClassMethod(
         cls=c,
         name='fromtimestamp',
         return_type='DateTime',

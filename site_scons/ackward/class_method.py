@@ -21,9 +21,9 @@ class ClassMethod(ClassElement):
     def __init__(self,
                  cls,
                  name,
-                 python_name=None,
                  return_type='void',
-                 signature=[]):
+                 signature=[],
+                 python_name=None):
         '''Construct a new method on a class.
 
         If `python_name` is None (default), it takes the value of `name`.

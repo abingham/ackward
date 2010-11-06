@@ -9,3 +9,18 @@ from .module_property import *
 from .property import *
 from .translate import *
 
+__all__ = [
+    "Class",
+    "ClassMethod",
+    "ClassProperty",
+    "Constructor",
+    "Function",
+    "Method",
+    "Module",
+    "ModuleProperty",
+    "Property",
+    "translate_file",
+    "translate_header_file",
+    "translate_impl_file"
+    ]
+
