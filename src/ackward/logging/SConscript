@@ -2,6 +2,14 @@ import build_utils
 
 Import(['env'])
 
+akw_files = [
+    'Module.akw',
+    ]
+
+for akw in akw_files:
+    env.AkwHeader(akw)
+    env.AkwImpl(akw)
+
 sources = [
     'Config.cpp',
     'Filter.cpp',

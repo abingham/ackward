@@ -10,31 +10,7 @@ using namespace boost::python;
 namespace ackward { namespace logging 
 {
 
-object module()
-{
-    static object mod;
-    static bool initialized = false;
-
-    if (!initialized)
-    {
-        mod = import("logging");
-        initialized = true;
-    }
-
-    return mod;
-}
-
-Logger getLogger()
-{
-    return Logger(
-        module().attr("getLogger")());
-}
-
-Logger getLogger(const std::wstring& name)
-{
-    return Logger(
-        module().attr("getLogger")(name));
-}
+#include <ackward/logging/Module_akw.ipp>
 
 void basicConfig()
 {
