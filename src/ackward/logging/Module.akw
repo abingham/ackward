@@ -5,16 +5,28 @@ import ackward as akw
 def preprocessor_guard():
     return 'INCLUDE_ACKWARD_LOGGING_MODULE_HPP'
 
-def includes():
+def header_includes():
     return [
-        'string',
-        'ackward/logging/Types.hpp'
+        ('ackward', 'logging', 'Types.hpp')
+        ]
+
+def impl_includes():
+    return [
+        ('string',),
+        ('boost', 'python', 'dict.hpp'),
+        ('boost', 'python', 'import.hpp'),
+        ('boost', 'python', 'object.hpp'),
+        ('ackward', 'logging', 'Logger.hpp'),
         ]
 
 def forward_declarations():
     return [
+        ('ackward', 'logging', 'class Logger'),
         ('boost', 'python', 'class dict')
         ]
+
+def using():
+    return ['namespace boost::python']
 
 def namespace():
     return ('ackward', 'logging')
@@ -32,5 +44,58 @@ def definition():
         name='getLogger',
         signature=[('std::wstring', 'name')],
         return_type='Logger')
+
+    akw.Function(
+        mod=m,
+        name='getLoggerClass',
+        return_type='boost::python::object') # TODO: Better return type than this?
+
+    for lvl in ['debug', 'info', 'warning', 'error', 'critical', 'exception']:
+        akw.Function(
+            mod=m,
+            name=lvl,
+            signature=[('std::wstring', 'msg')])
+
+    akw.Function(
+        mod=m,
+        name='log',
+        signature=[('Level', 'l'),
+                   ('std::wstring', 'msg')])
+
+    akw.Function(
+        mod=m,
+        name='disable',
+        signature=[('Level', 'l')])
+
+    akw.Function(
+        mod=m,
+        name='addLevelName',
+        signature=[('Level', 'l'),
+                   ('std::wstring', 'name')])
+
+    akw.Function(
+        mod=m,
+        name='getLevelName',
+        signature=[('Level', 'l')])
+
+    # TODO: makeLogRecord
+
+    akw.Function(
+        mod=m,
+        name='basicConfig')
+
+    akw.Function(
+        mod=m,
+        name='basicConfig',
+        signature=[('boost::python::dict', 'kwargs')])
+
+    akw.Function(
+        mod=m,
+        name='shutdown')
+
+    akw.Function(
+        mod=m,
+        name='setLoggerClass',
+        signature=[('boost::python::object', 'klass')])
 
     return m
