@@ -2,6 +2,23 @@
 
 import ackward as akw
 
+def preprocessor_guard():
+    return 'INCLUDE_ACKWARD_LOGGING_MODULE_HPP'
+
+def includes():
+    return [
+        'string',
+        'ackward/logging/Types.hpp'
+        ]
+
+def forward_declarations():
+    return [
+        ('boost', 'python', 'class dict')
+        ]
+
+def namespace():
+    return ('ackward', 'logging')
+
 def definition():
     m = akw.Module(name="logging")
 

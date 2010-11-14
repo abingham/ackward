@@ -1,5 +1,10 @@
 import imp, sys
 
+import includes
+import forward_declarations
+import namespace
+import preprocessor_guard
+
 def translate_file(method, infile, outfile=None):
     with open(infile, 'r') as f:
         mod = imp.load_module('akw_input', 
@@ -17,9 +22,32 @@ def translate_file(method, infile, outfile=None):
         sys.stdout.write(text)
 
 def translate_header_file(infile, outfile=None):
-    translate_file(
-        lambda cls: cls.generate_header(),
-        infile, outfile)
+    with open(infile, 'r') as f:
+        mod = imp.load_module('akw_input', 
+                              f, 
+                              infile, 
+                              ('', 'r', imp.PY_SOURCE))
+
+    body = [
+        includes.generate(
+            [('boost', 'call_traits.hpp')]),
+        forward_declarations.generate(
+            mod.forward_declarations()),
+        namespace.generate(
+            mod,
+            mod.definition().generate_header()),
+        ]
+
+    body = preprocessor_guard.generate(mod, body)
+
+    text = '\n\n'.join(body)
+
+    if outfile:
+        with open(outfile, 'w') as f:
+            f.write(text)
+    else:
+        sys.stdout.write(text)
+
 def translate_impl_file(infile, outfile=None):
     translate_file(
         lambda cls: cls.generate_impl(),

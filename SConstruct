@@ -40,7 +40,7 @@ env.AppendUnique(CPPPATH='#/src')
 
 subdirs = [
     'src/ackward',
-    'src/test'
+    # 'src/test'
     ]
 
 for subdir in subdirs:
