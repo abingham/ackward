@@ -1,4 +1,4 @@
-from .template import ElementTemplate
+from ..template import ElementTemplate
 
 header_template = '$return_type $name($header_signature);'
 

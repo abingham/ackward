@@ -1,5 +1,5 @@
-from .template import ContainerTemplate, ElementTemplate
-from .util import trace
+from ..template import ContainerTemplate, ElementTemplate
+from ..util import trace
 
 header_template = '''
 class $class_name : private core::Object {

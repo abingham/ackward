@@ -1,11 +1,12 @@
 import imp, sys
 
-import includes
-import forward_declarations
-import module
-import namespace
-import preprocessor_guard
-import using
+from translation_unit import (
+    includes,
+    forward_declarations,
+    module,
+    namespace,
+    preprocessor_guard,
+    using)
 
 
 def translate_file(method, infile, outfile=None):

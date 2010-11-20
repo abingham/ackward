@@ -28,9 +28,3 @@ class TranslationUnit(object):
     def objects(self):
         return []
 
-class ClassTranslationUnit(TranslationUnit):
-    def impl_includes(self):
-        return [
-            ('ackward', 'core', 'GetClass.hpp'),
-            ('ackward', 'core', 'Object.hpp'),
-            ]

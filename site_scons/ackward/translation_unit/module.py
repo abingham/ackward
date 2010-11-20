@@ -1,5 +1,5 @@
 import string
-from .util import trace
+from ..util import trace
 
 impl_template = '''namespace {
 

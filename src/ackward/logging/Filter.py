@@ -1,4 +1,5 @@
-from ackward import *
+from ackward.cls import Class, Constructor
+from ackward.translation_unit import ClassTranslationUnit
 
 class Filter(ClassTranslationUnit):
     def module(self):

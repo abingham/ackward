@@ -1,4 +1,5 @@
-from ackward import *
+from ackward.translation_unit import TranslationUnit
+from ackward.elements import Function
 
 class Module(TranslationUnit):
     def preprocessor_guard(self):

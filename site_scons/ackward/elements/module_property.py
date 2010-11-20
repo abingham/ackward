@@ -1,5 +1,5 @@
-from .template import ElementTemplate
-from .util import trace
+from ..template import ElementTemplate
+from ..util import trace
 
 header_template = '$type $name();'
 

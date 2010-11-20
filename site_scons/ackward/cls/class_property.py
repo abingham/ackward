@@ -1,5 +1,5 @@
 from .cls import ClassElement
-from .util import trace
+from ..util import trace
 
 header_getter = 'static $type $name();'
 
