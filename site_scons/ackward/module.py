@@ -1,13 +1,8 @@
-from .template import ContainerTemplate
+import string
 from .util import trace
 
-header_template = '''
-boost::python::object module();
+impl_template = '''namespace {
 
-$body
-'''
-
-impl_template = '''
 object module()
 {
   static object mod;
@@ -22,14 +17,9 @@ object module()
   return mod;
 }
 
-$body
-'''
+}'''
 
-class Module(ContainerTemplate):
-    @trace
-    def __init__(self,
-                 name):
-        super(Module, self).__init__(
-            header_template,
-            impl_template,
-            { 'module_name' : name })
+@trace
+def generate(mod):
+    tmpl = string.Template(impl_template)
+    return tmpl.substitute({'module_name' : mod})

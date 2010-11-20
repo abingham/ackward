@@ -25,13 +25,11 @@ void $name($impl_signature) {
 
 class Function(ElementTemplate):
     def __init__(self, 
-                 mod,
                  name,
                  return_type='void',
                  signature=[],
                  python_name=None):
         super(Function, self).__init__(
-            parent=mod,
             header_template=header_template,
             impl_template=impl_void_template if return_type == 'void' else impl_template,
             args={

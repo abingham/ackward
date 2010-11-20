@@ -5,13 +5,13 @@ def TOOL_ACKWARD(env):
         return akw.translate_header_file(str(source[0]), str(target[0]))
     akw_header = Builder(action = akw_header,
                          suffix = '.hpp',
-                         src_suffix = '.akw')
+                         src_suffix = '.py')
     
     def akw_impl(target, source, env):
         return akw.translate_impl_file(str(source[0]), str(target[0]))
     akw_impl = Builder(action = akw_impl,
                        suffix = '.cpp',
-                       src_suffix = '.akw')
+                       src_suffix = '.py')
 
     env.Append(
         BUILDERS = {

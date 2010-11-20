@@ -10,4 +10,4 @@ def declare(decl):
                                                 declare(decl[1:]))
 
 def generate(decls):
-    return '\n'.join([declare(decl) for decl in decls])
+    return [declare(decl) for decl in decls]

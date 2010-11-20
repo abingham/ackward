@@ -3,25 +3,23 @@ import build_utils
 Import(['env'])
 
 akw_files = [
-    'Module.akw',
+    'Config.py',
+    'Filter.py',
+    'Module.py',
     ]
 
-for akw in akw_files:
-    env.AkwHeader(akw)
-    env.AkwImpl(akw)
+[env.AkwHeader(akw) for akw in akw_files]
+akw_impls = [env.AkwImpl(akw) for akw in akw_files]
 
 sources = [
-    'Config.cpp',
-    'Filter.cpp',
     'Formatter.cpp',
     'Handler.cpp',
     'Initialize.cpp',
     'Logger.cpp',
     'LoggerAdapter.cpp',
     'LogRecord.cpp',
-    'Module.cpp',
     'Types.cpp',
-    ]
+    ] + akw_impls
 
 build_utils.build_shared_library(env,
                                  'ackward_logging',

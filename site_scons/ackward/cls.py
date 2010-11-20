@@ -2,14 +2,17 @@ from .template import ContainerTemplate, ElementTemplate
 from .util import trace
 
 header_template = '''
-$class_name(boost::python::object);
+class $class_name : private core::Object {
+public:
+  $class_name(boost::python::object);
 
 $body
 
-using Object::obj;
+  using Object::obj;
 
 private:
     static boost::python::object cls();
+};
 '''
 
 impl_template = '''
@@ -56,8 +59,10 @@ class ClassElement(ElementTemplate):
                 'class_name' : cls.name
                 })
         
+        self.cls = cls
+        cls.elements.append(self)
+
         super(ClassElement, self).__init__(
-            cls,
             header_template,
             impl_template,
             args)

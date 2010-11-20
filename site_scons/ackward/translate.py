@@ -2,9 +2,11 @@ import imp, sys
 
 import includes
 import forward_declarations
+import module
 import namespace
 import preprocessor_guard
 import using
+
 
 def translate_file(method, infile, outfile=None):
     with open(infile, 'r') as f:
@@ -29,31 +31,36 @@ def translate_header_file(infile, outfile=None):
                               infile, 
                               ('', 'r', imp.PY_SOURCE))
 
-    body = [
+    body = []
+
+    tunit = mod.definition()
+
+    # always include these headers
+    header_includes = set([('boost', 'call_traits.hpp'),
+                           ('boost', 'python', 'object_fwd.hpp')])
+    fwd_decls = set()
+
+    header_includes.update(tunit.header_includes())
+    fwd_decls.update(tunit.forward_declarations())
+
+    body.extend(
         includes.generate(
-            [('boost', 'call_traits.hpp'),
-             ('boost', 'python', 'object_fwd.hpp')])]
+            header_includes))
 
-    try:
-        body.append(
-            includes.generate(
-                mod.header_includes()))
-    except AttributeError:
-        pass
+    body.extend(
+        forward_declarations.generate(
+            fwd_decls))
 
-    try:
-        body.append(
-            forward_declarations.generate(
-                mod.forward_declarations()))
-    except AttributeError:
-        pass
+    for ns, objs in tunit.objects().items():
+        body.extend(
+            namespace.generate(
+                ns,
+                [obj.generate_header() for obj in objs]))
 
-    body.append(
-        namespace.generate(
-            mod,
-            mod.definition().generate_header()))
-
-    body = preprocessor_guard.generate(mod, body)
+    body = preprocessor_guard.generate(
+        mod,
+        tunit.preprocessor_guard(), 
+        body)
 
     text = '\n\n'.join(body)
 
@@ -72,24 +79,31 @@ def translate_impl_file(infile, outfile=None):
 
     body = []
 
-    try:
-        body.append(
-            includes.generate(
-                mod.impl_includes()))
-    except AttributeError:
-        pass
+    tunit = mod.definition()
 
-    try:
-        body.append(
-            using.generate(
-                mod.using()))
-    except AttributeError:
-        pass
+    impl_includes = set([
+            ('boost', 'python', 'object.hpp')
+            ])
+    impl_includes.update(tunit.impl_includes())
+
+    body.extend(
+        includes.generate(
+            impl_includes))
+
+    usings = set(['namespace boost::python'])
+    usings.update(tunit.using())
     
     body.append(
-        namespace.generate(
-            mod,
-            mod.definition().generate_impl()))
+        using.generate(
+            usings))
+
+    body.append(module.generate(tunit.module()))
+
+    for ns, objs in tunit.objects().items():
+        body.extend(
+            namespace.generate(
+                ns,
+                [obj.generate_impl() for obj in objs]))
 
     text = '\n\n'.join(body)
 
