@@ -2,8 +2,6 @@ from ackward.translation_unit import TranslationUnit
 from ackward.elements import Function
 
 class Config(TranslationUnit):
-    def module(self):
-        return 'logging'
 
     def preprocessor_guard(self):
         return 'INCLUDE_ACKWARD_LOGGING_CONFIG_HPP'
@@ -17,7 +15,8 @@ class Config(TranslationUnit):
         return [
             ('boost', 'python', 'dict.hpp'),
             ('boost', 'python', 'import.hpp'),
-            ('ackward', 'core', 'Exceptions.hpp')
+            ('ackward', 'core', 'Exceptions.hpp'),
+            ('ackward', 'logging', 'Module.hpp'),
             ]
 
     def forward_declarations(self):

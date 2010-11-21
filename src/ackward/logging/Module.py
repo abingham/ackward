@@ -1,7 +1,7 @@
 from ackward.translation_unit import TranslationUnit
-from ackward.elements import Function
+from ackward.elements import Function, Module
 
-class Module(TranslationUnit):
+class LoggingModule(TranslationUnit):
     def preprocessor_guard(self):
         return 'INCLUDE_ACKWARD_LOGGING_MODULE_HPP'
 
@@ -18,6 +18,7 @@ class Module(TranslationUnit):
             ('boost', 'python', 'module.hpp'),
             ('boost', 'python', 'object.hpp'),
             ('ackward', 'logging', 'Logger.hpp'),
+            ('ackward', 'logging', 'Module.hpp'),
             ]
 
     def forward_declarations(self):
@@ -34,6 +35,8 @@ class Module(TranslationUnit):
 
     def objects(self):
         objs = [
+            Module(name='logging'),
+
             Function(
                 name="getLogger",
                 return_type="Logger"),
@@ -89,4 +92,4 @@ class Module(TranslationUnit):
         return { ('ackward', 'logging') : objs }
 
 def definition():
-    return Module()
+    return LoggingModule()

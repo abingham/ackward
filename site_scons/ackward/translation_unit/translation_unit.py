@@ -6,10 +6,6 @@ class TranslationUnit(object):
     headers, forward-declarations, using statements, and everything
     that this translation unit will use.
     '''
-
-    def module(self):
-        raise NotImplementedError('TranslationUnit subclasses must implement `module()`')
-
     def preprocessor_guard(self):
         return None
 

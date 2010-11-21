@@ -3,7 +3,6 @@ import imp, sys
 from translation_unit import (
     includes,
     forward_declarations,
-    module,
     namespace,
     preprocessor_guard,
     using)
@@ -97,8 +96,6 @@ def translate_impl_file(infile, outfile=None):
     body.append(
         using.generate(
             usings))
-
-    body.append(module.generate(tunit.module()))
 
     for ns, objs in tunit.objects().items():
         body.extend(
