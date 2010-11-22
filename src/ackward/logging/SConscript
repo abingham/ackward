@@ -14,6 +14,7 @@ akw_files = [
 akw_impls = [env.AkwImpl(akw) for akw in akw_files]
 
 sources = [
+    'FileHandler.cpp',
     'Initialize.cpp',
     'Logger.cpp',
     'LoggerAdapter.cpp',
