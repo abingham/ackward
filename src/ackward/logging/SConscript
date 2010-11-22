@@ -5,6 +5,8 @@ Import(['env'])
 akw_files = [
     'Config.py',
     'Filter.py',
+    'Formatter.py',
+    'Handler.py',
     'Module.py',
     ]
 
@@ -12,12 +14,11 @@ akw_files = [
 akw_impls = [env.AkwImpl(akw) for akw in akw_files]
 
 sources = [
-    'Formatter.cpp',
-    'Handler.cpp',
     'Initialize.cpp',
     'Logger.cpp',
     'LoggerAdapter.cpp',
     'LogRecord.cpp',
+    'StreamHandler.cpp',
     'Types.cpp',
     ] + akw_impls
 

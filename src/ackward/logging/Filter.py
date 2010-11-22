@@ -8,7 +8,8 @@ class Filter(ClassTranslationUnit):
 
     def header_includes(self):
         return [
-            ('string',)
+            ('string',),
+            ('ackward', 'core', 'Object.hpp'),
             ]
 
     def impl_includes(self):
@@ -18,9 +19,6 @@ class Filter(ClassTranslationUnit):
             ]
 
         return super(Filter, self).impl_includes() + includes
-
-    def forward_declarations(self):
-        return []
 
     def objects(self):
         c = Class(name='Filter',
