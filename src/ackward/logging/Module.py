@@ -2,41 +2,10 @@ from ackward.translation_unit import TranslationUnit
 from ackward.elements import Function, Module
 
 class LoggingModule(TranslationUnit):
-    def preprocessor_guard(self):
-        return 'INCLUDE_ACKWARD_LOGGING_MODULE_HPP'
-
-    def header_includes(self):
-        return [
-            ('ackward', 'logging', 'Types.hpp')
-            ]
-
-    def impl_includes(self):
-        return [
-            ('string',),
-            ('boost', 'python', 'dict.hpp'),
-            ('boost', 'python', 'import.hpp'),
-            ('boost', 'python', 'module.hpp'),
-            ('boost', 'python', 'object.hpp'),
-            ('ackward', 'logging', 'Logger.hpp'),
-            ('ackward', 'logging', 'Module.hpp'),
-            ]
-
-    def forward_declarations(self):
-        return [
-            ('ackward', 'logging', 'class Logger'),
-            ('boost', 'python', 'class dict')
-            ]
-
-    def using(self):
-        return ['namespace boost::python']
-
-    def namespace(self):
-        return ('ackward', 'logging')
-
-    def objects(self):
-        objs = [
+    def __init__(self):
+        objs=[
             Module(name='logging'),
-
+            
             Function(
                 name="getLogger",
                 return_type="Logger"),
@@ -82,14 +51,33 @@ class LoggingModule(TranslationUnit):
                 name='setLoggerClass',
                 signature=[('boost::python::object', 'klass')]),
             ]
-                
+        
         for lvl in ['debug', 'info', 'warning', 'error', 'critical', 'exception']:
             objs.append(
                 Function(
                     name=lvl,
                     signature=[('std::wstring', 'msg')]))
-            
-        return { ('ackward', 'logging') : objs }
+
+        super(LoggingModule, self).__init__(
+            preprocessor_guard='INCLUDE_ACKWARD_LOGGING_MODULE_HPP',
+            header_includes=[
+                ('ackward', 'logging', 'Types.hpp')
+                ],
+            impl_includes=[
+                ('string',),
+                ('boost', 'python', 'dict.hpp'),
+                ('boost', 'python', 'import.hpp'),
+                ('boost', 'python', 'module.hpp'),
+                ('boost', 'python', 'object.hpp'),
+                ('ackward', 'logging', 'Logger.hpp'),
+                ('ackward', 'logging', 'Module.hpp'),
+                ],
+            forward_declarations=[
+                ('ackward', 'logging', 'class Logger'),
+                ('boost', 'python', 'class dict')
+                ],
+            using=['namespace boost::python'],
+            objects={ ('ackward', 'logging') : objs })
 
 def definition():
     return LoggingModule()

@@ -40,8 +40,8 @@ def translate_header_file(infile, outfile=None):
                            ('boost', 'python', 'object_fwd.hpp')])
     fwd_decls = set()
 
-    header_includes.update(tunit.header_includes())
-    fwd_decls.update(tunit.forward_declarations())
+    header_includes.update(tunit.header_includes)
+    fwd_decls.update(tunit.forward_declarations)
 
     body.extend(
         includes.generate(
@@ -51,7 +51,7 @@ def translate_header_file(infile, outfile=None):
         forward_declarations.generate(
             fwd_decls))
 
-    for ns, objs in tunit.objects().items():
+    for ns, objs in tunit.objects.items():
         body.extend(
             namespace.generate(
                 ns,
@@ -59,7 +59,7 @@ def translate_header_file(infile, outfile=None):
 
     body = preprocessor_guard.generate(
         mod,
-        tunit.preprocessor_guard(), 
+        tunit.preprocessor_guard, 
         body)
 
     text = '\n\n'.join(body)
@@ -84,20 +84,20 @@ def translate_impl_file(infile, outfile=None):
     impl_includes = set([
             ('boost', 'python', 'object.hpp')
             ])
-    impl_includes.update(tunit.impl_includes())
+    impl_includes.update(tunit.impl_includes)
 
     body.extend(
         includes.generate(
             impl_includes))
 
     usings = set(['namespace boost::python'])
-    usings.update(tunit.using())
+    usings.update(tunit.using)
     
     body.append(
         using.generate(
             usings))
 
-    for ns, objs in tunit.objects().items():
+    for ns, objs in tunit.objects.items():
         body.extend(
             namespace.generate(
                 ns,

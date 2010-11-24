@@ -3,52 +3,40 @@ from ackward.elements import Function
 
 class Config(TranslationUnit):
 
-    def preprocessor_guard(self):
-        return 'INCLUDE_ACKWARD_LOGGING_CONFIG_HPP'
+    functions = [
+        Function(
+            name='fileConfig',
+            signature=[
+                ('std::wstring', 'filename')]),
+        
+        Function(
+            name='fileConfig',
+            signature=[
+                ('std::wstring', 'filename'),
+                ('boost::python::dict', 'defaults')]),
+        
+        Function(name='listen'),
+        
+        Function(
+            name='listen',
+            signature=[
+                ('unsigned int', 'port')]),
+        
+        Function(name='stopListening'),
+        ]
 
-    def header_includes(self):
-        return [
-            ('string',)
-            ]
-
-    def impl_includes(self):
-        return [
-            ('boost', 'python', 'dict.hpp'),
-            ('boost', 'python', 'import.hpp'),
-            ('ackward', 'core', 'Exceptions.hpp'),
-            ('ackward', 'logging', 'Module.hpp'),
-            ]
-
-    def forward_declarations(self):
-        return [
-            ('boost', 'python', 'class dict')
-            ]
-
-    def objects(self):
-        return {
-            ('ackward', 'logging') : [
-                Function(
-                    name='fileConfig',
-                    signature=[
-                        ('std::wstring', 'filename')]),
-    
-                Function(
-                    name='fileConfig',
-                    signature=[
-                        ('std::wstring', 'filename'),
-                        ('boost::python::dict', 'defaults')]),
-                
-                Function(name='listen'),
-                
-                Function(
-                    name='listen',
-                    signature=[
-                        ('unsigned int', 'port')]),
-                
-                Function(name='stopListening'),
-                
-                ]
-            }
+    def __init__(self):
+        super(Config, self).__init__(
+            preprocessor_guard='INCLUDE_ACKWARD_LOGGING_CONFIG_HPP',
+            forward_declarations=[('boost', 'python', 'class dict')],
+            header_includes=[('string',)],
+            impl_includes=[
+                ('boost', 'python', 'dict.hpp'),
+                ('boost', 'python', 'import.hpp'),
+                ('ackward', 'core', 'Exceptions.hpp'),
+                ('ackward', 'logging', 'Module.hpp'),
+                ],
+            objects={ ('ackward', 'logging') : Config.functions })
 
 def definition():
     return Config()

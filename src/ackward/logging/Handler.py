@@ -3,31 +3,7 @@ from ackward.translation_unit import ClassTranslationUnit
 
 class Handler(ClassTranslationUnit):
 
-    def preprocessor_guard(self):
-        return 'INCLUDE_ACKWARD_LOGGING_HANDLER_HPP'
-
-    def forward_declarations(self):
-        return [
-            ('ackward', 'logging', 'class Formatter'),
-            ('ackward', 'logging', 'class Filter'),
-            ('ackward', 'logging', 'class LogRecord'),
-            ]
-
-    def header_includes(self):
-        return [
-            ('ackward', 'core', 'Object.hpp'),
-            ('ackward', 'logging', 'Types.hpp'),
-            ]
-
-    def impl_includes(self):
-        return super(Handler, self).impl_includes() + [
-            ('ackward', 'logging', 'Formatter.hpp'),
-            ('ackward', 'logging', 'Filter.hpp'),
-            ('ackward', 'logging', 'Handler.hpp'),
-            ('ackward', 'logging', 'LogRecord.hpp'),
-            ]
-
-    def handler_class(self):
+    def __init__(self):
         c = Class(
             name='Handler',
             wrapped_class='logging.Handler')
@@ -68,27 +44,25 @@ class Handler(ClassTranslationUnit):
             const=True,
             virtual=Method.VIRTUAL)
 
-        return c
+        super(Handler, self).__init__(
+            preprocessor_guard='INCLUDE_ACKWARD_LOGGING_HANDLER_HPP',
+            forward_declarations=[
+                ('ackward', 'logging', 'class Formatter'),
+                ('ackward', 'logging', 'class Filter'),
+                ('ackward', 'logging', 'class LogRecord'),
+                ],
+            header_includes=[
+                ('ackward', 'core', 'Object.hpp'),
+                ('ackward', 'logging', 'Types.hpp'),
+                ],
+            impl_includes=[
+                ('ackward', 'logging', 'Formatter.hpp'),
+                ('ackward', 'logging', 'Filter.hpp'),
+                ('ackward', 'logging', 'Handler.hpp'),
+                ('ackward', 'logging', 'LogRecord.hpp'),
+                ],
+            objects={ ('ackward', 'logging') : [c] })
 
-    def objects(self):
-
-# class FileHandler : public Handler
-# {
-# public:
-#     FileHandler(const std::wstring& filename,
-#                 const std::string& mode="a", 
-#                 const std::string& encoding="", 
-#                 bool delay=false);
-# };
-
-# class WatchedFileHandler : public Handler
-# {
-# public:
-#     WatchedFileHandler(const std::wstring& filename,
-#                        const std::string& mode="a", 
-#                        const std::string& encoding="",
-#                        bool delay=false);
-# };
 
 # class SocketHandler : public Handler
 # {
@@ -123,12 +97,6 @@ class Handler(ClassTranslationUnit):
 # public:
 #     static void emit_(const LogRecord&) {}
 # };
-
-        return {
-            ('ackward', 'logging') : [
-                self.handler_class(),
-                ]
-            }
 
 def definition():
     return Handler()

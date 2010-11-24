@@ -7,6 +7,7 @@ akw_files = [
     'Filter.py',
     'Formatter.py',
     'Handler.py',
+    'LogRecord.py',
     'Module.py',
     ]
 
@@ -15,12 +16,13 @@ akw_impls = [env.AkwImpl(akw) for akw in akw_files]
 
 sources = [
     'FileHandler.cpp',
-    'Initialize.cpp',
-    'Logger.cpp',
-    'LoggerAdapter.cpp',
-    'LogRecord.cpp',
+    #'Initialize.cpp',
+    #'Logger.cpp',
+    #'LoggerAdapter.cpp',
+    #'LogRecord.cpp',
     'StreamHandler.cpp',
     'Types.cpp',
+    'WatchedFileHandler.cpp',
     ] + akw_impls
 
 build_utils.build_shared_library(env,

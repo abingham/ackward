@@ -1,13 +1,13 @@
-#ifndef INCLUDE_ACKWARD_LOGGING_FILE_HANDLER_HPP
-#define INCLUDE_ACKWARD_LOGGING_FILE_HANDLER_HPP
+#ifndef INCLUDE_ACKWARD_LOGGING_WATCHED_FILE_HANDLER_HPP
+#define INCLUDE_ACKWARD_LOGGING_WATCHED_FILE_HANDLER_HPP
 
 #include <ackward/logging/Handler.hpp>
 
 namespace ackward { namespace logging {
 
-class FileHandler : public Handler {
+class WatchedFileHandler : public Handler {
 public:
-    FileHandler(
+    WatchedFileHandler(
         const std::wstring& filename,
         const std::string& mode="a", 
         const std::string& encoding="", 

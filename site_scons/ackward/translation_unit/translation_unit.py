@@ -6,21 +6,18 @@ class TranslationUnit(object):
     headers, forward-declarations, using statements, and everything
     that this translation unit will use.
     '''
-    def preprocessor_guard(self):
-        return None
-
-    def header_includes(self):
-        return []
-
-    def impl_includes(self):
-        return []
-
-    def forward_declarations(self):
-        return []
-
-    def using(self):
-        return []
-
-    def objects(self):
-        return []
-
+    def __init__(
+        self,
+        preprocessor_guard=None,
+        header_includes=[],
+        forward_declarations=[],
+        impl_includes=[],
+        using=[],
+        objects=[]):
+        self.preprocessor_guard=preprocessor_guard
+        self.header_includes=set(header_includes)
+        self.forward_declarations=set(forward_declarations)
+        self.impl_includes=set(impl_includes)
+        self.using=set(using)
+        self.objects=objects
+        
