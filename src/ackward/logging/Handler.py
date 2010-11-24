@@ -63,35 +63,6 @@ class Handler(ClassTranslationUnit):
                 ],
             objects={ ('ackward', 'logging') : [c] })
 
-
-# class SocketHandler : public Handler
-# {
-# public:
-#     SocketHandler(const std::wstring& host,
-#                   unsigned int port);
-# };
-
-# template <typename Impl>
-# class Handler_ : public Handler
-# {
-# public:
-#     Handler_() :
-#         Handler ( module().attr("Handler")() )
-#         {
-#             boost::python::object func = 
-#                 boost::python::make_function(
-#                     Handler_<Impl>::emit_impl);
-#             obj().attr("emit") = func;
-#         }
-
-# private:
-#     static void emit_impl(boost::python::object o)
-#         {
-#             LogRecord lr(o);
-#             Impl::emit_(lr);
-#         }
-# };
-
 # class NullHandler : public Handler_<NullHandler>
 # {
 # public:

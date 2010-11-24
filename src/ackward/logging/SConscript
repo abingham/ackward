@@ -7,6 +7,7 @@ akw_files = [
     'Filter.py',
     'Formatter.py',
     'Handler.py',
+    'LoggerBase.py',
     'LogRecord.py',
     'Module.py',
     ]
@@ -16,10 +17,12 @@ akw_impls = [env.AkwImpl(akw) for akw in akw_files]
 
 sources = [
     'FileHandler.cpp',
-    #'Initialize.cpp',
-    #'Logger.cpp',
+    'Initialize.cpp',
+    'Logger.cpp',
     #'LoggerAdapter.cpp',
     #'LogRecord.cpp',
+    'NullHandler.cpp',
+    'SocketHandler.cpp',
     'StreamHandler.cpp',
     'Types.cpp',
     'WatchedFileHandler.cpp',

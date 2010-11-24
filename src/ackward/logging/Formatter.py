@@ -9,12 +9,6 @@ class Formatter(ClassTranslationUnit):
 
         Constructor(cls=c)
 
-        Constructor(
-            cls=c,
-            signature=[
-                ('boost::python::object', 'obj'),
-                ])
-
         Method(
             cls=c,
             name='format',
