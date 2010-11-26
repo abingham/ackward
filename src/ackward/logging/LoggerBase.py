@@ -1,19 +1,6 @@
 from ackward.translation_unit import ClassTranslationUnit
 
-from ackward.cls import Class, Method
-
-const=True
-
-def build_sig(sig):
-    return [tuple(a.split()) for a in sig]
-
-def method(rtype, cls, name, sig, const=False):
-    Method(
-        cls=cls,
-        name=name,
-        return_type=rtype,
-        signature=build_sig(sig),
-        const=const)
+from ackward.cls import Class, method
 
 class LoggerBase(ClassTranslationUnit):
     def __init__(self):
@@ -21,48 +8,35 @@ class LoggerBase(ClassTranslationUnit):
             name='LoggerBase',
             wrapped_class='logging.Logger')
 
-        Method(
-            cls=c,
-            name='propagate',
-            const=True,
-            return_type='bool')
-
-        Method(
-            cls=c,
-            name='propagate',
-            signature=[('bool', 'p')])
-        
-        Method(
-            cls=c,
-            name='setLevel',
-            signature=[('Level', 'l')])
-
-        method('bool', c, 'isEnabledFor', ['Level l'], const)
-        method('Level', c, 'getEffectiveLevel', [], const)
+        method('bool propagate() const', c)
+        method('bool propagate(bool p) const', c)
+        method('void setLevel(Level l)', c)
+        method('bool isEnabledFor(Level l) const', c)
+        method('Level getEffectiveLevel() const', c)
         for lvl in ['debug', 'info', 'warning', 'error', 'critical', 'exception']:
-            method('void', c, lvl, ['std::wstring msg'], const)
-        
-        method('void', c, 'log', ['Level l', 'std::wstring msg'], const)
+            method('void %s(std::wstring msg) const' % lvl, c)
 
-        method('void', c, 'addFilter', ['Filter f'])
-        method('void', c, 'removeFilter', ['Filter f'])
-        method('bool', c, 'filter', ['LogRecord r'], const)
+        method('void log(Level l, std::wstring msg) const', c)
 
-        method('void', c, 'addHandler', ['Handler h'])
-        method('void', c, 'removeHandler', ['Handler h'])
+        method('void addFilter(Filter f)', c)
+        method('void removeFilter(Filter f)', c)
+        method('bool filter(LogRecord r) const', c)
 
-        # TODO: findCaller...
+        method('void addHandler(Handler h)', c)
+        method('void removeHandler(Handler h)', c)
 
-        method('void', c, 'handle', ['LogRecord r'], const)
+        # # TODO: findCaller...
 
-        # TODO: Record makeRecord(
-             # const std::wstring& name, 
-             # Level lvl, 
-             # const std::wstring& fn, 
-             # unsigned int lno, 
-             # const std::wstring& msg
-             # // args, exc_info[, func, extra]
-             # ) const;
+        method('void handle(LogRecord r) const', c)
+
+        # # TODO: Record makeRecord(
+        #      # const std::wstring& name, 
+        #      # Level lvl, 
+        #      # const std::wstring& fn, 
+        #      # unsigned int lno, 
+        #      # const std::wstring& msg
+        #      # // args, exc_info[, func, extra]
+        #      # ) const;
 
         super(LoggerBase, self).__init__(
             forward_declarations=[('ackward', 'logging', 'class Filter'),

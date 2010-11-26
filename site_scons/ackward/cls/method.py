@@ -58,3 +58,20 @@ class Method(ClassElement):
                 'virtual' : '' if virtual is None else 'virtual',
                 'virtual_tail' : '= 0' if virtual == Method.ABSTRACT else ''
                 })
+
+def build_sig(sig):
+    return 
+
+def method(sig, cls):
+    import re
+    regex = re.compile('^(.*)\s(.*)\((.*)\)(\s+const)?$')
+    (rtype, name, args, const) = (regex.match(sig).groups())
+
+    args = args.split(',') if args else []
+
+    Method(
+        cls=cls,
+        name=name,
+        return_type=rtype,
+        signature=[tuple(a.split()) for a in args],
+        const=bool(const))
