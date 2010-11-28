@@ -38,3 +38,15 @@ class Function(ElementTemplate):
                 'signature' : signature,
                 'python_name' : name if python_name is None else python_name,
                 })
+
+def function(sig):
+    import re
+    regex = re.compile('^(.*)\s(.*)\((.*)\)$')
+    (rtype, name, args) = (regex.match(sig).groups())
+
+    args = args.split(',') if args else []
+
+    return Function(
+        name=name,
+        return_type=rtype,
+        signature=[tuple(a.split()) for a in args])

@@ -82,7 +82,8 @@ def translate_impl_file(infile, outfile=None):
     tunit = mod.definition()
 
     impl_includes = set([
-            ('boost', 'python', 'object.hpp')
+            ('boost', 'python.hpp'),
+            ('ackward', 'core', 'Exceptions.hpp'),
             ])
     impl_includes.update(tunit.impl_includes)
 

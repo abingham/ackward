@@ -47,3 +47,15 @@ class ClassMethod(ClassElement):
                 'signature' : signature,
                 })
 
+def class_method(sig, cls):
+    import re
+    regex = re.compile('^(.*)\s(.*)\((.*)\)$')
+    (rtype, name, args) = (regex.match(sig).groups())
+
+    args = args.split(',') if args else []
+
+    ClassMethod(
+        cls=cls,
+        name=name,
+        return_type=rtype,
+        signature=[tuple(a.split()) for a in args])

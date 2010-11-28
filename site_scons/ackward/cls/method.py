@@ -59,9 +59,6 @@ class Method(ClassElement):
                 'virtual_tail' : '= 0' if virtual == Method.ABSTRACT else ''
                 })
 
-def build_sig(sig):
-    return 
-
 def method(sig, cls):
     import re
     regex = re.compile('^(.*)\s(.*)\((.*)\)(\s+const)?$')

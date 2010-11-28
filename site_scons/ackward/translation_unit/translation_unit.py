@@ -18,6 +18,6 @@ class TranslationUnit(object):
         self.header_includes=set(header_includes)
         self.forward_declarations=set(forward_declarations)
         self.impl_includes=set(impl_includes)
-        self.using=set(using)
+        self.using=set(using + ['namespace boost::python'])
         self.objects=objects
         
