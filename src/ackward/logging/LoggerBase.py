@@ -1,6 +1,6 @@
 from ackward.translation_unit import ClassTranslationUnit
 
-from ackward.cls import Class, method
+from ackward.cls import Class, method, Property
 
 class LoggerBase(ClassTranslationUnit):
     def __init__(self):
@@ -8,8 +8,7 @@ class LoggerBase(ClassTranslationUnit):
             name='LoggerBase',
             wrapped_class='logging.Logger')
 
-        method('bool propagate() const', c)
-        method('bool propagate(bool p) const', c)
+        Property(cls=c, name='propagate', type='bool')
         method('void setLevel(Level l)', c)
         method('bool isEnabledFor(Level l) const', c)
         method('Level getEffectiveLevel() const', c)

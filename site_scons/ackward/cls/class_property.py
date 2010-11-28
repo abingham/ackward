@@ -3,7 +3,7 @@ from ..util import trace
 
 header_getter = 'static $type $name();'
 
-header_setter = 'static void $name(const $type& val);'
+header_setter = 'static void $name($header_signature);'
 
 impl_getter = '''
 $type $class_name::$name() {
@@ -19,7 +19,7 @@ $type $class_name::$name() {
 }'''
 
 impl_setter = '''
-void $class_name::$name(const $type& val) {
+void $class_name::$name($impl_signature) {
     using namespace boost::python;
     try {
         object prop = 
@@ -52,4 +52,5 @@ class ClassProperty(ClassElement):
             args={
                 'name' : name,
                 'type' : type,
+                'signature' : [(type, 'val')]
                 })

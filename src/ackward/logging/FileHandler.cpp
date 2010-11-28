@@ -13,7 +13,7 @@ FileHandler::FileHandler(
         module().attr("FileHandler")(
             filename,
             mode,
-            encoding,
+            encoding == "" ? boost::python::object() : boost::python::object(encoding),
             delay))
 {}
 

@@ -3,7 +3,7 @@ from ..util import trace
 
 header_getter = '$type $name() const;'
 
-header_setter = 'void $name(const $type& val);'
+header_setter = 'void $name($header_signature);'
 
 impl_getter = '''
 $type $class_name::$name() const {
@@ -17,7 +17,7 @@ $type $class_name::$name() const {
 }'''
 
 impl_setter = '''
-void $class_name::$name(const $type& val) {
+void $class_name::$name($impl_signature) {
     try {
         obj().attr("$python_name") = val;
     } catch (const boost::python::error_already_set&) {
@@ -47,5 +47,6 @@ class Property(ClassElement):
             args={
                 'name' : name,
                 'type' : type,
+                'signature' : [(type, 'val')],
                 'python_name' : name if python_name is None else python_name,
                 })

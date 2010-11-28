@@ -28,18 +28,7 @@ class LogRecord(ClassTranslationUnit):
                 ('int', 'lineno'),
                 ('std::wstring', 'msg'),
                 ('boost::python::tuple', 'args'),
-                ])
-
-        Constructor(
-            cls=c,
-            signature=[
-                ('std::wstring', 'name'),
-                ('Level', 'lvl'),
-                ('std::wstring', 'pathname'),
-                ('int', 'lineno'),
-                ('std::wstring', 'msg'),
-                ('boost::python::tuple', 'args'),
-                ('boost::python::tuple', 'exc_info'),
+                ('boost::python::object', 'exc_info', 'boost::python::object()'),
                 ])
 
         method('std::wstring getMessage() const', c)

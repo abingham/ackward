@@ -1,6 +1,9 @@
 #include <ackward/logging/WatchedFileHandler.hpp>
 
+#include <ackward/core/GetClass.hpp>
 #include <ackward/logging/Module.hpp>
+
+using namespace boost::python;
 
 namespace ackward { namespace logging {
 
@@ -10,10 +13,10 @@ WatchedFileHandler::WatchedFileHandler(
     const std::string& encoding, 
     bool delay) :
     Handler( 
-        module().attr("WatchedFileHandler")(
+        core::getClass("logging.handlers.WatchedFileHandler")(
             filename,
             mode,
-            encoding,
+            encoding == "" ? object() : object(encoding),
             delay))
 {}
 

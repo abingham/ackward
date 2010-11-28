@@ -37,15 +37,11 @@ BOOST_AUTO_TEST_CASE( setLevel )
 
 BOOST_AUTO_TEST_CASE( isEnabledFor )
 {
-    try {
-        LoggerFixture f;
-    } catch (...) {
-        PyErr_Print();
-    }
-    // f.logger.setLevel(WARNING());
-    // BOOST_CHECK(f.logger.isEnabledFor(DEBUG()) == false);
-    // f.logger.setLevel(DEBUG());
-    // BOOST_CHECK(f.logger.isEnabledFor(DEBUG()) == true);
+    LoggerFixture f;
+    f.logger.setLevel(WARNING());
+    BOOST_CHECK(f.logger.isEnabledFor(DEBUG()) == false);
+    f.logger.setLevel(DEBUG());
+    BOOST_CHECK(f.logger.isEnabledFor(DEBUG()) == true);
 }
 
 BOOST_AUTO_TEST_CASE( getEffectiveLevel )
