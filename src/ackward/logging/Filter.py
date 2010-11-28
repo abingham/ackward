@@ -6,6 +6,8 @@ class Filter(ClassTranslationUnit):
         c = Class(name='Filter',
                   wrapped_class='logging.Filter')
         
+        Constructor(cls=c)
+
         Constructor(
             cls=c,
             signature=[('std::wstring', 'name')])

@@ -8,7 +8,7 @@ BOOST_AUTO_TEST_SUITE( Filter_methods )
 
 BOOST_AUTO_TEST_CASE( constructor )
 {
-    Filter f;
+    Filter f1;
     Filter f2(L"A.B.C.D");
 }
 

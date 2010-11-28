@@ -1,4 +1,4 @@
-from ackward.cls import Class, Constructor
+from ackward.cls import Class, Constructor, method
 from ackward.translation_unit import ClassTranslationUnit
 
 class LogRecord(ClassTranslationUnit):
@@ -29,6 +29,20 @@ class LogRecord(ClassTranslationUnit):
                 ('std::wstring', 'msg'),
                 ('boost::python::tuple', 'args'),
                 ])
+
+        Constructor(
+            cls=c,
+            signature=[
+                ('std::wstring', 'name'),
+                ('Level', 'lvl'),
+                ('std::wstring', 'pathname'),
+                ('int', 'lineno'),
+                ('std::wstring', 'msg'),
+                ('boost::python::tuple', 'args'),
+                ('boost::python::tuple', 'exc_info'),
+                ])
+
+        method('std::wstring getMessage() const', c)
 
         super(LogRecord, self).__init__(
             preprocessor_guard = 'INCLUDE_ACKWARD_LOGGING_LOG_RECORD_HPP',
