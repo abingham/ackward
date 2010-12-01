@@ -3,24 +3,23 @@ import build_utils
 Import(['env'])
 
 akw_files = [
-    'Date.akw',
-    'DateTime.akw',
-    'Time.akw'
+    'Date.py',
+    #'DateTime.akw',
+    #'Time.akw'
     ]
 
-for akw in akw_files:
-    env.AkwHeader(akw)
-    env.AkwImpl(akw)
+[env.AkwHeader(akw) for akw in akw_files]
+akw_impls = [env.AkwImpl(akw) for akw in akw_files]
 
 sources = [
-    'Date.cpp',
-    'DateTime.cpp',
-    'Initialize.cpp',
-    'Module.cpp',
-    'Time.cpp',
-    'TimeDelta.cpp',
-    'TZInfo.cpp',
-    ]
+    #'Date.cpp',
+    #'DateTime.cpp',
+    #'Initialize.cpp',
+    #'Module.cpp',
+    #'Time.cpp',
+    #'TimeDelta.cpp',
+    #'TZInfo.cpp',
+    ] + akw_impls
 
 build_utils.build_shared_library(env,
                                  'ackward_datetime',

@@ -3,9 +3,9 @@ Import(['env'])
 subdirs = [
     'core',
     'time',
-    'datetime',
+    # 'datetime',
     'logging',
-    'uuid',
+    # 'uuid',
     ]
 
 SConscript(dirs=subdirs, 

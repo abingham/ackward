@@ -7,19 +7,20 @@ Import('env')
 local_env = env.Clone()
 
 for libname in ['core', 
-                'datetime', 
+                #'datetime', 
                 'logging',
                 'time',
-                'uuid']:
+                #'uuid',
+                ]:
     products(env)['ackward_%s' % libname].configure(local_env, rpath=True)
 
 local_env.AppendUnique(CPPDEFINES=['BOOST_TEST_DYN_LINK'])
 local_env.AppendUnique(LIBS=['boost_unit_test_framework'])
 
 sources = [
-    'date_test.cpp',
-    'datetime_test.cpp',
-    'datetime_time_test.cpp',
+    #'date_test.cpp',
+    #'datetime_test.cpp',
+    #'datetime_time_test.cpp',
     'filter_test.cpp',
     'formatter_test.cpp',
     'handler_test.cpp',
@@ -31,14 +32,14 @@ sources = [
     'module_test.cpp',
     'test.cpp',
     'time_test.cpp',
-    'timedelta_test.cpp',
+    #'timedelta_test.cpp',
     'types_test.cpp',
-    'tzinfo_test.cpp',
+    #'tzinfo_test.cpp',
     'tuple_test.cpp',
     'util.cpp',
     'util_test.cpp',
-    'uuid_test.cpp',
+    #'uuid_test.cpp',
     ]
 
 env.Alias('all', local_env.Program('ackward_test', sources))
-env.Alias('all', local_env.Program('sample', ['sample.cpp']))
+# env.Alias('all', local_env.Program('sample', ['sample.cpp']))

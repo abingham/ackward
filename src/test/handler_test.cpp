@@ -1,8 +1,13 @@
 #include <boost/python.hpp>
 #include <boost/test/unit_test.hpp>
 
+#include <ackward/logging/FileHandler.hpp>
 #include <ackward/logging/Handler.hpp>
 #include <ackward/logging/Logger.hpp>
+#include <ackward/logging/NullHandler.hpp>
+#include <ackward/logging/SocketHandler.hpp>
+#include <ackward/logging/StreamHandler.hpp>
+#include <ackward/logging/WatchedFileHandler.hpp>
 
 using namespace ackward::logging;
 using namespace boost::python;

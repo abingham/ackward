@@ -10,6 +10,7 @@
 #include <ackward/logging/Logger.hpp>
 #include <ackward/logging/LogRecord.hpp>
 #include <ackward/logging/Module.hpp>
+#include <ackward/logging/StreamHandler.hpp>
 
 #include "LoggerFixture.hpp"
 #include "util.hpp"

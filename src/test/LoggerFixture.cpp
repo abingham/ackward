@@ -4,6 +4,7 @@
 #include <boost/foreach.hpp>
 #include <boost/test/unit_test.hpp>
 
+#include <ackward/logging/FileHandler.hpp>
 #include <ackward/logging/Filter.hpp>
 #include <ackward/logging/Handler.hpp>
 #include <ackward/logging/Module.hpp>
