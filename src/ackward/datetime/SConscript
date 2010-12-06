@@ -14,10 +14,10 @@ akw_impls = [env.AkwImpl(akw) for akw in akw_files]
 sources = [
     #'Date.cpp',
     #'DateTime.cpp',
-    #'Initialize.cpp',
-    #'Module.cpp',
+    'Initialize.cpp',
+    'Module.cpp',
     #'Time.cpp',
-    #'TimeDelta.cpp',
+    'TimeDelta.cpp',
     #'TZInfo.cpp',
     ] + akw_impls
 

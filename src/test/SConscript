@@ -7,7 +7,7 @@ Import('env')
 local_env = env.Clone()
 
 for libname in ['core', 
-                #'datetime', 
+                'datetime', 
                 'logging',
                 'time',
                 #'uuid',
@@ -18,7 +18,7 @@ local_env.AppendUnique(CPPDEFINES=['BOOST_TEST_DYN_LINK'])
 local_env.AppendUnique(LIBS=['boost_unit_test_framework'])
 
 sources = [
-    #'date_test.cpp',
+    'date_test.cpp',
     #'datetime_test.cpp',
     #'datetime_time_test.cpp',
     'filter_test.cpp',

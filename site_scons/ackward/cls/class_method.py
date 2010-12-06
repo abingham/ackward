@@ -52,10 +52,17 @@ def class_method(sig, cls):
     regex = re.compile('^(.*)\s(.*)\((.*)\)$')
     (rtype, name, args) = (regex.match(sig).groups())
 
+    # separate the parameters at ,
     args = args.split(',') if args else []
+    
+    # Split each arg
+    args = [tuple(a.split()) for a in args]
+
+    # combine multi-word types, e.g. (unsigned, int, x) -> (unsigned int, x)
+    args = [(' '.join(a[:-1]), a[-1]) for a in args]
 
     ClassMethod(
         cls=cls,
         name=name,
         return_type=rtype,
-        signature=[tuple(a.split()) for a in args])
+        signature=args)

@@ -1,133 +1,119 @@
 from ackward.translation_unit import ClassTranslationUnit
-from ackward.cls import Class, Constructor, class_method
+from ackward.elements import InlineFunction
+from ackward.cls import (Class, 
+                         class_method, 
+                         ClassProperty, 
+                         Constructor, 
+                         InlineMethod,
+                         Method,
+                         method,
+                         Property)
 
-def definition():
-    c = Class(name='Date',
-              wrapped_class='datetime.date')
+equality_operator='''
+bool operator==(const Date& d) const 
+{ return obj() == d.obj(); }
+'''
 
-    Constructor(
-        cls=c,
-        signature=[('unsigned int', 'year'),
-                   ('unsigned int', 'month'),
-                   ('unsigned int', 'day')])
+stream_operator='''
+inline std::ostream& operator<<(std::ostream& os, const Date& d) {
+  os << d.isoformat();
+  return os;
+}
+'''
 
-    class_method('Date today()')
+class Date(ClassTranslationUnit):
+    def __init__(self):
+        c = Class(name='Date',
+                  wrapped_class='datetime.date')
+        
+        Constructor(
+            cls=c,
+            signature=[('unsigned int', 'year'),
+                       ('unsigned int', 'month'),
+                       ('unsigned int', 'day')])
+        
+        class_method('Date today()', c)
+        class_method('Date fromtimestamp(double timestamp)', c)
+        class_method('Date fromordinal(unsigned int ordinal)', c)
 
-    # akw.ClassMethod(
-    #     cls=c,
-    #     name='fromtimestamp',
-    #     return_type='Date',
-    #     signature=[('double', 'timestamp')])
+        ClassProperty(
+            cls=c,
+            name='min',
+            type='Date',
+            read_only=True)
+
+        ClassProperty(
+            cls=c,
+            name='max',
+            type='Date',
+            read_only=True)
     
-    # akw.ClassMethod(
-    #     cls=c,
-    #     name='fromordinal',
-    #     return_type='Date',
-    #     signature=[('unsigned int', 'ordinal')])
+        ClassProperty(
+            cls=c,
+            name='resolution',
+            type='TimeDelta',
+            read_only=True)
 
-    # akw.ClassProperty(
-    #     cls=c,
-    #     name='min',
-    #     type='Date',
-    #     read_only=True)
+        Property(
+            cls=c,
+            name='year',
+            type='unsigned int',
+            read_only=True)
 
-    # akw.ClassProperty(
-    #     cls=c,
-    #     name='max',
-    #     type='Date',
-    #     read_only=True)
-    
-    # akw.ClassProperty(
-    #     cls=c,
-    #     name='resolution',
-    #     type='TimeDelta',
-    #     read_only=True)
+        Property(
+            cls=c,
+            name='month',
+            type='unsigned int',
+            read_only=True)
 
-    # akw.Property(
-    #     cls=c,
-    #     name='year',
-    #     type='unsigned int',
-    #     read_only=True)
+        Property(
+            cls=c,
+            name='day',
+            type='unsigned int',
+            read_only=True)
 
-    # akw.Property(
-    #     cls=c,
-    #     name='month',
-    #     type='unsigned int',
-    #     read_only=True)
+        Method(
+            cls=c,
+            name='replace',
+            python_name='replace',
+            return_type='Date',
+            signature=[('unsigned int', 'year'),
+                       ('unsigned int', 'month'),
+                       ('unsigned int', 'day')],
+            const=True)
 
-    # akw.Property(
-    #     cls=c,
-    #     name='day',
-    #     type='unsigned int',
-    #     read_only=True)
+        method('tm timetuple() const', c)
+        method('unsigned int toordinal() const', c)
+        method('int weekday() const', c)
+        method('int isoweekday() const', c)
+        method('boost::tuple<unsigned int, unsigned int, unsigned int> isocalendar() const', c)
+        method('std::string isoformat() const', c)
+        method('std::string ctime() const', c)
+        method('std::wstring strftime(std::wstring fmt) const', c)
 
-    # akw.Method(
-    #     cls=c,
-    #     name='_replace',
-    #     python_name='replace',
-    #     return_type='Date',
-    #     signature=[('unsigned int', 'year'),
-    #                ('unsigned int', 'month'),
-    #                ('unsigned int', 'day')],
-    #     const=True)
+        InlineMethod(
+            cls=c,
+            code=equality_operator)
 
-    # akw.Method(
-    #     cls=c,
-    #     name='timetuple',
-    #     return_type='tm',
-    #     const=True)
+        objs = [c]
 
-    # akw.Method(
-    #     cls=c,
-    #     name='toordinal',
-    #     return_type='unsigned int',
-    #     const=True)
-    
-    # akw.Method(
-    #     cls=c,
-    #     name='weekday',
-    #     return_type='int',
-    #     const=True)
+        stream = InlineFunction(
+            code=stream_operator)
+        
+        objs.append(stream)
 
-    # akw.Method(
-    #     cls=c,
-    #     name='isoweekday',
-    #     return_type='int',
-    #     const=True)
-
-    # akw.Method(
-    #     cls=c,
-    #     name='_isocalendar',
-    #     return_type='boost::python::tuple',
-    #     const=True,
-    #     python_name='isocalendar')
-
-    # akw.Method(
-    #     cls=c,
-    #     name='isoformat',
-    #     return_type='std::string',
-    #     const=True)
-
-    # akw.Method(
-    #     cls=c,
-    #     name='ctime',
-    #     return_type='std::string',
-    #     const=True)
-
-
-    # akw.Method(
-    #     cls=c,
-    #     name='strftime',
-    #     return_type='std::wstring',
-    #     signature=[('std::wstring', 'fmt')],
-    #     const=True)
-
-    super(LoggerBase, self).__init__(
-        forward_declarations=[],
-        header_includes=[],
-        impl_includes=[('ackward', 'datetime', 'Date.hpp'),
-                       ]
-        objects={('ackward', 'datetime') : [c]})
-
+        super(Date, self).__init__(
+            forward_declarations=[
+                ('ackward', 'datetime', 'class TimeDelta'),
+                ],
+            header_includes=[
+                ('boost', 'tuple', 'tuple.hpp')
+                ],
+            impl_includes=[
+                ('ackward', 'datetime', 'Date.hpp'),
+                ('ackward', 'datetime', 'TimeDelta.hpp'),
+                ],
+            objects={('ackward', 'datetime') : objs})
+        
 def definition():
     return Date()
