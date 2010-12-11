@@ -21,6 +21,14 @@ inline std::ostream& operator<<(std::ostream& os, const Date& d) {
 }
 '''
 
+replace_method='''
+Date replace(unsigned int y, unsigned int m, unsigned int d) const { 
+  y = (y == 0) ? year() : y;
+  m = (m == 0) ? month() : m;
+  d = (d == 0) ? day() : d;
+  return _replace(y, m, d);
+}'''
+
 class Date(ClassTranslationUnit):
     def __init__(self):
         c = Class(name='Date',
@@ -74,7 +82,7 @@ class Date(ClassTranslationUnit):
 
         Method(
             cls=c,
-            name='replace',
+            name='_replace',
             python_name='replace',
             return_type='Date',
             signature=[('unsigned int', 'year'),
@@ -82,11 +90,15 @@ class Date(ClassTranslationUnit):
                        ('unsigned int', 'day')],
             const=True)
 
+        InlineMethod(
+            cls=c,
+            code=replace_method)
+
         method('tm timetuple() const', c)
         method('unsigned int toordinal() const', c)
         method('int weekday() const', c)
         method('int isoweekday() const', c)
-        method('boost::tuple<unsigned int, unsigned int, unsigned int> isocalendar() const', c)
+        method('boost::tuple<int, int, int> isocalendar() const', c)
         method('std::string isoformat() const', c)
         method('std::string ctime() const', c)
         method('std::wstring strftime(std::wstring fmt) const', c)

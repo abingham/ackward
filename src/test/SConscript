@@ -20,7 +20,7 @@ local_env.AppendUnique(LIBS=['boost_unit_test_framework'])
 sources = [
     'date_test.cpp',
     #'datetime_test.cpp',
-    #'datetime_time_test.cpp',
+    'datetime_time_test.cpp',
     'filter_test.cpp',
     'formatter_test.cpp',
     'handler_test.cpp',

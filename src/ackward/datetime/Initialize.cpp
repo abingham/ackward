@@ -1,6 +1,7 @@
 #include <ackward/datetime/Initialize.hpp>
 
 #include <ackward/core/PythonConverter.hpp>
+#include <ackward/core/Tuple.hpp>
 #include <ackward/datetime/Date.hpp>
 #include <ackward/datetime/DateTime.hpp>
 #include <ackward/datetime/Time.hpp>
@@ -22,4 +23,7 @@ void ackward::datetime::initialize()
         "datetime.timedelta");
     // ackward::core::initializePythonConverter<TZInfo>(
     //    "datetime.tzinfo");
+
+    // For Date::isocalendar()
+    ackward::core::TupleConverter< boost::tuple<int, int, int> >::registerConverter();
 }

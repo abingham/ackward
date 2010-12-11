@@ -66,9 +66,25 @@ def method(sig, cls):
 
     args = args.split(',') if args else []
 
+    # split out default arguments: "int x=0" -> ["int x", "0"]; "int x" -> ["int x"]
+    args = [a.split('=') for a in args]
+    defaults = [a[1] for a in args if len(a) == 2]
+    args = [a[0] for a in args]
+
+    # Split each arg
+    args = [tuple(a.split()) for a in args]
+    
+    # combine multi-word types, e.g. (unsigned, int, x) -> (unsigned int, x)
+    args = [(' '.join(a[:-1]), a[-1]) for a in args]
+
+    # apply the defaults
+    for i in range(len(defaults)):
+        idx = len(args) - len(defaults) + i 
+        args[idx] = list(args[idx]) + [defaults[i]]
+
     Method(
         cls=cls,
         name=name,
         return_type=rtype,
-        signature=[tuple(a.split()) for a in args],
+        signature=args,
         const=bool(const))

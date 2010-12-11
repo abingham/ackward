@@ -4,21 +4,18 @@ Import(['env'])
 
 akw_files = [
     'Date.py',
-    #'DateTime.akw',
-    #'Time.akw'
+    'DateTime.py',
+    'Time.py'
     ]
 
 [env.AkwHeader(akw) for akw in akw_files]
 akw_impls = [env.AkwImpl(akw) for akw in akw_files]
 
 sources = [
-    #'Date.cpp',
-    #'DateTime.cpp',
     'Initialize.cpp',
     'Module.cpp',
-    #'Time.cpp',
     'TimeDelta.cpp',
-    #'TZInfo.cpp',
+    'TZInfo.cpp',
     ] + akw_impls
 
 build_utils.build_shared_library(env,
