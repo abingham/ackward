@@ -32,7 +32,7 @@ sources = [
     'module_test.cpp',
     'test.cpp',
     'time_test.cpp',
-    #'timedelta_test.cpp',
+    'timedelta_test.cpp',
     'types_test.cpp',
     #'tzinfo_test.cpp',
     'tuple_test.cpp',

@@ -5,7 +5,8 @@ Import(['env'])
 akw_files = [
     'Date.py',
     'DateTime.py',
-    'Time.py'
+    'Time.py',
+    'TimeDelta.py',
     ]
 
 [env.AkwHeader(akw) for akw in akw_files]
@@ -14,7 +15,6 @@ akw_impls = [env.AkwImpl(akw) for akw in akw_files]
 sources = [
     'Initialize.cpp',
     'Module.cpp',
-    'TimeDelta.cpp',
     'TZInfo.cpp',
     ] + akw_impls
 
