@@ -169,10 +169,13 @@ class UUID(ClassTranslationUnit):
             type='Fields',
             read_only=True)
 
+        # We need to figure the proper type for a 128-bit value.
+        # Don't forget a factory/constructor when we do.
         # Property(
         #     cls=c,
+        #     python_name='int',
         #     name='integer',
-        #     type='uint128_t',
+        #     type='Integer',
         #     read_only=True)
 
         Property(
