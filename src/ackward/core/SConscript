@@ -11,6 +11,21 @@ sources = [
     'Util.cpp'
 ]
 
+headers = [
+    'ByteArray.hpp',
+    'Enum.hpp',
+    'Exceptions.hpp',
+    'ExceptionTranslator.hpp',
+    'GetClass.hpp',
+    'Import.hpp',
+    'Iterable.hpp',
+    'Object.hpp',
+    'PythonConverter.hpp',
+    'Tuple.hpp',
+    'Util.hpp',
+    ]
+
 build_utils.build_shared_library(env,
-                                 'ackward_core',
-                                 sources)
+                                 'core',
+                                 sources,
+                                 headers)

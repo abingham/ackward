@@ -12,7 +12,7 @@ for libname in ['core',
                 'time',
                 'uuid',
                 ]:
-    products(env)['ackward_%s' % libname].configure(local_env, rpath=True)
+    products(env)[libname].configure(local_env, rpath=True)
 
 local_env.AppendUnique(CPPDEFINES=['BOOST_TEST_DYN_LINK'])
 local_env.AppendUnique(LIBS=['boost_unit_test_framework'])

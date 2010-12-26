@@ -57,4 +57,5 @@ for subdir in subdirs:
         exports='env',
         variant_dir=vdir)
 
+env.Alias('all', ['build', 'install'])
 env.Default('all')

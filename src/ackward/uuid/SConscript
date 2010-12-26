@@ -7,14 +7,20 @@ akw_files = [
     'UUID.py',
     ]
 
-[env.AkwHeader(akw) for akw in akw_files]
-akw_impls = [env.AkwImpl(akw) for akw in akw_files]
-
 sources = [
     'Initialize.cpp',
-    ] + akw_impls
+    ]
+
+headers = [
+    'Initialize.hpp',
+    'Module_akw.hpp',
+    'Types.hpp',
+    'UUID_akw.hpp',
+    'Variant.hpp',
+    ]
 
 build_utils.build_shared_library(env,
-                                 'ackward_uuid',
-                                 sources,
-                                 deps=[])
+                                 name='uuid',
+                                 sources=sources,
+                                 headers=headers,
+                                 akw_files=akw_files)
