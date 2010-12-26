@@ -7,6 +7,7 @@ syntax: glob
 *.so
 .scon*
 build/*
+install/*
 config.log
 custom.py
 *.db.log*
