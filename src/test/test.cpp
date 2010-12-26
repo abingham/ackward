@@ -14,7 +14,7 @@ struct Initialize {
             Py_Initialize(); 
             ackward::datetime::initialize();
             ackward::logging::initialize();
-            // ackward::uuid::initialize();
+            ackward::uuid::initialize();
         }
 
     ~Initialize() {

@@ -1,13 +1,20 @@
-# BOOST_INCLUDE_DIR = ...
-# BOOST_LIB_DIR = ...
+# Use this file to customize your build. Each value specified in here
+# controls some aspect of your build, and each value has a default. 
+
+# To set some value, just uncomment the appropriate line and set the
+# value.
+
+# BOOST_INCLUDE_DIR = '/usr/include'
+# BOOST_LIB_DIR = '/usr/lib'
 # BOOST_LIBS = ['boost_filesystem', 'boost_python', 'boost_system']
 
-# PYTHON_INCLUDE_DIR = ...
-# PYTHON_LIB_DIR = ...
-# PYTHON_LIBS = ...
+# PYTHON_INCLUDE_DIR = '/usr/include/python2.6'
+# PYTHON_LIB_DIR = '/usr/lib'
+# PYTHON_LIBS = 'python2.6'
 
-# CXX='g++-4.4'
+# CXX=None
+# CXXFLAGS=[]
 
-# VARIANT='release'
+# VARIANT='release' # options: debug, release
 
 # BUILD_DIR=None

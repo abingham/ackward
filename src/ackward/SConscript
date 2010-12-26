@@ -5,7 +5,7 @@ subdirs = [
     'time',
     'datetime',
     'logging',
-    # 'uuid',
+    'uuid',
     ]
 
 SConscript(dirs=subdirs, 

@@ -19,12 +19,10 @@ $type $name() {
 class ModuleProperty(ElementTemplate):
     @trace
     def __init__(self, 
-                 mod,
                  name,
                  type,
                  python_name=None):
         super(ModuleProperty, self).__init__(
-            parent=mod,
             header_template=header_template,
             impl_template=impl_template,
             args={

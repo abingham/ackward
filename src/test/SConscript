@@ -10,7 +10,7 @@ for libname in ['core',
                 'datetime', 
                 'logging',
                 'time',
-                #'uuid',
+                'uuid',
                 ]:
     products(env)['ackward_%s' % libname].configure(local_env, rpath=True)
 
@@ -38,7 +38,7 @@ sources = [
     'tuple_test.cpp',
     'util.cpp',
     'util_test.cpp',
-    #'uuid_test.cpp',
+    'uuid_test.cpp',
     ]
 
 env.Alias('all', local_env.Program('ackward_test', sources))
