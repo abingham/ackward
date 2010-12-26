@@ -1,3 +1,6 @@
+'''These are a collection of build variants.
+'''
+
 import sys
 
 class Variant(object):
@@ -29,6 +32,8 @@ variants = {
 
 def configure_variant(env, variant):
     '''Perform variant-specific configuration of the environment. 
+
+    `variant` is the name of the variant that should configure `env`.
     '''
     try:
         variants[variant].configure(env)

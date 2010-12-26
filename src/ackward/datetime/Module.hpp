@@ -6,6 +6,8 @@
 namespace ackward { namespace datetime
 {
 
+/** Get the python 'datetime' module.
+ */
 boost::python::object module();
 
 unsigned int MINYEAR();
