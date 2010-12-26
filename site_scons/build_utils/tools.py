@@ -24,14 +24,14 @@ def _build_shared_library(env, name, sources, deps=[]):
     env.Alias(
         'install',
         env.Install(
-            os.path.join('#', 'install', '$VARIANT', 'lib'), 
+            os.path.join('$INSTALL_DIR', 'lib'), 
             source = [lib]))
     
 def _install_headers(env, headers, subdir):
     env.Alias(
         'install',
         env.Install(
-            os.path.join('#', 'install', '$VARIANT', 'include', 'ackward', subdir),
+            os.path.join('$INSTALL_DIR', 'include', 'ackward', subdir),
             headers))
 
 def build_shared_library(env,

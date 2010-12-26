@@ -1,4 +1,4 @@
-import imp, sys
+import imp, os, sys
 
 from translation_unit import (
     includes,
@@ -17,7 +17,7 @@ def translate_header_file(infile, outfile=None):
     '''
     # Load the ackward source module
     with open(infile, 'r') as f:
-        mod = imp.load_module('akw_input', 
+        mod = imp.load_module(os.path.splitext(infile)[0].replace(os.path.sep, '_'),
                               f, 
                               infile, 
                               ('', 'r', imp.PY_SOURCE))

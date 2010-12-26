@@ -1,5 +1,7 @@
 import SCons.Script
 
+import os
+
 def init_vars(vars):
     '''Initialize the build variables.
     '''
@@ -20,6 +22,9 @@ def init_vars(vars):
 
     vars.Add('BUILD_DIR', 'Build-product directory', None)
 
+    vars.Add('INSTALL_DIR', 'Installation directory',
+             os.path.join('#', 'install', '$VARIANT'))
+    
     return vars
 
 def check_config(env):
