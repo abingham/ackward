@@ -9,6 +9,13 @@
 namespace ackward { namespace core
 {
 
+/** A base class for types that expose a python object in C++.
+
+    Essentially, this just manages an underlying
+    boost::python::object. There is no more magic than that. In
+    general, it's probably best to derive from this class privately;
+    this class just defines a small protocol.
+ */
 class Object
 {
 public:

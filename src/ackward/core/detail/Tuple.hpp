@@ -7,10 +7,20 @@
 
 #include <ackward/core/Util.hpp>
 
+/** These are the guts of the tuple conversion routines.
+ 
+    Mostly it's just a bunch of boost::preprocessor machination that
+    builds up the (relatively) simple converters between python tuples
+    and C++ tuples.
+ */
+
 namespace ackward {
 namespace core {
 namespace detail {
 
+// This defines the maximum number of arguments for which a
+// tuple-converter template will be created. You can define it
+// externally if you want.
 #ifndef ACKWARD_CORE_TUPLE_CONVERTER_SIZE_LIMIT
 #define ACKWARD_CORE_TUPLE_CONVERTER_SIZE_LIMIT 11
 #endif

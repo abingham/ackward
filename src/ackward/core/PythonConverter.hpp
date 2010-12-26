@@ -10,6 +10,9 @@
 namespace ackward { namespace core 
 {
 
+/** Implements to-python conversion for objects that use the "object"
+ * protocol.
+ */
 template <typename T>
 struct to_python_object_
 {
@@ -20,9 +23,16 @@ struct to_python_object_
         }
 };
 
+/** Implements from-python conversion for objects that support the
+ * object protocol.
+ */
 template <typename T>
 struct from_python_object_
 {
+    /** 
+        @param className The full name of the python class that this
+                         converts from.
+     */
     from_python_object_(const std::string& className)
         {
             className_ = className;
@@ -70,6 +80,9 @@ private:
 template <typename T>
 std::string from_python_object_<T>::className_;
 
+/** Sets up a to-/from-python converter for the python class
+ * `className` and C++ type `T`.
+ */
 template <typename T>
 void initializePythonConverter(const std::string& className)
 {

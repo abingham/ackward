@@ -11,6 +11,13 @@
 namespace ackward {
 namespace core {
 
+/** A to-/from-python converter template for boost::arrays<unsigned char, N>. 
+
+    To setup a converter for a particular size of array N, just
+    instantiate a ByteArray_python_converter<N> somewhere. Generally
+    you should do this in some sort of initialization method, or
+    somewhere early in your execution.
+ */
 template <unsigned int Size>
 struct ByteArray_python_converter
 {
@@ -18,6 +25,10 @@ struct ByteArray_python_converter
 
     ByteArray_python_converter()
         {
+            static bool initialized = false;
+
+            if (initialized) return;
+
             boost::python::converter::registry::push_back(
                 &convertible,
                 &construct,
@@ -26,6 +37,8 @@ struct ByteArray_python_converter
             boost::python::to_python_converter<
                 Array,
                 ByteArray_python_converter<Size> >();
+
+            initialized = true;
         }
     
     static void* convertible(PyObject* obj_ptr)

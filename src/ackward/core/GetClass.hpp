@@ -8,6 +8,17 @@
 namespace ackward { namespace core
 {
 
+/** Get the class object for a class.
+
+    The `name` parameter should be the full name of the class, with
+    packages and everything. For example "uuid.UUID" or "foo.bar.Baz".
+
+    If `name` is just a class name (e.g. "ClassName", no leading
+    package specification), then it is assumed to be in the
+    "__builtin__" module.
+
+    @param name The full name of the class object to get.
+ */
 boost::python::object 
 getClass(const std::string& name);
 

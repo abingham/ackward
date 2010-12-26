@@ -10,16 +10,25 @@
 namespace ackward { namespace core
 {
 
+/** Determine if an object is the None object */
 bool is_none(const boost::python::object&);
 
+/** Calls "iter(obj)" on some object.
+ */ 
 boost::python::object 
 iter(boost::python::object);
 
+/** Call "obj.next()" on some object (generally an iterator, but no check it made to that effect.) */
 boost::python::object
 next(boost::python::object iterator);
 
+/** Call "str(obj)" on an object */
 std::wstring repr(boost::python::object);
+
+/** Call "repr(obj)" on an object */
 std::wstring str(boost::python::object);
+
+/** Call str() on an object that supports the object protocol */
 template <typename T>
 std::wstring str(const T& t) { return ackward::core::str(t.obj()); }
 
