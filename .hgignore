@@ -45,3 +45,8 @@ src/ackward/uuid/Module.cpp
 src/ackward/uuid/Module.hpp
 src/ackward/uuid/UUID.cpp
 src/ackward/uuid/UUID.hpp
+src/ackward/datetime/Date.cpp
+src/ackward/datetime/Date.hpp
+src/ackward/datetime/DateTime.cpp
+src/ackward/datetime/DateTime.hpp
+src/ackward/datetime/Time.cpp
