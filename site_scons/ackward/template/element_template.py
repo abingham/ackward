@@ -20,7 +20,7 @@ class ElementTemplate(Template):
             args.update({
                     'header_signature' : build_signature(sig, True),
                     'impl_signature' : build_signature(sig, False),
-                    'parameters' : build_parameters(sig)})
+                    'parameters' : ', '.join([s[1] for s in sig])})
         except KeyError:
             pass
 
