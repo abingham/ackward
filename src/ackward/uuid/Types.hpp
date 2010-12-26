@@ -10,6 +10,7 @@ namespace uuid {
 
 typedef boost::array<unsigned char, 16> Bytes;
 typedef boost::uint_t<64>::least Node;
+// typedef boost::uint_t<128> Integer;
 
 typedef boost::tuple<unsigned long, // time_low
                      unsigned long, // time_mid
