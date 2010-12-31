@@ -1,4 +1,5 @@
 from .cls import ClassElement
+from ..signature import parse
 from ..util import trace
 
 header_template = '$virtual $return_type $name($header_signature) $const $virtual_tail;'
@@ -87,28 +88,7 @@ def method(sig, cls):
     Returns:
       A Method object for the method described by `sig`.
     '''
-
-    import re
-    regex = re.compile('^(.*)\s(.*)\((.*)\)(\s+const)?$')
-    (rtype, name, args, const) = (regex.match(sig).groups())
-
-    args = args.split(',') if args else []
-
-    # split out default arguments: "int x=0" -> ["int x", "0"]; "int x" -> ["int x"]
-    args = [a.split('=') for a in args]
-    defaults = [a[1] for a in args if len(a) == 2]
-    args = [a[0] for a in args]
-
-    # Split each arg
-    args = [tuple(a.split()) for a in args]
-    
-    # combine multi-word types, e.g. (unsigned, int, x) -> (unsigned int, x)
-    args = [(' '.join(a[:-1]), a[-1]) for a in args]
-
-    # apply the defaults
-    for i in range(len(defaults)):
-        idx = len(args) - len(defaults) + i 
-        args[idx] = list(args[idx]) + [defaults[i]]
+    rtype, name, args, const = parse(sig)
 
     Method(
         cls=cls,

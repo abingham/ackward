@@ -1,4 +1,5 @@
 from .cls import ClassElement
+from ..signature import parse
 from ..util import trace
 
 header_template = 'static $return_type $name($header_signature);'
@@ -61,19 +62,7 @@ def class_method(sig, cls):
     Returns:
       A ClassMethod object for the method described by `sig`.
     '''
-
-    import re
-    regex = re.compile('^(.*)\s(.*)\((.*)\)$')
-    (rtype, name, args) = (regex.match(sig).groups())
-
-    # separate the parameters at ,
-    args = args.split(',') if args else []
-    
-    # Split each arg
-    args = [tuple(a.split()) for a in args]
-
-    # combine multi-word types, e.g. (unsigned, int, x) -> (unsigned int, x)
-    args = [(' '.join(a[:-1]), a[-1]) for a in args]
+    rtype, name, args, const = parse(sig)
 
     ClassMethod(
         cls=cls,

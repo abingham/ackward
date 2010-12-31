@@ -1,3 +1,4 @@
+from ..signature import parse
 from ..template import ElementTemplate
 
 header_template = '$return_type $name($header_signature);'
@@ -40,11 +41,7 @@ class Function(ElementTemplate):
                 })
 
 def function(sig):
-    import re
-    regex = re.compile('^(.*)\s(.*)\((.*)\)$')
-    (rtype, name, args) = (regex.match(sig).groups())
-
-    args = args.split(',') if args else []
+    rtype, name, args, const = parse(sig)
 
     return Function(
         name=name,
