@@ -10,6 +10,11 @@ from translation_unit import (
 def translate_header_file(infile, outfile=None):
     '''Translate an ackward input file into a C++ header file.
 
+    This imports `infile` as a module and calls the `definition`
+    method in that module. `definition` should return a
+    TranslationUnit instance, and this method uses the information in
+    that TranslationUnit to generate a header file.
+
     Args:
       * infile: The input ackward source file.
       * outfile: The file into which to write the C++ output code. If
