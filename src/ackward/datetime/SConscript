@@ -16,11 +16,8 @@ sources = [
     ]
 
 headers = [
-    'Date_akw.hpp',
-    'DateTime_akw.hpp',
     'Initialize.hpp',
     'Module.hpp',
-    'Time_akw.hpp',
     'TZInfo.hpp',
     ]
 

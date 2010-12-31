@@ -12,7 +12,6 @@ sources = [
 
 headers = [ 
     'Initialize.hpp',
-    'Module_akw.hpp',
     ]
 
 build_utils.build_shared_library(env,

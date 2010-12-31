@@ -13,9 +13,7 @@ sources = [
 
 headers = [
     'Initialize.hpp',
-    'Module_akw.hpp',
     'Types.hpp',
-    'UUID_akw.hpp',
     'Variant.hpp',
     ]
 
