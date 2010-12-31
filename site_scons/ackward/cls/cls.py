@@ -35,11 +35,26 @@ boost::python::object $class_name::cls() {
 '''
 
 class Class(ContainerTemplate):
+    '''A template for generating C++ classes the "wrap" python
+    classes.
+    '''
+
     @trace
     def __init__(self,
                  name,
                  wrapped_class,
                  bases=['private core::Object']):
+        '''Create a new Class object.
+
+        Args:
+          * name: The C++ name of the class to generate.
+          * wrapped_class: The name of the python class that the C++
+              class wraps.
+          * bases: The base classes for the generated C++ class. A
+              sequence base-class descriptions of the form
+              "[private|protected|public] <class-name>"
+        '''
+
         if bases:
             bases = ': ' + ','.join(bases)
         else:
@@ -57,6 +72,9 @@ class Class(ContainerTemplate):
         self.wrapped_class = wrapped_class
 
 class ClassElement(ElementTemplate):
+    '''A base for templates describing elements of a class
+    (e.g. methods, properties, etc.)
+    '''
     def __init__(self, 
                  cls, 
                  header_template, 

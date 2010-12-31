@@ -25,6 +25,8 @@ void $class_name::$name($impl_signature) $const {
 }'''
 
 class Method(ClassElement):
+    '''A basic method of a class.
+    '''
     
     VIRTUAL=1
     ABSTRACT=2
@@ -38,6 +40,20 @@ class Method(ClassElement):
                  const=False,
                  python_name=None,
                  virtual=None):
+        '''Create a new method on a class.
+
+        Args:
+          * cls: The class object on which to create a new method.
+          * name: The C++ name of the method.
+          * return_type: The C++ return type of the method.
+          * signature: A sequence of argument descriptions.
+          * const: Whether the method is const.
+          * python_name: The name of the python method represented by
+              this method. If this is `None`, then `name` is used as
+              the python name as well.
+          * virtual: Whether this method is virtual.
+        '''
+
         if virtual == Method.ABSTRACT:
             implt = ''
         elif return_type == 'void':
@@ -60,6 +76,18 @@ class Method(ClassElement):
                 })
 
 def method(sig, cls):
+    '''Produce a Method object based on a string description of a method.
+
+    This is a convenience method for generated simple Methods.
+
+    Args:
+      * sig: The signature of the method.
+      * cls: The class on which to put the method.
+
+    Returns:
+      A Method object for the method described by `sig`.
+    '''
+
     import re
     regex = re.compile('^(.*)\s(.*)\((.*)\)(\s+const)?$')
     (rtype, name, args, const) = (regex.match(sig).groups())

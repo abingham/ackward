@@ -15,8 +15,9 @@ $return_type $class_name::$name($impl_signature) {
 }'''
 
 class ClassMethod(ClassElement):
-    '''A normal method on a class.
+    '''A "class method", e.g. a static method on a class.
     '''
+
     @trace
     def __init__(self,
                  cls,
@@ -48,6 +49,19 @@ class ClassMethod(ClassElement):
                 })
 
 def class_method(sig, cls):
+    '''Produces a ClassMethod based on a string description of a
+    class method.
+
+    This is a convenience method for generating simple ClassMethods.
+
+    Args:
+      * sig: The signature of the class method.
+      * cls: The class on which to put the method.
+
+    Returns:
+      A ClassMethod object for the method described by `sig`.
+    '''
+
     import re
     regex = re.compile('^(.*)\s(.*)\((.*)\)$')
     (rtype, name, args) = (regex.match(sig).groups())

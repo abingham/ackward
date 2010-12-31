@@ -39,6 +39,15 @@ class ClassProperty(ClassElement):
                  name,
                  type,
                  read_only=False):
+        '''Construct a new static property on a class. 
+
+        Args:
+          * cls: The class object on which to create the property.
+          * name: The name of the property.
+          * type: The type of the property.
+          * read_only: Whether the property is read-only or read-write.
+        '''
+
         header = header_getter
         impl = impl_getter
         if not read_only:
