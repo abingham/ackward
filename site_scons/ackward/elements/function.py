@@ -25,6 +25,8 @@ void $name($impl_signature) {
 }'''
 
 class Function(ElementTemplate):
+    '''A basic free function.
+    '''
     def __init__(self, 
                  name,
                  return_type='void',
@@ -41,6 +43,8 @@ class Function(ElementTemplate):
                 })
 
 def function(sig):
+    '''Parse a function signature and return a Function instance.
+    '''
     rtype, name, args, const = parse(sig)
 
     return Function(
