@@ -38,6 +38,15 @@ if not env.GetOption('clean') and not env.GetOption('help'):
 
 env.AppendUnique(CPPPATH='#/src')
 
+# Add build dir to include path
+try:
+    env.AppendUnique(CPPPATH=os.path.join('#',
+                                          env['BUILD_DIR'],
+                                          env['VARIANT'],
+                                          'src'))
+except KeyError:
+    pass
+
 subdirs = [
     'src/ackward',
     'src/test'
