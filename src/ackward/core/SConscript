@@ -3,6 +3,7 @@ import build_utils
 Import('env')
 
 sources = [
+    'Bytes.cpp',
     'Exceptions.cpp',
     'ExceptionTranslator.cpp',
     'GetClass.cpp',
@@ -13,6 +14,7 @@ sources = [
 
 headers = [
     'ByteArray.hpp',
+    'Bytes.hpp',
     'Enum.hpp',
     'Exceptions.hpp',
     'ExceptionTranslator.hpp',
