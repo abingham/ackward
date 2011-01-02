@@ -129,7 +129,12 @@ private:
         {
             BOOST_FOREACH(const typename Entries::value_type& entry, entries_)
             {
-                if (PyObject_Compare(entry.second.ptr(), obj_ptr) == 0)
+                int rslt = PyObject_RichCompareBool(
+                    entry.second.ptr(),
+                    obj_ptr,
+                    Py_EQ);
+
+                if (rslt == 1)
                     return obj_ptr;
             }
 
@@ -146,7 +151,12 @@ private:
 
             BOOST_FOREACH(const typename Entries::value_type& entry, entries_)
             {
-                if (PyObject_Compare(entry.second.ptr(), obj_ptr) == 0)
+                int rslt = PyObject_RichCompareBool(
+                    entry.second.ptr(),
+                    obj_ptr,
+                    Py_EQ);
+
+                if (rslt == 1)
                 {
                     void* storage = (
                         (converter::rvalue_from_python_storage<E>*)

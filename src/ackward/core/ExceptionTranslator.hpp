@@ -50,7 +50,7 @@ bool add(ExceptionTranslator& excx,
     // Assume that a length-1 range implies the __builtins__ module
     else if (distance(begin, end) == 1)
     {
-        return excx.add(import("__builtin__").attr(*begin), t);
+        return excx.add(import("builtins").attr(*begin), t);
     }
     else
     {

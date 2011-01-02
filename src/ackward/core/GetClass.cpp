@@ -27,7 +27,7 @@ object getClass(const std::string& name)
     std::string modName = join(splitVec, ".");
 
     if (modName.empty())
-        modName = "__builtin__";
+        modName = "builtins";
 
     object mod = import(modName.c_str());
     object cls = mod.attr(className.c_str());

@@ -43,8 +43,17 @@ struct ByteArray_python_converter
     
     static void* convertible(PyObject* obj_ptr)
         {
-            if (!PyString_Check(obj_ptr)) return 0;
-            if (PyString_Size(obj_ptr) != Size) return 0;
+            if (PyBytes_Check(obj_ptr))
+            {
+                if (PyBytes_Size(obj_ptr) != Size) return 0;
+            }
+            else if (PyByteArray_Check(obj_ptr)) 
+            {
+                if (PyByteArray_Size(obj_ptr) != Size) return 0;
+            }
+            else
+                return 0;
+
             return obj_ptr;
         }
     
@@ -62,7 +71,11 @@ struct ByteArray_python_converter
             // extraced from the python object
             Array* arr = new (storage) Array;
 
-            const char* chardata = PyString_AsString(obj_ptr);
+            const char* chardata = 
+                PyByteArray_Check(obj_ptr)
+                ? PyByteArray_AsString(obj_ptr)
+                : PyBytes_AsString(obj_ptr);
+
             std::copy(chardata, 
                       chardata + Size,
                       arr->begin());
@@ -73,11 +86,16 @@ struct ByteArray_python_converter
 
     static PyObject* convert(const Array& arr)
         {
-            boost::python::str pyvalue(
-                reinterpret_cast<const char*>(arr.begin()),
-                reinterpret_cast<const char*>(arr.end()));
+            namespace bp=boost::python;
+
+            bp::object bytes = bp::object(
+                bp::handle<>(
+                    PyBytes_FromStringAndSize(
+                        reinterpret_cast<const char*>(arr.data()), 
+                        arr.size())));
+
             return boost::python::incref(
-                pyvalue.ptr());
+                bytes.ptr());
         }
 };
 

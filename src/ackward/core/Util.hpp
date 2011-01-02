@@ -6,6 +6,7 @@
 #include <string>
 
 #include <boost/python/object.hpp>
+#include <boost/python/str.hpp>
 
 #include <ackward/core/Exceptions.hpp>
 
@@ -20,9 +21,13 @@ bool is_none(const boost::python::object&);
 boost::python::object 
 iter(boost::python::object);
 
-/** Call "obj.next()" on some object (generally an iterator, but no check it made to that effect.) */
+/** Call "obj.next()" on some object (generally an iterator, but no
+ * check it made to that effect.) */
 boost::python::object
 next(boost::python::object iterator);
+
+/** Convert a bp::str to a std::wstring */
+std::wstring strToWString(boost::python::str);
 
 /** Call "str(obj)" on an object */
 std::wstring repr(boost::python::object);

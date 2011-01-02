@@ -17,7 +17,7 @@ namespace ackward { namespace core
 
     If `name` is just a class name (e.g. "ClassName", no leading
     package specification), then it is assumed to be in the
-    "__builtin__" module.
+    "builtins" module.
 
     @param name The full name of the class object to get.
  */

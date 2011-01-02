@@ -1,6 +1,8 @@
 #ifndef INCLUDE_BA_LOG_DETAIL_ITERABLE_HPP
 #define INCLUDE_BA_LOG_DETAIL_ITERABLE_HPP
 
+#include <Python.h>
+
 #include <boost/iterator/iterator_facade.hpp>
 #include <boost/python/object_fwd.hpp>
 #include <boost/type_traits/is_const.hpp>

@@ -15,7 +15,7 @@ namespace ackward { namespace core
 
 /** Import a fully qualified module e.g. "a.b.c.d".
     
-    If `module` is empty, this returns the __builtin__ module.
+    If `module` is empty, this returns the builtins module.
 
     @param module The name of the module
     @return The module object
@@ -33,7 +33,7 @@ import(Itr begin, Itr end)
     try {
         
         if (begin == end)
-            return bp::import("__builtin__");
+            return bp::import("builtins");
         
         Itr itr = begin;
 
@@ -61,7 +61,7 @@ import(Itr begin, Itr end)
 /** Find a module-level object
     
     If `module` is empty, this looks for an object in the 
-    __builtin__ module.
+    builtins module.
 
     @param module The name of the module containing the object
     @param name The name of the object in the module
