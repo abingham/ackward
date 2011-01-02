@@ -36,6 +36,8 @@ public:
      */
     char operator[](std::size_t idx) const;
 
+    using Object::obj;
+
     // iteration
 public:
     typedef const char* iterator;

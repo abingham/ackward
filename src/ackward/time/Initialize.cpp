@@ -9,6 +9,7 @@
 #include <boost/python/object.hpp>
 
 #include <ackward/core/GetClass.hpp>
+#include <ackward/core/Initialize.hpp>
 
 using namespace boost::python;
 
@@ -77,7 +78,11 @@ void initialize()
     if (initialized)
         return;
 
+    ackward::core::initialize();
+
     struct_time_from_tm();
+
+    initialized = true;
 }
 
 }}

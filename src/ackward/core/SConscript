@@ -8,6 +8,7 @@ sources = [
     'ExceptionTranslator.cpp',
     'GetClass.cpp',
     'Import.cpp',
+    'Initialize.cpp',
     'Object.cpp',
     'Util.cpp'
 ]
@@ -20,6 +21,7 @@ headers = [
     'ExceptionTranslator.hpp',
     'GetClass.hpp',
     'Import.hpp',
+    'Initialize.hpp',
     'Iterable.hpp',
     'Object.hpp',
     'PythonConverter.hpp',

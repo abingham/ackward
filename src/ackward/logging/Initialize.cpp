@@ -1,5 +1,6 @@
 #include <ackward/logging/Initialize.hpp>
 
+#include <ackward/core/Initialize.hpp>
 #include <ackward/core/PythonConverter.hpp>
 #include <ackward/logging/Filter.hpp>
 #include <ackward/logging/Formatter.hpp>
@@ -12,6 +13,8 @@ namespace ackward { namespace logging
 
 void initialize()
 {
+    ackward::core::initialize();
+
     ackward::core::initializePythonConverter<Filter>(
         "logging.Filter");
     ackward::core::initializePythonConverter<Formatter>(

@@ -2,6 +2,7 @@
 
 #include <ackward/core/ByteArray.hpp>
 #include <ackward/core/Enum.hpp>
+#include <ackward/core/Initialize.hpp>
 #include <ackward/core/PythonConverter.hpp>
 #include <ackward/core/Tuple.hpp>
 #include <ackward/uuid/Module.hpp>
@@ -14,6 +15,8 @@ namespace uuid {
 
 void initialize()
 {
+    ackward::core::initialize();
+
     ackward::core::initializePythonConverter<UUID>(
         "uuid.UUID");
 

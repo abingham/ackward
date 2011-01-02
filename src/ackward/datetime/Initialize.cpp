@@ -1,5 +1,6 @@
 #include <ackward/datetime/Initialize.hpp>
 
+#include <ackward/core/Initialize.hpp>
 #include <ackward/core/PythonConverter.hpp>
 #include <ackward/core/Tuple.hpp>
 #include <ackward/datetime/Date.hpp>
@@ -11,6 +12,7 @@
 
 void ackward::datetime::initialize()
 {
+    ackward::core::initialize();
     ackward::time::initialize();
 
     ackward::core::initializePythonConverter<Date>(
