@@ -1,6 +1,7 @@
 #include <boost/python/tuple.hpp>
 #include <boost/test/unit_test.hpp>
 
+#include <ackward/core/Exceptions.hpp>
 #include <ackward/logging/Formatter.hpp>
 #include <ackward/logging/LogRecord.hpp>
 
@@ -42,11 +43,18 @@ BOOST_AUTO_TEST_CASE( formatTime )
 BOOST_AUTO_TEST_CASE( formatException )
 {
     Formatter f;
-    f.formatException(
-        boost::python::make_tuple(
-            boost::python::object(),
-            boost::python::object(),
-            boost::python::object()));
+
+    PyErr_SetString(PyExc_RuntimeError, "This is a test");
+
+    try {
+        f.formatException(
+            ackward::core::getExceptionInfo());
+    } catch (const ackward::core::AttributeError&) {
+        // TODO: Currently there is a bug in the traceback module that
+        // is causes an AttributeError
+        // (http://bugs.python.org/issue10805). When this is fixed,
+        // this test should run better.
+    }
 }
 
 BOOST_AUTO_TEST_SUITE_END()
