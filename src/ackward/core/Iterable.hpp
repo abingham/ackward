@@ -60,7 +60,7 @@ public: // iteration
                 try 
                 {
                     try {
-                        val_ = iter_.attr("next")();
+                        val_ = next(iter_);
                     } TRANSLATE_PYTHON_EXCEPTION();
                 }
                 catch (const StopIteration&) 
@@ -105,7 +105,7 @@ public: // iteration
                 try 
                 {
                     try {
-                        val_ = iter_.attr("next")();
+                        val_ = next(iter_);
                     } TRANSLATE_PYTHON_EXCEPTION();
                 }
                 catch (const StopIteration&) 
@@ -182,7 +182,7 @@ public: // iteration
                 try 
                 {
                     try {
-                        val_ = iter_.attr("next")();
+                        val_ = next(iter_);
                     } TRANSLATE_PYTHON_EXCEPTION();
                 }
                 catch (const StopIteration&) 
