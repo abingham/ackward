@@ -1,9 +1,11 @@
 #ifndef INCLUDE_ACKWARD_CORE_EXCEPTIONS_HPP
 #define INCLUDE_ACKWARD_CORE_EXCEPTIONS_HPP
 
+#include <Python.h>
+
 #include <exception>
 
-#include <boost/exception.hpp>
+#include <boost/exception/all.hpp>
 
 namespace boost { namespace python { class tuple; } }
 

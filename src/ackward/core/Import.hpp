@@ -1,6 +1,8 @@
 #ifndef INCLUDE_ACKWARD_CORE_IMPORT_HPP
 #define INCLUDE_ACKWARD_CORE_IMPORT_HPP
 
+#include <Python.h>
+
 #include <string>
 
 #include <boost/python/import.hpp>

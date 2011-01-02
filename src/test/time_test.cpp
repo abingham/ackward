@@ -1,3 +1,5 @@
+#include <Python.h>
+
 #include <boost/test/unit_test.hpp>
 
 #include <ackward/time/Module.hpp>

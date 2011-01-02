@@ -1,6 +1,8 @@
 #ifndef INCLUDE_BA_LOG_DETAIL_UTIL_HPP
 #define INCLUDE_BA_LOG_DETAIL_UTIL_HPP
 
+#include <Python.h>
+
 #include <string>
 
 #include <boost/python/object.hpp>

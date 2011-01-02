@@ -1,3 +1,5 @@
+#include <Python.h>
+
 #include <fstream>
 
 #include <boost/filesystem.hpp>

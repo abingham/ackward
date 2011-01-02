@@ -1,6 +1,8 @@
 #ifndef INCLUDE_ACKWARD_DATETIME_TZINFO_HPP
 #define INCLUDE_ACKWARD_DATETIME_TZINFO_HPP
 
+#include <Python.h>
+
 #include <boost/shared_ptr.hpp>
 
 #include <boost/python/extract.hpp>

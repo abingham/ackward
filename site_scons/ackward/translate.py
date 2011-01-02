@@ -35,12 +35,13 @@ def translate_header_file(infile, outfile=None):
     tunit = mod.definition() 
 
     # always include these headers
-    header_includes = set([('boost', 'call_traits.hpp'),
-                           ('boost', 'python', 'object_fwd.hpp')])
+    header_includes = [('Python.h',),
+                       ('boost', 'call_traits.hpp'),
+                       ('boost', 'python', 'object_fwd.hpp')]
     fwd_decls = set()
 
     # Get the header-includes.
-    header_includes.update(tunit.header_includes)
+    header_includes.extend(tunit.header_includes)
 
     # Get the forward declarations.
     fwd_decls.update(tunit.forward_declarations)

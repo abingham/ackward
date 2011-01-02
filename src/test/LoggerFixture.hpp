@@ -1,3 +1,5 @@
+#include <Python.h>
+
 #include <boost/filesystem/path.hpp>
 
 #include <ackward/logging/Handler.hpp>

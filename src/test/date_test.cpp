@@ -1,3 +1,5 @@
+#include <Python.h>
+
 #include <ctime>
 #include <limits>
 #include <sstream>
