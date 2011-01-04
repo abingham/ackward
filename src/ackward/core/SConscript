@@ -3,6 +3,7 @@ import build_utils
 Import('env')
 
 sources = [
+    'ByteArray.cpp',
     'Bytes.cpp',
     'Exceptions.cpp',
     'ExceptionTranslator.cpp',

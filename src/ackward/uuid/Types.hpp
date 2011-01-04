@@ -1,14 +1,12 @@
 #ifndef INCLUDE_ACKWARD_UUID_TYPES_HPP
 #define INCLUDE_ACKWARD_UUID_TYPES_HPP
 
-#include <boost/array.hpp>
 #include <boost/integer.hpp>
 #include <boost/tuple/tuple.hpp>
 
 namespace ackward {
 namespace uuid {
 
-typedef boost::array<unsigned char, 16> Bytes;
 typedef boost::uint_t<64>::least Node;
 // typedef boost::uint_t<128> Integer;
 

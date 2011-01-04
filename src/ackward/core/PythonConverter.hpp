@@ -4,7 +4,9 @@
 #include <Python.h>
 
 #include <string>
+#include <vector>
 
+#include <boost/foreach.hpp>
 #include <boost/python.hpp>
 
 #include <ackward/core/GetClass.hpp>
@@ -37,7 +39,7 @@ struct from_python_object_
      */
     from_python_object_(const std::string& className)
         {
-            className_ = className;
+            classNames_.push_back(className);
 
             boost::python::converter::registry::push_back(
                 &convertible,
@@ -47,10 +49,15 @@ struct from_python_object_
     
     static void* convertible(PyObject* obj_ptr)
         {
-            boost::python::object cls = 
-                ackward::core::getClass(className_);
-            if (!PyObject_IsInstance(obj_ptr, cls.ptr())) return 0;
-            return obj_ptr;
+            BOOST_FOREACH(const std::string& name, classNames_)
+            {
+                boost::python::object cls = 
+                    ackward::core::getClass(name);
+                if (PyObject_IsInstance(obj_ptr, cls.ptr()))
+                    return obj_ptr;
+            }
+
+            return 0;
         }
     
     static void construct(
@@ -76,11 +83,25 @@ struct from_python_object_
         }
 
 private:
-    static std::string className_;
+    static std::vector<std::string> classNames_;
 };
 
 template <typename T>
-std::string from_python_object_<T>::className_;
+std::vector<std::string> from_python_object_<T>::classNames_;
+
+template <typename T>
+void initializeFromPythonConverter(const std::string& className)
+{
+    from_python_object_<T> temp(className);
+}
+
+template <typename T>
+void initializeToPythonConverter()
+{
+    boost::python::to_python_converter<
+        T,
+        to_python_object_<T> >();
+}
 
 /** Sets up a to-/from-python converter for the python class
  * `className` and C++ type `T`.
@@ -88,11 +109,8 @@ std::string from_python_object_<T>::className_;
 template <typename T>
 void initializePythonConverter(const std::string& className)
 {
-    boost::python::to_python_converter<
-        T,
-        to_python_object_<T> >();
-
-    from_python_object_<T> temp(className);
+    initializeToPythonConverter<T>();
+    initializeFromPythonConverter<T>(className);
 }
 
 }}

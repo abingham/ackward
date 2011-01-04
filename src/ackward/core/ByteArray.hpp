@@ -3,101 +3,91 @@
 
 #include <Python.h>
 
-#include <boost/array.hpp>
-#include <boost/python/converter/registry.hpp>
-#include <boost/python/str.hpp>
-#include <boost/python/to_python_converter.hpp>
+#include <vector>
+
+#include <ackward/core/Object.hpp>
 
 namespace ackward {
 namespace core {
 
-/** A to-/from-python converter template for boost::arrays<unsigned char, N>. 
+class Bytes;
 
-    To setup a converter for a particular size of array N, just
-    instantiate a ByteArray_python_converter<N> somewhere. Generally
-    you should do this in some sort of initialization method, or
-    somewhere early in your execution.
- */
-template <unsigned int Size>
-struct ByteArray_python_converter
+class ByteArray : private Object
 {
-    typedef boost::array<unsigned char, Size> Array;
+public:
+    /** Construct ByteArray from existing python bytearray.
 
-    ByteArray_python_converter()
-        {
-            static bool initialized = false;
+        @throw ValueError `ba` is not a bytearray object.
+     */
+    ByteArray(boost::python::object ba);
 
-            if (initialized) return;
+    /** Construct ByteArray from existing data.
 
-            boost::python::converter::registry::push_back(
-                &convertible,
-                &construct,
-                boost::python::type_id<Array>());
+        @param data The data to copy into the new Bytes object
+        @param len The number of bytes in `data`.
+    */
+    ByteArray(const char* data, Py_ssize_t len);
 
-            boost::python::to_python_converter<
-                Array,
-                ByteArray_python_converter<Size> >();
-
-            initialized = true;
-        }
+    ByteArray(const Bytes&);
     
-    static void* convertible(PyObject* obj_ptr)
-        {
-            if (PyBytes_Check(obj_ptr))
-            {
-                if (PyBytes_Size(obj_ptr) != Size) return 0;
-            }
-            else if (PyByteArray_Check(obj_ptr)) 
-            {
-                if (PyByteArray_Size(obj_ptr) != Size) return 0;
-            }
-            else
-                return 0;
+    /** Construct Bytes from a range of values */
+    template <typename Itr>
+    ByteArray(Itr, Itr);
 
-            return obj_ptr;
-        }
+    /** Construct empty ByteArray */
+    ByteArray();
+
+    /** Get number of bytes in array */
+    Py_ssize_t size() const;
     
-    static void construct(
-        PyObject* obj_ptr,
-        boost::python::converter::rvalue_from_python_stage1_data* data)
-        {
-            using namespace boost::python;
+    /** Get/set the byte at a particuar index.
+        @param idx The index of the byte to get.
+        @throw IndexError Index is out of range.
+    */
+    char operator[](std::size_t idx) const;
+    char& operator[](std::size_t idx);
 
-            void* storage = (
-                (boost::python::converter::rvalue_from_python_storage<Array>*)
-                data)->storage.bytes;
-            
-            // in-place construct the new QString using the character data
-            // extraced from the python object
-            Array* arr = new (storage) Array;
+    bool operator==(const ByteArray&) const;
+    bool operator==(const Bytes&) const;
 
-            const char* chardata = 
-                PyByteArray_Check(obj_ptr)
-                ? PyByteArray_AsString(obj_ptr)
-                : PyBytes_AsString(obj_ptr);
+    using Object::obj;
 
-            std::copy(chardata, 
-                      chardata + Size,
-                      arr->begin());
-            
-            // Stash the memory chunk pointer for later use by boost.python
-            data->convertible = storage;
-        }
+    // iteration
+public:
+    typedef char* iterator;
+    typedef const char* const_iterator;
+    
+    iterator begin();
+    iterator end();
 
-    static PyObject* convert(const Array& arr)
-        {
-            namespace bp=boost::python;
+    const_iterator begin() const;
+    const_iterator end() const;
 
-            bp::object bytes = bp::object(
-                bp::handle<>(
-                    PyBytes_FromStringAndSize(
-                        reinterpret_cast<const char*>(arr.data()), 
-                        arr.size())));
-
-            return boost::python::incref(
-                bytes.ptr());
-        }
+    template <typename Itr>
+    static boost::python::object copyData(Itr, Itr);
 };
+
+template <typename Itr>
+ByteArray::ByteArray(Itr begin, Itr end) :
+    Object ( ByteArray::copyData(begin, end) )
+{}
+
+template <typename Itr>
+boost::python::object
+ByteArray::copyData(Itr begin, Itr end)
+{
+    using namespace boost::python;
+
+    std::vector<char> data(begin, end);
+
+    object obj = object(
+        handle<>(
+            PyByteArray_FromStringAndSize(
+                &data[0], 
+                data.size())));
+
+    return obj;
+}
 
 } // namepace core
 } // namespace ackward

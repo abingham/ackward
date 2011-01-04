@@ -28,8 +28,6 @@ void initialize()
         ;
 
     core::TupleConverter<Fields>::registerConverter();
-
-    ackward::core::ByteArray_python_converter<16> temp;
 }
 
 } // namespace uuid

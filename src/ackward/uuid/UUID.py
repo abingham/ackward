@@ -29,7 +29,7 @@ static UUID fromHex(
 '''
 
 from_bytes1='''
-static UUID fromBytes(const Bytes& bytes)
+static UUID fromBytes(const ackward::core::Bytes& bytes)
 {
     try {
         boost::python::object obj = UUID::cls()(
@@ -42,7 +42,7 @@ static UUID fromBytes(const Bytes& bytes)
 
 from_bytes2='''
 static UUID fromBytes(
-  const Bytes& bytes,
+  const ackward::core::Bytes& bytes,
   uint8_t version)
 {
     using namespace boost::python;
@@ -60,7 +60,7 @@ static UUID fromBytes(
 '''
 
 from_bytes_le1='''
-static UUID fromBytes_LE(const Bytes& bytes_le)
+static UUID fromBytes_LE(const ackward::core::Bytes& bytes_le)
 {
     using namespace boost::python;
 
@@ -76,7 +76,7 @@ static UUID fromBytes_LE(const Bytes& bytes_le)
 
 from_bytes_le2='''
 static UUID fromBytes_LE(
-  const Bytes& bytes_le,
+  const ackward::core::Bytes& bytes_le,
   uint8_t version)
 {
     using namespace boost::python;
@@ -148,13 +148,13 @@ class UUID(ClassTranslationUnit):
         Property(
             cls=c,
             name='bytes',
-            type='Bytes',
+            type='ackward::core::ByteArray',
             read_only=True)
 
         Property(
             cls=c,
             name='bytes_le',
-            type='Bytes',
+            type='ackward::core::ByteArray',
             read_only=True)
 
         Property(
@@ -206,6 +206,8 @@ class UUID(ClassTranslationUnit):
             forward_declarations=[
                 ],
             header_includes=[
+                ('ackward', 'core', 'ByteArray.hpp'),
+                ('ackward', 'core', 'Bytes.hpp'),
                 ('ackward', 'core', 'ExceptionTranslator.hpp'),
                 ('ackward', 'core', 'Tuple.hpp'),
                 ('ackward', 'core', 'Util.hpp'),

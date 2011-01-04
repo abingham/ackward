@@ -18,6 +18,7 @@ local_env.AppendUnique(CPPDEFINES=['BOOST_TEST_DYN_LINK'])
 local_env.AppendUnique(LIBS=['boost_unit_test_framework'])
 
 sources = [
+    'bytearray_test.cpp',
     'bytes_test.cpp',
     'date_test.cpp',
     'datetime_test.cpp',

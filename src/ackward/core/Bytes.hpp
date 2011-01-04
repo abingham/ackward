@@ -1,10 +1,16 @@
 #ifndef INCLUDE_ACKWARD_CORE_BYTES_HPP
 #define INCLUDE_ACKWARD_CORE_BYTES_HPP
 
+#include <Python.h>
+
+#include <vector>
+
 #include <ackward/core/Object.hpp>
 
 namespace ackward {
 namespace core {
+
+class ByteArray;
 
 class Bytes : private Object
 {
@@ -22,6 +28,12 @@ public:
     */
     Bytes(const char* data, Py_ssize_t len);
 
+    Bytes(const ByteArray&);
+
+    /** Construct Bytes from a range of values */
+    template <typename Itr>
+    Bytes(Itr, Itr);
+
     /** Construct a new, empty Bytes object
      */
     Bytes();
@@ -36,6 +48,9 @@ public:
      */
     char operator[](std::size_t idx) const;
 
+    bool operator==(const Bytes&) const;
+    bool operator==(const ByteArray&) const;
+
     using Object::obj;
 
     // iteration
@@ -48,7 +63,32 @@ public:
 
     const_iterator begin() const;
     const_iterator end() const;
+
+    template <typename Itr>
+    static boost::python::object copyData(Itr, Itr);
 };
+
+template <typename Itr>
+Bytes::Bytes(Itr begin, Itr end) :
+    Object ( Bytes::copyData(begin, end) )
+{}
+
+template <typename Itr>
+boost::python::object
+Bytes::copyData(Itr begin, Itr end)
+{
+    using namespace boost::python;
+
+    std::vector<char> data(begin, end);
+
+    object obj = object(
+        handle<>(
+            PyBytes_FromStringAndSize(
+                &data[0], 
+                data.size())));
+
+    return obj;
+}
 
 } // core
 } // ackward

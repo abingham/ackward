@@ -66,10 +66,7 @@ BOOST_AUTO_TEST_CASE( uuid_fromHex )
 
 BOOST_AUTO_TEST_CASE( uuid_fromBytes )
 {
-    Bytes b;
-
-    std::string val("\x12\x34\x56\x78\x12\x34\x56\x78\x12\x34\x56\x78\x12\x34\x56\x78");
-    std::copy(val.begin(), val.end(), b.begin());
+    Bytes b("\x12\x34\x56\x78\x12\x34\x56\x78\x12\x34\x56\x78\x12\x34\x56\x78", 16);
 
     UUID uuid = UUID::fromBytes(b);
     BOOST_CHECK(uuid.bytes() == b);
@@ -78,10 +75,7 @@ BOOST_AUTO_TEST_CASE( uuid_fromBytes )
 
 BOOST_AUTO_TEST_CASE( uuid_fromBytes_LE )
 {
-    Bytes b;
-
-    std::string val("\x78\x56\x34\x12\x34\x12\x78\x56\x12\x34\x56\x78\x12\x34\x56\x78");
-    std::copy(val.begin(), val.end(), b.begin());
+    Bytes b("\x78\x56\x34\x12\x34\x12\x78\x56\x12\x34\x56\x78\x12\x34\x56\x78", 16);
 
     UUID uuid = UUID::fromBytes_LE(b);
     BOOST_CHECK(uuid.bytes_le() == b);
@@ -129,11 +123,13 @@ BOOST_AUTO_TEST_CASE( uuid_version )
     BOOST_CHECK(
         UUID::fromHex("12345678123456781234567812345678").version() == 0);
 
-    BOOST_CHECK(
-        UUID::fromBytes(Bytes()).version() == 0);
+    Bytes b("\x12\x34\x56\x78\x12\x34\x56\x78\x12\x34\x56\x78\x12\x34\x56\x78", 16);
 
     BOOST_CHECK(
-        UUID::fromBytes_LE(Bytes()).version() == 0);
+        UUID::fromBytes(b).version() == 0);
+
+    BOOST_CHECK(
+        UUID::fromBytes_LE(b).version() == 0);
 
     BOOST_CHECK(
         UUID::fromFields(
@@ -165,9 +161,7 @@ BOOST_AUTO_TEST_CASE( uuid_version_hex )
 
 BOOST_AUTO_TEST_CASE( uuid_version_bytes )
 {
-    Bytes b;
-    std::string val("\x12\x34\x56\x78\x12\x34\x56\x78\x12\x34\x56\x78\x12\x34\x56\x78");
-    std::copy(val.begin(), val.end(), b.begin());
+    Bytes b("\x12\x34\x56\x78\x12\x34\x56\x78\x12\x34\x56\x78\x12\x34\x56\x78", 16);
 
     for (uint8_t i = 1; i < 6; ++i)
     {
@@ -186,9 +180,7 @@ BOOST_AUTO_TEST_CASE( uuid_version_bytes )
 
 BOOST_AUTO_TEST_CASE( uuid_version_bytes_le )
 {
-    Bytes b;
-    std::string val("\x12\x34\x56\x78\x12\x34\x56\x78\x12\x34\x56\x78\x12\x34\x56\x78");
-    std::copy(val.begin(), val.end(), b.begin());
+    Bytes b("\x12\x34\x56\x78\x12\x34\x56\x78\x12\x34\x56\x78\x12\x34\x56\x78", 16);
 
     for (uint8_t i = 1; i < 6; ++i)
     {
@@ -328,8 +320,10 @@ BOOST_AUTO_TEST_CASE( uuid_namespace_x500 )
 
 BOOST_AUTO_TEST_CASE( uuid_example_test )
 {
-    Bytes b;
-    for (int i = 0; i < 16; ++i) { b[i] = i; }
+    std::vector<char> bytes;
+    for (int i = 0; i < 16; ++i) { bytes.push_back(i); }
+    Bytes b(bytes.begin(), bytes.end());
+
 
     // make a UUID based on the host ID and current time
     // uuid1(); // TODO: Fails in implicit getnode()

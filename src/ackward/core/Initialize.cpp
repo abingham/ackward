@@ -1,5 +1,6 @@
 #include <ackward/core/Initialize.hpp>
 
+#include <ackward/core/ByteArray.hpp>
 #include <ackward/core/Bytes.hpp>
 #include <ackward/core/PythonConverter.hpp>
 
@@ -12,8 +13,15 @@ void initialize()
 
     if (!initialized)
     {
+        initializePythonConverter<ByteArray>(
+            "bytearray");
+        initializeFromPythonConverter<ByteArray>(
+            "bytes");
+
         initializePythonConverter<Bytes>(
             "bytes");
+        initializeFromPythonConverter<Bytes>(
+            "bytearray");
 
         initialized = true;
     }
