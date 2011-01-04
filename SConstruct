@@ -18,6 +18,8 @@ build.init_variables(vars)
 env = Environment(variables=vars,
                   tools=['default', TOOL_ACKWARD])
 
+build.configure(env)
+
 Help(vars.GenerateHelpText(env))
 
 # Run variant-specific configuration

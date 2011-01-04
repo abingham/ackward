@@ -22,6 +22,8 @@ def init_variables(vars):
 
     vars.Add('BUILD_DIR', 'Build-product directory', None)
 
+    vars.Add('VERBOSE', 'Print extra info about the build', False)
+
     vars.Add('INSTALL_DIR', 'Installation directory',
              os.path.join('#', 'install', '$VARIANT'))
     
