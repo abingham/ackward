@@ -17,4 +17,5 @@
 
 # VARIANT='release' # options: debug, release
 
+# VERBOSE=None
 # BUILD_DIR=None
