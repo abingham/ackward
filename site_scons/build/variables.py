@@ -2,7 +2,7 @@ import SCons.Script
 
 import os
 
-def init_vars(vars):
+def init_variables(vars):
     '''Initialize the build variables.
     '''
     vars.Add('BOOST_INCLUDE_DIR', 'Location of boost headers', '/usr/include')

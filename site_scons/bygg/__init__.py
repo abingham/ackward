@@ -1,3 +1,6 @@
+'''A collection of utilities for scons builds.
+'''
+
 from .tools import build_shared_library
 from .variant import *
 

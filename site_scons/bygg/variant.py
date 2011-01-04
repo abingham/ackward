@@ -1,7 +1,9 @@
 '''These are a collection of build variants.
 '''
 
-import sys
+import logging, sys
+
+logger = logging.getLogger('bygg.variant')
 
 class Variant(object):
     def __init__(self, name):
@@ -36,9 +38,10 @@ def configure_variant(env, variant):
     `variant` is the name of the variant that should configure `env`.
     '''
     try:
+        logger.info('Configuring for variant {0}'.format(variant))
         variants[variant].configure(env)
     except KeyError:
-        print 'ERROR: Invalid variant "%s". Valid options are %s.' % (variant,
-                                                                      variants.keys())
+        logger.error('Invalid variant "{0}". Valid options are {1}.'.format(variant,
+                                                                            variants.keys()))
         sys.exit(1)
 
