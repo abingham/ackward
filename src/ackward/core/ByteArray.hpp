@@ -89,6 +89,11 @@ ByteArray::copyData(Itr begin, Itr end)
     return obj;
 }
 
+template <>
+boost::python::object
+ByteArray::copyData<const char*>(const char* begin, 
+                                 const char* end);
+
 } // namepace core
 } // namespace ackward
 

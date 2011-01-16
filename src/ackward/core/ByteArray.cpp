@@ -116,5 +116,20 @@ ByteArray::const_iterator ByteArray::end() const
     return PyByteArray_AsString(obj().ptr()) + size();
 }
 
+template <>
+boost::python::object
+ByteArray::copyData<const char*>(const char* begin, 
+                                 const char* end)
+{
+    using namespace boost::python;
+
+    object obj = object(
+        handle<>(
+            PyByteArray_FromStringAndSize(
+                begin,
+                end - begin)));
+
+    return obj;
 }
-}
+
+}}
