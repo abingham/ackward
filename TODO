@@ -35,7 +35,7 @@ Logging
 * LoggerAdapter
 * Various handler subclasses
 * StreamHandler: construct from things like cout, cerr...any ostream?
-* fromFile, listen, etc.
+* fileConfig(), listen, stopListening, etc.
 
 Datetime
 ========
