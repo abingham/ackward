@@ -10,9 +10,10 @@ class Variant(object):
         self.name = name
 
     def configure(self, env):
-        env['SHLIBSUFFIX'] = '-%s' % self.name + env['SHLIBSUFFIX']
-        env['SHOBJSUFFIX'] = '.%s' % self.name + env['SHOBJSUFFIX']
-        env['OBJSUFFIX'] = '.%s' % self.name + env['OBJSUFFIX']
+        #env['SHLIBSUFFIX'] = '-%s' % self.name + env['SHLIBSUFFIX']
+        #env['SHOBJSUFFIX'] = '.%s' % self.name + env['SHOBJSUFFIX']
+        #env['OBJSUFFIX'] = '.%s' % self.name + env['OBJSUFFIX']
+        pass
     
 class DebugVariant(Variant):
     def __init__(self, name='debug'):

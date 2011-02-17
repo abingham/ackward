@@ -51,7 +51,8 @@ except KeyError:
 
 subdirs = [
     'src/ackward',
-    'src/test'
+    'src/test',
+    'examples',
     ]
 
 for subdir in subdirs:

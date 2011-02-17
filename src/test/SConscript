@@ -1,6 +1,6 @@
 import os
 
-from build_utils import products
+from bygg import products
 
 Import('env')
 

@@ -10,11 +10,11 @@ class SharedLib(object):
         self.node = node
         
     def configure(self, env, rpath=False):
-        env.AppendUnique(LIBS=[self.node])
+        env.AppendUnique(LIBS=[os.path.split(self.node.path)[1]])
 
-        env.AppendUnique(LIBPATH=[os.path.split(self.node.path)[0]])
-        if rpath:
-            env.AppendUnique(RPATH=[os.path.split(self.node.path)[0]])
+        env.AppendUnique(LIBPATH=[os.path.join('#', os.path.split(self.node.path)[0])])
+        #if rpath:
+        #    env.AppendUnique(RPATH=[os.path.split(self.node.path)[0]])
 
 def _build_shared_library(env, name, sources, deps=[]):
     from . import products
@@ -72,3 +72,21 @@ def build_shared_library(env,
     _install_headers(env,
                      headers + akw_headers,
                      name)
+
+def build_program(env,
+                  name,
+                  sources,
+                  deps=[]):
+    from . import products
+    
+    local_env = env.Clone()
+    bin = local_env.Program(name, sources)
+    for dep in deps:
+        products(env)[dep].configure(local_env)
+
+    env.Alias('build', bin)
+    env.Alias(
+        'install',
+        env.Install(
+            os.path.join('$INSTALL_DIR', 'bin'), 
+            source = [bin]))
