@@ -1,0 +1,11 @@
+import os
+
+Import(['env'])
+
+subdirs = [
+    'logging',
+    ]
+
+SConscript(dirs=subdirs,
+           exports='env')
+

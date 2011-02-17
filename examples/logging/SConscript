@@ -1,0 +1,9 @@
+from bygg import build_program
+
+Import(['env'])
+
+build_program(
+    env,
+    'log_example',
+    ['log_example.cpp'],
+    deps=['core', 'logging'])
