@@ -8,9 +8,9 @@
 # BOOST_LIB_DIR = '/usr/lib'
 # BOOST_LIBS = ['boost_filesystem', 'boost_python', 'boost_system']
 
-# PYTHON_INCLUDE_DIR = '/usr/include/python2.6'
+# PYTHON_INCLUDE_DIR = '/usr/include/python3.1'
 # PYTHON_LIB_DIR = '/usr/lib'
-# PYTHON_LIBS = 'python2.6'
+# PYTHON_LIBS = ['python3']
 
 # CXX=None
 # CXXFLAGS=[]
