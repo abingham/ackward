@@ -28,10 +28,16 @@ class ReleaseVariant(Variant):
         super(ReleaseVariant, self).__init__(name)
 
 # Maps from variant names to variant-specific configuration functions
-variants = {
+_variants = {
     'release' : ReleaseVariant(),
     'debug' : DebugVariant()
     }
+
+def register_variant(name, variant):
+    _variants[name] = variant
+
+register_variant('release', ReleaseVariant())
+register_variant('debug', DebugVariant())
 
 def configure_variant(env, variant):
     '''Perform variant-specific configuration of the environment. 
@@ -40,7 +46,7 @@ def configure_variant(env, variant):
     '''
     try:
         logger.info('Configuring for variant {0}'.format(variant))
-        variants[variant].configure(env)
+        _variants[variant].configure(env)
     except KeyError:
         logger.error('Invalid variant "{0}". Valid options are {1}.'.format(variant,
                                                                             variants.keys()))

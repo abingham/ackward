@@ -1,4 +1,4 @@
-import bygg
+import build
 
 Import('env')
 
@@ -30,7 +30,8 @@ headers = [
     'Util.hpp',
     ]
 
-bygg.build_shared_library(env,
-                          'core',
-                          sources,
-                          headers)
+build.shared_library(
+    env,
+    'core',
+    sources,
+    headers)

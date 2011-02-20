@@ -9,7 +9,7 @@ class DebugVariant(bygg.DebugVariant):
         super(DebugVariant, self).configure(env)
         env.AppendUnique(CPPDEFINES=['ACKWARD_DEBUG'])
 
-bygg.variants['debug'] = DebugVariant()
+bygg.register_variant('debug', DebugVariant())
 
 # Initialize the custom build variables
 vars = Variables('custom.py')
