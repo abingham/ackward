@@ -37,7 +37,7 @@ def shared_library(env,
 
     akw_impls = [env.AkwImpl(akw) for akw in akw_files]
 
-    bygg.build_shared_library(
+    return bygg.build_shared_library(
         env=env,
         name=name,
         sources=sources + akw_impls,
@@ -46,3 +46,14 @@ def shared_library(env,
         lib_dir=os.path.join('$INSTALL_DIR', 'lib'),
         include_dir=os.path.join('$INSTALL_DIR', 'include'),
         include_subdir=os.path.join('ackward', name))
+
+def program(env,
+            name,
+            sources,
+            deps=[]):
+    return bygg.build_program(
+        env,
+        name,
+        sources,
+        os.path.join('$INSTALL_DIR', 'bin'),
+        deps)

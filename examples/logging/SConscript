@@ -1,8 +1,8 @@
-from bygg import build_program
+import build
 
 Import(['env'])
 
-build_program(
+build.program(
     env,
     'log_example',
     ['log_example.cpp'],

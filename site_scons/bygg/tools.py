@@ -18,11 +18,11 @@ class SharedLib(object):
         #if rpath:
         #    env.AppendUnique(RPATH=[os.path.split(self.node.path)[0]])
 
-def _install_headers(env, headers, subdir):
+def _install_headers(env, headers, include_dir):
     env.Alias(
         'install',
         env.Install(
-            os.path.join('$INSTALL_DIR', 'include', 'ackward', subdir),
+            include_dir,
             headers))
 
 def build_shared_library(env,
@@ -55,7 +55,7 @@ def build_shared_library(env,
     env.Alias(
         'install',
         env.Install(
-            os.path.join('$INSTALL_DIR', 'lib'), 
+            lib_dir,
             source = [lib]))
 
     _install_headers(
@@ -66,6 +66,7 @@ def build_shared_library(env,
 def build_program(env,
                   name,
                   sources,
+                  bin_dir,
                   deps=[]):
     from . import products
     
@@ -78,5 +79,5 @@ def build_program(env,
     env.Alias(
         'install',
         env.Install(
-            os.path.join('$INSTALL_DIR', 'bin'), 
+            bin_dir,
             source = [bin]))
