@@ -10,9 +10,6 @@ class Variant(object):
         self.name = name
 
     def configure(self, env):
-        #env['SHLIBSUFFIX'] = '-%s' % self.name + env['SHLIBSUFFIX']
-        #env['SHOBJSUFFIX'] = '.%s' % self.name + env['SHOBJSUFFIX']
-        #env['OBJSUFFIX'] = '.%s' % self.name + env['OBJSUFFIX']
         pass
     
 class DebugVariant(Variant):
@@ -27,28 +24,32 @@ class ReleaseVariant(Variant):
     def __init__(self, name='release'):
         super(ReleaseVariant, self).__init__(name)
 
-# Maps from variant names to variant-specific configuration functions
-_variants = {
-    'release' : ReleaseVariant(),
-    'debug' : DebugVariant()
-    }
+class VariantManager:
+    def __init__(self):
+        self.variants = {}
+        self.__active = None
+        
+    active_variant = property(lambda self: self.__active)
 
-def register_variant(name, variant):
-    _variants[name] = variant
+    def register_variant(self, name, variant):
+        self.variants[name] = variant
+
+    def configure_variant(self, env, name):
+        try:
+            logger.info('Configuring for variant {0}'.format(name))
+            
+            self.variants[name].configure(env)
+            self.__active = self.variants[name]
+        except KeyError:
+            logger.error('Invalid variant "{0}". Valid options are {1}.'.format(name,
+                                                                                self.variants.keys()))
+            sys.exit(1)
+
+mgr = VariantManager()
+register_variant = mgr.register_variant
+configure_variant = mgr.configure_variant
+active_variant = lambda: mgr.active_variant
 
 register_variant('release', ReleaseVariant())
 register_variant('debug', DebugVariant())
-
-def configure_variant(env, variant):
-    '''Perform variant-specific configuration of the environment. 
-
-    `variant` is the name of the variant that should configure `env`.
-    '''
-    try:
-        logger.info('Configuring for variant {0}'.format(variant))
-        _variants[variant].configure(env)
-    except KeyError:
-        logger.error('Invalid variant "{0}". Valid options are {1}.'.format(variant,
-                                                                            variants.keys()))
-        sys.exit(1)
 

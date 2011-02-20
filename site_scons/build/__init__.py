@@ -42,7 +42,9 @@ def shared_library(env,
         name=name,
         sources=sources + akw_impls,
         headers=headers + akw_headers,
-        lib_name='ackward_{0}'.format(name),
+        lib_name='ackward_{0}-{1}'.format(
+            name, 
+            bygg.variant.active_variant().name),
         lib_dir=os.path.join('$INSTALL_DIR', 'lib'),
         include_dir=os.path.join('$INSTALL_DIR', 'include'),
         include_subdir=os.path.join('ackward', name))
