@@ -30,7 +30,7 @@ def configure(env):
 def shared_library(env,
                    name,
                    sources,
-                   headers,
+                   headers=[],
                    akw_files=[],
                    deps=[]):
     akw_headers = [env.AkwHeader(akw) for akw in akw_files]

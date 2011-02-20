@@ -1,0 +1,19 @@
+import os
+
+import bygg
+
+Import(['env'])
+
+env = env.Clone()
+
+env['SHLIBPREFIX'] = ''
+
+bygg.build_shared_library(
+    env,
+    name='log_test',
+    sources=['log_test.cpp'],
+    headers=[],
+    deps=['core', 'logging'],
+    lib_dir=os.path.join('$INSTALL_DIR', 'lib'),
+    include_dir='',
+    include_subdir='')

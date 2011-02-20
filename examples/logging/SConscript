@@ -1,9 +1,9 @@
-import build
-
 Import(['env'])
 
-build.program(
-    env,
-    'log_example',
-    ['log_example.cpp'],
-    deps=['core', 'logging'])
+subdirs = [
+    'embed',
+    'extension',
+    ]
+
+SConscript(dirs=subdirs,
+           exports='env')
