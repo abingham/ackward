@@ -40,10 +40,11 @@ def check_config(env):
             print 'Missing header %s. %s must be installed!' % (header, package)
             env.Exit(1)
 
-    for libs, package in [ (env['BOOST_LIBS'], 'boost.python'),
+    for libs, package in [ (env['BOOST_LIBS'], 'boost'),
                            (env['PYTHON_LIBS'], 'python')]:
-        if not conf.CheckLib(libs, language='C++'):
-            print 'Missing library/ies %s. %s must be installed!' % (libs, package)
-            env.Exit(1)
+        for lib in libs:
+            if not conf.CheckLib(lib, language='C++'):
+                print 'Missing library %s. %s must be installed!' % (lib, package)
+                env.Exit(1)
 
     return conf.Finish()
