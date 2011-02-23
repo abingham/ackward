@@ -102,4 +102,20 @@ Bytes::const_iterator Bytes::end() const
     return PyBytes_AsString(obj().ptr()) + size();
 }
 
+template <>
+boost::python::object
+Bytes::copyData<const char*>(const char* begin, 
+                             const char* end)
+{
+    using namespace boost::python;
+
+    object obj = object(
+        handle<>(
+            PyBytes_FromStringAndSize(
+                begin, 
+                end - begin)));
+
+    return obj;
+}
+
 }}

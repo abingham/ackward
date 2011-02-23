@@ -90,6 +90,11 @@ Bytes::copyData(Itr begin, Itr end)
     return obj;
 }
 
+template <>
+boost::python::object
+Bytes::copyData<const char*>(const char* begin, 
+                             const char* end);
+
 } // core
 } // ackward
 

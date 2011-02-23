@@ -1,0 +1,9 @@
+import build
+
+Import(['env'])
+
+build.program(
+    env,
+    'log_example_embed',
+    ['log_example.cpp'],
+    deps=['core', 'logging'])

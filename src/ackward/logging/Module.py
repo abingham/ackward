@@ -61,10 +61,10 @@ class LoggingModule(TranslationUnit):
         super(LoggingModule, self).__init__(
             preprocessor_guard='INCLUDE_ACKWARD_LOGGING_MODULE_HPP',
             header_includes=[
+                ('string',),
                 ('ackward', 'logging', 'Types.hpp')
                 ],
             impl_includes=[
-                ('string',),
                 ('boost', 'python', 'dict.hpp'),
                 ('boost', 'python', 'import.hpp'),
                 ('boost', 'python', 'module.hpp'),

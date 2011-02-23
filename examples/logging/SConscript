@@ -1,0 +1,9 @@
+Import(['env'])
+
+subdirs = [
+    'embed',
+    'extension',
+    ]
+
+SConscript(dirs=subdirs,
+           exports='env')

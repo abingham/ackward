@@ -2,7 +2,7 @@ import SCons.Script
 
 import os
 
-def init_vars(vars):
+def init_variables(vars):
     '''Initialize the build variables.
     '''
     vars.Add('BOOST_INCLUDE_DIR', 'Location of boost headers', '/usr/include')
@@ -22,6 +22,8 @@ def init_vars(vars):
 
     vars.Add('BUILD_DIR', 'Build-product directory', None)
 
+    vars.Add('VERBOSE', 'Print extra info about the build', 0)
+
     vars.Add('INSTALL_DIR', 'Installation directory',
              os.path.join('#', 'install', '$VARIANT'))
     
@@ -38,10 +40,11 @@ def check_config(env):
             print 'Missing header %s. %s must be installed!' % (header, package)
             env.Exit(1)
 
-    for libs, package in [ (env['BOOST_LIBS'], 'boost.python'),
+    for libs, package in [ (env['BOOST_LIBS'], 'boost'),
                            (env['PYTHON_LIBS'], 'python')]:
-        if not conf.CheckLib(libs, language='C++'):
-            print 'Missing library/ies %s. %s must be installed!' % (libs, package)
-            env.Exit(1)
+        for lib in libs:
+            if not conf.CheckLib(lib, language='C++'):
+                print 'Missing library %s. %s must be installed!' % (lib, package)
+                env.Exit(1)
 
     return conf.Finish()

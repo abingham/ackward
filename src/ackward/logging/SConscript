@@ -1,4 +1,4 @@
-import build_utils
+import build
 
 Import(['env'])
 
@@ -36,8 +36,10 @@ headers = [
     'WatchedFileHandler.hpp',
     ]
 
-build_utils.build_shared_library(env,
-                                 name='logging',
-                                 sources=sources,
-                                 headers=headers,
-                                 akw_files=akw_files)
+build.shared_library(
+    env,
+    name='logging',
+    sources=sources,
+    headers=headers,
+    akw_files=akw_files,
+    deps=['core'])
