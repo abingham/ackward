@@ -39,6 +39,9 @@ std::wstring str(boost::python::object);
 template <typename T>
 std::wstring str(const T& t) { return ackward::core::str(t.obj()); }
 
+/** Get the "builtins" module */
+boost::python::object builtins();
+
 /** Determine if an object is of a specified type.
 
     @param obj The object to test

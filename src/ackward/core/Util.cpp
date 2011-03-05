@@ -6,8 +6,27 @@
 
 #include <ackward/core/ExceptionTranslator.hpp>
 #include <ackward/core/Import.hpp>
+#include <ackward/core/PythonVersion.hpp>
 
 using namespace boost::python;
+
+namespace {
+
+std::wstring unicodeToWString(PyObject* s)
+{
+    assert(PyUnicode_Check(s));
+
+    Py_ssize_t len = PyUnicode_GetSize(s);
+    
+    boost::scoped_array<wchar_t> buf(new wchar_t[len]);
+    
+    if (PyUnicode_AsWideChar(reinterpret_cast<PyUnicodeObject*>(s), buf.get(), len) == -1)
+        return std::wstring();
+    
+    return std::wstring(buf.get(), buf.get() + len);
+}
+
+}
 
 namespace ackward { namespace core
 {
@@ -51,14 +70,22 @@ next(object iterator)
 
 std::wstring strToWString(boost::python::str s)
 {
-    Py_ssize_t len = PyUnicode_GetSize(s.ptr());
-    
-    boost::scoped_array<wchar_t> buf(new wchar_t[len]);
-    
-    if (PyUnicode_AsWideChar(reinterpret_cast<PyUnicodeObject*>(s.ptr()), buf.get(), len) == -1)
-        return std::wstring();
-    
-    return std::wstring(buf.get(), buf.get() + len);
+#if ACKWARD_PYTHON_VERSION == 2
+
+    if (PyUnicode_Check(s.ptr()))
+        return ::unicodeToWString(s.ptr());
+
+    object unicodeObject = object(
+        handle<>(
+            PyUnicode_FromObject(s.ptr())));
+
+    return ::unicodeToWString(unicodeObject.ptr());
+
+#elif ACKWARD_PYTHON_VERSION == 3
+
+    return ::unicodeToWString(s.ptr());
+
+#endif
 }
 
 std::wstring repr(object obj)
@@ -74,6 +101,22 @@ std::wstring str(object obj)
     boost::python::str r = extract<boost::python::str>(
         object(handle<>(PyObject_Str(obj.ptr()))));
     return strToWString(r);
+}
+
+boost::python::object builtins()
+{
+    static boost::python::object mod;
+    
+    if (is_none(mod))
+    {
+#if ACKWARD_PYTHON_VERSION == 2
+        mod = import("__builtin__");
+#elif ACKWARD_PYTHON_VERSION == 3
+        mod = import("builtins");
+#endif
+    }
+
+    return mod;
 }
 
 bool isInstance(boost::python::object obj,
