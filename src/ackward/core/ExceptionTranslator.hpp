@@ -11,6 +11,8 @@
 #include <boost/python/object.hpp>
 #include <boost/python/tuple.hpp>
 
+#include <ackward/core/Util.hpp>
+
 namespace ackward { namespace core
 {
 
@@ -50,7 +52,7 @@ bool add(ExceptionTranslator& excx,
     // Assume that a length-1 range implies the __builtins__ module
     else if (distance(begin, end) == 1)
     {
-        return excx.add(import("builtins").attr(*begin), t);
+        return excx.add(builtins().attr(*begin), t);
     }
     else
     {

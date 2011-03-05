@@ -8,6 +8,8 @@
 #include <boost/python/import.hpp>
 #include <boost/python/object.hpp>
 
+#include <ackward/core/Util.hpp>
+
 using namespace boost::algorithm;
 using namespace boost::python;
 
@@ -26,10 +28,11 @@ object getClass(const std::string& name)
     splitVec.pop_back();
     std::string modName = join(splitVec, ".");
 
-    if (modName.empty())
-        modName = "builtins";
+    object mod = 
+        modName.empty()
+        ? builtins()
+        : import(modName.c_str());
 
-    object mod = import(modName.c_str());
     object cls = mod.attr(className.c_str());
     return cls;
 }

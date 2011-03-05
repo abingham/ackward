@@ -9,6 +9,7 @@
 #include <boost/python/object.hpp>
 
 #include <ackward/core/Exceptions.hpp>
+#include <ackward/core/Util.hpp>
 
 namespace ackward { namespace core
 {
@@ -33,7 +34,7 @@ import(Itr begin, Itr end)
     try {
         
         if (begin == end)
-            return bp::import("builtins");
+            return builtins();
         
         Itr itr = begin;
 

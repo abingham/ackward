@@ -3,7 +3,7 @@
 #include <boost/python.hpp>
 
 #include <ackward/core/ExceptionTranslator.hpp>
-#include <ackward/core/PythonVersion.hpp>
+#include <ackward/core/Util.hpp>
 
 using namespace boost::python;
 
@@ -22,33 +22,23 @@ void translatePythonException(tuple einfo)
 
     if (!initialized)
     {
-#if ACKWARD_PYTHON_VERSION == 2
-
-        object builtins = import("__builtin__");
-
-#elif ACKWARD_PYTHON_VERSION == 3
-        
-        object builtins = import("builtins");
-
-#endif
-
-        ex.add(builtins.attr("AttributeError"),
+        ex.add(builtins().attr("AttributeError"),
                &throw_with_python_info<AttributeError>);
-        ex.add(builtins.attr("ImportError"),
+        ex.add(builtins().attr("ImportError"),
                &throw_with_python_info<ImportError>);
-        ex.add(builtins.attr("IndexError"),
+        ex.add(builtins().attr("IndexError"),
                &throw_with_python_info<IndexError>);
-        ex.add(builtins.attr("IOError"),
+        ex.add(builtins().attr("IOError"),
                &throw_with_python_info<IOError>);
-        ex.add(builtins.attr("KeyError"),
+        ex.add(builtins().attr("KeyError"),
                &throw_with_python_info<KeyError>);
-        ex.add(builtins.attr("TypeError"),
+        ex.add(builtins().attr("TypeError"),
                &throw_with_python_info<TypeError>);
-        ex.add(builtins.attr("ReferenceError"),
+        ex.add(builtins().attr("ReferenceError"),
                &throw_with_python_info<ReferenceError>);
-        ex.add(builtins.attr("ValueError"),
+        ex.add(builtins().attr("ValueError"),
                &throw_with_python_info<ValueError>);
-        ex.add(builtins.attr("StopIteration"),
+        ex.add(builtins().attr("StopIteration"),
                &throw_with_python_info<StopIteration>);
  
        initialized = true;

@@ -6,6 +6,7 @@
 #include <vector>
 
 #include <ackward/core/Object.hpp>
+#include <ackward/core/PythonVersion.hpp>
 
 namespace ackward {
 namespace core {
@@ -83,9 +84,20 @@ Bytes::copyData(Itr begin, Itr end)
 
     object obj = object(
         handle<>(
+
+#if ACKWARD_PYTHON_VERSION == 2
+
+            PyString_FromStringAndSize(
+
+#elif ACKWARD_PYTHON_VERSION == 3
+
             PyBytes_FromStringAndSize(
+
+#endif
+
                 &data[0], 
                 data.size())));
+
 
     return obj;
 }

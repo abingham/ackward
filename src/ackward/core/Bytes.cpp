@@ -6,6 +6,8 @@
 
 #if ACKWARD_PYTHON_VERSION == 2
 
+#include "Bytes.python2.ipp"
+
 #elif ACKWARD_PYTHON_VERSION == 3
 
 #include "Bytes.python3.ipp"

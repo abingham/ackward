@@ -2,6 +2,8 @@
 
 namespace bp=boost::python;
 
+namespace {
+
 /* Check to see if:
      a) `obj` is a bytes object, or
      b) `obj` supports the buffer protocol.
@@ -25,6 +27,8 @@ bp::object validateObject(bp::object obj)
     }
 
     throw ackward::core::ValueError();
+}
+
 }
 
 namespace ackward {
