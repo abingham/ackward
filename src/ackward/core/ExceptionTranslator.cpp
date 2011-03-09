@@ -50,4 +50,20 @@ bool ExceptionTranslator::add(boost::python::object excType,
     return false;
 }
 
+bool ExceptionTranslator::remove(boost::python::object excType)
+{
+    for (ThrowMap::iterator itr = map_.begin();
+            itr != map_.end();
+            ++itr)
+    {
+        if (itr->first == excType)
+        {
+            map_.erase(itr);
+            return true;
+        }
+    }
+
+    return false;
+}
+
 }}

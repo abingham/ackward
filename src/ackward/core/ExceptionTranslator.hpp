@@ -30,7 +30,7 @@ public:
     bool add(boost::python::object excType,
              Thrower thrower);
 
-    // TODO: remove
+    bool remove(boost::python::object excType);
 
 private:
     typedef std::pair<boost::python::object, Thrower> Mapping;
