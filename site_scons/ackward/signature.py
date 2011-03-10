@@ -1,5 +1,5 @@
 import re
-from .util import trace
+from .trace import trace
 
 @trace
 def build_signature(sig, header):

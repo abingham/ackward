@@ -1,11 +1,11 @@
-from .cls import ClassElement
-from ..signature import parse
-from ..util import trace
+from .element import SigTemplateElement
+from .signature import parse
+from .trace import trace
 
-header_template = '$virtual $return_type $name($header_signature) $const $virtual_tail;'
+header_template = '$virtual $return_type $method_name($header_signature) $const $virtual_tail;'
 
 impl_template = '''
-$return_type $class_name::$name($impl_signature) $const {
+$return_type $class_name::$method_name($impl_signature) $const {
     try {
         return boost::python::extract<$return_type>(
             obj().attr("$python_name")($parameters));
@@ -16,7 +16,7 @@ $return_type $class_name::$name($impl_signature) $const {
 }'''
 
 impl_void_template = '''
-void $class_name::$name($impl_signature) $const {
+void $class_name::$method_name($impl_signature) $const {
     try {
         obj().attr("$python_name")($parameters);
     } catch (const boost::python::error_already_set&) {
@@ -25,7 +25,7 @@ void $class_name::$name($impl_signature) $const {
     }
 }'''
 
-class Method(ClassElement):
+class Method(SigTemplateElement):
     '''A basic method of a class.
     '''
     
@@ -34,7 +34,6 @@ class Method(ClassElement):
 
     @trace
     def __init__(self,
-                 cls,
                  name,
                  return_type='void',
                  signature=[],
@@ -44,7 +43,6 @@ class Method(ClassElement):
         '''Create a new method on a class.
 
         Args:
-          * cls: The class object on which to create a new method.
           * name: The C++ name of the method.
           * return_type: The C++ return type of the method.
           * signature: A sequence of argument descriptions.
@@ -62,12 +60,12 @@ class Method(ClassElement):
         else:
             implt = impl_template 
 
-        super(Method, self).__init__(
-            cls,
-            header_template=header_template,
-            impl_template=implt,
-            args={
-                'name' : name,
+        SigTemplateElement.__init__(
+            self,
+            header_open_template=header_template,
+            impl_open_template=implt,
+            symbols={
+                'method_name' : name,
                 'return_type' : return_type,
                 'signature' : signature,
                 'python_name' : name if python_name is None else python_name,
@@ -76,14 +74,13 @@ class Method(ClassElement):
                 'virtual_tail' : '= 0' if virtual == Method.ABSTRACT else ''
                 })
 
-def method(sig, cls):
+def method(sig):
     '''Produce a Method object based on a string description of a method.
 
     This is a convenience method for generated simple Methods.
 
     Args:
       * sig: The signature of the method.
-      * cls: The class on which to put the method.
 
     Returns:
       A Method object for the method described by `sig`.
@@ -91,7 +88,6 @@ def method(sig, cls):
     rtype, name, args, const = parse(sig)
 
     Method(
-        cls=cls,
         name=name,
         return_type=rtype,
         signature=args,

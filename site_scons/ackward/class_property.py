@@ -1,16 +1,16 @@
-from .cls import ClassElement
-from ..util import trace
+from .element import SigTemplateElement
+from .trace import trace
 
-header_getter = 'static $type $name();'
+header_getter = 'static $type $property_name();'
 
-header_setter = 'static void $name($header_signature);'
+header_setter = 'static void $property_name($header_signature);'
 
 impl_getter = '''
-$type $class_name::$name() {
+$type $class_name::$property_name() {
     using namespace boost::python;
     try {
         object prop = 
-            $class_name::cls().attr("$name");
+            $class_name::cls().attr("$property_name");
         return extract<$type>(prop);
     } catch (const boost::python::error_already_set&) {
         core::translatePythonException();
@@ -19,11 +19,11 @@ $type $class_name::$name() {
 }'''
 
 impl_setter = '''
-void $class_name::$name($impl_signature) {
+void $class_name::$property_name($impl_signature) {
     using namespace boost::python;
     try {
         object prop = 
-            $class_name::cls().attr("$name");
+            $class_name::cls().attr("$property_name");
         prop = val;
     } catch (const error_already_set&) {
         core::translatePythonException();
@@ -31,18 +31,18 @@ void $class_name::$name($impl_signature) {
     }
 }'''
 
+# TODO: This should be generating code to use the new
+# core::Property<T> class
 
-class ClassProperty(ClassElement):
+class ClassProperty(SigTemplateElement):
     @trace
     def __init__(self,
-                 cls,
                  name,
                  type,
                  read_only=False):
         '''Construct a new static property on a class. 
 
         Args:
-          * cls: The class object on which to create the property.
           * name: The name of the property.
           * type: The type of the property.
           * read_only: Whether the property is read-only or read-write.
@@ -54,12 +54,12 @@ class ClassProperty(ClassElement):
             header = '\n'.join([header, header_setter])
             impl = '\n'.join([impl, impl_setter])
 
-        super(ClassProperty, self).__init__(
-            cls=cls,
-            header_template=header,
-            impl_template=impl,
-            args={
-                'name' : name,
+        SigTemplateElement.__init__(
+            self,
+            header_open_template=header,
+            impl_open_template=impl,
+            symbols={
+                'property_name' : name,
                 'type' : type,
                 'signature' : [(type, 'val')]
                 })

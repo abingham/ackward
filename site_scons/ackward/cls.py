@@ -1,13 +1,13 @@
-from ..template import ContainerTemplate, ElementTemplate
-from ..util import trace
+from .element import TemplateElement
+from .trace import trace
 
-header_template = '''
+header_open_template = '''
 class $class_name $bases {
 public:
   $class_name(boost::python::object);
+'''
 
-$body
-
+header_close_template = '''
   using Object::obj;
 
 private:
@@ -15,12 +15,10 @@ private:
 };
 '''
 
-impl_template = '''
+impl_open_template = '''
 $class_name::$class_name(boost::python::object o) :
   Object (o)
 {}
-
-$body
 
 boost::python::object $class_name::cls() {
         static boost::python::object c;
@@ -34,7 +32,7 @@ boost::python::object $class_name::cls() {
 }
 '''
 
-class Class(ContainerTemplate):
+class Class(TemplateElement):
     '''A template for generating C++ classes the "wrap" python
     classes.
     '''
@@ -60,35 +58,13 @@ class Class(ContainerTemplate):
         else:
             bases = ''
 
-        super(Class, self).__init__(
-            header_template,
-            impl_template,
-            { 'class_name' : name,
-              'wrapped_class' : wrapped_class,
-              'bases' : bases,
-              })
-
-        self.name = name
-        self.wrapped_class = wrapped_class
-
-class ClassElement(ElementTemplate):
-    '''A base for templates describing elements of a class
-    (e.g. methods, properties, etc.)
-    '''
-    def __init__(self, 
-                 cls, 
-                 header_template, 
-                 impl_template,
-                 args={}):
-        args.update({
-                'wrapped_class' : cls.wrapped_class,
-                'class_name' : cls.name
+        TemplateElement.__init__(
+            self,
+            header_open_template=header_open_template,
+            header_close_template=header_close_template,
+            impl_open_template=impl_open_template,
+            symbols={ 
+                'class_name' : name,
+                'wrapped_class' : wrapped_class,
+                'bases' : bases,
                 })
-        
-        self.cls = cls
-        cls.elements.append(self)
-
-        super(ClassElement, self).__init__(
-            header_template,
-            impl_template,
-            args)

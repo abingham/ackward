@@ -1,9 +1,9 @@
-from ..template import ElementTemplate
+from .element import TemplateElement
 
-header_template = 'boost::python::object $function_name();'
+header_template = 'boost::python::object $module_function();'
 
 impl_template = '''
-boost::python::object $function_name()
+boost::python::object $module_function()
 {
   using namespace boost::python;
 
@@ -12,7 +12,7 @@ boost::python::object $function_name()
 
   if (!initialized)
   {
-    mod = import("$name");
+    mod = import("$module_name");
     initialized = true;
   }
 
@@ -20,7 +20,7 @@ boost::python::object $function_name()
 }
 '''
 
-class Module(ElementTemplate):
+class Module(TemplateElement):
     '''Generates a method that returns a python module object.
     '''
     def __init__(self, 
@@ -33,10 +33,13 @@ class Module(ElementTemplate):
               generated method.
           * function_name: The name of the C++ method to generate.
         '''
-        super(Module, self).__init__(
-            header_template=header_template,
-            impl_template=impl_template,
-            args={
-                'name' : name,
-                'function_name' : function_name,
+        TemplateElement.__init__(
+            self,
+            header_open_template=header_template,
+            impl_open_template=impl_template,
+            header_includes=[('boost', 'python', 'object.hpp')],
+            impl_includes=[('boost', 'python', 'import.hpp')],
+            symbols={
+                'module_name' : name,
+                'module_function' : function_name,
                 })

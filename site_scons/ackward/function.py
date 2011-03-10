@@ -1,5 +1,6 @@
-from ..signature import parse
-from ..template import ElementTemplate
+from .element import SigTemplateElement
+from .signature import parse
+from .trace import trace
 
 header_template = '$return_type $name($header_signature);'
 
@@ -24,7 +25,7 @@ void $name($impl_signature) {
   }
 }'''
 
-class Function(ElementTemplate):
+class Function(SigTemplateElement):
     '''A basic free function.
     '''
     def __init__(self, 
@@ -32,16 +33,19 @@ class Function(ElementTemplate):
                  return_type='void',
                  signature=[],
                  python_name=None):
-        super(Function, self).__init__(
-            header_template=header_template,
-            impl_template=impl_void_template if return_type == 'void' else impl_template,
-            args={
+
+        SigTemplateElement.__init__(
+            self,
+            header_open_template=header_template,
+            impl_open_template=impl_void_template if return_type == 'void' else impl_template,
+            symbols={
                 'name' : name,
                 'return_type' : return_type,
                 'signature' : signature,
                 'python_name' : name if python_name is None else python_name,
                 })
 
+@trace
 def function(sig):
     '''Parse a function signature and return a Function instance.
     '''
