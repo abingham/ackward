@@ -1,11 +1,6 @@
 from .element import TemplateElement
 from .trace import trace
 
-# TODO: Consider making this a "child" of a Module element, from which
-# it could get the module function name, etc.
-
-# TODO: the function-name "module()" should not be hard-coded. See the above TODO as well.
-
 header_template = '$type $module_property_name();'
 
 impl_template = '''
@@ -20,8 +15,6 @@ $type $module_property_name() {
         throw;
     }
 }'''
-
-# TODO: Should this be using the Property<T> construct?
 
 class ModuleProperty(TemplateElement):
     '''Template to generate a module-level property wrapper.
