@@ -1,10 +1,11 @@
 from ackward import (Class, 
                      method,
+                     Namespace,
                      Property,
                      TranslationUnit)
 
-def definition():
-    t = TranslationUnit(
+def tunit():
+    return TranslationUnit(
         forward_declarations=[('ackward', 'logging', 'class Filter'),
                               ('ackward', 'logging', 'class Handler'),
                               ('ackward', 'logging', 'class LogRecord')],
@@ -14,40 +15,33 @@ def definition():
                        ('ackward', 'logging', 'Handler.hpp'),
                        ('ackward', 'logging', 'LogRecord.hpp')])
 
-    c = Class(
-        name='LoggerBase',
-        wrapped_class='logging.Logger')
-    t += c
-    
-    c += Property(name='propagate', type='bool')
-    c += method('void setLevel(Level l)')
-    c += method('bool isEnabledFor(Level l) const')
-    c += method('Level getEffectiveLevel() const')
+def methods():
+    m = [
+        'void setLevel(Level l)',
+        'bool isEnabledFor(Level l) const',
+        'Level getEffectiveLevel() const',
+        'void log(Level l, std::wstring msg) const',
+        'void addFilter(Filter f)',
+        'void removeFilter(Filter f)',
+        'bool filter(LogRecord r) const',
+        'void addHandler(Handler h)',
+        'void removeHandler(Handler h)',
+        'void handle(LogRecord r) const',
+        ]
 
     for lvl in ['debug', 'info', 'warning', 'error', 'critical', 'exception']:
-        c += method('void %s(std::wstring msg) const' % lvl)
+        m.append('void {0}(std::wstring msg) const'.format(lvl))
 
-    c += method('void log(Level l, std::wstring msg) const')
+    list(map(method, m))
 
-    c += method('void addFilter(Filter f)')
-    c += method('void removeFilter(Filter f)')
-    c += method('bool filter(LogRecord r) const')
-
-    c += method('void addHandler(Handler h)')
-    c += method('void removeHandler(Handler h)')
-
-    # TODO: findCaller...
-
-    c += method('void handle(LogRecord r) const')
-
-    # TODO: Record makeRecord(
-         # const std::wstring& name, 
-         # Level lvl, 
-         # const std::wstring& fn, 
-         # unsigned int lno, 
-         # const std::wstring& msg
-         # // args, exc_info[, func, extra]
-         # ) const;
+def definition():
+    with tunit() as t:
+        with Namespace('ackward', 'logging'):
+            with Class(name='LoggerBase',
+                       wrapped_class='logging.Logger'):
+    
+                Property(name='propagate', type='bool')
+                methods()
 
     return t
                 

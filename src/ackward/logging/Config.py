@@ -4,8 +4,8 @@ from ackward import (function,
                      Namespace,
                      TranslationUnit)
 
-def definition():
-    t = TranslationUnit(
+def tunit():
+    return TranslationUnit(
         guard='INCLUDE_ACKWARD_LOGGING_CONFIG_HPP',
         forward_declarations=[('boost', 'python', 'class dict')],
         header_includes=[('string',)],
@@ -16,17 +16,19 @@ def definition():
             ('ackward', 'logging', 'Module.hpp'),
             ])
 
-    ns = Namespace('ackward', 'logging')
-    t += ns
+def functions():
+    f = [ 
+        'void fileConfig(std::wstring filename)',
+        'void fileConfig(std::string filename, boost::python::dict defaults)',
+        'void listen()',
+        'void listen(unsigned int port)',
+        'void stopListening()',
+        ]
 
-    functions = [
-            'void fileConfig(std::wstring filename)',
-            'void fileConfig(std::string filename, boost::python::dict defaults)',
-            'void listen()',
-            'void listen(unsigned int port)'
-            'void stopListening()',
-            ]
+    list(map(function, f))
 
-    list(map(functools.partial(operator.iadd, ns), [function(f) for f in functions]))
-
+def definition():
+    with tunit() as t:
+        with  Namespace('ackward', 'logging'):
+            functions()
     return t

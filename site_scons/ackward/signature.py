@@ -61,7 +61,11 @@ def parse(sig):
     might not even "fail" on some bad input.
     '''
 
-    (rtype, name, args, const) = (sig_regex.match(sig).groups())
+    match = sig_regex.match(sig)
+    if match is None:
+        raise ValueError('Cannot parse signature: "{0}"'.format(sig))
+
+    (rtype, name, args, const) = (match.groups())
     
     # Split the args on commas
     args = args.split(',') if args else []

@@ -1,12 +1,14 @@
 import functools, operator
 
 from ackward import (Class,
+                     Constructor,
                      method,
+                     Namespace,
                      TranslationUnit)
 
-def definition():
-    t = TranslationUnit(
-        preprocessor_guard='INCLUDE_ACKWARD_LOGGING_FORMATTER',
+def tunit():
+    return TranslationUnit(
+        guard='INCLUDE_ACKWARD_LOGGING_FORMATTER',
         forward_declarations=[
             ('ackward', 'logging', 'class LogRecord'),
             ('boost', 'python', 'class tuple'),
@@ -20,18 +22,21 @@ def definition():
             ('boost', 'python', 'tuple.hpp'),
             ])
 
-    
-    c = Class(name='Formatter',
-              wrapped_class='logging.Formatter')
-    t += c
-
-    c += Constructor()
-
-    methods = [
+def methods():
+    m = [
         'std::wstring format(LogRecord record) const',
         'std::wstring formatTime(LogRecord record) const',
-        'std::wstring formatTime(LogRecord record, std::wstring datefmt const',
-        'std::wstring formatException(boost::python::tuple exc) const']
-    list(map(functools.partial(operator.iadd, c), [method(m) for m in method]))
+        'std::wstring formatTime(LogRecord record, std::wstring datefmt) const',
+        'std::wstring formatException(boost::python::tuple exc) const'
+        ]
+    list(map(method, m))
+
+def definition():
+    with tunit() as t:
+        with Namespace('ackward', 'logging'):
+            with Class(name='Formatter',
+                       wrapped_class='logging.Formatter'):
+                Constructor()
+                methods()
     
     return t

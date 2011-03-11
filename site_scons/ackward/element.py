@@ -88,8 +88,12 @@ class TemplateElement(Element):
 class SigTemplateElement(TemplateElement):
     def __init__(self,
                  symbols,
+                 header_includes=None,
                  *args,
                  **kwargs):
+        header_includes = header_includes or []
+        header_includes.append(('boost', 'call_traits.hpp'))
+
         try:
             sig = symbols['signature']
             symbols = dict(symbols)
@@ -103,5 +107,6 @@ class SigTemplateElement(TemplateElement):
         TemplateElement.__init__(
             self,
             symbols=symbols,
+            header_includes=header_includes,
             *args,
             **kwargs)

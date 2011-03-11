@@ -1,7 +1,10 @@
-from ackward import Constructor, TranslationUnit
+from ackward import (Class,
+                     Constructor, 
+                     Namespace,
+                     TranslationUnit)
 
-def definition():
-    t = TranslationUnit(
+def tunit():
+    return TranslationUnit(
         guard='INCLUDE_ACKWARD_LOGGING_FILTER_HPP',
         header_includes=[
             ('string',),
@@ -12,8 +15,12 @@ def definition():
             ('boost', 'python', 'import.hpp'),
             ])
 
-    t += Constructor()
-    t += Constructor(
-        signature=[('std::wstring', 'name')])
-
+def definition():
+    with tunit() as t:
+        with Namespace('ackward', 'logging'):
+            with Class(name='Filter', 
+                       wrapped_class='logging.Filter'):
+                Constructor()
+                Constructor(
+                    signature=[('std::wstring', 'name')])
     return t

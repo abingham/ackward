@@ -1,10 +1,11 @@
 from ackward import (Class,
                      method,
+                     Method,
                      Namespace,
                      TranslationUnit)
 
-def definition():
-    t = TranslationUnit(
+def tunit():
+    return TranslationUnit(
         guard='INCLUDE_ACKWARD_LOGGING_HANDLER_HPP',
         forward_declarations=[
             ('ackward', 'logging', 'class Formatter'),
@@ -22,25 +23,29 @@ def definition():
             ('ackward', 'logging', 'LogRecord.hpp'),
             ])
 
-    ns = Namespace('ackward', 'logging')
-    t += ns
-
-    ns += Class(
-        name='Handler',
-        wrapped_class='logging.Handler')
-        
-    methods = [
+def methods():
+    m = [
         'void setLevel(Level level)',
         'void setFormatter(Formatter f)',
         'void addFilter(Filter f)',
         'void removeFilter(Filter f)',
         'void flush() const',
         'void close()',
-        'virtual void emit(LogRecord r) const'
         ]
+    list(map(method, m))
 
-    for m in methods:
-        ns += method(m)
+    Method(
+        name='emit',
+        signature=[('LogRecord', 'r')],
+        const=True,
+        virtual=True)
+
+def definition():
+    with tunit() as t:
+        with Namespace('ackward', 'logging'):
+            with Class(name='Handler',
+                       wrapped_class='logging.Handler'):
+                methods()
 
     return t
     

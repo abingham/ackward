@@ -3,8 +3,8 @@ from ackward import (function,
                      Namespace,
                      TranslationUnit)
 
-def definition():
-    t = TranslationUnit(
+def tunit():
+    return TranslationUnit(
         guard='INCLUDE_ACKWARD_LOGGING_MODULE_HPP',
         header_includes=[
             ('string',),
@@ -24,12 +24,8 @@ def definition():
             ],
         using=['namespace boost::python'])
 
-    ns = Namespace('ackward', 'logging')
-    t += ns
-
-    ns += Module(name='logging')
-    
-    for func in [
+def functions():
+    f = [
         'Logger getLogger()',
         'Logger getLogger(std::wstring name)',
         'boost::python::object getLoggerClass()',
@@ -42,10 +38,16 @@ def definition():
         'void basicConfig(boost::python::dict kwargs)',
         'void shutdown()',
         'void setLoggerClass(boost::python::object klass)',
-        ]:
-        ns += function(func)
-        
-    for lvl in ['debug', 'info', 'warning', 'error', 'critical', 'exception']:
-        ns += function('void {0}(std::wstring msg)'.format(lvl))
+        ]
+    
+    list(map(function, f))
 
+    levels = ['debug', 'info', 'warning', 'error', 'critical', 'exception']
+    list(map(function, ['void {0}(std::wstring msg)'.format(lvl) for lvl in levels]))
+
+def definition():
+    with tunit() as t:
+        with Namespace('ackward', 'logging'):
+            with Module(name='logging'):
+                functions()
     return t

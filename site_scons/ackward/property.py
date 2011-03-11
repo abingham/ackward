@@ -24,7 +24,7 @@ $type $class_name::$property_name() const {
 impl_non_const = impl_const + '''
 void $class_name::$property_name($impl_signature) {
    try {
-     obj().attr("$python_name") = x;
+     obj().attr("$python_name") = val;
    } catch (const boost::python::error_already_set&) {
        core::translatePythonException();
        throw;

@@ -37,6 +37,7 @@ class TranslationUnit(Element):
         yield '#ifndef {0}'.format(guard)
         yield '#define {0}'.format(guard)
 
+        # TODO: Remove duplicates from header list (impl also)
         # generate header include statements
         for e in self:
             for h in e.header_includes:
