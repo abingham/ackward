@@ -32,21 +32,22 @@ void $class_name::$property_name($impl_signature) {
 }'''
 
 class ClassProperty(SigTemplateElement):
+    '''A static property on a class. 
+
+    Args:
+      * name: The name of the property.
+      * type: The type of the property.
+      * read_only: Whether the property is read-only or read-write.
+    '''
+
     @trace
     def __init__(self,
                  name,
                  type,
                  read_only=False):
-        '''Construct a new static property on a class. 
-
-        Args:
-          * name: The name of the property.
-          * type: The type of the property.
-          * read_only: Whether the property is read-only or read-write.
-        '''
-
         header = header_getter
         impl = impl_getter
+
         if not read_only:
             header = '\n'.join([header, header_setter])
             impl = '\n'.join([impl, impl_setter])

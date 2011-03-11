@@ -47,6 +47,7 @@ class ClassMethod(SigTemplateElement):
                 'signature' : signature,
                 })
 
+@trace
 def class_method(sig):
     '''Produces a ClassMethod based on a string description of a
     class method.
