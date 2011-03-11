@@ -61,7 +61,6 @@ class TemplateElement(Element):
                  close_impl_template='',
                  *args,
                  **kwargs):
-        # TODO: Fix these names. Should be open_header_template, etc.
         Element.__init__(self, *args, **kwargs)
         self.open_header_template = open_header_template
         self.close_header_template = close_header_template
