@@ -3,6 +3,9 @@ import string
 from .signature import build_signature
 
 class Element:
+    
+    _stack = []
+
     def __init__(self, 
                  children=None,
                  header_includes=None,
@@ -17,6 +20,9 @@ class Element:
         self.forward_declarations = forward_declarations or []
         self.using = using or []
         self.symbols = symbols or {}
+
+        if Element._stack:
+            Element._stack[-1] += self
 
     def open_header(self, mod, symbols):
         return ['']
@@ -39,6 +45,13 @@ class Element:
     def __iadd__(self, child):
         self.children.append(child)
         return self
+
+    def __enter__(self):
+        Element._stack.append(self)
+        return self
+
+    def __exit__(self, t, v, tb):
+        Element._stack.pop()
 
 class TemplateElement(Element):
     def __init__(self,

@@ -1,16 +1,15 @@
-from ackward.translation_unit import TranslationUnit
-from ackward.elements import function, Module
-
-class TimeModule(TranslationUnit):
-    def __init__(self):
-        objs=[
-            Module(name='time'),
-            function('float time()')
-            ]
-
-        super(TimeModule, self).__init__(
-            preprocessor_guard='INCLUDE_ACKWARD_TIME_MODULE_HPP',
-            objects={ ('ackward', 'time') : objs })
+import ackward
 
 def definition():
-    return TimeModule()
+    t = ackward.TranslationUnit(
+        guard='INCLUDE_ACKWARD_TIME_MODULE_HPP')
+    
+    ns = ackward.Namespace('ackward', 'time')
+    t += ns
+
+    ns += ackward.Module(
+        name='time')
+
+    ns += ackward.function('float time()')
+
+    return t

@@ -1,10 +1,38 @@
-from .element import TemplateElement
+from .element import SigTemplateElement
 from .trace import trace
 
-header_non_const = 'Property<$type> $property_name;'
-header_const = 'const Property<$type> $property_name;'
+header_const = '''
+$type $property_name() const;
+'''
 
-class Property(TemplateElement):
+header_non_const = header_const + '''
+void $property_name($header_signature);
+'''
+
+impl_const = '''
+$type $class_name::$property_name() const {
+   try {
+     return boost::python::extract<$type>(
+       obj().attr("$python_name"));
+   } catch (const boost::python::error_already_set&) {
+       core::translatePythonException();
+       throw;
+   }
+}
+'''
+
+impl_non_const = impl_const + '''
+void $class_name::$property_name($impl_signature) {
+   try {
+     obj().attr("$python_name") = x;
+   } catch (const boost::python::error_already_set&) {
+       core::translatePythonException();
+       throw;
+   }
+}
+'''
+
+class Property(SigTemplateElement):
     '''A "property" in a C++ class.
 
     This wraps a property on a python object.
@@ -26,14 +54,20 @@ class Property(TemplateElement):
               read-write.
         '''
         header = header_const if read_only else header_non_const
+        impl = impl_const if read_only else impl_non_const
             
-        TemplateElement.__init__(
+        SigTemplateElement.__init__(
             self,
+            header_includes=[],
             header_open_template=header,
-            impl_open_template='',
+            impl_open_template=impl,
+            impl_includes=[
+                ('boost', 'python', 'extract.hpp'),
+                ('ackward', 'core', 'Exceptions.hpp'),
+                ],
             symbols={
                 'property_name' : name,
                 'type' : type,
                 'signature' : [(type, 'val')],
-                'python_name' : name if python_name is None else python_name,
+                'python_name' : python_name or name,
                 })

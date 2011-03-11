@@ -32,12 +32,18 @@ class Function(SigTemplateElement):
                  name,
                  return_type='void',
                  signature=[],
-                 python_name=None):
+                 python_name=None,
+                 impl_includes=None):
+
+        impl_includes = impl_includes or []
 
         SigTemplateElement.__init__(
             self,
             header_open_template=header_template,
             impl_open_template=impl_void_template if return_type == 'void' else impl_template,
+            impl_includes=impl_includes + [
+                ('boost', 'python', 'extract.hpp'),
+                ('ackward', 'core', 'Exceptions.hpp')],
             symbols={
                 'name' : name,
                 'return_type' : return_type,
@@ -54,4 +60,4 @@ def function(sig):
     return Function(
         name=name,
         return_type=rtype,
-        signature=[tuple(a.split()) for a in args])
+        signature=args)

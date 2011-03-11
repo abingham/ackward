@@ -10,30 +10,30 @@ local_env.AppendUnique(CPPDEFINES=['BOOST_TEST_DYN_LINK'])
 local_env.AppendUnique(LIBS=['boost_unit_test_framework'])
 
 sources = [
-    'bytearray_test.cpp',
-    'bytes_test.cpp',
-    'date_test.cpp',
-    'datetime_test.cpp',
-    'datetime_time_test.cpp',
+    #'bytearray_test.cpp',
+    #'bytes_test.cpp',
+    #'date_test.cpp',
+    #'datetime_test.cpp',
+    #'datetime_time_test.cpp',
     'exception_translator_test.cpp',
-    'filter_test.cpp',
-    'formatter_test.cpp',
-    'handler_test.cpp',
+    #'filter_test.cpp',
+    #'formatter_test.cpp',
+    #'handler_test.cpp',
     'import_test.cpp',
-    'LoggerFixture.cpp',
-    'logger_adapter_test.cpp',
-    'logger_test.cpp',
-    'log_record_test.cpp',
-    'module_test.cpp',
+    #'LoggerFixture.cpp',
+    #'logger_adapter_test.cpp',
+    #'logger_test.cpp',
+    #'log_record_test.cpp',
+    #'module_test.cpp',
     'test.cpp',
     'time_test.cpp',
-    'timedelta_test.cpp',
-    'types_test.cpp',
+    #'timedelta_test.cpp',
+    #'types_test.cpp',
     #'tzinfo_test.cpp',
     'tuple_test.cpp',
     'util.cpp',
     'util_test.cpp',
-    'uuid_test.cpp',
+    #'uuid_test.cpp',
     ]
 
 build.program(
@@ -41,7 +41,8 @@ build.program(
     'ackward_test', 
     sources, 
     deps=['core', 
-          'datetime', 
-          'logging',
+          #'datetime', 
+          #'logging',
           'time',
-          'uuid'])
+          #'uuid'
+          ])

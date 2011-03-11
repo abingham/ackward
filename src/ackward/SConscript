@@ -3,8 +3,8 @@ Import(['env'])
 subdirs = [
     'core',
     'time',
-    'datetime',
-    'logging',
+    #'datetime',
+    #'logging',
     # 're',
     'uuid',
     ]

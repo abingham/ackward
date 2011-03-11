@@ -1,13 +1,4 @@
-from ackward.translation_unit import ClassTranslationUnit
-from ackward.elements import InlineFunction
-from ackward.cls import (Class, 
-                         class_method, 
-                         ClassProperty, 
-                         Constructor, 
-                         InlineMethod,
-                         Method,
-                         method,
-                         Property)
+import ackward
 
 equality_operator='''
 bool operator==(const Date& d) const 
@@ -29,103 +20,96 @@ Date replace(unsigned int y, unsigned int m, unsigned int d) const {
   return _replace(y, m, d);
 }'''
 
-class Date(ClassTranslationUnit):
-    def __init__(self):
-        c = Class(name='Date',
-                  wrapped_class='datetime.date')
-        
-        Constructor(
-            cls=c,
-            signature=[('unsigned int', 'year'),
-                       ('unsigned int', 'month'),
-                       ('unsigned int', 'day')])
-        
-        class_method('Date today()', c)
-        class_method('Date fromtimestamp(double timestamp)', c)
-        class_method('Date fromordinal(unsigned int ordinal)', c)
-
-        ClassProperty(
-            cls=c,
-            name='min',
-            type='Date',
-            read_only=True)
-
-        ClassProperty(
-            cls=c,
-            name='max',
-            type='Date',
-            read_only=True)
+def definition():
+    t = ackward.TranslationUnit(
+        forward_declarations=[
+            ('ackward', 'datetime', 'class TimeDelta'),
+            ],
+        header_includes=[
+            ('boost', 'tuple', 'tuple.hpp')
+            ],
+        impl_includes=[
+            ('ackward', 'datetime', 'Date.hpp'),
+            ('ackward', 'datetime', 'TimeDelta.hpp'),
+            ])
     
-        ClassProperty(
-            cls=c,
-            name='resolution',
-            type='TimeDelta',
-            read_only=True)
+    ns = ackward.Namespace('ackward', 'datetime')
+    t += ns
 
-        Property(
-            cls=c,
-            name='year',
-            type='unsigned int',
-            read_only=True)
+    c = ackward.Class(
+        name='Date',
+        wrapped_class='datetime.date')
+    ns += c
 
-        Property(
-            cls=c,
-            name='month',
-            type='unsigned int',
-            read_only=True)
-
-        Property(
-            cls=c,
-            name='day',
-            type='unsigned int',
-            read_only=True)
-
-        Method(
-            cls=c,
-            name='_replace',
-            python_name='replace',
-            return_type='Date',
-            signature=[('unsigned int', 'year'),
-                       ('unsigned int', 'month'),
-                       ('unsigned int', 'day')],
-            const=True)
-
-        InlineMethod(
-            cls=c,
-            code=replace_method)
-
-        method('tm timetuple() const', c)
-        method('unsigned int toordinal() const', c)
-        method('int weekday() const', c)
-        method('int isoweekday() const', c)
-        method('boost::tuple<int, int, int> isocalendar() const', c)
-        method('std::string isoformat() const', c)
-        method('std::string ctime() const', c)
-        method('std::wstring strftime(std::wstring fmt) const', c)
-
-        InlineMethod(
-            cls=c,
-            code=equality_operator)
-
-        objs = [c]
-
-        stream = InlineFunction(
-            code=stream_operator)
+    c += ackward.Constructor(
+        signature=[('unsigned int', 'year'),
+                   ('unsigned int', 'month'),
+                   ('unsigned int', 'day')])
         
-        objs.append(stream)
+    c += ackward.class_method('Date today()')
+    c += ackward.class_method('Date fromtimestamp(double timestamp)')
+    c += ackward.class_method('Date fromordinal(unsigned int ordinal)')
 
-        super(Date, self).__init__(
-            forward_declarations=[
-                ('ackward', 'datetime', 'class TimeDelta'),
-                ],
-            header_includes=[
-                ('boost', 'tuple', 'tuple.hpp')
-                ],
-            impl_includes=[
-                ('ackward', 'datetime', 'Date.hpp'),
-                ('ackward', 'datetime', 'TimeDelta.hpp'),
-                ],
-            objects={('ackward', 'datetime') : objs})
+    c += ackward.ClassProperty(
+        name='min',
+        type='Date',
+        read_only=True)
+
+    c += ackward.ClassProperty(
+        name='max',
+        type='Date',
+        read_only=True)
+    
+    c += ackward.ClassProperty(
+        name='resolution',
+        type='TimeDelta',
+        read_only=True)
+
+    c += ackward.Property(
+        name='year',
+        type='unsigned int',
+        read_only=True)
+
+    c += ackward.Property(
+        name='month',
+        type='unsigned int',
+        read_only=True)
+
+    c += ackward.Property(
+        name='day',
+        type='unsigned int',
+        read_only=True)
+
+    c += ackward.Method(
+        name='_replace',
+        python_name='replace',
+        return_type='Date',
+        signature=[('unsigned int', 'year'),
+                   ('unsigned int', 'month'),
+                   ('unsigned int', 'day')],
+        const=True)
+
+    c += ackward.InlineMethod(
+        code=replace_method)
+
+    for m in [
+        'tm timetuple() const',
+        'unsigned int toordinal() const',
+        'int weekday() const',
+        'int isoweekday() const',
+        'boost::tuple<int, int, int> isocalendar() const',
+        'std::string isoformat() const',
+        'std::string ctime() const',
+        'std::wstring strftime(std::wstring fmt) const']:
+        c += ackward.method(m)
+
+    c += ackward.InlineMethod(
+        code=equality_operator)
+
+    ns += InlineFunction(
+        code=stream_operator)
+
+    return t
         
 def definition():
     return Date()

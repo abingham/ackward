@@ -63,6 +63,9 @@ class Class(TemplateElement):
             header_open_template=header_open_template,
             header_close_template=header_close_template,
             impl_open_template=impl_open_template,
+            impl_includes=[
+                ('ackward','core','GetClass.hpp'),
+                ],
             symbols={ 
                 'class_name' : name,
                 'wrapped_class' : wrapped_class,
