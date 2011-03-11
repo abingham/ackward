@@ -44,9 +44,8 @@ class TranslationUnit(Element):
             yield '#include <{0}>'.format(os.path.join(*header))
 
         # generate forward declarations
-        for e in self:
-            for d in e.forward_declarations:
-                yield _declare(d)
+        for decl in set(chain(*[e.forward_declarations for e in self])):
+            yield _declare(decl)
 
     @trace
     def close_header(self, mod, symbols):
