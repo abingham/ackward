@@ -1,15 +1,16 @@
 import ackward
 
-def definition():
-    t = ackward.TranslationUnit(
+def tunit():
+    return ackward.TranslationUnit(
         guard='INCLUDE_ACKWARD_TIME_MODULE_HPP')
-    
-    ns = ackward.Namespace('ackward', 'time')
-    t += ns
 
-    ns += ackward.Module(
-        name='time')
+def definition():
+    with tunit() as t:
+        with ackward.Namespace('ackward', 'time'):
 
-    ns += ackward.function('float time()')
+            ackward.Module(
+                name='time')
+
+            ackward.function('float time()')
 
     return t
