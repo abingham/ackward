@@ -1,5 +1,34 @@
 import imp, sys
 
+class Cache:
+    '''Imported module cache.
+
+    Avoids re-importing of modules.
+    '''
+    cache = {}
+    count = 0
+
+    @staticmethod
+    def load(infile):
+        try:
+            mod = Cache.cache[infile]
+            print('HIT', infile, mod)
+        except KeyError:
+            pass
+
+        with open(infile, 'r') as f:
+            mod = imp.load_module(
+                'akw_input_{0}'.format(Cache.count), 
+                f, 
+                infile, 
+                ('', 'r', imp.PY_SOURCE))
+
+        Cache.count += 1
+        Cache.cache[infile] = mod
+        print('MISS', infile, mod)
+
+        return mod
+
 def process_header(elem, mod, symbols={}):
     symbols = dict(symbols)
     symbols.update(elem.symbols)
@@ -29,11 +58,7 @@ def process_impl(elem, mod, symbols={}):
         yield line
 
 def _translate(processor, infile, outfile=None):
-    with open(infile, 'r') as f:
-        mod = imp.load_module('akw_input', 
-                              f, 
-                              infile, 
-                              ('', 'r', imp.PY_SOURCE))
+    mod = Cache.load(infile)
 
     body = []
 
@@ -55,6 +80,3 @@ def translate_header(infile, outfile=None):
 
 def translate_impl(infile, outfile=None):
     _translate(process_impl, infile, outfile)
-
-# TODO: Consider Reworking these so that the input is only imported
-# once.
