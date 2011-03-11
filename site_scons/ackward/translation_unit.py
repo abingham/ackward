@@ -41,7 +41,6 @@ class TranslationUnit(Element):
         # TODO: Remove duplicates from header list (impl also)
         # generate header include statements
         for header in set(chain(*[e.header_includes for e in self])):
-            print( '#include <{0}>'.format(os.path.join(*header)))
             yield '#include <{0}>'.format(os.path.join(*header))
 
         # generate forward declarations

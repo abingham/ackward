@@ -12,7 +12,6 @@ class Cache:
     def load(infile):
         try:
             mod = Cache.cache[infile]
-            print('HIT', infile, mod)
         except KeyError:
             pass
 
@@ -25,7 +24,6 @@ class Cache:
 
         Cache.count += 1
         Cache.cache[infile] = mod
-        print('MISS', infile, mod)
 
         return mod
 
