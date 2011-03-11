@@ -1,16 +1,24 @@
-from ackward.translation_unit import ClassTranslationUnit
+from ackward import (Class,
+                     class_method,
+                     Constructor,
+                     Namespace,
+                     TranslationUnit)
 
-from ackward.cls import (Class,
-                         Constructor,
-                         class_method)
+def tunit():
+    return TranslationUnit(
+        forward_declarations=[
+            ('ackward', 'datetime', 'class TZInfo'),
+            ],
+        impl_includes=[
+            ('ackward', 'datetime', 'DateTime.hpp'),
+            ('ackward', 'datetime', 'TZInfo.hpp'),
+            ])
 
-class DateTime(ClassTranslationUnit):
-    def __init__(self):
-        c = Class(name='DateTime',
-                  wrapped_class='datetime.datetime')
+def datetime_class():
+    with Class(name='DateTime',
+               wrapped_class='datetime.datetime'):
 
         Constructor(
-            cls=c,
             signature=[('unsigned int', 'year'),
                        ('unsigned int', 'month'),
                        ('unsigned int', 'day'),
@@ -20,22 +28,15 @@ class DateTime(ClassTranslationUnit):
                        ('unsigned int', 'microsecond', '0'),
                        #[, tzinfo
                        ])
-
-        class_method('DateTime today()', c)
-        class_method('DateTime now()', c)
-        class_method('DateTime now(TZInfo tz)', c)
-        class_method('DateTime utcnow()', c)
-        class_method('DateTime fromtimestamp(float timestamp)', c)
-
-        super(DateTime, self).__init__(
-            forward_declarations=[
-                ('ackward', 'datetime', 'class TZInfo'),
-                ],
-            impl_includes=[
-                ('ackward', 'datetime', 'DateTime.hpp'),
-                ('ackward', 'datetime', 'TZInfo.hpp'),
-                ],
-            objects={('ackward', 'datetime') : [c]})
+        
+        class_method('DateTime today()')
+        class_method('DateTime now()')
+        class_method('DateTime now(TZInfo tz)')
+        class_method('DateTime utcnow()')
+        class_method('DateTime fromtimestamp(float timestamp)')
 
 def definition():
-    return DateTime()
+    with tunit() as t:
+        with Namespace('ackward', 'datetime'):
+            datetime_class()
+    return t

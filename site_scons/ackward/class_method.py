@@ -1,4 +1,5 @@
 from .element import SigTemplateElement
+from .signature import parse
 from .trace import trace
 
 header_template = 'static $return_type $method_name($header_signature);'

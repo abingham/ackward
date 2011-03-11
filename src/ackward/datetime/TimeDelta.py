@@ -1,10 +1,10 @@
-from ackward.translation_unit import ClassTranslationUnit
-from ackward.elements import InlineFunction
-from ackward.cls import (Class,
-                         ClassProperty,
-                         Constructor,
-                         InlineMethod,
-                         Property)
+from ackward import (Class,
+                     ClassProperty,
+                     Constructor,
+                     InlineFunction,
+                     Namespace,
+                     Property,
+                     TranslationUnit)
 
 eq_operator='''
 bool operator==(const TimeDelta& td) const
@@ -66,13 +66,17 @@ inline TimeDelta abs(const TimeDelta& td)
 { return td.obj().attr("__abs__")(); }
 '''
 
-class TimeDelta(ClassTranslationUnit):
-    def __init__(self):
-        c = Class(name='TimeDelta',
-                  wrapped_class='datetime.timedelta')
+def tunit():
+    return TranslationUnit(
+        impl_includes=[
+            ('ackward', 'datetime', 'TimeDelta.hpp')
+            ])
+
+def timedelta_class():
+    with Class(name='TimeDelta',
+               wrapped_class='datetime.timedelta'):
         
         Constructor(
-            cls=c,
             signature=[('double', 'days', '0'),
                        ('double', 'seconds', '0'),
                        ('double', 'microseconds', '0'),
@@ -82,60 +86,51 @@ class TimeDelta(ClassTranslationUnit):
                        ('double', 'weeks', '0')])
 
         Property(
-            cls=c,
             type='int',
             name='days',
             read_only=True)
+
         Property(
-            cls=c,
             type='unsigned int',
             name='seconds',
             read_only=True)
+
         Property(
-            cls=c,
             type='unsigned int',
             name='microseconds',
             read_only=True)
-
+        
         ClassProperty(
-            cls=c,
             type='TimeDelta',
             name='min',
             read_only=True)
+        
         ClassProperty(
-            cls=c,
             type='TimeDelta',
             name='max',
             read_only=True)
+        
         ClassProperty(
-            cls=c,
             type='TimeDelta',
             name='resolution',
             read_only=True)
-
-        InlineMethod(cls=c, code=eq_operator)
-        InlineMethod(cls=c, code=ne_operator)
-        InlineMethod(cls=c, code=lt_operator)
-        InlineMethod(cls=c, code=le_operator)
-        InlineMethod(cls=c, code=gt_operator)
-        InlineMethod(cls=c, code=ge_operator)
-
-        objs = [
-            c,
-            InlineFunction(code=add_operator),
-            InlineFunction(code=sub_operator),
-            InlineFunction(code=mul_operator),
-            InlineFunction(code=div_operator),
-            InlineFunction(code=neg_operator),
-            InlineFunction(code=abs_function),
-            ]
-
-        super(TimeDelta, self).__init__(
-            header_includes=[],
-            impl_includes=[
-                ('ackward', 'datetime', 'TimeDelta.hpp')
-                ],
-            objects={('ackward', 'datetime') : objs})
-
+        
+        InlineFunction(code=eq_operator)
+        InlineFunction(code=ne_operator)
+        InlineFunction(code=lt_operator)
+        InlineFunction(code=le_operator)
+        InlineFunction(code=gt_operator)
+        InlineFunction(code=ge_operator)
+        
 def definition():
-    return TimeDelta()
+    with tunit() as t:
+        with Namespace('ackward', 'datetime'):
+            timedelta_class()
+
+            InlineFunction(code=add_operator)
+            InlineFunction(code=sub_operator)
+            InlineFunction(code=mul_operator)
+            InlineFunction(code=div_operator)
+            InlineFunction(code=neg_operator)
+            InlineFunction(code=abs_function)
+    return t
