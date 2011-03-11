@@ -35,8 +35,8 @@ class Module(TemplateElement):
         '''
         TemplateElement.__init__(
             self,
-            header_open_template=header_template,
-            impl_open_template=impl_template,
+            open_header_template=header_template,
+            open_impl_template=impl_template,
             header_includes=[('boost', 'python', 'object.hpp')],
             impl_includes=[('boost', 'python', 'import.hpp')],
             symbols={

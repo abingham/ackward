@@ -59,8 +59,8 @@ class Property(SigTemplateElement):
         SigTemplateElement.__init__(
             self,
             header_includes=[],
-            header_open_template=header,
-            impl_open_template=impl,
+            open_header_template=header,
+            open_impl_template=impl,
             impl_includes=[
                 ('boost', 'python', 'extract.hpp'),
                 ('ackward', 'core', 'Exceptions.hpp'),

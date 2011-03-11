@@ -55,33 +55,33 @@ class Element:
 
 class TemplateElement(Element):
     def __init__(self,
-                 header_open_template='',
-                 header_close_template='',
-                 impl_open_template='',
-                 impl_close_template='',
+                 open_header_template='',
+                 close_header_template='',
+                 open_impl_template='',
+                 close_impl_template='',
                  *args,
                  **kwargs):
         # TODO: Fix these names. Should be open_header_template, etc.
         Element.__init__(self, *args, **kwargs)
-        self.header_open_template = header_open_template
-        self.header_close_template = header_close_template
-        self.impl_open_template = impl_open_template
-        self.impl_close_template = impl_close_template
+        self.open_header_template = open_header_template
+        self.close_header_template = close_header_template
+        self.open_impl_template = open_impl_template
+        self.close_impl_template = close_impl_template
         
     def open_header(self, mod, symbols):
-        t = string.Template(self.header_open_template)
+        t = string.Template(self.open_header_template)
         yield t.substitute(symbols)
 
     def close_header(self, mod, symbols):
-        t = string.Template(self.header_close_template)
+        t = string.Template(self.close_header_template)
         yield t.substitute(symbols)
 
     def open_impl(self, mod, symbols):
-        t = string.Template(self.impl_open_template)
+        t = string.Template(self.open_impl_template)
         yield t.substitute(symbols)
 
     def close_impl(self, mod, symbols):
-        t = string.Template(self.impl_close_template)
+        t = string.Template(self.close_impl_template)
         yield t.substitute(symbols)
 
 

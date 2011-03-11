@@ -43,8 +43,8 @@ class ModuleProperty(TemplateElement):
 
         TemplateElement.__init__(
             self,
-            header_open_template=header_template,
-            impl_open_template=impl_template,
+            open_header_template=header_template,
+            open_impl_template=impl_template,
             impl_includes=impl_includes + [('boost', 'python', 'extract.hpp'),
                                            ('boost', 'python', 'object.hpp')],
             symbols={

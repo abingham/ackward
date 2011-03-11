@@ -1,13 +1,13 @@
 from .element import TemplateElement
 from .trace import trace
 
-header_open_template = '''
+open_header_template = '''
 class $class_name $bases {
 public:
   $class_name(boost::python::object);
 '''
 
-header_close_template = '''
+close_header_template = '''
   using Object::obj;
 
 private:
@@ -15,7 +15,7 @@ private:
 };
 '''
 
-impl_open_template = '''
+open_impl_template = '''
 $class_name::$class_name(boost::python::object o) :
   Object (o)
 {}
@@ -60,9 +60,9 @@ class Class(TemplateElement):
 
         TemplateElement.__init__(
             self,
-            header_open_template=header_open_template,
-            header_close_template=header_close_template,
-            impl_open_template=impl_open_template,
+            open_header_template=open_header_template,
+            close_header_template=close_header_template,
+            open_impl_template=open_impl_template,
             header_includes=[
                 ('ackward', 'core', 'Object.hpp'),
                 ],

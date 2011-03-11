@@ -39,8 +39,8 @@ class Function(SigTemplateElement):
 
         SigTemplateElement.__init__(
             self,
-            header_open_template=header_template,
-            impl_open_template=impl_void_template if return_type == 'void' else impl_template,
+            open_header_template=header_template,
+            open_impl_template=impl_void_template if return_type == 'void' else impl_template,
             impl_includes=impl_includes + [
                 ('boost', 'python', 'extract.hpp'),
                 ('ackward', 'core', 'Exceptions.hpp')],

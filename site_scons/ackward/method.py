@@ -62,8 +62,8 @@ class Method(SigTemplateElement):
 
         SigTemplateElement.__init__(
             self,
-            header_open_template=header_template,
-            impl_open_template=implt,
+            open_header_template=header_template,
+            open_impl_template=implt,
             symbols={
                 'method_name' : name,
                 'return_type' : return_type,

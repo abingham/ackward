@@ -38,8 +38,8 @@ class ClassMethod(SigTemplateElement):
         '''
         SigTemplateElement.__init__(
             self,
-            header_open_template=header_template,
-            impl_open_template=impl_template,
+            open_header_template=header_template,
+            open_impl_template=impl_template,
             symbols = {
                 'method_name' : name,
                 'python_name' : name if python_name is None else python_name,
