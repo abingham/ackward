@@ -31,9 +31,6 @@ void $class_name::$property_name($impl_signature) {
     }
 }'''
 
-# TODO: This should be generating code to use the new
-# core::Property<T> class
-
 class ClassProperty(SigTemplateElement):
     @trace
     def __init__(self,
