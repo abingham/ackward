@@ -38,7 +38,6 @@ class TranslationUnit(Element):
         yield '#ifndef {0}'.format(guard)
         yield '#define {0}'.format(guard)
 
-        # TODO: Remove duplicates from header list (impl also)
         # generate header include statements
         for header in set(chain(*[e.header_includes for e in self])):
             yield '#include <{0}>'.format(os.path.join(*header))
@@ -54,12 +53,10 @@ class TranslationUnit(Element):
     @trace
     def open_impl(self, mod, symbols):
         # generate impl includes
-        for e in self:
-            for h in e.impl_includes:
-                yield '#include <{0}>'.format(os.path.join(*h))
+        for header in set(chain(*[e.impl_includes for e in self])):
+            yield '#include <{0}>'.format(os.path.join(*header))
 
         # usings
-        for e in self:
-            for u in e.using:
-                yield 'using {0};'.format(u)
+        for using in set(chain(*[e.using for e in self])):
+            yield 'using {0};'.format(using)
         
