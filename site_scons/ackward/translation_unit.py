@@ -1,4 +1,5 @@
 import os
+from itertools import chain
 
 from .element import Element
 from .trace import trace
@@ -39,9 +40,9 @@ class TranslationUnit(Element):
 
         # TODO: Remove duplicates from header list (impl also)
         # generate header include statements
-        for e in self:
-            for h in e.header_includes:
-                yield '#include <{0}>'.format(os.path.join(*h))
+        for header in set(chain(*[e.header_includes for e in self])):
+            print( '#include <{0}>'.format(os.path.join(*header)))
+            yield '#include <{0}>'.format(os.path.join(*header))
 
         # generate forward declarations
         for e in self:
