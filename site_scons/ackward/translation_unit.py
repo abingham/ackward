@@ -38,6 +38,9 @@ class TranslationUnit(Element):
         yield '#ifndef {0}'.format(guard)
         yield '#define {0}'.format(guard)
 
+        # This avoids the posix-redefinition warnings
+        yield '#include <Python.h>'
+
         # generate header include statements
         for header in set(chain(*[e.header_includes for e in self])):
             yield '#include <{0}>'.format(os.path.join(*header))
