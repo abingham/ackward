@@ -1,8 +1,15 @@
-from ackward import TranslationUnit
+from ackward import (Module,
+                     Namespace,
+                     TranslationUnit)
+
+def tunit():
+    return TranslationUnit(
+        guard='INCLUDE_ACKWARD_RE_MODULE_HPP')
 
 def definition():
-    t = TranslationUnit(
-        guard='INCLUDE_ACKWARD_RE_MODULE_HPP')
+    with tunit() as t:
+        with Namespace('ackward', 're'):
+            Module(name='re')
 
         # objs = [
         #     Module(name='re'),

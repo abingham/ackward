@@ -3,7 +3,9 @@ import build
 Import(['env'])
 
 akw_files = [
-    'Module.py'
+    'MatchObject.py',
+    'Module.py',
+    'RegexObject.py',
     ]
 
 sources = [
