@@ -45,12 +45,12 @@ class Element:
                  forward_declarations=None,
                  using=None,
                  symbols=None):
-        self.children = list(children) or []
+        self.children = list(children or [])
 
-        self.header_includes = list(header_includes) or []
-        self.impl_includes = list(impl_includes) or []
-        self.forward_declarations = list(forward_declarations) or []
-        self.using = list(using) or []
+        self.header_includes = list(header_includes or [])
+        self.impl_includes = list(impl_includes or [])
+        self.forward_declarations = list(forward_declarations or [])
+        self.using = list(using or [])
         self.symbols = symbols or {}
 
         if Element._stack:
