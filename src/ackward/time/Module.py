@@ -7,7 +7,7 @@ def tunit():
     return TranslationUnit(
         guard='INCLUDE_ACKWARD_TIME_MODULE_HPP')
 
-def definition():
+def definition(env):
     with tunit() as t:
         with Namespace('ackward', 'time'):
             Module(name='time')

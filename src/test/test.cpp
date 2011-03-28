@@ -5,6 +5,8 @@
 
 #include <ackward/datetime/Initialize.hpp>
 #include <ackward/logging/Initialize.hpp>
+#include <ackward/queue/Initialize.hpp>
+#include <ackward/time/Initialize.hpp>
 #include <ackward/uuid/Initialize.hpp>
 
 // Global initialization
@@ -14,6 +16,8 @@ struct Initialize {
             Py_Initialize(); 
             ackward::datetime::initialize();
             ackward::logging::initialize();
+            ackward::queue::initialize();
+            ackward::time::initialize();
             ackward::uuid::initialize();
         }
 

@@ -45,7 +45,7 @@ def functions():
     levels = ['debug', 'info', 'warning', 'error', 'critical', 'exception']
     list(map(function, ['void {0}(std::wstring msg)'.format(lvl) for lvl in levels]))
 
-def definition():
+def definition(env):
     with tunit() as t:
         with Namespace('ackward', 'logging'):
             with Module(name='logging'):

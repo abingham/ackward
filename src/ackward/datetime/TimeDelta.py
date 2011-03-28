@@ -122,7 +122,7 @@ def timedelta_class():
         InlineFunction(code=gt_operator)
         InlineFunction(code=ge_operator)
         
-def definition():
+def definition(env):
     with tunit() as t:
         with Namespace('ackward', 'datetime'):
             timedelta_class()

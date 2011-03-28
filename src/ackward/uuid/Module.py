@@ -4,7 +4,7 @@ from ackward import (function,
                      Namespace,
                      TranslationUnit)
 
-def definition():
+def definition(env):
     with TranslationUnit(
         header_includes=[
             ('ackward', 'uuid', 'Types.hpp'),

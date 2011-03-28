@@ -1,6 +1,5 @@
 #include <Python.h>
 
-#include <csignal>
 #include <list>
 
 #include <boost/assign/list_of.hpp>
@@ -13,36 +12,12 @@
 #include <ackward/uuid/Module.hpp>
 #include <ackward/uuid/UUID.hpp>
 
+#include "disable_signal.hpp"
+
 #include <iostream>
 
 using namespace ackward::core;
 using namespace ackward::uuid;
-
-namespace
-{
-
-struct DisableSignal
-{
-    struct sigaction temp_;
-    struct sigaction orig_;
-    int sig_;
-
-    DisableSignal(int sig) :
-        sig_ (sig)
-        {
-                temp_.sa_handler = SIG_IGN;
-                sigemptyset(&temp_.sa_mask);
-                temp_.sa_flags = 0;
-                sigaction(sig_, &temp_, &orig_);
-        }
-
-    ~DisableSignal()
-        {
-            sigaction(sig_, &orig_, NULL);
-        }
-};
-
-}
 
 BOOST_AUTO_TEST_SUITE( UUID_methods )
 

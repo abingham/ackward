@@ -12,7 +12,7 @@ def tunit():
                          ('boost', 'python', 'object.hpp')],
         impl_includes=[('ackward', 're', 'MatchObject.hpp')])
 
-def definition():
+def definition(env):
     with tunit() as t:
         with Namespace('ackward', 're'):
             with Class(name='MatchObject',

@@ -27,7 +27,7 @@ def functions():
 
     list(map(function, f))
 
-def definition():
+def definition(env):
     with tunit() as t:
         with  Namespace('ackward', 'logging'):
             functions()

@@ -111,7 +111,7 @@ def date_class():
         InlineFunction(
             code=equality_operator)
 
-def definition():
+def definition(env):
     with tunit() as t:
         with Namespace('ackward', 'datetime'):
             date_class()

@@ -195,6 +195,7 @@ BOOST_AUTO_TEST_CASE( strftime_test )
 {
     std::wstring s =
         Date::today().strftime(L"This is a test");
+
     // TODO: A more realistic test?
 }
 

@@ -123,7 +123,7 @@ def time_class():
         InlineFunction(
             code=eq_operator)    
 
-def definition():
+def definition(env):
     with tunit() as t:
         with Namespace('ackward', 'datetime'):
             time_class()

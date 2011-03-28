@@ -31,7 +31,7 @@ def methods():
         ]
     list(map(method, m))
 
-def definition():
+def definition(env):
     with tunit() as t:
         with Namespace('ackward', 'logging'):
             with Class(name='Formatter',

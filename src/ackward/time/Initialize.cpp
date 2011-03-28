@@ -43,7 +43,8 @@ struct struct_time_from_tm
 
             object tt = object(
                 handle<>(
-                    obj_ptr));
+                    borrowed(
+                        obj_ptr)));
 
             void* storage = (
                 (boost::python::converter::rvalue_from_python_storage<tm>*)

@@ -55,12 +55,12 @@ def process_impl(elem, mod, symbols={}):
     for line in elem.close_impl(mod, symbols):
         yield line
 
-def _translate(processor, infile, outfile=None):
+def _translate(env, processor, infile, outfile=None):
     mod = Cache.load(infile)
 
     body = []
 
-    top_elem = mod.definition()
+    top_elem = mod.definition(env)
 
     def proc(f):
         for line in processor(top_elem, mod):
@@ -73,8 +73,8 @@ def _translate(processor, infile, outfile=None):
     else:
         proc(sys.stdout)
 
-def translate_header(infile, outfile=None):
-    _translate(process_header, infile, outfile)
+def translate_header(env, infile, outfile=None):
+    _translate(env, process_header, infile, outfile)
 
-def translate_impl(infile, outfile=None):
-    _translate(process_impl, infile, outfile)
+def translate_impl(env, infile, outfile=None):
+    _translate(env, process_impl, infile, outfile)

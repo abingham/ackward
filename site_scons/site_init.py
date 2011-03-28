@@ -2,13 +2,13 @@ import ackward as akw
 
 def TOOL_ACKWARD(env):
     def akw_header(target, source, env): 
-        return akw.translate_header(str(source[0]), str(target[0]))
+        return akw.translate_header(env, str(source[0]), str(target[0]))
     akw_header = Builder(action = akw_header,
                          suffix = '.hpp',
                          src_suffix = '.py')
     
     def akw_impl(target, source, env):
-        return akw.translate_impl(str(source[0]), str(target[0]))
+        return akw.translate_impl(env, str(source[0]), str(target[0]))
     akw_impl = Builder(action = akw_impl,
                        suffix = '.cpp',
                        src_suffix = '.py')

@@ -1,74 +1,7 @@
--*- rst -*-
+* Debugging issue sefault with unit-tests.
 
-General
-=======
-
-* generate static 'mod()' for modules?
-
-* Update to using ackward compiler wherever possible!
-* Consider adding "isNone" or some other way of checking Object
-  subclasses for None...or if this is even a reasonable idea. Using
-  shared_ptr is also a good option.
-* create (or find) "type()" method for python objects
-* Check for proper type on C++ object construction, e.g. TimeDelta
-  should check the obj parameter, at least in debug mode.
-  * We have this functionality, but it doesn't always work e.g. for
-    Filter and Handler. The reason, I assume, is that we're passing in
-    objects which meet the duck-type but aren't actually
-    subclasses. Is it just a bad idea to do this kind of checking at
-    all? Maybe we should just warn about mismatches in debug mode or
-    something?
-* Need a way to get class object which doesn't decref them
-  incorrectly. I believe this is the problem with getClass and
-  findObject wrt getting class objects. Needs investigation and a good
-  fix.
-  * Remember that from_python_object_::convertible() is using
-    getClass...I think this is the source of problems.
-* Can the akw generated code use boost type-traits to use references
-  vs. value parameters at the correct times?
-
-
-Logging
-=======
-
-* Quash console output in tests
-* LoggerAdapter
-* Various handler subclasses
-* StreamHandler: construct from things like cout, cerr...any ostream?
-* fileConfig(), listen, stopListening, etc.
-
-Datetime
-========
-
-* TimeDelta
-  * Done?
-* TZInfo
-  * TZInfo_ needs to create a subclass of tzinfo for
-    customization. Standard tzinfo members are read-only and can't be
-    replaced
-* Date:
-  * Done?
-* Time
-  * start/implement this
-* DateTime
-  * Finish API
-* Consider writing general-use tm <-> time.struct_time
-  converters...useful?
-
-UUID
-====
-* Figure out why getnode segfaults when not under the debugger.
-
-Next Version
-============
-
-* Subclassing C++ interfaces
-  For example::
-  
-  class MyFormatter : public Formatter
-  {
-  private:
-     // Reimplements standard format() method
-     std::wstring format_impl(const LogRecord&) const;
-  };
+  Break in ackward::queue::module(). Let 'mod' get assigned. 'pyo mod'
+  will print something that looks suspicious...refcount 0 bytes
+  object. 'pyo mod.m_ptr' will print what you expect, the queue
+  module. Then do 'pyo mod' again, and you'll get a segfault. Hmmm...
 

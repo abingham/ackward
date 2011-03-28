@@ -14,6 +14,7 @@ def init_variables(vars):
     vars.Add('PYTHON_INCLUDE_DIR', 'Location of Python headers', '/usr/include/python2.6')
     vars.Add('PYTHON_LIB_DIR', 'Location of Python libraries', '/usr/lib')
     vars.Add('PYTHON_LIBS', 'Python libraries to link', ['python2.6'])
+    vars.Add('PYTHON_VERSION', 'Python major version', '2')
 
     vars.Add('VARIANT', 'Compile with debugging', 'release')
 

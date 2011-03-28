@@ -35,7 +35,7 @@ def datetime_class():
         class_method('DateTime utcnow()')
         class_method('DateTime fromtimestamp(float timestamp)')
 
-def definition():
+def definition(env):
     with tunit() as t:
         with Namespace('ackward', 'datetime'):
             datetime_class()

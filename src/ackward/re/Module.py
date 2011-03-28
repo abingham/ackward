@@ -6,7 +6,7 @@ def tunit():
     return TranslationUnit(
         guard='INCLUDE_ACKWARD_RE_MODULE_HPP')
 
-def definition():
+def definition(env):
     with tunit() as t:
         with Namespace('ackward', 're'):
             Module(name='re')

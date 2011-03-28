@@ -143,7 +143,7 @@ uint8_t version() const
 }
 '''
 
-def definition():
+def definition(env):
     with TranslationUnit(
         header_includes=[
             ('ackward', 'core', 'ByteArray.hpp'),

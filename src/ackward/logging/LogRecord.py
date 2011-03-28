@@ -17,7 +17,7 @@ def tunit():
             ('ackward', 'logging', 'LogRecord.hpp'),
             ])
 
-def definition():
+def definition(env):
     with tunit() as t:
         with Namespace('ackward', 'logging'):
 

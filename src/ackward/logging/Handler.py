@@ -40,7 +40,7 @@ def methods():
         const=True,
         virtual=True)
 
-def definition():
+def definition(env):
     with tunit() as t:
         with Namespace('ackward', 'logging'):
             with Class(name='Handler',

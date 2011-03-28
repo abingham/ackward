@@ -9,12 +9,14 @@ local_env = env.Clone()
 local_env.AppendUnique(CPPDEFINES=['BOOST_TEST_DYN_LINK'])
 local_env.AppendUnique(LIBS=['boost_unit_test_framework'])
 
+# Hmm...problem occurs just running date_test by itself.
 sources = [
     'bytearray_test.cpp',
     'bytes_test.cpp',
     'date_test.cpp',
     'datetime_test.cpp',
     'datetime_time_test.cpp',
+    'disable_signal.cpp',
     'exception_translator_test.cpp',
     'filter_test.cpp',
     'formatter_test.cpp',
@@ -25,6 +27,7 @@ sources = [
     'logger_test.cpp',
     'log_record_test.cpp',
     'module_test.cpp',
+    'queue_test.cpp',
     'test.cpp',
     'time_test.cpp',
     'timedelta_test.cpp',
@@ -43,6 +46,7 @@ build.program(
     deps=['core', 
           'datetime', 
           'logging',
+          'queue',
           'time',
           'uuid'
           ])

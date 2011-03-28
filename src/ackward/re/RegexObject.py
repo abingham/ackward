@@ -11,7 +11,7 @@ def tunit():
         impl_includes=[('ackward', 're', 'RegexObject.hpp'),
                        ('ackward', 're', 'MatchObject.hpp')])
 
-def definition():
+def definition(env):
     with tunit() as t:
         with Namespace('ackward', 're'):
             with Class(name='RegexObject',
