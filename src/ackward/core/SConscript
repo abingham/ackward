@@ -5,7 +5,7 @@ Import('env')
 sources = [
     'ByteArray.cpp',
     'Bytes.cpp',
-    'Exceptions.cpp',
+    'ExceptionTranslation.cpp',
     'ExceptionTranslator.cpp',
     'GetClass.cpp',
     'Import.cpp',
@@ -19,6 +19,7 @@ headers = [
     'Bytes.hpp',
     'Enum.hpp',
     'Exceptions.hpp',
+    'ExceptionTranslation.hpp',
     'ExceptionTranslator.hpp',
     'GetClass.hpp',
     'Import.hpp',

@@ -8,7 +8,7 @@
 #include <boost/python/import.hpp>
 #include <boost/python/object.hpp>
 
-#include <ackward/core/Exceptions.hpp>
+#include <ackward/core/ExceptionTranslation.hpp>
 #include <ackward/core/Util.hpp>
 
 namespace ackward { namespace core

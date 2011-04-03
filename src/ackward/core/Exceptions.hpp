@@ -1,6 +1,9 @@
 #ifndef INCLUDE_ACKWARD_CORE_EXCEPTIONS_HPP
 #define INCLUDE_ACKWARD_CORE_EXCEPTIONS_HPP
 
+/** C++ counterparts to the standard Python exceptions.
+ */
+
 #include <Python.h>
 
 #include <exception>
@@ -9,16 +12,16 @@
 
 namespace boost { namespace python { class tuple; } }
 
-namespace ackward { namespace core
-{
+namespace ackward { 
+namespace core {
 
-void translatePythonException();
-void translatePythonException(boost::python::tuple);
-boost::python::tuple getExceptionInfo();
-
+/** The base for all ackward exceptions. */
 class Exception : public virtual boost::exception,
                   public virtual std::exception
 {};
+
+/** A collection of C++ analogues for the standard Python exceptions.
+ */
 class AttributeError : public Exception {};
 class ImportError : public Exception {};
 class IndexError : public Exception {};

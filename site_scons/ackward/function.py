@@ -9,20 +9,14 @@ $return_type $name($impl_signature) {
   try {
     return boost::python::extract<$return_type>(
       module().attr("$python_name")($parameters));
-  } catch (const boost::python::error_already_set&) {
-      core::translatePythonException();
-      throw;
-  }
+  } TRANSLATE_PYTHON_EXCEPTION()
 }'''
 
 impl_void_template = '''
 void $name($impl_signature) {
   try {
       module().attr("$python_name")($parameters);
-  } catch (const boost::python::error_already_set&) {
-      core::translatePythonException();
-      throw;
-  }
+  } TRANSLATE_PYTHON_EXCEPTION()
 }'''
 
 class Function(SigTemplateElement):
@@ -43,7 +37,7 @@ class Function(SigTemplateElement):
             open_impl_template=impl_void_template if return_type == 'void' else impl_template,
             impl_includes=impl_includes + [
                 ('boost', 'python', 'extract.hpp'),
-                ('ackward', 'core', 'Exceptions.hpp')],
+                ('ackward', 'core', 'ExceptionTranslation.hpp')],
             symbols={
                 'name' : name,
                 'return_type' : return_type,

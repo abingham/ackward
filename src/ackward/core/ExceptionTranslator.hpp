@@ -1,6 +1,14 @@
 #ifndef INCLUDE_BA_LOG_DETAIL_EXCEPTION_TRANSLATOR_HPP
 #define INCLUDE_BA_LOG_DETAIL_EXCEPTION_TRANSLATOR_HPP
 
+/** This defines the central class used for exception-translation in ackward.
+
+    This should not be confused with `ExceptionTranslation.h/cpp`
+    which defined the methods and macros that are actually used to
+    *perform* the translation. Those methods are implemented in terms
+    of the class defined here. Sorry for the confusion...
+ */
+
 #include <Python.h>
 
 #include <utility>
@@ -13,9 +21,11 @@
 
 #include <ackward/core/Util.hpp>
 
-namespace ackward { namespace core
-{
+namespace ackward { 
+namespace core {
 
+/** A registry of python-to-c++ exception translations.
+ */
 class ExceptionTranslator
 {
 public:
@@ -100,12 +110,7 @@ void throw_with_python_info(boost::python::object type,
     throw e;
 }
 
-}}
-
-#define TRANSLATE_PYTHON_EXCEPTION()                \
-catch (const boost::python::error_already_set&) {   \
-    ackward::core::translatePythonException();      \
-    throw;                                          \
+}
 }
 
 #endif

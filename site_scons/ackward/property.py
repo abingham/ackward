@@ -14,10 +14,7 @@ $type $class_name::$property_name() const {
    try {
      return boost::python::extract<$type>(
        obj().attr("$python_name"));
-   } catch (const boost::python::error_already_set&) {
-       core::translatePythonException();
-       throw;
-   }
+   } TRANSLATE_PYTHON_EXCEPTION()
 }
 '''
 
@@ -25,10 +22,7 @@ impl_non_const = impl_const + '''
 void $class_name::$property_name($impl_signature) {
    try {
      obj().attr("$python_name") = val;
-   } catch (const boost::python::error_already_set&) {
-       core::translatePythonException();
-       throw;
-   }
+   } TRANSLATE_PYTHON_EXCEPTION ()
 }
 '''
 
@@ -63,7 +57,7 @@ class Property(SigTemplateElement):
             open_impl_template=impl,
             impl_includes=[
                 ('boost', 'python', 'extract.hpp'),
-                ('ackward', 'core', 'Exceptions.hpp'),
+                ('ackward', 'core', 'ExceptionTranslation.hpp'),
                 ],
             symbols={
                 'property_name' : name,
