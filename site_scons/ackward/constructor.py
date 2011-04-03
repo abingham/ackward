@@ -9,11 +9,8 @@ ${class_name}::${class_name}($impl_signature) try :
     ${class_name}::cls()($parameters) )
 {
 }
-catch (const boost::python::error_already_set&)
-{
-  core::translatePythonException();
-  throw;
-}'''
+TRANSLATE_PYTHON_EXCEPTION()
+'''
 
 class Constructor(SigTemplateElement):
     '''A template for class constructors.
@@ -31,6 +28,9 @@ class Constructor(SigTemplateElement):
             self,
             open_header_template = header_template,
             open_impl_template = impl_template,
+            impl_includes=[
+                ('ackward', 'core', 'ExceptionTranslation.hpp'),
+                ],
             symbols = {
                 'signature' : signature,
                 })

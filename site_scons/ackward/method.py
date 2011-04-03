@@ -9,20 +9,14 @@ $return_type $class_name::$method_name($impl_signature) $const {
     try {
         return boost::python::extract<$return_type>(
             obj().attr("$python_name")($parameters));
-    } catch (const boost::python::error_already_set&) {
-        core::translatePythonException();
-        throw;
-    }
+    } TRANSLATE_PYTHON_EXCEPTION()
 }'''
 
 impl_void_template = '''
 void $class_name::$method_name($impl_signature) $const {
     try {
         obj().attr("$python_name")($parameters);
-    } catch (const boost::python::error_already_set&) {
-        core::translatePythonException();
-        throw;
-    }
+    } TRANSLATE_PYTHON_EXCEPTION()
 }'''
 
 class Method(SigTemplateElement):
@@ -64,6 +58,9 @@ class Method(SigTemplateElement):
             self,
             open_header_template=header_template,
             open_impl_template=implt,
+            impl_includes=[
+                ('ackward', 'core', 'ExceptionTranslation.hpp'),
+                ],
             symbols={
                 'method_name' : name,
                 'return_type' : return_type,

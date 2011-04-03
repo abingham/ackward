@@ -10,10 +10,7 @@ $type $module_property_name() {
         object prop = 
             $module_function().attr("$python_name");
         return extract<$type>(prop);
-    } catch (const boost::python::error_already_set&) {
-        core::translatePythonException();
-        throw;
-    }
+    } TRANSLATE_PYTHON_EXCEPTION()
 }'''
 
 class ModuleProperty(TemplateElement):
@@ -45,8 +42,11 @@ class ModuleProperty(TemplateElement):
             self,
             open_header_template=header_template,
             open_impl_template=impl_template,
-            impl_includes=impl_includes + [('boost', 'python', 'extract.hpp'),
-                                           ('boost', 'python', 'object.hpp')],
+            impl_includes=impl_includes + [
+                ('boost', 'python', 'extract.hpp'),
+                ('boost', 'python', 'object.hpp'),
+                ('ackward', 'core', 'ExceptionTranslation.hpp'),
+                ],
             symbols={
                 'module_property_name' : name,
                 'type' : type,

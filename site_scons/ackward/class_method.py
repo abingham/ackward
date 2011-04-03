@@ -9,10 +9,7 @@ $return_type $class_name::$method_name($impl_signature) {
     try {
         return boost::python::extract<$return_type>(
             $class_name::cls().attr("$python_name")($parameters));
-    } catch (const boost::python::error_already_set&) {
-        core::translatePythonException();
-        throw;
-    }
+    } TRANSLATE_PYTHON_EXCEPTION()
 }'''
 
 class ClassMethod(SigTemplateElement):
@@ -40,6 +37,9 @@ class ClassMethod(SigTemplateElement):
             self,
             open_header_template=header_template,
             open_impl_template=impl_template,
+            impl_includes=[
+                ('ackward', 'core', 'ExceptionTranslation.hpp'),
+                ],
             symbols = {
                 'method_name' : name,
                 'python_name' : name if python_name is None else python_name,

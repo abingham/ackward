@@ -12,10 +12,7 @@ $type $class_name::$property_name() {
         object prop = 
             $class_name::cls().attr("$property_name");
         return extract<$type>(prop);
-    } catch (const boost::python::error_already_set&) {
-        core::translatePythonException();
-        throw;
-    }
+    } TRANSLATE_PYTHON_EXCEPTION()
 }'''
 
 impl_setter = '''
@@ -25,10 +22,7 @@ void $class_name::$property_name($impl_signature) {
         object prop = 
             $class_name::cls().attr("$property_name");
         prop = val;
-    } catch (const error_already_set&) {
-        core::translatePythonException();
-        throw;
-    }
+    } TRANSLATE_PYTHON_EXCEPTION()
 }'''
 
 class ClassProperty(SigTemplateElement):
@@ -56,6 +50,9 @@ class ClassProperty(SigTemplateElement):
             self,
             open_header_template=header,
             open_impl_template=impl,
+            impl_includes=[
+                ('ackward', 'core', 'ExceptionTranslation.hpp'),
+                ],
             symbols={
                 'property_name' : name,
                 'type' : type,
