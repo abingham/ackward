@@ -1,2 +1,5 @@
 def build(ctx):
-    list(map(ctx.recurse, ['core']))
+    list(
+        map(ctx.recurse, 
+            ['core',
+             'logging']))
