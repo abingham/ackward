@@ -6,6 +6,7 @@ syntax: glob
 *.pyc
 *.so
 .scon*
+.waf*
 build/*
 install/*
 config.log
