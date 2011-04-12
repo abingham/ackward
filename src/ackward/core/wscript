@@ -1,0 +1,16 @@
+sources = [
+    'ByteArray.cpp',
+    'Bytes.cpp',
+    'ExceptionTranslation.cpp',
+    'ExceptionTranslator.cpp',
+    'GetClass.cpp',
+    'Import.cpp',
+    'Initialize.cpp',
+    'Object.cpp',
+    'Util.cpp'
+]
+
+def build(ctx):
+    ctx.shlib(
+        source=' '.join(sources),
+        target = 'ackward_core')
