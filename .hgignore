@@ -17,6 +17,8 @@ custom.py
 *_akw.hpp
 *_akw.ipp
 
+.ropeproject/*
+
 src/TAGS
 src/test/ackward_test
 src/test/sample
