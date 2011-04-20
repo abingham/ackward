@@ -20,7 +20,14 @@ std::wstring unicodeToWString(PyObject* s)
     
     boost::scoped_array<wchar_t> buf(new wchar_t[len]);
     
-    if (PyUnicode_AsWideChar(reinterpret_cast<PyUnicodeObject*>(s), buf.get(), len) == -1)
+    if (PyUnicode_AsWideChar(
+#if ACKWARD_PYTHON_MAJOR_VERSION == 3 && ACKWARD_PYTHON_MINOR_VERSION == 2
+            s,
+#else
+            reinterpret_cast<PyUnicodeObject*>(s),
+#endif
+            buf.get(), 
+            len) == -1)
         return std::wstring();
     
     return std::wstring(buf.get(), buf.get() + len);
@@ -70,7 +77,7 @@ next(object iterator)
 
 std::wstring strToWString(boost::python::str s)
 {
-#if ACKWARD_PYTHON_VERSION == 2
+#if ACKWARD_PYTHON_MAJOR_VERSION == 2
 
     if (PyUnicode_Check(s.ptr()))
         return ::unicodeToWString(s.ptr());
@@ -81,7 +88,7 @@ std::wstring strToWString(boost::python::str s)
 
     return ::unicodeToWString(unicodeObject.ptr());
 
-#elif ACKWARD_PYTHON_VERSION == 3
+#elif ACKWARD_PYTHON_MAJOR_VERSION == 3
 
     return ::unicodeToWString(s.ptr());
 
@@ -109,9 +116,9 @@ boost::python::object builtins()
     
     if (is_none(mod))
     {
-#if ACKWARD_PYTHON_VERSION == 2
+#if ACKWARD_PYTHON_MAJOR_VERSION == 2
         mod = import("__builtin__");
-#elif ACKWARD_PYTHON_VERSION == 3
+#elif ACKWARD_PYTHON_MAJOR_VERSION == 3
         mod = import("builtins");
 #endif
     }

@@ -42,7 +42,7 @@ enum Flags {
     X = 0x40,
     VERBOSE = 0x40
 
-#if ACKWARD_PYTHON_VERSION == 3
+#if ACKWARD_PYTHON_MAJOR_VERSION == 3
     ,
     A = 0x100,
     ASCII = 0x100

@@ -85,11 +85,11 @@ Bytes::copyData(Itr begin, Itr end)
     object obj = object(
         handle<>(
 
-#if ACKWARD_PYTHON_VERSION == 2
+#if ACKWARD_PYTHON_MAJOR_VERSION == 2
 
             PyString_FromStringAndSize(
 
-#elif ACKWARD_PYTHON_VERSION == 3
+#elif ACKWARD_PYTHON_MAJOR_VERSION == 3
 
             PyBytes_FromStringAndSize(
 

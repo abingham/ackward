@@ -7,7 +7,7 @@ namespace queue {
 
 boost::python::object module()
 {
-#if ACKWARD_PYTHON_VERSION == 2
+#if ACKWARD_PYTHON_MAJOR_VERSION == 2
     return import("Queue");
 #else
     return import("queue");

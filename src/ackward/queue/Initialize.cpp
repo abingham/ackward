@@ -22,7 +22,7 @@ void initialize()
         module().attr("Empty"));
 
     ackward::core::initializePythonConverter<Queue>(
-#if ACKWARD_PYTHON_VERSION == 2
+#if ACKWARD_PYTHON_MAJOR_VERSION == 2
         "Queue.Queue"
 #else
         "queue.Queue"
