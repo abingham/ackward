@@ -2,6 +2,7 @@
 
 #include <boost/assign/list_of.hpp>
 #include <boost/foreach.hpp>
+#include <boost/python/object.hpp>
 #include <boost/test/unit_test.hpp>
 
 #include <ackward/queue/Queue.hpp>
@@ -42,5 +43,27 @@ BOOST_AUTO_TEST_CASE( queue_makeQueue )
         BOOST_CHECK_EQUAL(q.qsize(), 0);
     }
 }
+
+BOOST_AUTO_TEST_CASE( queue_put )
+{
+    BOOST_FOREACH(int t, ::qTypes) {
+        Queue q = ::makeQ(t, 100);
+
+        for (int i = 0; i < 100; ++i)
+        {
+            BOOST_CHECK_EQUAL(q.qsize(), i);
+            q.put(boost::python::object(i));
+        }
+
+        for (int i = 0; i < 100; ++i)
+        {
+            int val = boost::python::extract<int>(q.get());
+            BOOST_CHECK_EQUAL(val, i);
+        }
+    }
+}
+
+// TODO: put with block and timeout
+// TODO: get, get w/ block and timeout
 
 BOOST_AUTO_TEST_SUITE_END()
