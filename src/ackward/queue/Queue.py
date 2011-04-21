@@ -24,9 +24,14 @@ def queueClass(env, qtype):
         method('unsigned int qsize() const')
         # method('bool empty() const')
 
+        # TODO: put variants that are templatized on `item` type
         method('void put(boost::python::object item)')
         method('void put(boost::python::object item, bool block)')
         method('void put(boost::python::object item, bool block, unsigned int timeout)')
+
+        # TODO: get variants that are templatized on `item` type
+        method('boost::python::object get()')
+        # TODO: block + timeout
 
 def definition(env):
     with tunit() as t:
