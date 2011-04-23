@@ -21,6 +21,7 @@ Contents:
    Requirements <requirements>
    Building ackward <building>
    Logging example: Embedding <logging_example_embedding>
+   Release Notes <release_notes>   
 
 Indices and tables
 ==================
