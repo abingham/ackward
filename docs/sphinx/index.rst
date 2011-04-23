@@ -12,7 +12,8 @@ more accessible from C++ programs which embed Python. It could (and
 should) be expanded to include any modules which might be useful from
 a C++ program.
 
-Contents:
+Contents
+========
 
 .. toctree::
    :maxdepth: 2
