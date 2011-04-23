@@ -2,18 +2,18 @@
 
 #include <boost/python.hpp>
 
-#include <ackward/logging/Logger.hpp>
+#include <ackward/logging/Logger.hpp>       // 1
 
 namespace bp=boost::python;
 
 namespace
 {
 
-void log_message(bp::object logger,
+void log_message(bp::object logger,         // 2 
                  const std::wstring& msg)
 {
-    ackward::logging::Logger l(logger);
-    l.error(msg);
+    ackward::logging::Logger l(logger);     // 3
+    l.error(msg);                           // 4
 }
 
 }

@@ -1,0 +1,13 @@
+#summary This is an attempt to explain/justify ackward.
+
+One of python's strengths is that it can interface easily with other languages. In particular, it's good at interoperating with C/C++. However, the idioms and styles needed for dealing with python objects in C++ are generally _very_ different from what you would use in python itself. In other words, while you can work with python objects in C++, you lose a lot of the elegance and simplicity associated with python.
+
+The Boost.Python library takes great strides in making it more natural to work with python objects in C++. Defining python classes and modules with Boost.Python feels much more like python than standard use of the python C API, and this is a huge benefit. Developers using Boost.Python are able to approach problems in a more consistent manner, and they don't have to "switch gears" as much.
+
+Nevertheless, Boost.Python is only one step in the right direction. It provides a platform upon which a much richer, more "natural" integration between python and C++ can be built, and this is where ackward tries to extend things even further. ackward aims to provide simple, idiomatic access to the python standard library in C++. 
+
+By doing this, ackward gives python extension writers the ability to work with many common python objects in their C++ code. Likewise, it gives them access to the wealth of functionality in the standard library. This should help foster consistency across code bases and reduce repetition. It should also help spread the effective domain of the well-tested, robust, and well-known python standard library.
+
+It's worth noting that ackward helps embedded python developers as much as extension writers. In fact, ackward grew much more out of embedded work than extensions; it's genesis was an attempt to expose the python logging library in C++.
+
+The goal of exposing the entire python standard library is indeed lofty. Pragmatically, the project will need to simply tackle manageable pieces one at a time. In general, it should be possible to develop independent pieces of the standard library in parallel, so the project scope should be able to scale with the amount of help it can get. Ultimately, the direction and scope of ackward will depend on the number of people who work on it and their interests.
