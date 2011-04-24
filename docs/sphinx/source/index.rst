@@ -21,8 +21,10 @@ Contents
    Rationale <rationale>
    Requirements <requirements>
    Building ackward <building>
+   API <api/api>
    Logging example: Embedding <logging_example_embedding>
    Release Notes <release_notes>   
+   
 
 Indices and tables
 ==================
