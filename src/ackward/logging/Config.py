@@ -4,6 +4,21 @@ from ackward import (function,
                      Namespace,
                      TranslationUnit)
 
+fileConfig1_doc = '''
+/** Read the logging configuration from a ConfigParser-format file.
+    
+    This can be called several times from an application, allowing an end user
+    the ability to select from various pre-canned configurations (if the
+    developer provides a mechanism to present the choices and load the chosen
+    configuration).
+
+    @param filename The filename to read from. */'''
+
+fileConfig2_doc = '' # TODO
+listen1_doc = '' # TODO
+listen2_doc = '' # TODO
+stopListening_doc = '' # TODO
+
 def tunit():
     return TranslationUnit(
         guard='INCLUDE_ACKWARD_LOGGING_CONFIG_HPP',
@@ -17,15 +32,22 @@ def tunit():
             ])
 
 def functions():
-    f = [ 
-        'void fileConfig(std::wstring filename)',
-        'void fileConfig(std::string filename, boost::python::dict defaults)',
-        'void listen()',
-        'void listen(unsigned int port)',
-        'void stopListening()',
+    funcs = [ 
+        (fileConfig1_doc,
+         'void fileConfig(std::wstring filename)'),
+        (fileConfig2_doc, 
+         'void fileConfig(std::string filename, boost::python::dict defaults)'),
+        (listen1_doc, 
+         'void listen()'),
+        (listen2_doc, 
+         'void listen(unsigned int port)'),
+        (stopListening_doc, 
+         'void stopListening()'),
         ]
 
-    list(map(function, f))
+    for d,f in funcs:
+        func = function(f)
+        if d: func.doc = d
 
 def definition(env):
     with tunit() as t:

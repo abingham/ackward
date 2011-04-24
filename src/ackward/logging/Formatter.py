@@ -6,6 +6,13 @@ from ackward import (Class,
                      Namespace,
                      TranslationUnit)
 
+formatter_doc = '''
+/** 
+\\rst 
+Wrapper around ``logging.Formatter`` objects. See `<http://docs.python.org/py3k/library/logging.html#formatter-objects>`_ for more information. 
+\endrst 
+*/'''
+
 def tunit():
     return TranslationUnit(
         guard='INCLUDE_ACKWARD_LOGGING_FORMATTER',
@@ -35,7 +42,8 @@ def definition(env):
     with tunit() as t:
         with Namespace('ackward', 'logging'):
             with Class(name='Formatter',
-                       wrapped_class='logging.Formatter'):
+                       wrapped_class='logging.Formatter',
+                       doc=formatter_doc):
                 Constructor()
                 methods()
     

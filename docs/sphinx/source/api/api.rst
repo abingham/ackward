@@ -8,6 +8,7 @@ This API documentation is extracted from the ``ackward`` source [#]_.
    :maxdepth: 2
 
    ackward::core <core/index>
+   ackward::logging <logging/index>
 
 .. toctree::
    :maxdepth: 1
