@@ -84,7 +84,7 @@ def method(sig):
     '''
     rtype, name, args, const = parse(sig)
 
-    Method(
+    return Method(
         name=name,
         return_type=rtype,
         signature=args,

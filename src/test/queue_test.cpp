@@ -64,6 +64,26 @@ BOOST_AUTO_TEST_CASE( queue_put )
 }
 
 // TODO: put with block and timeout
-// TODO: get, get w/ block and timeout
+
+BOOST_AUTO_TEST_CASE( queue_get )
+{
+    BOOST_FOREACH(int t, ::qTypes) {
+        Queue q = ::makeQ(t, 100);
+        
+        for (int i = 0; i < 100; ++i)
+        {
+             q.put(boost::python::object(i));
+        }
+        
+        for (int i = 0; i < 100; ++i)
+        {
+            BOOST_CHECK_EQUAL(q.qsize(), 100 - i);
+            int val = boost::python::extract<int>(q.get());
+            BOOST_CHECK_EQUAL(val, i);
+        }
+    }
+}
+
+// TODO: get w/ block and timeout
 
 BOOST_AUTO_TEST_SUITE_END()

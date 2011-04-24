@@ -5,6 +5,48 @@ from ackward import (Class,
                      Namespace,
                      TranslationUnit)
 
+queue_doc = '''/**
+\\rst
+A wrapper for {0} objects in the ``queue`` module. See `<http://docs.python.org/py3k/library/queue.html#queue-objects>`_.
+\endrst
+*/'''
+
+qsize_doc = '''/** 
+Return the approximate size of the queue. Note, qsize() > 0 doesn't
+guarantee that a subsequent get() will not block, nor will qsize() <
+maxsize guarantee that put() will not block.
+
+\\rst
+See `<http://docs.python.org/py3k/library/queue.html#queue.Queue.qsize>`_.
+\\endrst
+
+@return The current size of the queue.
+*/'''
+
+put_doc = '''/** 
+Put item into the queue. 
+
+\\rst
+See `<http://docs.python.org/py3k/library/queue.html#queue.Queue.put>`_.
+\endrst
+
+@param item The item to place in the queue.
+{0}
+@throws ackward::queue::Full There is no space in the queue.
+*/'''
+
+get_doc = '''/**
+Remove and return an item from the queue.
+
+\\rst
+See `<http://docs.python.org/py3k/library/queue.html#queue.Queue.get>`_.
+\endrst
+
+{0}
+@return The item retrieved from the queue.
+@throws ackward::queue::Empty The queue is empty.
+*/'''
+
 def modname(env):
     if env['PYTHON_VERSION'] == 2:
         return 'Queue'
@@ -19,19 +61,27 @@ def tunit():
 
 def queueClass(env, qtype):
     with Class(name=qtype,
-               wrapped_class='{0}.{1}'.format(modname(env), qtype)):
+               wrapped_class='{0}.{1}'.format(modname(env), qtype),
+               doc=queue_doc.format(qtype)):
 
-        method('unsigned int qsize() const')
+        method('unsigned int qsize() const').doc = qsize_doc
         # method('bool empty() const')
 
         # TODO: put variants that are templatized on `item` type
-        method('void put(boost::python::object item)')
-        method('void put(boost::python::object item, bool block)')
-        method('void put(boost::python::object item, bool block, unsigned int timeout)')
+        method('void put(boost::python::object item)').doc = put_doc.format('')
+        method('void put(boost::python::object item, bool block)').doc = put_doc.format(
+            '@param block Whether to block until the queue has space.')
+        method('void put(boost::python::object item, bool block, unsigned int timeout)').doc = put_doc.format(
+            '''@param block Whether to block until the queue has space.
+               @param timeout How long to wait for queue to have space.''')
 
         # TODO: get variants that are templatized on `item` type
-        method('boost::python::object get()')
-        # TODO: block + timeout
+        method('boost::python::object get()').doc = get_doc.format('')
+        method('boost::python::object get(bool block)').doc = get_doc.format(
+            '@param block Whether to block until there\'s an item in the queue.')
+        method('boost::python::object get(bool block, unsigned int timeout)').doc = get_doc.format(
+            '''@param block Whether to block until there\'s an item in the queue.
+               @param timeout How long to wait until there's an item in the queue.''')
 
 def definition(env):
     with tunit() as t:
