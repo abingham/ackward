@@ -41,7 +41,8 @@ class Class(TemplateElement):
     def __init__(self,
                  name,
                  wrapped_class,
-                 bases=['private core::Object']):
+                 bases=['private core::Object'],
+                 doc=None):
         '''Create a new Class object.
 
         Args:
@@ -73,4 +74,5 @@ class Class(TemplateElement):
                 'class_name' : name,
                 'wrapped_class' : wrapped_class,
                 'bases' : bases,
-                })
+                },
+            doc=doc)
