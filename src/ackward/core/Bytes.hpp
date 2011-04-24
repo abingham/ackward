@@ -13,6 +13,8 @@ namespace core {
 
 class ByteArray;
 
+/** A wrapper around Python `bytes` objects.
+ */
 class Bytes : private Object
 {
 public:

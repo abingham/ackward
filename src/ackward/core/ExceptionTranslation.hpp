@@ -9,11 +9,13 @@
 namespace ackward {
 namespace core {
 
-/** Get the ExceptionTranslator object used by ackward.
+/*! Get the ExceptionTranslator object used by ackward.
 
     This is the ExceptionTranslator instance used by
     e.g. `translatePythonException()` and
     `registerExceptionTranslation()`.
+
+    @return The ackward ExceptionTranslator instance.
  */
 ExceptionTranslator& exceptionTranslator();
 
@@ -25,6 +27,7 @@ ExceptionTranslator& exceptionTranslator();
 
     @param pythonEx The Python exception object to be translated into
       C++.
+
     @tparam T The C++ class into which the Python exception will be
       translated.
     
@@ -37,8 +40,25 @@ void registerExceptionTranslation(boost::python::object pythonEx)
         &throw_with_python_info<T>);
 }
 
+/** Translate the current Python exception (if any.)
+
+    This uses ``getExceptionInfo()`` to get the current Python
+    exception.
+ */
 void translatePythonException();
-void translatePythonException(boost::python::tuple);
+
+/** Translate the Python exception represented by the the (type,
+    value, traceback) tuple argument.
+
+    @param exc The (type,value,traceback) tuple to translate.
+ */
+void translatePythonException(boost::python::tuple exc);
+
+/** Get the current Python exception info tuple
+
+    @return A (type, value, traceback) tuple for the current Python
+      exception.
+ */
 boost::python::tuple getExceptionInfo();
 
 }

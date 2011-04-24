@@ -14,7 +14,8 @@
 namespace ackward {
 namespace core {
 
-/** A tool to simplify the construction of python converters between a
+/** \rst
+    A tool to simplify the construction of python converters between a
     python enum and a C++ enum. This differs from boost.python's enum
     template in that bp's enum is designed to expose C++ enumerations
     in python extension modules. This class is designed to maps python
@@ -53,12 +54,14 @@ namespace core {
 
       MyEnum e = extract<MyEnum>(obj);
       assert(e == Val1);
+
+\endrst
  */
 template <typename E>
 class Enum
 {
 public:
-    /** Add a conversion mapping
+    /** Add a conversion mapping.
 
         @param cpp The C++ enum value to map
 
@@ -89,6 +92,11 @@ public:
         }
 
     /* The convert function for boost.python's converter system
+       
+       ..note:: 
+
+         This is part of the boost::python conversion system
+          and should not, in general, be used by others.
      */
     static PyObject* convert(E e)
         {
