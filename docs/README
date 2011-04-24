@@ -1,0 +1,36 @@
+The ackward documentation relies on two systems:
+
+  * doxygen, for extracting C++ documentation
+  * sphinx, for overall organization and presentation
+
+We use the 'breathe' sphinx extension to bridge the two worlds.
+
+Here are the steps for creating the documentation:
+
+ 1. Do a complete build.  
+
+    This is needed to make sure that all of the headers have been
+    generated from source.
+
+ 2. In the ``docs/doxygen`` directory, run ``doxygen``.
+
+    This will parse the C++ source and extract the embedded
+    documentation.
+
+ 3. In the ``docs/sphinx/source`` directory, run ``make html``.
+
+    This will generate the final documentation from the
+    restructured-text source. This phase imports data generated in the
+    doxygen step.
+
+That's it. Your output will be in the
+``docs/sphinx/source/_build/html`` directory.
+
+Here's the short version::
+
+  % cd <location of ackward SConsctruct>
+  % scons
+  % cd docs/doxygen
+  % doxygen
+  % cd ../sphinx/source
+  % make html
