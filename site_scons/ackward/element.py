@@ -20,7 +20,7 @@ class Element:
           baz = BazElement()
      llama = LlamaElement()
 
-    Here, `bar` is a child of `foo` and `baz` is a child of `bar`, but
+    Here, `bar` is a child of `foo`, and `baz` is a child of `bar`, but
     `llama` is not a child of any Element.
 
     Args:
@@ -44,7 +44,8 @@ class Element:
                  impl_includes=None,
                  forward_declarations=None,
                  using=None,
-                 symbols=None):
+                 symbols=None,
+                 doc=None):
         self.children = list(children or [])
 
         self.header_includes = list(header_includes or [])
@@ -52,6 +53,8 @@ class Element:
         self.forward_declarations = list(forward_declarations or [])
         self.using = list(using or [])
         self.symbols = symbols or {}
+        
+        self.doc = doc
 
         if Element._stack:
             Element._stack[-1] += self
@@ -68,6 +71,7 @@ class Element:
         Returns:
           An iterable of lines to include in the output.
         '''
+
         return ['']
 
     def close_header(self, mod, symbols):
@@ -143,6 +147,12 @@ class Element:
         '''
         Element._stack.pop()
 
+    def render_doc(self):
+        '''Return the text to be used for the element's documentation.
+        '''
+        if self.doc:
+            yield self.doc
+        
 class TemplateElement(Element):
     def __init__(self,
                  open_header_template='',

@@ -31,6 +31,9 @@ def process_header(elem, mod, symbols={}):
     symbols = dict(symbols)
     symbols.update(elem.symbols)
 
+    for line in elem.render_doc():
+        yield line
+
     for line in elem.open_header(mod, symbols):
         yield line
 
