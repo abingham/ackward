@@ -1,5 +1,6 @@
 from ackward import (Class,
                      Function,
+                     InlineFunction,
                      method,
                      Module,
                      Namespace,
@@ -67,19 +68,54 @@ def queueClass(env, qtype):
         method('unsigned int qsize() const').doc = qsize_doc
         # method('bool empty() const')
 
-        # TODO: put variants that are templatized on `item` type
-        method('void put(boost::python::object item)').doc = put_doc.format('')
-        method('void put(boost::python::object item, bool block)').doc = put_doc.format(
+        # put
+        InlineFunction('''
+template <typename T> 
+void put(const T& t) { 
+  try { obj().attr("put")(t); } 
+  TRANSLATE_PYTHON_EXCEPTION() 
+}''').doc = put_doc.format('') 
+
+        InlineFunction('''
+template <typename T> 
+void put(const T& t, bool block) { 
+  try { obj().attr("put")(t, block); } 
+  TRANSLATE_PYTHON_EXCEPTION() 
+}''').doc = put_doc.format(
             '@param block Whether to block until the queue has space.')
-        method('void put(boost::python::object item, bool block, unsigned int timeout)').doc = put_doc.format(
+
+        InlineFunction('''
+template <typename T> 
+void put(const T& t, bool block, unsigned int timeout) { 
+  try { obj().attr("put")(t, block, timeout); } 
+  TRANSLATE_PYTHON_EXCEPTION() 
+}''').doc = put_doc.format(
             '''@param block Whether to block until the queue has space.
                @param timeout How long to wait for queue to have space.''')
+        
 
-        # TODO: get variants that are templatized on `item` type
-        method('boost::python::object get()').doc = get_doc.format('')
-        method('boost::python::object get(bool block)').doc = get_doc.format(
+        # get
+        InlineFunction('''
+template <typename T>
+T get() {
+  try { boost::python::extract<T>(obj().attr("get")()); }
+  TRANSLATE_PYTHON_EXCEPTION()
+}''').doc = get_doc.format('')
+
+        InlineFunction('''
+template <typename T>
+T get(bool block) {
+  try { boost::python::extract<T>(obj().attr("get")(block)); }
+  TRANSLATE_PYTHON_EXCEPTION()
+}''').doc = get_doc.format(
             '@param block Whether to block until there\'s an item in the queue.')
-        method('boost::python::object get(bool block, unsigned int timeout)').doc = get_doc.format(
+
+        InlineFunction('''
+template <typename T>
+T get(bool block, unsigned int timeout) {
+  try { boost::python::extract<T>(obj().attr("get")(block, timeout)); }
+  TRANSLATE_PYTHON_EXCEPTION()
+}''').doc = get_doc.format(
             '''@param block Whether to block until there\'s an item in the queue.
                @param timeout How long to wait until there's an item in the queue.''')
 

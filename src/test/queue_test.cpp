@@ -52,12 +52,12 @@ BOOST_AUTO_TEST_CASE( queue_put )
         for (int i = 0; i < 100; ++i)
         {
             BOOST_CHECK_EQUAL(q.qsize(), i);
-            q.put(boost::python::object(i));
+            q.put(i);
         }
 
         for (int i = 0; i < 100; ++i)
         {
-            int val = boost::python::extract<int>(q.get());
+            int val = q.get<int>();
             BOOST_CHECK_EQUAL(val, i);
         }
     }
@@ -72,13 +72,13 @@ BOOST_AUTO_TEST_CASE( queue_get )
         
         for (int i = 0; i < 100; ++i)
         {
-             q.put(boost::python::object(i));
+             q.put(i);
         }
         
         for (int i = 0; i < 100; ++i)
         {
             BOOST_CHECK_EQUAL(q.qsize(), 100 - i);
-            int val = boost::python::extract<int>(q.get());
+            int val = q.get<int>();
             BOOST_CHECK_EQUAL(val, i);
         }
     }
