@@ -121,6 +121,7 @@ T get(bool block, unsigned int timeout) {
 
         method('bool full() const').doc = '/** Return True if the queue is full, False otherwise. */'
         method('void task_done()').doc = '/** Indicate that a formerly enqueued task is complete. */'
+        method('void join()').doc = '/** Blocks until all items in the queue have been gotten and processed. */'
 
 def definition(env):
     with tunit() as t:
@@ -139,9 +140,3 @@ def definition(env):
                     python_name='Queue')
 
     return t
-
-# Queue.join()
-
-#     Blocks until all items in the queue have been gotten and processed.
-
-#     The count of unfinished tasks goes up whenever an item is added to the queue. The count goes down whenever a consumer thread calls task_done() to indicate that the item was retrieved and all work on it is complete. When the count of unfinished tasks drops to zero, join() unblocks.

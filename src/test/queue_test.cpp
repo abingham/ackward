@@ -114,4 +114,14 @@ BOOST_AUTO_TEST_CASE( queue_task_done )
     }
 }
 
+BOOST_AUTO_TEST_CASE( queue_join )
+{
+    BOOST_FOREACH(int t, ::qTypes) {
+        Queue q = ::makeQ(t, 2);
+        q.put(1);
+        q.task_done();
+        q.join();
+    }
+}
+
 BOOST_AUTO_TEST_SUITE_END()
