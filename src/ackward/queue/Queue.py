@@ -120,6 +120,7 @@ T get(bool block, unsigned int timeout) {
                @param timeout How long to wait until there's an item in the queue.''')
 
         method('bool full() const').doc = '/** Return True if the queue is full, False otherwise. */'
+        method('void task_done()').doc = '/** Indicate that a formerly enqueued task is complete. */'
 
 def definition(env):
     with tunit() as t:
@@ -138,31 +139,6 @@ def definition(env):
                     python_name='Queue')
 
     return t
-
-# Queue.full()
-#     Return True if the queue is full, False otherwise. If full() returns True it doesnt guarantee that a subsequent call to get() will not block. Similarly, if full() returns False it doesnt guarantee that a subsequent call to put() will not block.
-
-# Queue.put(item[, block[, timeout]])
-#     Put item into the queue. If optional args block is true and timeout is None (the default), block if necessary until a free slot is available. If timeout is a positive number, it blocks at most timeout seconds and raises the Full exception if no free slot was available within that time. Otherwise (block is false), put an item on the queue if a free slot is immediately available, else raise the Full exception (timeout is ignored in that case).
-
-# Queue.put_nowait(item)
-#     Equivalent to put(item, False).
-
-# Queue.get([block[, timeout]])
-#     Remove and return an item from the queue. If optional args block is true and timeout is None (the default), block if necessary until an item is available. If timeout is a positive number, it blocks at most timeout seconds and raises the Empty exception if no item was available within that time. Otherwise (block is false), return an item if one is immediately available, else raise the Empty exception (timeout is ignored in that case).
-
-# Queue.get_nowait()
-#     Equivalent to get(False).
-
-# Two methods are offered to support tracking whether enqueued tasks have been fully processed by daemon consumer threads.
-
-# Queue.task_done()
-
-#     Indicate that a formerly enqueued task is complete. Used by queue consumer threads. For each get() used to fetch a task, a subsequent call to task_done() tells the queue that the processing on the task is complete.
-
-#     If a join() is currently blocking, it will resume when all items have been processed (meaning that a task_done() call was received for every item that had been put() into the queue).
-
-#     Raises a ValueError if called more times than there were items placed in the queue.
 
 # Queue.join()
 

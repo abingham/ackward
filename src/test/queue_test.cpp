@@ -102,4 +102,16 @@ BOOST_AUTO_TEST_CASE( queue_full )
     }
 }
 
+BOOST_AUTO_TEST_CASE( queue_task_done )
+{
+    BOOST_FOREACH(int t, ::qTypes) {
+        Queue q = ::makeQ(t, 2);
+        q.put(1);
+        q.task_done();
+        BOOST_CHECK_THROW(
+            q.task_done(),
+            ackward::core::ValueError);
+    }
+}
+
 BOOST_AUTO_TEST_SUITE_END()
