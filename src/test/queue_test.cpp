@@ -64,6 +64,7 @@ BOOST_AUTO_TEST_CASE( queue_put )
 }
 
 // TODO: put with block and timeout
+// TODO: test for Full exception
 
 BOOST_AUTO_TEST_CASE( queue_get )
 {
@@ -85,5 +86,20 @@ BOOST_AUTO_TEST_CASE( queue_get )
 }
 
 // TODO: get w/ block and timeout
+// TODO: test for Empty exception
+
+BOOST_AUTO_TEST_CASE( queue_full )
+{
+    BOOST_FOREACH(int t, ::qTypes) {
+        Queue q = ::makeQ(t, 2);
+        BOOST_CHECK(!q.full());
+        q.put(0);
+        BOOST_CHECK(!q.full());
+        q.put(1);
+        BOOST_CHECK(q.full());
+        q.get<int>();
+        BOOST_CHECK(!q.full());
+    }
+}
 
 BOOST_AUTO_TEST_SUITE_END()

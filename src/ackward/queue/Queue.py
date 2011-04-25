@@ -98,14 +98,14 @@ void put(const T& t, bool block, unsigned int timeout) {
         InlineFunction('''
 template <typename T>
 T get() {
-  try { boost::python::extract<T>(obj().attr("get")()); }
+  try { return boost::python::extract<T>(obj().attr("get")()); }
   TRANSLATE_PYTHON_EXCEPTION()
 }''').doc = get_doc.format('')
 
         InlineFunction('''
 template <typename T>
 T get(bool block) {
-  try { boost::python::extract<T>(obj().attr("get")(block)); }
+  try { return boost::python::extract<T>(obj().attr("get")(block)); }
   TRANSLATE_PYTHON_EXCEPTION()
 }''').doc = get_doc.format(
             '@param block Whether to block until there\'s an item in the queue.')
@@ -113,11 +113,13 @@ T get(bool block) {
         InlineFunction('''
 template <typename T>
 T get(bool block, unsigned int timeout) {
-  try { boost::python::extract<T>(obj().attr("get")(block, timeout)); }
+  try { return boost::python::extract<T>(obj().attr("get")(block, timeout)); }
   TRANSLATE_PYTHON_EXCEPTION()
 }''').doc = get_doc.format(
             '''@param block Whether to block until there\'s an item in the queue.
                @param timeout How long to wait until there's an item in the queue.''')
+
+        method('bool full() const').doc = '/** Return True if the queue is full, False otherwise. */'
 
 def definition(env):
     with tunit() as t:
