@@ -143,7 +143,40 @@ uint8_t version() const
 }
 '''
 
+def doc(d):
+    return '''/**
+\\rst
+{0}
+\endrst
+*/'''.format(d)
+
+uuid_doc = doc('''
+Immutable UUID objects as specified in RFC 4122.
+
+See `<http://docs.python.org/library/uuid.html#uuid.UUID>`_.
+''')
+
+fields_doc = doc('''
+'A tuple of the six integer fields of the UUID, which are also
+available as six individual attributes and two derived attributes:
+
+==================== =============================
+Field 	             Meaning
+==================== =============================
+time_low 	     the first 32 bits of the UUID
+time_mid 	     the next 16 bits of the UUID
+time_hi_version      the next 16 bits of the UUID
+clock_seq_hi_variant the next 8 bits of the UUID
+clock_seq_low 	     the next 8 bits of the UUID
+node 	             the last 48 bits of the UUID
+time 	             the 60-bit timestamp
+clock_seq 	     the 14-bit sequence number'
+==================== =============================
+''')
+
 def definition(env):
+    global doc
+
     with TranslationUnit(
         header_includes=[
             ('ackward', 'core', 'ByteArray.hpp'),
@@ -161,26 +194,27 @@ def definition(env):
         with Namespace('ackward', 'uuid'):
 
             with Class(name='UUID',
-                       wrapped_class='uuid.UUID'):
+                       wrapped_class='uuid.UUID',
+                       doc=uuid_doc):
                 Property(
                     name='bytes',
                     type='ackward::core::ByteArray',
-                    read_only=True)
+                    read_only=True).doc = doc('The UUID as a 16-byte string (containing the six integer fields in big-endian byte order).')
 
                 Property(
                     name='bytes_le',
                     type='ackward::core::ByteArray',
-                    read_only=True)
+                    read_only=True).doc = doc('The UUID as a 16-byte string (with time_low, time_mid, and time_hi_version in little-endian byte order).')
 
                 Property(
                     name='hex',
                     type='std::string',
-                    read_only=True)
+                    read_only=True).doc = doc('The UUID as a 32-character hexadecimal string.')
 
                 Property(
                     name='fields',
                     type='Fields',
-                    read_only=True)
+                    read_only=True).doc = fields_doc
 
                 # We need to figure the proper type for a 128-bit value.
                 # Don't forget a factory/constructor when we do.
@@ -194,12 +228,12 @@ def definition(env):
                 Property(
                     name='urn',
                     type='std::string',
-                    read_only=True)
+                    read_only=True).doc = doc('The UUID as a URN as specified in RFC 4122.')
 
                 Property(
                     name='variant',
                     type='Variant',
-                    read_only=True)
+                    read_only=True).doc = doc('The UUID variant, which determines the internal layout of the UUID. This will be one of the integer constants RESERVED_NCS, RFC_4122, RESERVED_MICROSOFT, or RESERVED_FUTURE.')
 
                 Property(
                     name='_version',
@@ -207,7 +241,18 @@ def definition(env):
                     type='boost::python::object',
                     read_only=True)
 
-                for code in [from_hex1, from_hex2, from_bytes1, from_bytes2, from_bytes_le1, from_bytes_le2, from_fields1, from_fields2, version]:
+                for code,doc in [
+                    (from_hex1, doc('Create a UUID from a string of 32 hexadecimal digits')),
+                    (from_hex2, doc('Create a UUID from a string of 32 hexadecimal digits and a version')),
+                    (from_bytes1, doc('Create a UUID from a string of 16 bytes.')),
+                    (from_bytes2, doc('Create a UUID from a string of 16 bytes and a version.')),
+                    (from_bytes_le1, doc('Create a UUID from a string of 16 bytes in little-endian order.')),
+                    (from_bytes_le2, doc('Create a UUID from a string of 16 bytes in little-endian order and a version.')),
+                    (from_fields1, doc('a tuple of six integers (32-bit time_low, 16-bit time_mid, 16-bit time_hi_version, 8-bit clock_seq_hi_variant, 8-bit clock_seq_low, 48-bit node)')),
+                    (from_fields2, doc('a tuple of six integers (32-bit time_low, 16-bit time_mid, 16-bit time_hi_version, 8-bit clock_seq_hi_variant, 8-bit clock_seq_low, 48-bit node) and a version.')),
+                    (version, doc('The UUID version number (1 through 5, meaningful only when the variant is RFC_4122).')),
+                    ]:
                     InlineFunction(
-                        code=code)
+                        code=code,
+                        doc=doc)
     return t

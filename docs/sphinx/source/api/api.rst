@@ -10,6 +10,7 @@ This API documentation is extracted from the ``ackward`` source [#]_.
    ackward::core <core/index>
    ackward::logging <logging/index>
    ackward::queue <queue/index>
+   ackward::uuid <uuid/index>
 
 .. toctree::
    :maxdepth: 1

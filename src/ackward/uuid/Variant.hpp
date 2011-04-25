@@ -4,6 +4,8 @@
 namespace ackward {
 namespace uuid {
 
+/** These represent the various internal layouts of a UUID.
+ */
 enum Variant
 {
     RESERVED_NCS, 
