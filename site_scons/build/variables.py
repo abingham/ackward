@@ -41,8 +41,6 @@ int main(int argc, char** argv) {
 }
 ''').substitute(version=v)
 
-    print(code)
-    
     def check(context):
         context.Message(
             'Checking if Python major version == {0}...'.format(v))
