@@ -217,5 +217,5 @@ man_pages = [
 ]
 
 # breathe config
-breathe_projects = { "ackward": "/home/abingham/projects/ackward/docs/doxygen/xml" }
+breathe_projects = { "ackward": "../../doxygen/xml" }
 breathe_default_project = "ackward"
