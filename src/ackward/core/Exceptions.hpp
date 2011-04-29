@@ -20,8 +20,9 @@ class Exception : public virtual boost::exception,
                   public virtual std::exception
 {};
 
-/** A collection of C++ analogues for the standard Python exceptions.
+/* A collection of C++ analogues for the standard Python exceptions.
  */
+
 class AttributeError : public Exception {};
 class ImportError : public Exception {};
 class IndexError : public Exception {};
