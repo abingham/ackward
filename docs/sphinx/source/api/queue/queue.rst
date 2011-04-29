@@ -2,4 +2,4 @@
 ackward::queue Queue classes
 ============================
 
-.. doxygenfile:: Queue.hpp
+.. doxygenfile:: ackward/queue/Queue.hpp

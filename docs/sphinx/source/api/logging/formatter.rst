@@ -2,4 +2,4 @@
 ackward::logging::Formatter
 ===========================
 
-.. doxygenfile:: Formatter.hpp
+.. doxygenfile:: ackward/logging/Formatter.hpp

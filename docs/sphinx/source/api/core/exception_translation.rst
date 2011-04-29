@@ -2,4 +2,4 @@
 ExceptionTranslation.hpp
 ========================
 
-.. doxygenfile:: ExceptionTranslation.hpp
+.. doxygenfile:: ackward/core/ExceptionTranslation.hpp

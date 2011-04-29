@@ -2,4 +2,4 @@
 ackward::queue Exceptions
 =========================
 
-.. doxygenfile:: Exceptions.hpp
+.. doxygenfile:: ackward/queue/Exceptions.hpp
