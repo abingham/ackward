@@ -8,4 +8,5 @@ ackward::core
    ByteArray <bytearray>
    Bytes <bytes>
    Enum <enum>
+   Exceptions <exceptions>
    ExceptionTranslation <exception_translation>
