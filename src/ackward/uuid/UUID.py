@@ -161,17 +161,18 @@ fields_doc = doc('''
 available as six individual attributes and two derived attributes:
 
 ==================== =============================
-Field 	             Meaning
+Field                Meaning
 ==================== =============================
-time_low 	     the first 32 bits of the UUID
-time_mid 	     the next 16 bits of the UUID
+time_low             the first 32 bits of the UUID
+time_mid             the next 16 bits of the UUID
 time_hi_version      the next 16 bits of the UUID
 clock_seq_hi_variant the next 8 bits of the UUID
-clock_seq_low 	     the next 8 bits of the UUID
-node 	             the last 48 bits of the UUID
-time 	             the 60-bit timestamp
-clock_seq 	     the 14-bit sequence number'
+clock_seq_low        the next 8 bits of the UUID
+node                 the last 48 bits of the UUID
+time                 the 60-bit timestamp
+clock_seq            the 14-bit sequence number'
 ==================== =============================
+
 ''')
 
 def definition(env):
