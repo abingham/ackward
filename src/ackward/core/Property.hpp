@@ -11,18 +11,43 @@
 namespace ackward {
 namespace core {
 
+/** Property<T> is a value-like C++ interface to an underlying Python
+    property. It provides a C++ API for properties which is similar to
+    what you get in Python.
+
+    \rst
+    General use is like this::
+
+      class MyClass {
+      public:
+        Property<int> myProperty;
+      };
+      ...
+      MyClass c;
+      c.myProperty = 3;
+      int x = c.myProperty;
+
+    \endrst
+ */
 template <typename T>
 class Property : private Object
 {
 public:
     typedef T value_type;
 
+    /** Construct a new property.
+
+        @param obj The underlying Python object.
+        @param pythonName The name of the property on `obj`.
+     */
     Property(boost::python::object obj,
              const std::string& pythonName) :
         Object (obj),
         pythonName_ (pythonName)
         {}
 
+    /** Get the underlying property value.
+     */
     operator value_type ()
         {
             try {
@@ -31,6 +56,11 @@ public:
             } TRANSLATE_PYTHON_EXCEPTION();
         }
 
+    /** Assign to the underlying property.
+
+        @param v The value to assign.
+        @returns This object.
+     */
     Property<value_type>& operator=(typename boost::call_traits<value_type>::const_reference v)
         {
             try {
