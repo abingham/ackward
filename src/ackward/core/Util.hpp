@@ -1,5 +1,5 @@
-#ifndef INCLUDE_BA_LOG_DETAIL_UTIL_HPP
-#define INCLUDE_BA_LOG_DETAIL_UTIL_HPP
+#ifndef INCLUDE_ACKWARD_CORE_UTIL_HPP
+#define INCLUDE_ACKWARD_CORE_UTIL_HPP
 
 #include <Python.h>
 
@@ -10,8 +10,8 @@
 
 #include <ackward/core/Exceptions.hpp>
 
-namespace ackward { namespace core
-{
+namespace ackward { 
+namespace core {
 
 /** Determine if an object is the None object */
 bool is_none(const boost::python::object&);
@@ -97,6 +97,7 @@ bool fromPythonConvertible(PyObject* obj_ptr)
     return false;
 }
 
-}}
+} // core
+} // ackward
 
 #endif
