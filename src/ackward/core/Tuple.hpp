@@ -9,7 +9,7 @@
 #include <ackward/core/detail/Tuple.hpp>
 
 /** Functions for converting between boost::tuple and
- * boost::python::tuple
+    boost::python::tuple 
  */
 
 namespace ackward {
