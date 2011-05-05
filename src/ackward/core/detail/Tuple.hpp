@@ -7,11 +7,11 @@
 
 #include <ackward/core/Util.hpp>
 
-/** These are the guts of the tuple conversion routines.
+/* These are the guts of the tuple conversion routines.
  
-    Mostly it's just a bunch of boost::preprocessor machination that
-    builds up the (relatively) simple converters between python tuples
-    and C++ tuples.
+   Mostly it's just a bunch of boost::preprocessor machination that
+   builds up the (relatively) simple converters between python tuples
+   and C++ tuples.
  */
 
 namespace ackward {

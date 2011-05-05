@@ -9,7 +9,9 @@
 namespace ackward {
 namespace core {
 
-/*! Get the ExceptionTranslator object used by ackward.
+/*! \file
+
+    Get the ExceptionTranslator object used by ackward.
 
     This is the ExceptionTranslator instance used by
     e.g. `translatePythonException()` and

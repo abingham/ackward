@@ -1,7 +1,9 @@
 #ifndef INCLUDE_BA_LOG_DETAIL_EXCEPTION_TRANSLATOR_HPP
 #define INCLUDE_BA_LOG_DETAIL_EXCEPTION_TRANSLATOR_HPP
 
-/** This defines the central class used for exception-translation in ackward.
+/** \file
+
+    This defines the central class used for exception-translation in ackward.
 
     This should not be confused with `ExceptionTranslation.h/cpp`
     which defined the methods and macros that are actually used to

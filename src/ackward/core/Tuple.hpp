@@ -8,8 +8,10 @@
 
 #include <ackward/core/detail/Tuple.hpp>
 
-/** Functions for converting between boost::tuple and
-    boost::python::tuple 
+/** \file
+    
+    Functions for converting between boost::tuple and
+    boost::python::tuple
  */
 
 namespace ackward {
