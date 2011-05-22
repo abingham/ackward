@@ -9,3 +9,4 @@ let us know.
    :maxdepth: 2
 
    Logging <logging/logging>
+   Core <core/index>
