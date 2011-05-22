@@ -1,0 +1,9 @@
+import build
+
+Import(['env'])
+
+build.program(
+    env,
+    'bytearray_example',
+    ['ByteArray.cpp'],
+    deps=['core'])
