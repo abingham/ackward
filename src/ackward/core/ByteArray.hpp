@@ -19,22 +19,31 @@ class ByteArray : private Object
 public:
     /** Construct ByteArray from existing python bytearray.
 
+        @param ba A Python ``bytearray`` object.
         @throw ValueError `ba` is not a bytearray object.
      */
-    ByteArray(boost::python::object ba);
+    explicit ByteArray(boost::python::object ba);
 
     /** Construct ByteArray from existing data.
 
         @param data The data to copy into the new Bytes object
         @param len The number of bytes in `data`.
     */
-    ByteArray(const char* data, Py_ssize_t len);
+    ByteArray(const unsigned char* data, Py_ssize_t len);
 
-    ByteArray(const Bytes&);
+    /** Conversion constructor from Bytes.
+
+        @param b A ``Bytes`` object from which to copy data.
+     */ 
+    explicit ByteArray(const Bytes& b);
     
-    /** Construct Bytes from a range of values */
+    /** Construct Bytes from a range of values 
+        
+        @param b The `begin` iterator to copy from.
+        @param e The `end` iterator to copy from.
+     */
     template <typename Itr>
-    ByteArray(Itr, Itr);
+    ByteArray(Itr b, Itr e);
 
     /** Construct empty ByteArray */
     ByteArray();
@@ -46,8 +55,8 @@ public:
         @param idx The index of the byte to get.
         @throw IndexError Index is out of range.
     */
-    char operator[](std::size_t idx) const;
-    char& operator[](std::size_t idx);
+    unsigned char operator[](std::size_t idx) const;
+    unsigned char& operator[](std::size_t idx);
 
     bool operator==(const ByteArray&) const;
     bool operator==(const Bytes&) const;
@@ -56,8 +65,8 @@ public:
 
     // iteration
 public:
-    typedef char* iterator;
-    typedef const char* const_iterator;
+    typedef unsigned char* iterator;
+    typedef const unsigned char* const_iterator;
     
     iterator begin();
     iterator end();
@@ -81,20 +90,16 @@ ByteArray::copyData(Itr begin, Itr end)
     using namespace boost::python;
 
     std::vector<char> data(begin, end);
-
-    object obj = object(
-        handle<>(
-            PyByteArray_FromStringAndSize(
-                &data[0], 
-                data.size())));
-
-    return obj;
+    return copyData<const char*>(
+        &data[0],
+        &data[0] + data.size());
 }
 
 template <>
 boost::python::object
-ByteArray::copyData<const char*>(const char* begin, 
-                                 const char* end);
+ByteArray::copyData<const char*>(
+    const char* begin, 
+    const char* end);
 
 } // namepace core
 } // namespace ackward

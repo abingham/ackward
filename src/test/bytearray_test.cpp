@@ -1,6 +1,7 @@
 #include <Python.h>
 
 #include <string>
+#include <vector>
 
 #include <boost/test/unit_test.hpp>
 
@@ -37,7 +38,9 @@ BOOST_AUTO_TEST_CASE( from_data_ctor )
 {
     std::string data("asdf");
 
-    ByteArray b(data.c_str(), data.size());
+    ByteArray b(
+        reinterpret_cast<const unsigned char*>(data.c_str()), 
+        data.size());
     BOOST_CHECK((std::size_t)b.size() == data.size());
     BOOST_CHECK(std::string(b.begin(), b.end()) == data);
 }
@@ -51,7 +54,9 @@ BOOST_AUTO_TEST_CASE( default_ctor )
 BOOST_AUTO_TEST_CASE( index )
 {
     std::string data("1234");
-    ByteArray b(data.c_str(), data.size());
+    ByteArray b(
+        reinterpret_cast<const unsigned char*>(data.c_str()), 
+        data.size());
     
     for (int i = 0; i < b.size(); ++i)
     {
@@ -62,7 +67,9 @@ BOOST_AUTO_TEST_CASE( index )
 BOOST_AUTO_TEST_CASE( index_throw )
 {
     std::string data("1234");
-    ByteArray b(data.c_str(), data.size());
+    ByteArray b(
+        reinterpret_cast<const unsigned char*>(data.c_str()), 
+        data.size());
 
     BOOST_CHECK_THROW(
         b[5],
@@ -72,7 +79,9 @@ BOOST_AUTO_TEST_CASE( index_throw )
 BOOST_AUTO_TEST_CASE( index_modify )
 {
     std::string data("1234");
-    ByteArray b(data.c_str(), data.size());
+    ByteArray b(
+        reinterpret_cast<const unsigned char*>(data.c_str()), 
+        data.size());
 
     std::string data2("asdf");
     for (int i = 0; i < b.size(); ++i)

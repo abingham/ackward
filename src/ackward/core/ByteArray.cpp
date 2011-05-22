@@ -42,11 +42,13 @@ ByteArray::ByteArray(bp::object obj) :
     Object (::validateObject(obj))
 {}
 
-ByteArray::ByteArray(const char* data, Py_ssize_t len) :
+ByteArray::ByteArray(const unsigned char* data, Py_ssize_t len) :
     Object (
         bp::object(
             bp::handle<>(
-                PyByteArray_FromStringAndSize(data, len))))
+                PyByteArray_FromStringAndSize(
+                    reinterpret_cast<const char*>(data), 
+                    len))))
 {}
 
 ByteArray::ByteArray(const Bytes& b) :
@@ -70,7 +72,7 @@ Py_ssize_t ByteArray::size() const
     return PyByteArray_Size(obj().ptr());
 }
 
-char ByteArray::operator[](std::size_t idx) const
+unsigned char ByteArray::operator[](std::size_t idx) const
 {
     if (idx >= (std::size_t)size())
         throw IndexError();
@@ -88,45 +90,48 @@ bool ByteArray::operator==(const Bytes& b) const
     return obj() == b.obj();
 }
 
-char& ByteArray::operator[](std::size_t idx)
+unsigned char& ByteArray::operator[](std::size_t idx)
 {
     if (idx >= (std::size_t)size())
         throw IndexError();
 
-    return PyByteArray_AsString(obj().ptr())[idx];
+    return reinterpret_cast<unsigned char*>(PyByteArray_AsString(obj().ptr()))[idx];
 }
 
 ByteArray::iterator ByteArray::begin() 
 {
-    return PyByteArray_AsString(obj().ptr());
+    return reinterpret_cast<iterator>(
+        PyByteArray_AsString(obj().ptr()));
 }
 
 ByteArray::iterator ByteArray::end()
 {
-    return PyByteArray_AsString(obj().ptr()) + size();
+    return begin() + size();
 }
 
 ByteArray::const_iterator ByteArray::begin() const
 {
-    return PyByteArray_AsString(obj().ptr());
+    return reinterpret_cast<const_iterator>(
+        PyByteArray_AsString(obj().ptr()));
 }
 
 ByteArray::const_iterator ByteArray::end() const
 {
-    return PyByteArray_AsString(obj().ptr()) + size();
+    return begin() + size();
 }
 
 template <>
 boost::python::object
-ByteArray::copyData<const char*>(const char* begin, 
-                                 const char* end)
+ByteArray::copyData<const char*>(
+    const char* begin, 
+    const char* end)
 {
     using namespace boost::python;
 
     object obj = object(
         handle<>(
             PyByteArray_FromStringAndSize(
-                begin,
+                begin, 
                 end - begin)));
 
     return obj;

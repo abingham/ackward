@@ -16,12 +16,12 @@ Contents
 ========
 
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 1
 
    Rationale <rationale>
    Requirements <requirements>
-   Building ackward <building>
-   Logging example <logging_example>
+   Building <building>
+   Examples <examples/index>
    API <api/api>
    Release Notes <release_notes>   
    
