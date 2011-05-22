@@ -14,7 +14,7 @@ Embedded
 This example shows typical use of ackward::logging embedded in a C++
 program.
 
-.. literalinclude:: ../../../examples/logging/embed/log_example.cpp
+.. literalinclude:: ../../../../../examples/logging/embed/log_example.cpp
    :language: c++
    :linenos:
 
@@ -41,7 +41,7 @@ This example shows the use of ``ackward::logging`` in a C++ extension
 module (i.e. a Python module written in C++.) This first bit of code
 implements the extension module itself.
 
-.. literalinclude:: ../../../examples/logging/extension/log_test.cpp
+.. literalinclude:: ../../../../../examples/logging/extension/log_test.cpp
    :language: c++
    :linenos:
 
@@ -58,6 +58,6 @@ This second bit of code just shows a basic use of the extension. This
 is really just included for completeness; there's nothing special
 going on here.
 
-.. literalinclude:: ../../../examples/logging/extension/example.py
+.. literalinclude:: ../../../../../examples/logging/extension/example.py
    :language: python
    :linenos:
