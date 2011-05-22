@@ -2,7 +2,11 @@
 ackward API
 ===========
 
-This API documentation is extracted from the ``ackward`` source [#]_.
+This API documentation is extracted from the ``ackward`` source
+[#]_. The ``ackward`` API is broken up into several modules. The first
+module, ``ackward::core``, is a collection of common classes and
+methods used throughout the rest of the modules. The remaining modules
+represent interfaces to various Python modules.
 
 .. toctree::
    :maxdepth: 1
