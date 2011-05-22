@@ -4,7 +4,7 @@ Documentation TODO list
  * Examples for every class and function
   * Core
    * ByteArray **DONE** 
-   * Bytes
+   * Bytes **DONE**
    * ExceptionTranslation
    * ExceptionTranslator
    * Exceptions
