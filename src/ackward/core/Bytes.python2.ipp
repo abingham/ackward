@@ -117,22 +117,26 @@ bool Bytes::operator==(const ByteArray& b) const
 
 Bytes::iterator Bytes::begin() 
 {
-    return PyString_AsString(obj().ptr());
+    return reinterpret_cast<iterator>(
+        PyString_AsString(obj().ptr()));
 }
 
 Bytes::iterator Bytes::end()
 {
-    return PyString_AsString(obj().ptr()) + size();
+    return reinterpret_cast<iterator>(
+        PyString_AsString(obj().ptr()) + size());
 }
 
 Bytes::const_iterator Bytes::begin() const
 {
-    return PyString_AsString(obj().ptr());
+    return reinterpret_cast<const_iterator>(
+        PyString_AsString(obj().ptr()));
 }
 
 Bytes::const_iterator Bytes::end() const
 {
-    return PyString_AsString(obj().ptr()) + size();
+    return reinterpret_cast<const_iterator>(
+        PyString_AsString(obj().ptr()) + size());
 }
 
 template <>
