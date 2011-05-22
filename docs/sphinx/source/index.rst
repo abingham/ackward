@@ -21,8 +21,7 @@ Contents
    Rationale <rationale>
    Requirements <requirements>
    Building <building>
-   Examples <examples/index>
-   API <api/api>
+   API + Examples <api/api>
    Release Notes <release_notes>   
    
 

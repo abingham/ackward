@@ -3,7 +3,7 @@ Documentation TODO list
 
  * Examples for every class and function
   * Core
-   * ByteArray
+   * ByteArray **DONE** 
    * Bytes
    * ExceptionTranslation
    * ExceptionTranslator
