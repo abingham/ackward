@@ -6,7 +6,7 @@ Documentation TODO list
    * ByteArray **DONE** 
    * Bytes **DONE**
    * ExceptionTranslation
-   * ExceptionTranslator
+   * ExceptionTranslator **DONE**
    * Exceptions
    * GetClass
    * Import
