@@ -3,6 +3,7 @@ import os
 Import(['env'])
 
 subdirs = [
+    'core',
     'logging',
     ]
 
