@@ -2,8 +2,14 @@ import build
 
 Import(['env'])
 
-build.program(
-    env,
-    'bytearray_example',
-    ['ByteArray.cpp'],
-    deps=['core'])
+programs = {
+    'bytearray_example' : ['ByteArray.cpp'],
+    'bytes_example' : ['Bytes.cpp'],
+    }
+
+for name, sources in programs.items():
+    build.program(
+        env,
+        name,
+        sources,
+        deps=['core'])

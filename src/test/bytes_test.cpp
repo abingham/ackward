@@ -37,7 +37,9 @@ BOOST_AUTO_TEST_CASE( from_data_ctor )
 {
     std::string data("asdf");
 
-    Bytes b(data.c_str(), data.size());
+    Bytes b(
+        reinterpret_cast<const unsigned char*>(data.c_str()), 
+        data.size());
     BOOST_CHECK((std::size_t)b.size() == data.size());
     BOOST_CHECK(std::string(b.begin(), b.end()) == data);
 }
@@ -51,7 +53,9 @@ BOOST_AUTO_TEST_CASE( default_ctor )
 BOOST_AUTO_TEST_CASE( index )
 {
     std::string data("1234");
-    Bytes b(data.c_str(), data.size());
+    Bytes b(
+        reinterpret_cast<const unsigned char*>(data.c_str()), 
+        data.size());
     
     for (int i = 0; i < b.size(); ++i)
     {
@@ -62,7 +66,9 @@ BOOST_AUTO_TEST_CASE( index )
 BOOST_AUTO_TEST_CASE( index_throw )
 {
     std::string data("1234");
-    Bytes b(data.c_str(), data.size());
+    Bytes b(
+        reinterpret_cast<const unsigned char*>(data.c_str()), 
+        data.size());
 
     BOOST_CHECK_THROW(
         b[5],

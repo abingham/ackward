@@ -29,6 +29,7 @@ public:
         @param data The data to copy into the new Bytes object
         @param len The number of bytes in `data`.
     */
+    Bytes(const unsigned char* data, Py_ssize_t len);
     Bytes(const char* data, Py_ssize_t len);
 
     Bytes(const ByteArray&);
@@ -49,7 +50,7 @@ public:
         @param idx The index of the byte to get.
         @throw IndexError Index is out of range.
      */
-    char operator[](std::size_t idx) const;
+    unsigned char operator[](std::size_t idx) const;
 
     bool operator==(const Bytes&) const;
     bool operator==(const ByteArray&) const;
@@ -58,8 +59,8 @@ public:
 
     // iteration
 public:
-    typedef const char* iterator;
-    typedef const char* const_iterator;
+    typedef const unsigned char* iterator;
+    typedef const unsigned char* const_iterator;
     
     iterator begin();
     iterator end();
@@ -83,25 +84,9 @@ Bytes::copyData(Itr begin, Itr end)
     using namespace boost::python;
 
     std::vector<char> data(begin, end);
-
-    object obj = object(
-        handle<>(
-
-#if ACKWARD_PYTHON_MAJOR_VERSION == 2
-
-            PyString_FromStringAndSize(
-
-#elif ACKWARD_PYTHON_MAJOR_VERSION == 3
-
-            PyBytes_FromStringAndSize(
-
-#endif
-
-                &data[0], 
-                data.size())));
-
-
-    return obj;
+    return copyData<const char*>(
+        &data[0],
+        &data[0] + data.size());
 }
 
 template <>

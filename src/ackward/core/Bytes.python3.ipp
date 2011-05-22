@@ -38,11 +38,22 @@ Bytes::Bytes(bp::object obj) :
     Object (::validateObject(obj))
 {}
 
+Bytes::Bytes(const unsigned char* data, Py_ssize_t len) :
+    Object (
+        bp::object(
+            bp::handle<>(
+                PyBytes_FromStringAndSize(
+                    reinterpret_cast<const char*>(data), 
+                    len))))
+{}
+
 Bytes::Bytes(const char* data, Py_ssize_t len) :
     Object (
         bp::object(
             bp::handle<>(
-                PyBytes_FromStringAndSize(data, len))))
+                PyBytes_FromStringAndSize(
+                    data, 
+                    len))))
 {}
 
 Bytes::Bytes(const ByteArray& b) :
@@ -65,7 +76,7 @@ Py_ssize_t Bytes::size() const
     return PyBytes_Size(obj().ptr());
 }
 
-char Bytes::operator[](std::size_t idx) const
+unsigned char Bytes::operator[](std::size_t idx) const
 {
     if (idx >= (std::size_t)size())
         throw IndexError();
@@ -85,22 +96,26 @@ bool Bytes::operator==(const ByteArray& b) const
 
 Bytes::iterator Bytes::begin() 
 {
-    return PyBytes_AsString(obj().ptr());
+    return reinterpret_cast<iterator>(
+        PyBytes_AsString(obj().ptr()));
 }
 
 Bytes::iterator Bytes::end()
 {
-    return PyBytes_AsString(obj().ptr()) + size();
+    return reinterpret_cast<iterator>(
+        PyBytes_AsString(obj().ptr()) + size());
 }
 
 Bytes::const_iterator Bytes::begin() const
 {
-    return PyBytes_AsString(obj().ptr());
+    return reinterpret_cast<const_iterator>(
+        PyBytes_AsString(obj().ptr()));
 }
 
 Bytes::const_iterator Bytes::end() const
 {
-    return PyBytes_AsString(obj().ptr()) + size();
+    return reinterpret_cast<const_iterator>(
+        PyBytes_AsString(obj().ptr()) + size());
 }
 
 template <>

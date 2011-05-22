@@ -62,11 +62,22 @@ Bytes::Bytes(bp::object obj) :
     Object (::fromObject(obj))
 {}
 
+Bytes::Bytes(const unsigned char* data, Py_ssize_t len) :
+    Object (
+        bp::object(
+            bp::handle<>(
+                PyString_FromStringAndSize(
+                    reinterpret_cast<const char*>(data), 
+                    len))))
+{}
+
 Bytes::Bytes(const char* data, Py_ssize_t len) :
     Object (
         bp::object(
             bp::handle<>(
-                PyString_FromStringAndSize(data, len))))
+                PyString_FromStringAndSize(
+                    data, 
+                    len))))
 {}
 
 Bytes::Bytes(const ByteArray& b) :
@@ -86,7 +97,7 @@ Py_ssize_t Bytes::size() const
     return PyString_Size(obj().ptr());
 }
 
-char Bytes::operator[](std::size_t idx) const
+unsigned char Bytes::operator[](std::size_t idx) const
 {
     if (idx >= (std::size_t)size())
         throw IndexError();
