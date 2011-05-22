@@ -53,7 +53,7 @@ subdirs = [
     'src/ackward',
     'src/test',
     'docs',
-    #'examples',
+    'examples',
     ]
 
 for subdir in subdirs:
