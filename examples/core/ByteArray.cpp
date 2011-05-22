@@ -6,8 +6,6 @@
 
 #include <ackward/core/ByteArray.hpp>
 
-#include <iostream>
-
 namespace ac = ackward::core;
 
 int main(int argc, char** argv)
