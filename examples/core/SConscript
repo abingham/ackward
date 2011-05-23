@@ -8,7 +8,9 @@ programs = {
     'exception_translation_example' : ['ExceptionTranslation.cpp'],
     'exception_translator_example' : ['ExceptionTranslator.cpp'],
     'exceptions_example' : ['Exceptions.cpp'],
+    'find_object_example' : ['FindObject.cpp'],
     'get_class_example' : ['GetClass.cpp'],
+    'import_example' : ['Import.cpp'],
     }
 
 for name, sources in programs.items():

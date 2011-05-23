@@ -8,7 +8,7 @@ Documentation TODO list
    * ExceptionTranslation **DONE**
    * ExceptionTranslator **DONE**
    * Exceptions **DONE**
-   * GetClass
+   * GetClass **DONE**
    * Import
    * Initialize
    * Object

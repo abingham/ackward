@@ -2,11 +2,6 @@
 ackward::core Misc.
 ===================
 
-ackward::core::import()
-=======================
-
-.. doxygenfile:: ackward/core/Import.hpp
-
 ackward::core::initialize()
 ===========================
 
