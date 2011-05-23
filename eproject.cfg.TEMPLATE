@@ -7,12 +7,12 @@
 
 (setq prj-tools
       '(("Make" "scons -j3" "f9")
-        ("Clean" "scons -c" "C-f9")
-        ("Run" "source setup_env.sh && src/test/ackward_test" "f8")
-        ("Docs" "cd docs/doxygen && doxygen && cd ../sphinx/source && make clean && make html" "f7")
-        ("---" nil nil)
-        ("Explore Project" "nautilus --browser `pwd` &" nil)
-        ("XTerm In Project" "xterm &" nil)))
+	("Clean" "scons -c" "C-f9")
+	("Run" "source setup_env.sh && src/test/ackward_test" "f8")
+	("Docs" "cd docs/doxygen && doxygen && cd ../sphinx/source && make clean && make html" "f7")
+	("---" nil nil)
+	("Explore Project" "nautilus --browser `pwd` &" nil)
+	("XTerm In Project" "xterm &" nil)))
 
 (setq prj-files
       '(("examples/logging/embed/log_example.cpp" 1 1)
@@ -204,6 +204,7 @@
 	("src/ackward/datetime/TimeDelta.py" 1 1)
 	("src/ackward/datetime/Time.py" 1 1)
 	("src/ackward/datetime/DateTime.py" 1 1)
+	("eproject.cfg" 1 41)
 	("src/ackward/datetime/Date.py" 1 1)
 	("src/ackward/logging/LogRecord.py" 1 1)
 	("src/ackward/logging/Module.py" 1 1)
@@ -262,6 +263,7 @@
 	("src/ackward/time/SConscript" 1 1)
 	("src/test/SConscript" 1 1)))
 
-(setq prj-curfile "docs/TODO.rst")
+(setq prj-curfile "eproject.cfg")
 
 (setq prj-functions nil)
+
