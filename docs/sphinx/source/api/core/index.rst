@@ -15,6 +15,7 @@ general, the elements of ``core`` don't pertain to a particular Python module.
    Exceptions <exceptions>
    ExceptionTranslation <exception_translation>
    ExceptionTranslator <exception_translator>
+   GetClass <get_class>
    Object <object>
    Property <property>
    Tuple <tuple>

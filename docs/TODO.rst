@@ -7,7 +7,7 @@ Documentation TODO list
    * Bytes **DONE**
    * ExceptionTranslation **DONE**
    * ExceptionTranslator **DONE**
-   * Exceptions
+   * Exceptions **DONE**
    * GetClass
    * Import
    * Initialize
