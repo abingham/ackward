@@ -5,7 +5,7 @@ Documentation TODO list
   * Core
    * ByteArray **DONE** 
    * Bytes **DONE**
-   * ExceptionTranslation
+   * ExceptionTranslation **DONE**
    * ExceptionTranslator **DONE**
    * Exceptions
    * GetClass

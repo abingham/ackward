@@ -5,6 +5,7 @@ Import(['env'])
 programs = {
     'bytearray_example' : ['ByteArray.cpp'],
     'bytes_example' : ['Bytes.cpp'],
+    'exception_translation_example' : ['ExceptionTranslation.cpp'],
     'exception_translator_example' : ['ExceptionTranslator.cpp'],
     }
 
