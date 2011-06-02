@@ -9,7 +9,7 @@ Documentation TODO list
    * ExceptionTranslator **DONE**
    * Exceptions **DONE**
    * GetClass **DONE**
-   * Import
+   * Import **DONE**
    * Initialize
    * Object
    * Property

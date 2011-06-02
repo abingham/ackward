@@ -8,7 +8,7 @@ get the module object.
 Example
 =======
 
-.. literalinclude:: ../../../../../example/core/Import.cpp
+.. literalinclude:: ../../../../../examples/core/Import.cpp
    :language: c++
    :linenos:
 
