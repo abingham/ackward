@@ -13,6 +13,7 @@ programs = {
     'import_example' : ['Import.cpp'],
     'initialize_example' : ['Initialize.cpp'],
     'object_example' : ['Object.cpp'],
+    'property_example' : ['Property.cpp'],
     }
 
 for name, sources in programs.items():
