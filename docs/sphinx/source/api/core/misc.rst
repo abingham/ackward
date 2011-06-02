@@ -2,11 +2,6 @@
 ackward::core Misc.
 ===================
 
-ackward::core::initialize()
-===========================
-
-.. doxygenfunction:: ackward::core::initialize
-
 ackward::core::initializePythonConverter()
 ==========================================
 

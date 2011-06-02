@@ -18,6 +18,7 @@ general, the elements of ``core`` don't pertain to a particular Python module.
    findObject() <find_object>
    getClass() <get_class>
    import() <import>
+   initialize() <initialize>
    Object <object>
    Property <property>
    Tuple <tuple>
