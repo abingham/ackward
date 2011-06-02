@@ -11,6 +11,7 @@ programs = {
     'find_object_example' : ['FindObject.cpp'],
     'get_class_example' : ['GetClass.cpp'],
     'import_example' : ['Import.cpp'],
+    'initialize_example' : ['Initialize.cpp'],
     }
 
 for name, sources in programs.items():
