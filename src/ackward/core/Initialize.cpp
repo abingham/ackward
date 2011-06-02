@@ -55,6 +55,11 @@ void initialize()
         initializeFromPythonConverter<Bytes>(
             "bytearray");
 
+#if ACKWARD_PYTHON_MAJOR_VERSION == 2
+        initializeFromPythonConverter<Bytes>(
+            "str");
+#endif
+
         initialized = true;
     }
 }
