@@ -12,7 +12,7 @@ Documentation TODO list
    * Import **DONE**
    * Initialize **DONE**
    * Object **DONE**
-   * Property
+   * Property **DONE**
    * PythonConverter
    * PythonVersion
    * Tuple
