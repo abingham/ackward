@@ -1,6 +1,7 @@
 #ifndef INCLUDE_ACKWARD_CORE_PROPERTY_HPP
 #define INCLUDE_ACKWARD_CORE_PROPERTY_HPP
 
+#include <iostream>
 #include <string>
 
 #include <boost/call_traits.hpp>
@@ -48,11 +49,11 @@ public:
 
     /** Get the underlying property value.
      */
-    operator value_type ()
+    operator value_type () const
         {
             try {
                 return boost::python::extract<value_type>(
-                    obj().attr(pythonName_));
+                    obj().attr(pythonName_.c_str()));
             } TRANSLATE_PYTHON_EXCEPTION();
         }
 
@@ -64,7 +65,7 @@ public:
     Property<value_type>& operator=(typename boost::call_traits<value_type>::const_reference v)
         {
             try {
-                obj().attr(pythonName_) = v;
+                obj().attr(pythonName_.c_str()) = v;
             } TRANSLATE_PYTHON_EXCEPTION();
 
             return *this;
@@ -76,6 +77,13 @@ private:
     std::string pythonName_;
 
 };
+
+template <typename T>
+std::ostream& operator<<(std::ostream& os, const Property<T>& p)
+{
+    os << static_cast<T>(p);
+    return os;
+}
 
 }
 }
