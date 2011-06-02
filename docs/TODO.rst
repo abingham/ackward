@@ -10,7 +10,7 @@ Documentation TODO list
    * Exceptions **DONE**
    * GetClass **DONE**
    * Import **DONE**
-   * Initialize
+   * Initialize **DONE**
    * Object
    * Property
    * PythonConverter
