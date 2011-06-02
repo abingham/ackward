@@ -17,6 +17,8 @@ Example
 =======
 
 .. literalinclude:: ../../../../../examples/core/Initialize.cpp
+   :language: c++
+   :linenos:
 
 API
 ===
