@@ -11,7 +11,7 @@ Documentation TODO list
    * GetClass **DONE**
    * Import **DONE**
    * Initialize **DONE**
-   * Object
+   * Object **DONE**
    * Property
    * PythonConverter
    * PythonVersion
