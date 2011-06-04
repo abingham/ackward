@@ -10,101 +10,68 @@
 #include <boost/python.hpp>
 
 #include <ackward/core/GetClass.hpp>
+#include <ackward/core/detail/PythonConverter.hpp>
 
-namespace ackward { namespace core 
-{
-
-/** Implements to-python conversion for objects that use the "object"
- * protocol.
- */
-template <typename T>
-struct to_python_object_
-{
-    static PyObject* convert(const T& t)
-        {
-            return boost::python::incref(
-                t.obj().ptr());
-        }
-};
-
-/** Implements from-python conversion for objects that support the
- * object protocol.
- */
-template <typename T>
-struct from_python_object_
-{
-    /** 
-        @param className The full name of the python class that this
-                         converts from.
-     */
-    from_python_object_(const std::string& className)
-        {
-            classNames_.push_back(className);
-
-            boost::python::converter::registry::push_back(
-                &convertible,
-                &construct,
-                boost::python::type_id<T>());
-        }
+/** \rst
     
-    static void* convertible(PyObject* obj_ptr)
-        {
-            BOOST_FOREACH(const std::string& name, classNames_)
-            {
-                boost::python::object cls = 
-                    ackward::core::getClass(name);
-                if (PyObject_IsInstance(obj_ptr, cls.ptr()))
-                    return obj_ptr;
-            }
+The family of ``initializePythonConverter`` functions register to- and
+from-python conversion methods for ``ackward::core::Object``
+subclasses.
 
-            return 0;
-        }
-    
-    static void construct(
-        PyObject* obj_ptr,
-        boost::python::converter::rvalue_from_python_stage1_data* data)
-        {
-            using namespace boost::python;
+\endrst
+ */
 
-            void* storage = (
-                (boost::python::converter::rvalue_from_python_storage<T>*)
-                data)->storage.bytes;
-            
-            // in-place construct the new QString using the character data
-            // extraced from the python object
-            new (storage) T(
-                object(
-                    handle<>(
-                        borrowed(
-                            obj_ptr))));
-            
-            // Stash the memory chunk pointer for later use by boost.python
-            data->convertible = storage;
-        }
+namespace ackward { 
+namespace core {
 
-private:
-    static std::vector<std::string> classNames_;
-};
+/** \rst    
 
-template <typename T>
-std::vector<std::string> from_python_object_<T>::classNames_;
+    Register a from-python converter for an ``Object`` subclass.
 
+\endrst
+
+    @tparam T The C++ type for which to register a converter; the
+      "convert-to" type.
+
+    @param className The name of the Python class for which a
+      converter-to-T will be registered.
+ */
 template <typename T>
 void initializeFromPythonConverter(const std::string& className)
 {
-    from_python_object_<T> temp(className);
+    detail::from_python_object_<T> temp(className);
 }
 
+/** \rst
+
+    Register a to-python converter for an ``Object`` subclass.
+
+    \endrst
+
+    @tparam T The C++ type for which to register a converter; the
+      "convert-from" type.
+ */
 template <typename T>
 void initializeToPythonConverter()
 {
     boost::python::to_python_converter<
         T,
-        to_python_object_<T> >();
+        detail::to_python_object_<T> >();
 }
 
-/** Sets up a to-/from-python converter for the python class
- * `className` and C++ type `T`.
+/** \rst
+
+    Register a to-/from-python converter for the python class
+    `className` and C++ type `T`.
+
+    This really just calls ``initializeToPythonConverter<T>()`` and
+    ``initializeFromPythonConverter<T>(className)``.
+
+    \endrst
+
+    @tparam T The C++ to convert from and to.
+    @param className The name of the Python class to convert from and
+      to.
  */
 template <typename T>
 void initializePythonConverter(const std::string& className)
@@ -113,6 +80,7 @@ void initializePythonConverter(const std::string& className)
     initializeFromPythonConverter<T>(className);
 }
 
-}}
+}
+}
 
 #endif
