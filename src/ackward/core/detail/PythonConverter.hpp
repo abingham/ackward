@@ -1,3 +1,6 @@
+#ifndef INCLUDE_ACKWARD_CORE_DETAIL_PYTHON_CONVERTER_HPP
+#define INCLUDE_ACKWARD_CORE_DETAIL_PYTHON_CONVERTER_HPP
+
 #include <Python.h>
 
 #include <string>
@@ -96,3 +99,5 @@ std::vector<std::string> from_python_object_<T>::classNames_;
 }
 }
 }
+
+#endif
