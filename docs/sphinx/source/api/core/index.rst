@@ -21,6 +21,7 @@ general, the elements of ``core`` don't pertain to a particular Python module.
    initialize() <initialize>
    Object <object>
    Property <property>
+   Python conversion <python_converter>
    Tuple <tuple>
    Utilities <util>
    Misc <misc>
