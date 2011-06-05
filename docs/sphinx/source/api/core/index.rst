@@ -22,6 +22,6 @@ general, the elements of ``core`` don't pertain to a particular Python module.
    Object <object>
    Property <property>
    Python conversion <python_converter>
+   Python version <python_version>
    Tuple <tuple>
    Utilities <util>
-   Misc <misc>
