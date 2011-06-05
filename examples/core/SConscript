@@ -15,6 +15,7 @@ programs = {
     'object_example' : ['Object.cpp'],
     'property_example' : ['Property.cpp'],
     'python_converter_example' : ['PythonConverter.cpp'],
+    'python_version_example' : ['PythonVersion.cpp'],
     }
 
 for name, sources in programs.items():
