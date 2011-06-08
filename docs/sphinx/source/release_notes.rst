@@ -4,13 +4,13 @@ Release Notes
 
 **Contents**
 
-* :ref:`release_notes_CURRENT`
+* :ref:`release_notes_0_3`
 * :ref:`release_notes_0_2`
 
-.. _release_notes_CURRENT:
+.. _release_notes_0_3:
 
-CURRENT
-=======
+0.3
+===
 
 * Added doxygen support to documentation project.
 * Added `breathe` sphinx extension to bridge the doxygen-sphinx divide.
