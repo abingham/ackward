@@ -4,6 +4,7 @@
 #include <boost/python/object.hpp>
 #include <boost/scoped_array.hpp>
 
+#include <ackward/core/Exceptions.hpp>
 #include <ackward/core/ExceptionTranslator.hpp>
 #include <ackward/core/Import.hpp>
 #include <ackward/core/PythonVersion.hpp>
@@ -63,6 +64,9 @@ object
 next(object iterator)
 {
     using namespace boost::python;
+
+    if (!PyIter_Check(iterator.ptr()))
+        throw TypeError();
 
     PyObject* rval_ptr =
         PyIter_Next(iterator.ptr());

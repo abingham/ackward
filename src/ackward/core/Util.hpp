@@ -13,33 +13,73 @@
 namespace ackward { 
 namespace core {
 
-/** Determine if an object is the None object */
-bool is_none(const boost::python::object&);
+/** \rst
 
-/** Calls "iter(obj)" on some object.
+    Determine if an object is the None object.
+    
+    This is equivalent to the following Python code::
+
+      obj is None
+
+    \endrst
+
+    @param obj The object to test.
+    @return True if `obj` is `None`, False otherwise.
+ */
+bool is_none(const boost::python::object& obj);
+
+/** Create in iterator over some Python object.
+
+    @param obj The object to create an iterator over.
+    @return An iterator object
+    @throw TypeError `obj` is not iterable.
  */ 
 boost::python::object 
-iter(boost::python::object);
+iter(boost::python::object obj);
 
 /** Call "obj.next()" on some object (generally an iterator, but no
- * check it made to that effect.) */
+    check it made to that effect.) 
+  
+    @param iterator The iterator to get the next element from.
+    @return The next element from `iterator`.
+    @throw TypeError `iterator` is not an iterator.
+ */
 boost::python::object
 next(boost::python::object iterator);
 
-/** Convert a bp::str to a std::wstring */
-std::wstring strToWString(boost::python::str);
+/** Convert a bp::str to a std::wstring 
+    
+    @param s The Python string to convert into a wstring.
+    @return The wstring copied from `s`.
+ */
+std::wstring strToWString(boost::python::str s);
 
-/** Call "str(obj)" on an object */
-std::wstring repr(boost::python::object);
+/** Call "repr(obj)" on an object.
 
-/** Call "repr(obj)" on an object */
-std::wstring str(boost::python::object);
+    @param obj The object to get a repr for.
+    @return The result of `repr(obj)`.
+ */
+std::wstring repr(boost::python::object obj);
 
-/** Call str() on an object that supports the object protocol */
+/** Call "str(obj)" on an object.
+    
+    @param obj The object to get a string for.
+    @return The result of `str(obj)`.
+ */
+std::wstring str(boost::python::object obj);
+
+/** Call str() on an object that supports the object protocol.
+
+    @param t The object-protocol object to call `str` on.
+    @return The result of `str(t)`.
+ */
 template <typename T>
 std::wstring str(const T& t) { return ackward::core::str(t.obj()); }
 
-/** Get the "builtins" module */
+/** Get the "builtins" module.
+
+    @return The "builtins" module object.
+ */
 boost::python::object builtins();
 
 /** Determine if an object is of a specified type.
@@ -55,7 +95,8 @@ bool isInstance(boost::python::object obj,
 
     @param obj The object to test
     @param typeName The full name of the expected type of `obj`
-    @tparam ExcType The type of exception to throw if `obj` is not a `typeName`. This exception will be default-constructed.
+    @tparam ExcType The type of exception to throw if `obj` is not a
+      `typeName`. This exception will be default-constructed.
  */
 template <typename ExcType=ValueError>
 void verifyType(boost::python::object obj,
