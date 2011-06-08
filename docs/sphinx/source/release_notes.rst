@@ -14,6 +14,7 @@ CURRENT
 
 * Added doxygen support to documentation project.
 * Added `breathe` sphinx extension to bridge the doxygen-sphinx divide.
+* A great deal of documentation updates.
 
 .. _release_notes_0_2:
 
