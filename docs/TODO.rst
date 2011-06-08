@@ -15,8 +15,8 @@ Documentation TODO list
    * Property **DONE**
    * PythonConverter **DONE**
    * PythonVersion **DONE**
-   * Tuple
-   * Util
+   * Tuple **DONE**
+   * Util **DONE**
   * Logging
   * DateTime
   * Queue
