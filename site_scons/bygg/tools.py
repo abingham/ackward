@@ -19,11 +19,14 @@ class SharedLib(object):
         #    env.AppendUnique(RPATH=[os.path.split(self.node.path)[0]])
 
 def _install_headers(env, headers, include_dir):
-    env.Alias(
-        'install',
-        env.Install(
-            include_dir,
-            headers))
+    for header in headers:
+        header_path, _ = os.path.split(str(header))
+
+        env.Alias(
+            'install',
+            env.Install(
+                os.path.join(include_dir, header_path),
+                header))
 
 def build_shared_library(env,
                          name,

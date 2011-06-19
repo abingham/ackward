@@ -1,7 +1,7 @@
 '''Configuration and other stuff specific to this particular build.
 '''
 
-import logging, os, sys
+import itertools, logging, os, sys
 import bygg
 
 from .variables import init_variables, check_config
@@ -33,15 +33,17 @@ def shared_library(env,
                    headers=[],
                    akw_files=[],
                    deps=[]):
-    akw_headers = [env.AkwHeader(akw) for akw in akw_files]
+    akw_headers = itertools.chain(*[env.AkwHeader(akw) for akw in akw_files])
+    headers.extend(akw_headers)
 
-    akw_impls = [env.AkwImpl(akw) for akw in akw_files]
+    akw_impls = itertools.chain(*[env.AkwImpl(akw) for akw in akw_files])
+    sources.extend(akw_impls)
 
     return bygg.build_shared_library(
         env=env,
         name=name,
-        sources=sources + akw_impls,
-        headers=headers + akw_headers,
+        sources=sources,
+        headers=headers,
         lib_name='ackward_{0}-{1}'.format(
             name, 
             bygg.variant.active_variant().name),
