@@ -3,7 +3,9 @@
 
 #include <ackward/logging/Handler.hpp>
 
-namespace ackward { namespace logging {
+namespace ackward { 
+namespace logging { 
+namespace handlers {
 
 class SocketHandler : public Handler {
 public:
@@ -11,6 +13,8 @@ public:
                   unsigned int port);
 };
 
-}}
+}
+}
+}
 
 #endif

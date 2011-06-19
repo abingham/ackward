@@ -5,11 +5,12 @@
 #include <ackward/logging/Handler.hpp>
 #include <ackward/logging/Logger.hpp>
 #include <ackward/logging/NullHandler.hpp>
-#include <ackward/logging/SocketHandler.hpp>
 #include <ackward/logging/StreamHandler.hpp>
-#include <ackward/logging/WatchedFileHandler.hpp>
+#include <ackward/logging/handlers/SocketHandler.hpp>
+#include <ackward/logging/handlers/WatchedFileHandler.hpp>
 
 using namespace ackward::logging;
+using namespace ackward::logging::handlers;
 using namespace boost::python;
 
 BOOST_AUTO_TEST_SUITE( Handlers )

@@ -223,7 +223,7 @@ BOOST_AUTO_TEST_CASE( removeHandler )
     BOOST_ASSERT(f.logger.handlers().size() == initialCount);
 }
 
-BOOST_AUTO_TEST_CASE( handlers )
+BOOST_AUTO_TEST_CASE( handlers_size )
 {
     LoggerFixture f;
     

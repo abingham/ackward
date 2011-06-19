@@ -3,7 +3,9 @@
 
 #include <ackward/logging/Handler.hpp>
 
-namespace ackward { namespace logging {
+namespace ackward { 
+namespace logging { 
+namespace handlers {
 
 class WatchedFileHandler : public Handler {
 public:
@@ -14,6 +16,8 @@ public:
         bool delay=false);
 };
 
-}}
+}
+}
+}
 
 #endif

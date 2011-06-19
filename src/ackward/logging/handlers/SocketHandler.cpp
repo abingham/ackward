@@ -1,9 +1,11 @@
-#include <ackward/logging/SocketHandler.hpp>
+#include <ackward/logging/handlers/SocketHandler.hpp>
 
 #include <ackward/core/GetClass.hpp>
-#include <ackward/logging/Module.hpp>
+#include <ackward/logging/handlers/Module.hpp>
 
-namespace ackward { namespace logging {
+namespace ackward { 
+namespace logging {
+namespace handlers {
 
 SocketHandler::SocketHandler(
     const std::wstring& host,
@@ -13,4 +15,6 @@ SocketHandler::SocketHandler(
             host, port))
 {}
 
-}}
+}
+}
+}

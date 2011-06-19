@@ -8,6 +8,7 @@ akw_files = [
     'Filter.py',
     'Formatter.py',
     'Handler.py',
+    'handlers/Module.py',
     'LoggerAdapter.py',
     'LoggerBase.py',
     'LogRecord.py',
@@ -19,10 +20,10 @@ sources = [
     'Initialize.cpp',
     'Logger.cpp',
     'NullHandler.cpp',
-    'SocketHandler.cpp',
     'StreamHandler.cpp',
     'Types.cpp',
-    'WatchedFileHandler.cpp',
+    'handlers/SocketHandler.cpp',
+    'handlers/WatchedFileHandler.cpp',
     ]
 
 headers = [
@@ -30,11 +31,11 @@ headers = [
     'Initialize.hpp',
     'Logger.hpp',
     'NullHandler.hpp',
-    'SocketHandler.hpp',
     'StreamHandler.hpp',
     'Types.hpp',
     'UserHandler.hpp',
-    'WatchedFileHandler.hpp',
+    'handlers/SocketHandler.hpp',
+    'handlers/WatchedFileHandler.hpp',
     ]
 
 build.shared_library(

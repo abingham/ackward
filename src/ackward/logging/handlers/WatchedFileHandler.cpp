@@ -1,11 +1,13 @@
-#include <ackward/logging/WatchedFileHandler.hpp>
+#include <ackward/logging/handlers/WatchedFileHandler.hpp>
 
 #include <ackward/core/GetClass.hpp>
-#include <ackward/logging/Module.hpp>
+#include <ackward/logging/handlers/Module.hpp>
 
 using namespace boost::python;
 
-namespace ackward { namespace logging {
+namespace ackward { 
+namespace logging {
+namespace handlers {
 
 WatchedFileHandler::WatchedFileHandler(
     const std::wstring& filename,
@@ -20,4 +22,6 @@ WatchedFileHandler::WatchedFileHandler(
             delay))
 {}
 
-}}
+}
+}
+}
