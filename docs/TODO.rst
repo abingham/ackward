@@ -2,22 +2,37 @@ Documentation TODO list
 -----------------------
 
  * Examples for every class and function
-  * Core
-   * ByteArray **DONE** 
-   * Bytes **DONE**
-   * ExceptionTranslation **DONE**
-   * ExceptionTranslator **DONE**
-   * Exceptions **DONE**
-   * GetClass **DONE**
-   * Import **DONE**
-   * Initialize **DONE**
-   * Object **DONE**
-   * Property **DONE**
-   * PythonConverter **DONE**
-   * PythonVersion **DONE**
-   * Tuple **DONE**
-   * Util **DONE**
   * Logging
+   * Config.py
+    * fileConfig **DONE**
+    * listen
+    * stopListening
+   * FileHandler.cpp
+   * FileHandler.hpp
+   * Filter.py
+   * Formatter.cpp~
+   * Formatter.py
+   * Handler.py
+   * Initialize.cpp
+   * Initialize.hpp
+   * LogRecord.py
+   * Logger.cpp
+   * Logger.hpp
+   * LoggerAdapter.py
+   * LoggerBase.py
+   * Module.py
+   * NullHandler.cpp
+   * NullHandler.hpp
+   * SConscript
+   * SocketHandler.cpp
+   * SocketHandler.hpp
+   * StreamHandler.cpp
+   * StreamHandler.hpp
+   * Types.cpp
+   * Types.hpp
+   * UserHandler.hpp
+   * WatchedFileHandler.cpp
+   * WatchedFileHandler.hpp
   * DateTime
   * Queue
   * Time
