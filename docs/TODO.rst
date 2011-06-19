@@ -5,8 +5,6 @@ Documentation TODO list
   * Logging
    * Config.py
     * fileConfig **DONE**
-    * listen
-    * stopListening
    * FileHandler.cpp
    * FileHandler.hpp
    * Filter.py

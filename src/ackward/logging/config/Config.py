@@ -31,9 +31,20 @@ fileConfig2_doc = '''
     @param filename The filename to read from. 
     @param defaults Defaults to be passed to the ConfigParser. */'''
 
-listen1_doc = '' # TODO
-listen2_doc = '' # TODO
-stopListening_doc = '' # TODO
+# TODO: These require some sort of wrapper for the thread that's returned
+# from listen.
+
+# listen1_doc = '''Starts up a socket server on the specified port, and
+# listens for new configurations.
+
+# The module's default DEFAULT_LOGGING_CONFIG_PORT is used. Logging
+# configurations will be sent as a file suitable for processing by
+# fileConfig(). Returns a Thread instance on which you can call start()
+# to start the server, and which you can join() when appropriate. To
+# stop the server, call stopListening().'''
+
+# listen2_doc = '' # TODO
+# stopListening_doc = '' # TODO
 
 def tunit():
     return TranslationUnit(
@@ -53,12 +64,12 @@ def functions():
          'void fileConfig(std::wstring filename)'),
         (fileConfig2_doc, 
          'void fileConfig(std::wstring filename, boost::python::dict defaults)'),
-        (listen1_doc, 
-         'void listen()'),
-        (listen2_doc, 
-         'void listen(unsigned int port)'),
-        (stopListening_doc, 
-         'void stopListening()'),
+        # (listen1_doc, 
+        #  'void listen()'),
+        # (listen2_doc, 
+        #  'void listen(unsigned int port)'),
+        # (stopListening_doc, 
+        #  'void stopListening()'),
         ]
 
     for d,f in funcs:
