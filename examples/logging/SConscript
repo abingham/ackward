@@ -1,3 +1,5 @@
+import build
+
 Import(['env'])
 
 subdirs = [
@@ -7,3 +9,15 @@ subdirs = [
 
 SConscript(dirs=subdirs,
            exports='env')
+
+programs = {
+    'file_config_example' : ['FileConfig.cpp'],
+    }
+
+for name, sources in programs.items():
+    build.program(
+        env,
+        name,
+        sources,
+        deps=['core',
+              'logging'])
