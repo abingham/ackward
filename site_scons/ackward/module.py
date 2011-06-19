@@ -5,14 +5,12 @@ header_template = 'boost::python::object $module_function();'
 impl_template = '''
 boost::python::object $module_function()
 {
-  using namespace boost::python;
-
-  static object mod;
+  static boost::python::object mod;
   static bool initialized = false;
 
   if (!initialized)
   {
-    mod = import("$module_name");
+    mod = ackward::core::import("$module_name");
     initialized = true;
   }
 
@@ -38,7 +36,7 @@ class Module(TemplateElement):
             open_header_template=header_template,
             open_impl_template=impl_template,
             header_includes=[('boost', 'python', 'object.hpp')],
-            impl_includes=[('boost', 'python', 'import.hpp')],
+            impl_includes=[('ackward', 'core', 'Import.hpp')],
             symbols={
                 'module_name' : name,
                 'module_function' : function_name,
