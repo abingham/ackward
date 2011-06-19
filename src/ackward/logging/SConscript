@@ -3,7 +3,8 @@ import build
 Import(['env'])
 
 akw_files = [
-    'Config.py',
+    'config/Config.py',
+    'config/Module.py',
     'Filter.py',
     'Formatter.py',
     'Handler.py',
