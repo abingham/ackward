@@ -29,34 +29,19 @@ template <typename Itr>
 boost::python::object
 import(Itr begin, Itr end)
 {
-    namespace bp=boost::python;
+    std::ostringstream oss;
 
-    try {
-        
-        if (begin == end)
-            return builtins();
-        
+    if (begin != end)
+    {
         Itr itr = begin;
-
-        std::string name(*itr);
-        bp::object mod = bp::import(name.c_str());
+        oss << *itr;
         ++itr;
+        
         for (; itr != end; ++itr)
-        {
-            name = *itr;
-            mod = mod.attr(name.c_str());
-        }
-
-        return mod;
-
-    } catch (const bp::error_already_set&) {
-        try {
-            translatePythonException();
-        } catch (const AttributeError&) {
-            throw ImportError();
-        }
-        throw;
+            oss << "." << *itr;
     }
+
+    return import(oss.str());
 }
 
 /** Find a module-level object

@@ -4,8 +4,16 @@ Release Notes
 
 **Contents**
 
+* :ref:`release_notes_CURRENT`
 * :ref:`release_notes_0_3`
 * :ref:`release_notes_0_2`
+
+.. _release_notes_CURRENT:
+
+CURRENT
+=======
+
+* ``ackward::core::import`` now relies more on ``boost::python::import()``.
 
 .. _release_notes_0_3:
 

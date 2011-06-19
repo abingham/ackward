@@ -12,7 +12,9 @@ BOOST_AUTO_TEST_CASE( import_test )
 {
     bp::object mod = import("sys");
     mod = import("os.path");
-    mod = import("");
+    mod = import("logging.config");
+
+    BOOST_CHECK(import("") == builtins());
 
     BOOST_CHECK_THROW(
         import("foo.bar.llama.yak"),
@@ -37,10 +39,12 @@ BOOST_AUTO_TEST_CASE( import_template_test )
 
 BOOST_AUTO_TEST_CASE( findObject_test )
 {
-    bp::object obj = findObject("os.path",
-                                "split");
-    obj = findObject("", "str");
-    
+    findObject("os.path",
+               "split");
+    findObject("", "str");
+    findObject("logging.config", 
+               "fileConfig");
+
     BOOST_CHECK_THROW(
         findObject("os.path", "llamas_ate_my_cereal"),
         AttributeError);
@@ -52,9 +56,10 @@ BOOST_AUTO_TEST_CASE( findObject_test )
 
 BOOST_AUTO_TEST_CASE( findObject_fullname_test )
 {
-    bp::object obj = findObject("os.path.split");
-    obj = findObject("str");
-    
+    findObject("os.path.split");
+    findObject("str");
+    findObject("logging.config.fileConfig");
+
     BOOST_CHECK_THROW(
         findObject("os.path.llamas_ate_my_cereal"),
         AttributeError);

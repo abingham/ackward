@@ -4,36 +4,37 @@
 
 #include <ackward/core/ExceptionTranslator.hpp>
 
-using namespace boost::python;
+namespace bp=boost::python;
 
 namespace ackward { namespace core
 {
 
-object
+bp::object
 import(const std::string& name)
 {
-    typedef boost::tokenizer<boost::char_separator<char> > 
-        tokenizer;
-    boost::char_separator<char> sep(".");
-    tokenizer tokens(name, sep);
-    return ackward::core::import(tokens.begin(), tokens.end());
+    try {
+        if (name.empty())
+            return builtins();
+        
+        return bp::import(name.c_str());
+    } TRANSLATE_PYTHON_EXCEPTION();
 }
 
-object
+bp::object
 findObject(const std::string& module,
            const std::string& name)
 {
-    object mod = import(module);
+    bp::object mod = import(module);
     
     try {
         return mod.attr(name.c_str());
-    } catch (const boost::python::error_already_set&) {
+    } catch (const bp::error_already_set&) {
         translatePythonException();
         throw;
     }
 }
 
-object
+bp::object
 findObject(const std::string& fullName)
 {
     typedef boost::tokenizer<boost::char_separator<char> > 
@@ -47,7 +48,7 @@ findObject(const std::string& fullName)
     --enditr;
 
     try {
-        object mod = import(toks.begin(), enditr);
+        bp::object mod = import(toks.begin(), enditr);
         return mod.attr(enditr->c_str());
     } TRANSLATE_PYTHON_EXCEPTION();
 }
