@@ -16,8 +16,7 @@ BOOST_AUTO_TEST_CASE( isInstance_test )
     BOOST_ASSERT(
         isInstance(foo, "str"));
 
-    bp::object obj = import("datetime.datetime");
-    obj = obj.attr("now")();
+    bp::object obj = findObject("datetime.datetime").attr("now")();
     BOOST_ASSERT(
         isInstance(obj, "datetime.datetime"));
 }
