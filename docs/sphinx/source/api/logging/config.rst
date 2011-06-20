@@ -1,6 +1,6 @@
-==========
-Config.hpp
-==========
+=============
+Configuration
+=============
 
 These functions are can be used to configure the logging system.
 
