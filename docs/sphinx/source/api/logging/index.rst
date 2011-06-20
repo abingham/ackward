@@ -12,4 +12,5 @@ APIs.
    :maxdepth: 1
 
    Configuration <config>
+   FileHandler <file_handler>
    Extended examples <extended_examples>
