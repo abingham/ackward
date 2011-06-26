@@ -15,3 +15,4 @@ API
 ===
 
 .. doxygenclass:: ackward::logging::FileHandler
+   :members:
