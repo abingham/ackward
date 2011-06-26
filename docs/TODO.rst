@@ -5,8 +5,8 @@ Documentation TODO list
   * Logging
    * Config.py
     * fileConfig **DONE**
-   * FileHandler.cpp
-   * FileHandler.hpp
+   * FileHandler.cpp **DONE**
+   * FileHandler.hpp **DONE**
    * Filter.py
    * Formatter.cpp~
    * Formatter.py
