@@ -80,10 +80,17 @@ BOOST_AUTO_TEST_CASE( next_test )
 
 BOOST_AUTO_TEST_CASE( strToWString_test )
 {
+#if ACKWARD_PYTHON_MAJOR_VERSION == 3
     bp::str s("åøæ");
     std::wstring ws =
         strToWString(s);
     BOOST_CHECK( ws == std::wstring(L"åøæ") );
+#else
+    bp::str s("abc");
+    std::wstring ws =
+        strToWString(s);
+    BOOST_CHECK( ws == std::wstring(L"abc") );
+#endif
 }
 
 BOOST_AUTO_TEST_CASE( fromPythonConvertible_test )

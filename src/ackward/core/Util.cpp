@@ -86,11 +86,13 @@ std::wstring strToWString(boost::python::str s)
     if (PyUnicode_Check(s.ptr()))
         return ::unicodeToWString(s.ptr());
 
-    object unicodeObject = object(
-        handle<>(
-            PyUnicode_FromObject(s.ptr())));
+    assert(PyString_Check(s.ptr()));
 
-    return ::unicodeToWString(unicodeObject.ptr());
+    char* sz = PyString_AS_STRING(
+        reinterpret_cast<PyStringObject*>(s.ptr()));
+    return std::wstring(
+        sz,
+        sz + strlen(sz));
 
 #elif ACKWARD_PYTHON_MAJOR_VERSION == 3
 
