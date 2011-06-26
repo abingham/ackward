@@ -11,9 +11,10 @@ SConscript(dirs=subdirs,
            exports='env')
 
 programs = {
-    'file_config_example' : ['FileConfig.cpp'],
-    'file_handler_example' : ['FileHandler.cpp'],
-    'filter_example' : ['Filter.cpp'],
+    'file_config_example': ['FileConfig.cpp'],
+    'file_handler_example': ['FileHandler.cpp'],
+    'filter_example': ['Filter.cpp'],
+    'formatter_example': ['Formatter.cpp'],
     }
 
 for name, sources in programs.items():
