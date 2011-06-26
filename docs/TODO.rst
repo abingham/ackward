@@ -7,9 +7,9 @@ Documentation TODO list
     * fileConfig **DONE**
    * FileHandler.cpp **DONE**
    * FileHandler.hpp **DONE**
-   * Filter.py
+   * Filter.py *DONE*
    * Formatter.cpp~
-   * Formatter.py
+   * Formatter.py **DONE**
    * Handler.py
    * Initialize.cpp
    * Initialize.hpp

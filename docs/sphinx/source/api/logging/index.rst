@@ -14,4 +14,5 @@ APIs.
    Configuration <config>
    FileHandler <file_handler>
    Filter <filter>
+   Formatter <formatter>
    Extended examples <extended_examples>
