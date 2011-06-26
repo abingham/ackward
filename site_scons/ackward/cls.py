@@ -4,6 +4,8 @@ from .trace import trace
 open_header_template = '''
 class $class_name $bases {
 public:
+  /** Construct a new $class_name from an existing Python object.
+   */
   $class_name(boost::python::object);
 '''
 
@@ -20,6 +22,8 @@ $class_name::$class_name(boost::python::object o) :
   Object (o)
 {}
 
+/** Get a reference to the Python class object for `$wrapped_class`.
+ */
 boost::python::object $class_name::cls() {
         static boost::python::object c;
         static bool initialized = false;

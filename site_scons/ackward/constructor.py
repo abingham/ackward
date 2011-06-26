@@ -18,7 +18,8 @@ class Constructor(SigTemplateElement):
 
     @trace
     def __init__(self, 
-                 signature=[]):
+                 signature=[],
+                 doc=None):
         '''
         Args:
           * cls: The class to which this contructor belongs.
@@ -33,4 +34,5 @@ class Constructor(SigTemplateElement):
                 ],
             symbols = {
                 'signature' : signature,
-                })
+                },
+            doc=doc)

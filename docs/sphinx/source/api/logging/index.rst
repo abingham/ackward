@@ -13,4 +13,5 @@ APIs.
 
    Configuration <config>
    FileHandler <file_handler>
+   Filter <filter>
    Extended examples <extended_examples>
