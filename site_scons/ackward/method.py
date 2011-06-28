@@ -33,7 +33,8 @@ class Method(SigTemplateElement):
                  signature=[],
                  const=False,
                  python_name=None,
-                 virtual=None):
+                 virtual=None,
+                 doc=None):
         '''Create a new method on a class.
 
         Args:
@@ -69,9 +70,10 @@ class Method(SigTemplateElement):
                 'const' : 'const' if const else '',
                 'virtual' : '' if virtual is None else 'virtual',
                 'virtual_tail' : '= 0' if virtual == Method.ABSTRACT else ''
-                })
+                },
+            doc=doc)
 
-def method(sig):
+def method(sig, doc=None):
     '''Produce a Method object based on a string description of a method.
 
     This is a convenience method for generated simple Methods.
@@ -88,4 +90,5 @@ def method(sig):
         name=name,
         return_type=rtype,
         signature=args,
-        const=bool(const))
+        const=bool(const),
+        doc=doc)
