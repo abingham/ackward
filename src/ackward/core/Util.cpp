@@ -50,12 +50,21 @@ iter(object obj)
 {
     using namespace boost::python;
 
+    PyObject* pyobj = PyObject_GetIter(obj.ptr());
+
+    if (PyErr_Occurred())
+    {
+        assert(!pyobj);
+        translatePythonException();
+    }
+    
+    assert(pyobj);
+
     try
     {
         object itr =
             object(
-                handle<>(
-                    PyObject_GetIter(obj.ptr())));
+                handle<>(pyobj));
         return itr;
     } TRANSLATE_PYTHON_EXCEPTION();
 }
