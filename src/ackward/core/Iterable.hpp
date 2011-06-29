@@ -50,7 +50,11 @@ public: // iteration
     {
     public:
         iterator() {}
-        iterator(boost::python::object iter) : iter_ (iter) {}
+        iterator(boost::python::object iter) : 
+            iter_ (iter) 
+            {
+                increment();
+            }
 
     private:
         friend class boost::iterator_core_access;
@@ -95,7 +99,11 @@ public: // iteration
     {
     public:
         const_iterator() {}
-        const_iterator(boost::python::object iter) : iter_ (iter) {}
+        const_iterator(boost::python::object iter) : 
+            iter_ (iter) 
+            {
+                increment();
+            }
 
     private:
         friend class boost::iterator_core_access;
