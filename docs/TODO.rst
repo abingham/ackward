@@ -1,6 +1,9 @@
 Documentation TODO list
 -----------------------
 
+IT LOOKS LIKE THE INCREMENT METHOD OF ITERABLE IS NOT BEING PROPERLY
+CALLED. WTF?
+
  * Examples for every class and function
   * Logging
    * Config.py
@@ -10,7 +13,7 @@ Documentation TODO list
    * Filter.py *DONE*
    * Formatter.cpp~
    * Formatter.py **DONE**
-   * Handler.py
+   * Handler.py **DONE**
    * Initialize.cpp
    * Initialize.hpp
    * LogRecord.py

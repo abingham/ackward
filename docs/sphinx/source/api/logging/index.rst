@@ -15,4 +15,5 @@ APIs.
    FileHandler <file_handler>
    Filter <filter>
    Formatter <formatter>
+   Handler <handler>
    Extended examples <extended_examples>
