@@ -238,6 +238,15 @@ BOOST_AUTO_TEST_CASE( handlers_size )
     }
 }
 
+BOOST_AUTO_TEST_CASE( handlers_iteration )
+{
+    LoggerFixture f;
+    BOOST_FOREACH(Handler h, f.logger.handlers())
+    {
+        h.setLevel(INFO());
+    }
+}
+
 BOOST_AUTO_TEST_CASE( handle )
 {
     LoggerFixture f;
