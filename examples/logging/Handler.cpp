@@ -14,21 +14,11 @@ int main(int, char**)
     Py_Initialize();
     initialize();
 
+    // Do basic configuration of the logging system.
     basicConfig();
 
     // Set the level of each Handler in the top-level
     // logger to "info".
-    Logger l = getLogger();
-    Logger::Handlers h = l.handlers();
-    std::size_t x = h.size();
-    // for (Logger::Handlers::iterator hli = h.begin();
-    //      hli != h.end();
-    //      ++hli)
-    // {
-    //     Handler hndlr = *hli;
-    //     hndlr.setLevel(INFO());
-    // }
- 
     BOOST_FOREACH(Handler hnd, getLogger().handlers())
     {
         hnd.setLevel(INFO());
