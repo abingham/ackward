@@ -14,8 +14,8 @@ CALLED. WTF?
    * Formatter.cpp~
    * Formatter.py **DONE**
    * Handler.py **DONE**
-   * Initialize.cpp
-   * Initialize.hpp
+   * Initialize.cpp **DONE**
+   * Initialize.hpp **DONE**
    * LogRecord.py
    * Logger.cpp
    * Logger.hpp

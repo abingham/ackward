@@ -16,4 +16,5 @@ APIs.
    Filter <filter>
    Formatter <formatter>
    Handler <handler>
+   Initialize <initialize>
    Extended examples <extended_examples>
