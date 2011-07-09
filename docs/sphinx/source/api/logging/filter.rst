@@ -2,7 +2,9 @@
 Filter
 ======
 
-``ackward::logging::Filter`` wraps a Python ``logging.Filter`` object.
+``ackward::logging::Filter`` wraps a Python `logging.Filter
+<http://docs.python.org/py3k/library/logging.html#filter-objects>`_
+object.
 
 Example
 =======
