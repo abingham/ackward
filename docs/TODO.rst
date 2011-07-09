@@ -1,8 +1,7 @@
-Documentation TODO list
------------------------
+TODO list
+---------
 
-IT LOOKS LIKE THE INCREMENT METHOD OF ITERABLE IS NOT BEING PROPERLY
-CALLED. WTF?
+ * Add properties to LogRecord: args, exc_info, etc.
 
  * Examples for every class and function
   * Logging
@@ -15,8 +14,8 @@ CALLED. WTF?
    * Formatter.py **DONE**
    * Handler.py **DONE**
    * Initialize.cpp **DONE**
-   * Initialize.hpp **DONE**
-   * LogRecord.py
+   * Initialize.hpp **DONE** 
+   * LogRecord.py **DONE**
    * Logger.cpp
    * Logger.hpp
    * LoggerAdapter.py
