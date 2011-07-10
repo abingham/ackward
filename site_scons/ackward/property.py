@@ -37,7 +37,8 @@ class Property(SigTemplateElement):
                  name,
                  type,
                  python_name=None,
-                 read_only=False):
+                 read_only=False,
+                 **kwargs):
         '''
         Args:
           * name: The C++ name of the property.
@@ -64,4 +65,5 @@ class Property(SigTemplateElement):
                 'type' : type,
                 'signature' : [(type, 'val')],
                 'python_name' : python_name or name,
-                })
+                },
+            **kwargs)

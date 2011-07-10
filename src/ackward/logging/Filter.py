@@ -3,16 +3,11 @@ from ackward import (Class,
                      Namespace,
                      TranslationUnit)
 
-filter_doc='''/**
-\\rst
-
+filter_doc='''\\rst
 A wrapper around Python `logging.Filter
 <http://docs.python.org/py3k/library/logging.html#filter-objects>`_
 objects. 
-
-\\endrst
-*/
-'''
+\\endrst'''
 
 def tunit():
     return TranslationUnit(
@@ -33,7 +28,7 @@ def definition(env):
                        wrapped_class='logging.Filter',
                        doc=filter_doc):
                 Constructor(
-                    doc='/** Create a new Filter. */')
+                    doc='Create a new Filter.')
                 # Constructor(
                 #     signature=[('std::wstring', 'name')])
     return t

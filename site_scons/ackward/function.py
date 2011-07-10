@@ -27,7 +27,8 @@ class Function(SigTemplateElement):
                  return_type='void',
                  signature=[],
                  python_name=None,
-                 impl_includes=None):
+                 impl_includes=None,
+                 doc=None):
 
         impl_includes = impl_includes or []
 
@@ -43,10 +44,11 @@ class Function(SigTemplateElement):
                 'return_type' : return_type,
                 'signature' : signature,
                 'python_name' : name if python_name is None else python_name,
-                })
+                },
+            doc=doc)
 
 @trace
-def function(sig):
+def function(sig,doc=None):
     '''Parse a function signature and return a Function instance.
     '''
     rtype, name, args, const = parse(sig)
@@ -54,4 +56,5 @@ def function(sig):
     return Function(
         name=name,
         return_type=rtype,
-        signature=args)
+        signature=args,
+        doc=doc)

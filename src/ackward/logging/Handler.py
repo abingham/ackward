@@ -26,17 +26,17 @@ def tunit():
 def methods():
     m = [
         ('void setLevel(Level level)',
-         '/** Set the logging level of this handler. */'),
+         'Set the logging level of this handler.'),
         ('void setFormatter(Formatter f)',
-         '/** Set the formatter for this handler. */'),
+         'Set the formatter for this handler.'),
         ('void addFilter(Filter f)',
-         '/** Add the specified filter to this handler. */'),
+         'Add the specified filter to this handler.'),
         ('void removeFilter(Filter f)',
-         '/** Remove the specified filter from this handler. */'),
+         'Remove the specified filter from this handler.'),
         ('void flush() const',
-         '/** Ensure all logging output has been flushed. */'),
+         'Ensure all logging output has been flushed.'),
         ('void close()',
-         '/** Tidy up any resources used by the handler. */')
+         'Tidy up any resources used by the handler.')
         ]
     list(map(lambda x: method(*x), m))
 
@@ -45,14 +45,14 @@ def methods():
         signature=[('LogRecord', 'r')],
         const=True,
         virtual=True,
-        doc='/** Do whatever it takes to actually log the specified logging record.*/')
+        doc='Do whatever it takes to actually log the specified logging record.')
 
 def definition(env):
     with tunit() as t:
         with Namespace('ackward', 'logging'):
             with Class(name='Handler',
                        wrapped_class='logging.Handler',
-                       doc='/** Handler instances dispatch logging events to specific destinations. */'):
+                       doc='Handler instances dispatch logging events to specific destinations.'):
                 methods()
 
     return t

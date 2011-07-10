@@ -6,12 +6,9 @@ from ackward import (Class,
                      Namespace,
                      TranslationUnit)
 
-formatter_doc = '''
-/** 
-\\rst 
+formatter_doc = '''\\rst
 Wrapper around ``logging.Formatter`` objects. See `<http://docs.python.org/py3k/library/logging.html#formatter-objects>`_ for more information. 
-\\endrst 
-*/'''
+\\endrst'''
 
 def tunit():
     return TranslationUnit(

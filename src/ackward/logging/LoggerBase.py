@@ -50,9 +50,9 @@ def methods():
              'Logs a message with level ``{0}`` on this logger.'.format(lvl.upper())))
 
     for m in methods:
-        docstring = '''/** \\rst 
-                           {0} 
-                           \\endrst */'''.format(m[1])
+        docstring='''\\rst
+                     {0}
+                     \\endrst'''
         method(m[0], doc=docstring)
 
 def definition(env):
@@ -62,7 +62,7 @@ def definition(env):
                        wrapped_class='logging.Logger'):
     
                 # TODO: docstring for propagate
-                Property(name='propagate', type='bool')
+                Property(name='propagate', type='bool').doc='If this evaluates to false, logging messages are not passed by this logger or by its child loggers to the handlers of higher level (ancestor) loggers.'
                 methods()
 
     return t

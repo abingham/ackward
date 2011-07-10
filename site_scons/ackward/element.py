@@ -151,7 +151,9 @@ class Element:
         '''Return the text to be used for the element's documentation.
         '''
         if self.doc:
-            yield self.doc
+            yield '''/**
+                     {0}
+                     */'''.format(self.doc)
         
 class TemplateElement(Element):
     def __init__(self,

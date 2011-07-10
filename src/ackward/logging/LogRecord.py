@@ -4,20 +4,17 @@ from ackward import (Class,
                      Namespace,
                      TranslationUnit)
 
-log_record_doc='''/** \\rst
-
+log_record_doc='''\\rst
 A wrapper around Python `logging.LogRecord <http://docs.python.org/py3k/library/logging.html#logging.LogRecord>`_ objects.
+\\endrst'''
 
-\\endrst */
-'''
-
-get_message_doc='''/** Returns the message for this LogRecord instance
+get_message_doc='''Returns the message for this LogRecord instance
 after merging any user-supplied arguments with the message.
 
 If the user-supplied message argument to the logging call is not a
 string, str() is called on it to convert it to a string. This allows
 use of user-defined classes as messages, whose __str__ method can
-return the actual format string to be used. */
+return the actual format string to be used.
 '''
 
 def tunit():
@@ -51,7 +48,7 @@ def definition(env):
                         ('boost::python::tuple', 'args'),
                         ('boost::python::object', 'exc_info', 'boost::python::object()'),
                         ],
-                    doc='/** Create a new LogRecord. */')
+                    doc='Create a new LogRecord.')
 
                 method('std::wstring getMessage() const',
                        doc=get_message_doc)

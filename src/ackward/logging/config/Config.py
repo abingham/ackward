@@ -5,7 +5,7 @@ from ackward import (function,
                      TranslationUnit)
 
 fileConfig1_doc = '''
-/** Read the logging configuration from a ConfigParser-format file.
+    Read the logging configuration from a ConfigParser-format file.
     
     This can be called several times from an application, allowing an end user
     the ability to select from various pre-canned configurations (if the
@@ -15,10 +15,10 @@ fileConfig1_doc = '''
     This disables existing loggers which are not named in the logging
     configuration.
 
-    @param filename The filename to read from. */'''
+    @param filename The filename to read from.'''
 
 fileConfig2_doc = '''
-/** Read the logging configuration from a ConfigParser-format file.
+    Read the logging configuration from a ConfigParser-format file.
     
     This can be called several times from an application, allowing an end user
     the ability to select from various pre-canned configurations (if the
@@ -29,7 +29,7 @@ fileConfig2_doc = '''
     configuration.
 
     @param filename The filename to read from. 
-    @param defaults Defaults to be passed to the ConfigParser. */'''
+    @param defaults Defaults to be passed to the ConfigParser.'''
 
 # TODO: These require some sort of wrapper for the thread that's returned
 # from listen.

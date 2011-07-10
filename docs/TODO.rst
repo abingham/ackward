@@ -8,8 +8,6 @@ TODO list
    the various property ackward directives.
  * Figure out how to make breathe include documentation for "using"
    methods, e.g. in Logger.hpp.
- * Change ackward doc parameter so that it gets automatically wrapped
-   in "/** \rst <contents> \endrst */"
 
  * Examples for every class and function
   * Logging

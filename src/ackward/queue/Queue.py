@@ -6,14 +6,10 @@ from ackward import (Class,
                      Namespace,
                      TranslationUnit)
 
-queue_doc = '''/**
-\\rst
+queue_doc = '''\\rst
 A wrapper for {0} objects in the ``queue`` module. See `<http://docs.python.org/py3k/library/queue.html#queue-objects>`_.
-\endrst
-*/'''
-
-qsize_doc = '''/** 
-Return the approximate size of the queue. Note, qsize() > 0 doesn't
+\\endrst'''
+qsize_doc = '''Return the approximate size of the queue. Note, qsize() > 0 doesn't
 guarantee that a subsequent get() will not block, nor will qsize() <
 maxsize guarantee that put() will not block.
 
@@ -22,31 +18,31 @@ See `<http://docs.python.org/py3k/library/queue.html#queue.Queue.qsize>`_.
 \\endrst
 
 @return The current size of the queue.
-*/'''
+'''
 
-put_doc = '''/** 
+put_doc = '''
 Put item into the queue. 
 
 \\rst
 See `<http://docs.python.org/py3k/library/queue.html#queue.Queue.put>`_.
-\endrst
+\\endrst
 
 @param item The item to place in the queue.
 {0}
 @throws ackward::queue::Full There is no space in the queue.
-*/'''
+'''
 
-get_doc = '''/**
+get_doc = '''
 Remove and return an item from the queue.
 
 \\rst
 See `<http://docs.python.org/py3k/library/queue.html#queue.Queue.get>`_.
-\endrst
+\\endrst
 
 {0}
 @return The item retrieved from the queue.
 @throws ackward::queue::Empty The queue is empty.
-*/'''
+'''
 
 def modname(env):
     if env['PYTHON_VERSION'] == 2:
@@ -119,9 +115,9 @@ T get(bool block, unsigned int timeout) {
             '''@param block Whether to block until there\'s an item in the queue.
                @param timeout How long to wait until there's an item in the queue.''')
 
-        method('bool full() const').doc = '/** Return True if the queue is full, False otherwise. */'
-        method('void task_done()').doc = '/** Indicate that a formerly enqueued task is complete. */'
-        method('void join()').doc = '/** Blocks until all items in the queue have been gotten and processed. */'
+        method('bool full() const').doc = 'Return True if the queue is full, False otherwise.'
+        method('void task_done()').doc = 'Indicate that a formerly enqueued task is complete.'
+        method('void join()').doc = 'Blocks until all items in the queue have been gotten and processed.'
 
 def definition(env):
     with tunit() as t:
