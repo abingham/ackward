@@ -52,7 +52,7 @@ def methods():
     for m in methods:
         docstring='''\\rst
                      {0}
-                     \\endrst'''
+                     \\endrst'''.format(m[1])
         method(m[0], doc=docstring)
 
 def definition(env):
