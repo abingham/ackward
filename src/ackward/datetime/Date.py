@@ -23,11 +23,12 @@ inline std::ostream& operator<<(std::ostream& os, const Date& d) {
 
 replace_method='''
 Date replace(unsigned int y, unsigned int m, unsigned int d) const { 
-  y = (y == 0) ? year() : y;
-  m = (m == 0) ? month() : m;
-  d = (d == 0) ? day() : d;
+  y = (y == 0) ? year : y;
+  m = (m == 0) ? month : m;
+  d = (d == 0) ? day : d;
   return _replace(y, m, d);
-}'''
+}
+'''
 
 def tunit():
     return TranslationUnit(

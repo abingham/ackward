@@ -7,6 +7,7 @@ impl_template = '''
 ${class_name}::${class_name}($impl_signature) try :
   core::Object (
     ${class_name}::cls()($parameters) )
+  $constructor_initializers
 {
 }
 TRANSLATE_PYTHON_EXCEPTION()

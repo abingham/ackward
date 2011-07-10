@@ -21,10 +21,10 @@ bool operator==(const Time& t) const
 replace_method='''
 Time replace(unsigned int h=0, unsigned int m=0, unsigned int s=0, unsigned int ms=0) const {
   return _replace(
-    h == 0 ? hour() : h,
-    m == 0 ? minute() : m,
-    s == 0 ? second() : s,
-    ms == 0 ? microsecond() : ms);
+    h == 0 ? hour : h,
+    m == 0 ? minute : m,
+    s == 0 ? second : s,
+    ms == 0 ? microsecond : ms);
 }
 '''
 

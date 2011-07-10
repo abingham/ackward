@@ -4,8 +4,6 @@ TODO list
  * Add properties to LogRecord: args, exc_info, etc.
  * Logger should inherit privately from LoggerBase, and then "use" the
    necessary methods.
- * Consider replacing getter/setter methods with Property objects in
-   the various property ackward directives.
  * Figure out how to make breathe include documentation for "using"
    methods, e.g. in Logger.hpp.
 
@@ -15,7 +13,7 @@ TODO list
     * fileConfig **DONE**
    * FileHandler.cpp **DONE**
    * FileHandler.hpp **DONE**
-   * Filter.py *DONE*
+   * Filter.py **DONE**
    * Formatter.cpp~
    * Formatter.py **DONE**
    * Handler.py **DONE**

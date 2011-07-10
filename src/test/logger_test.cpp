@@ -26,9 +26,9 @@ BOOST_AUTO_TEST_SUITE( Logger_methods )
 BOOST_AUTO_TEST_CASE( propagate )
 {
     LoggerFixture f;
-    BOOST_CHECK(f.logger.propagate());
-    f.logger.propagate(false);
-    BOOST_CHECK(!f.logger.propagate());
+    BOOST_CHECK(f.logger.propagate);
+    f.logger.propagate = false;
+    BOOST_CHECK(!f.logger.propagate);
 }
 
 BOOST_AUTO_TEST_CASE( setLevel )

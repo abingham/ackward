@@ -20,6 +20,7 @@ private:
 open_impl_template = '''
 $class_name::$class_name(boost::python::object o) :
   Object (o)
+  $constructor_initializers
 {}
 
 /** Get a reference to the Python class object for `$wrapped_class`.
@@ -80,3 +81,18 @@ class Class(TemplateElement):
                 'bases' : bases,
                 },
             doc=doc)
+
+    def open_impl(self, mod, symbols):
+        # Gather up any constructor initializers that the class
+        # children might have.
+        initializers = []
+        for child in self.children:
+            try:
+                initializers.extend(child.initializers())
+            except AttributeError:
+                pass
+        initializers = '\n'.join([', {0}'.format(i) for i in initializers])
+
+        symbols['constructor_initializers'] = initializers
+
+        return TemplateElement.open_impl(self, mod, symbols)

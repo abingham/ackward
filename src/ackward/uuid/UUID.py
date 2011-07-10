@@ -135,7 +135,7 @@ uint8_t version() const
 {
     using namespace boost::python;
 
-    object v = _version();
+    object v = _version;
     if (core::is_none(v))
         return 0;
     else

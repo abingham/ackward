@@ -31,7 +31,7 @@ BOOST_AUTO_TEST_CASE( uuid_fromHex )
     BOOST_FOREACH(const std::string& value, values)
     {
         UUID uuid = UUID::fromHex(value);
-        BOOST_CHECK(uuid.hex() == "12345678123456781234567812345678");
+        BOOST_CHECK(std::string(uuid.hex) == "12345678123456781234567812345678");
     }
 
     BOOST_CHECK_THROW(
@@ -44,8 +44,8 @@ BOOST_AUTO_TEST_CASE( uuid_fromBytes )
     Bytes b("\x12\x34\x56\x78\x12\x34\x56\x78\x12\x34\x56\x78\x12\x34\x56\x78", 16);
 
     UUID uuid = UUID::fromBytes(b);
-    BOOST_CHECK(uuid.bytes() == b);
-    BOOST_CHECK(uuid.hex() == "12345678123456781234567812345678");
+    BOOST_CHECK(Bytes(uuid.bytes) == b);
+    BOOST_CHECK(std::string(uuid.hex) == "12345678123456781234567812345678");
 }
 
 BOOST_AUTO_TEST_CASE( uuid_fromBytes_LE )
@@ -53,7 +53,7 @@ BOOST_AUTO_TEST_CASE( uuid_fromBytes_LE )
     Bytes b("\x78\x56\x34\x12\x34\x12\x78\x56\x12\x34\x56\x78\x12\x34\x56\x78", 16);
 
     UUID uuid = UUID::fromBytes_LE(b);
-    BOOST_CHECK(uuid.bytes_le() == b);
+    BOOST_CHECK(Bytes(uuid.bytes_le) == b);
 }
 
 BOOST_AUTO_TEST_CASE( uuid_fromFields )
@@ -68,10 +68,10 @@ BOOST_AUTO_TEST_CASE( uuid_fromFields )
     
     UUID uuid = UUID::fromFields(f);
 
-    Fields f2 = uuid.fields();
+    Fields f2 = uuid.fields;
 
-    BOOST_CHECK(uuid.fields() == f);
-    BOOST_CHECK(uuid.hex() == "12345678123456781234567812345678");
+    BOOST_CHECK(Fields(uuid.fields) == f);
+    BOOST_CHECK(std::string(uuid.hex) == "12345678123456781234567812345678");
 
     // NOTE: I kinda expect uuid to throw if values were out of range,
     //       but apparently it doesn't.
@@ -90,7 +90,7 @@ BOOST_AUTO_TEST_CASE( uuid_fromFields )
 BOOST_AUTO_TEST_CASE( uuid_variant )
 {
     UUID uuid = UUID::fromHex("12345678123456781234567812345678");
-    uuid.variant();
+    Variant(uuid.variant);
 }
 
 BOOST_AUTO_TEST_CASE( uuid_version )
@@ -217,20 +217,20 @@ BOOST_AUTO_TEST_CASE( uuid_uuid1_0 )
     DisableSignal d(SIGCHLD);
 
     UUID uuid = ackward::uuid::uuid1();
-    uuid.hex(); // Just to give the instance something to do and avoid
-                // a compiler warning.
+    std::string sz = uuid.hex; // Just to give the instance something
+                               // to do and avoid a compiler warning.
 }
 
 BOOST_AUTO_TEST_CASE( uuid_uuid1_1 )
 {
     UUID uuid = ackward::uuid::uuid1(1234);
-    uuid.hex();
+    std::string sz = uuid.hex;
 }
 
 BOOST_AUTO_TEST_CASE( uuid_uuid1_2 )
 {
     UUID uuid = ackward::uuid::uuid1(1234, 5678);
-    uuid.hex();
+    std::string sz = uuid.hex;
 }
 
 BOOST_AUTO_TEST_CASE( uuid_uuid3 )
@@ -246,14 +246,14 @@ BOOST_AUTO_TEST_CASE( uuid_uuid3 )
     {
         UUID uuid = ackward::uuid::uuid3(
             u, "monkey");
-        uuid.hex();
+        std::string sz = uuid.hex;
     }
 }
 
 BOOST_AUTO_TEST_CASE( uuid_uuid4 )
 {
     UUID uuid = ackward::uuid::uuid4();
-    uuid.hex();
+    std::string sz = uuid.hex;
 }
 
 BOOST_AUTO_TEST_CASE( uuid_uuid5 )
@@ -269,28 +269,28 @@ BOOST_AUTO_TEST_CASE( uuid_uuid5 )
     {
         UUID uuid = ackward::uuid::uuid5(
             u, "llama");
-        uuid.hex();
+        std::string sz = uuid.hex;
     }
 }
 
 BOOST_AUTO_TEST_CASE( uuid_namespace_dns )
 {
-    ackward::uuid::NAMESPACE_DNS().hex();
+    std::string sz = ackward::uuid::NAMESPACE_DNS().hex;
 }
 
 BOOST_AUTO_TEST_CASE( uuid_namespace_url )
 {
-    ackward::uuid::NAMESPACE_URL().hex();
+    std::string sz = ackward::uuid::NAMESPACE_URL().hex;
 }
 
 BOOST_AUTO_TEST_CASE( uuid_namespace_oid )
 {
-    ackward::uuid::NAMESPACE_OID().hex();
+    std::string sz = ackward::uuid::NAMESPACE_OID().hex;
 }
 
 BOOST_AUTO_TEST_CASE( uuid_namespace_x500 )
 {
-    ackward::uuid::NAMESPACE_X500().hex();
+    std::string sz = ackward::uuid::NAMESPACE_X500().hex;
 }
 
 BOOST_AUTO_TEST_CASE( uuid_example_test )
@@ -318,10 +318,10 @@ BOOST_AUTO_TEST_CASE( uuid_example_test )
     BOOST_CHECK( ackward::core::str(x) == L"00010203-0405-0607-0809-0a0b0c0d0e0f" );
     
     x = UUID::fromBytes(b);
-    BOOST_CHECK( x.bytes() == b );
+    BOOST_CHECK( Bytes(x.bytes) == b );
 
-    // # make a UUID from a 16-byte string
-    UUID::fromBytes(x.bytes());
+    // make a UUID from a 16-byte string
+    UUID::fromBytes(Bytes(x.bytes));
     
     UUID::fromHex("00010203-0405-0607-0809-0a0b0c0d0e0f");
 }

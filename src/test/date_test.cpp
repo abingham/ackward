@@ -42,9 +42,9 @@ BOOST_AUTO_TEST_CASE( normalConstructor)
             {
                 try {
                     Date d(year,month,day);
-                    BOOST_ASSERT(d.year() == year);
-                    BOOST_ASSERT(d.month() == month);
-                    BOOST_ASSERT(d.day() == day);
+                    BOOST_ASSERT(d.year == year);
+                    BOOST_ASSERT(d.month == month);
+                    BOOST_ASSERT(d.day == day);
                 } catch (const ValueError&) {
                     BOOST_ASSERT(day > 28);
                 }

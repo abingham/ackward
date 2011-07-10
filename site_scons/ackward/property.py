@@ -2,28 +2,11 @@ from .element import SigTemplateElement
 from .trace import trace
 
 header_const = '''
-$type $property_name() const;
+ackward::core::ROProperty<$type> $property_name;
 '''
 
-header_non_const = header_const + '''
-void $property_name($header_signature);
-'''
-
-impl_const = '''
-$type $class_name::$property_name() const {
-   try {
-     return boost::python::extract<$type>(
-       obj().attr("$python_name"));
-   } TRANSLATE_PYTHON_EXCEPTION()
-}
-'''
-
-impl_non_const = impl_const + '''
-void $class_name::$property_name($impl_signature) {
-   try {
-     obj().attr("$python_name") = val;
-   } TRANSLATE_PYTHON_EXCEPTION ()
-}
+header_non_const = '''
+ackward::core::Property<$type> $property_name;
 '''
 
 class Property(SigTemplateElement):
@@ -49,17 +32,13 @@ class Property(SigTemplateElement):
               read-write.
         '''
         header = header_const if read_only else header_non_const
-        impl = impl_const if read_only else impl_non_const
             
         SigTemplateElement.__init__(
             self,
-            header_includes=[],
-            open_header_template=header,
-            open_impl_template=impl,
-            impl_includes=[
-                ('boost', 'python', 'extract.hpp'),
-                ('ackward', 'core', 'ExceptionTranslation.hpp'),
+            header_includes=[
+                ('ackward', 'core', 'Property.hpp'),
                 ],
+            open_header_template=header,
             symbols={
                 'property_name' : name,
                 'type' : type,
@@ -67,3 +46,9 @@ class Property(SigTemplateElement):
                 'python_name' : python_name or name,
                 },
             **kwargs)
+
+    def initializers(self):
+        return [
+            '{0}(obj(), "{1}")'.format(self.symbols['property_name'],
+                                       self.symbols['python_name']),
+            ]
