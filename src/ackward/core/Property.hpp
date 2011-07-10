@@ -31,17 +31,17 @@ namespace core {
     \endrst
  */
 template <typename T>
-class Property : private Object
+class ROProperty : private Object
 {
 public:
     typedef T value_type;
 
-    /** Construct a new property.
+    /** Construct a new read-only property.
 
         @param obj The underlying Python object.
         @param pythonName The name of the property on `obj`.
      */
-    Property(boost::python::object obj,
+    ROProperty(boost::python::object obj,
              const std::string& pythonName) :
         Object (obj),
         pythonName_ (pythonName)
@@ -57,6 +57,34 @@ public:
             } TRANSLATE_PYTHON_EXCEPTION();
         }
 
+    using Object::obj;
+
+    const std::string& pythonName() const 
+        {
+            return pythonName_;
+        }
+
+private:
+    std::string pythonName_;
+
+};
+
+template <typename T>
+class Property : public ROProperty<T>
+{
+public:
+    typedef typename ROProperty<T>::value_type value_type;
+
+    /** Construct a new property.
+
+        @param obj The underlying Python object.
+        @param pythonName The name of the property on `obj`.
+     */
+    Property(boost::python::object obj,
+             const std::string& pythonName) :
+        ROProperty<T>(obj, pythonName)
+        {}
+
     /** Assign to the underlying property.
 
         @param v The value to assign.
@@ -65,21 +93,17 @@ public:
     Property<value_type>& operator=(typename boost::call_traits<value_type>::const_reference v)
         {
             try {
-                obj().attr(pythonName_.c_str()) = v;
+                obj().attr(this->pythonName().c_str()) = v;
             } TRANSLATE_PYTHON_EXCEPTION();
 
             return *this;
         }
 
-    using Object::obj;
-
-private:
-    std::string pythonName_;
-
+    using ROProperty<T>::obj;
 };
 
 template <typename T>
-std::ostream& operator<<(std::ostream& os, const Property<T>& p)
+std::ostream& operator<<(std::ostream& os, const ROProperty<T>& p)
 {
     os << static_cast<T>(p);
     return os;
