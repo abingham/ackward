@@ -58,6 +58,26 @@ public:
      */
     ConstHandlers handlers() const;
 
+    // Pull in stuff from LoggerBase
+    using LoggerBase::propagate;
+    using LoggerBase::setLevel;
+    using LoggerBase::isEnabledFor;
+    using LoggerBase::getEffectiveLevel;
+    using LoggerBase::log;
+    using LoggerBase::addFilter;
+    using LoggerBase::removeFilter;
+    using LoggerBase::filter;
+    using LoggerBase::addHandler;
+    using LoggerBase::removeHandler;
+    using LoggerBase::handle;
+    using LoggerBase::debug;
+    using LoggerBase::info;
+    using LoggerBase::warning;
+    using LoggerBase::error;
+    using LoggerBase::critical;
+    using LoggerBase::exception;
+    using LoggerBase::obj;
+    
     // /**
     //    This is a factory method which can be overridden in subclasses
     //    to create specialized LogRecord instances.

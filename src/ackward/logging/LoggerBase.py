@@ -16,23 +16,44 @@ def tunit():
                        ('ackward', 'logging', 'LogRecord.hpp')])
 
 def methods():
-    m = [
-        'void setLevel(Level l)',
-        'bool isEnabledFor(Level l) const',
-        'Level getEffectiveLevel() const',
-        'void log(Level l, std::wstring msg) const',
-        'void addFilter(Filter f)',
-        'void removeFilter(Filter f)',
-        'bool filter(LogRecord r) const',
-        'void addHandler(Handler h)',
-        'void removeHandler(Handler h)',
-        'void handle(LogRecord r) const',
+    methods = [
+        ('void setLevel(Level l)',
+         'Sets the threshold for this logger.'),
+        ('bool isEnabledFor(Level l) const',
+         'Indicates if a message of severity ``lvl`` would be processed by this logger.'),
+        ('Level getEffectiveLevel() const',
+         'Indicates the effective level for this logger.'),
+        ('void log(Level lvl, std::wstring msg) const',
+         'Logs a message with level ``lvl`` on this logger.'),
+        ('void addFilter(Filter f)',
+         'Adds the specified filter ``filt`` to this logger.'),
+        ('void removeFilter(Filter f)',
+         'Removes the specified filter ``filt`` from this logger.'),
+        ('bool filter(LogRecord r) const',
+         'Applies this logger\'s filters to the record and returns a true value if the record is to be processed.'),
+        ('void addHandler(Handler h)',
+         'Adds the specified handler ``hdlr`` to this logger.'),
+        ('void removeHandler(Handler h)',
+         'Removes the specified handler hdlr from this logger.'),
+        ('void handle(LogRecord r) const',
+         'Handles a record by passing it to all handlers associated with this logger and its ancestors (until a false value of propagate is found).'),
+        ('void exception(std::wstring msg) const',
+         '''Logs a message with level ``ERROR`` on this logger. 
+
+            Exception info is added to the logging message. This method
+            should only be called from an exception handler.''')
         ]
 
-    for lvl in ['debug', 'info', 'warning', 'error', 'critical', 'exception']:
-        m.append('void {0}(std::wstring msg) const'.format(lvl))
+    for lvl in ['debug', 'info', 'warning', 'error', 'critical']:
+        methods.append(
+            ('void {0}(std::wstring msg) const'.format(lvl),
+             'Logs a message with level ``{0}`` on this logger.'.format(lvl.upper())))
 
-    list(map(method, m))
+    for m in methods:
+        docstring = '''/** \\rst 
+                           {0} 
+                           \\endrst */'''.format(m[1])
+        method(m[0], doc=docstring)
 
 def definition(env):
     with tunit() as t:
@@ -40,6 +61,7 @@ def definition(env):
             with Class(name='LoggerBase',
                        wrapped_class='logging.Logger'):
     
+                # TODO: docstring for propagate
                 Property(name='propagate', type='bool')
                 methods()
 
