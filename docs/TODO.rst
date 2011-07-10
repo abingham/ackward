@@ -2,6 +2,8 @@ TODO list
 ---------
 
  * Add properties to LogRecord: args, exc_info, etc.
+ * Logger should inherit privately from LoggerBase, and then "use" the
+   necessary methods.
 
  * Examples for every class and function
   * Logging

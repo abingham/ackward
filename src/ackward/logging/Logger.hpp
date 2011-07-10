@@ -4,24 +4,58 @@
 #include <ackward/core/Iterable.hpp>
 #include <ackward/logging/LoggerBase.hpp>
 
-namespace ackward { namespace logging 
-{
+namespace ackward { 
+namespace logging {
 
 class Filter;
 class Handler;
 
-class Logger : public LoggerBase {
+/**
+\rst
+
+A wrapper around Python `logging.Logger
+<http://docs.python.org/py3k/library/logging.html#logger-objects>`_
+objects. 
+
+\endrst
+*/
+class Logger : private LoggerBase {
 public:
+    /** Construct a Logger around an existing Python ``Logger``
+        instance.
+     */
     Logger(boost::python::object);
 
+    /** An iterable of Filter objects on a Logger.
+     */
     typedef core::Iterable<Filter> Filters;
+
+    /** An iterable of const Filter objects on a Logger.
+     */
     typedef core::Iterable<const Filter> ConstFilters;
+
+    /** Get an iterable over the Filters on this Logger.
+     */
     Filters filters();
+
+    /** Get an iterable over the const Filters on this Logger.
+     */
     ConstFilters filters() const;
 
+    /** An iterable of Handler objects on a Logger.
+     */
     typedef core::Iterable<Handler> Handlers;
+
+    /** An iterable of const Handle objects on a Logger.
+     */
     typedef core::Iterable<const Handler> ConstHandlers;
+
+    /** Get an iterable over the Handlers on a Logger.
+     */
     Handlers handlers();
+
+    /** Get an iterable over the const Handlers on a Logger.
+     */
     ConstHandlers handlers() const;
 
     // /**
@@ -40,7 +74,9 @@ public:
     // //     ) const;
 
     // using core::Object::obj;
-};                                                                                                                                                                                                                                                       
-}}
+};
+
+}
+}
 
 #endif

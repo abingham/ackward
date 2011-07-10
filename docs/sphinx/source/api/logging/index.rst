@@ -17,5 +17,6 @@ APIs.
    Formatter <formatter>
    Handler <handler>
    Initialize <initialize>
+   Logger <logger>
    LogRecord <log_record>
    Extended examples <extended_examples>
