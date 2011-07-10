@@ -14,6 +14,10 @@ CURRENT
 =======
 
 * ``ackward::core::import`` now relies more on ``boost::python::import()``.
+* ``ackward.Property`` now generates ``ackward::core::Property<T>``
+  instead of getters and setters.
+* ``ackward.Class`` can be customized with cosntructor initializer
+  statements by its children.
 
 .. _release_notes_0_3:
 
