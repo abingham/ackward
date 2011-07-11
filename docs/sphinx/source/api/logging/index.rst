@@ -19,4 +19,5 @@ APIs.
    Initialize <initialize>
    Logger <logger>
    LogRecord <log_record>
+   Module-level functions <module>
    Extended examples <extended_examples>

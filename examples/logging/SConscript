@@ -18,6 +18,7 @@ programs = {
     'handler_example': ['Handler.cpp'],
     'logger_example' : ['Logger.cpp'],
     'log_record_example': ['LogRecord.cpp'],
+    'module_example': ['Module.cpp'],
     }
 
 for name, sources in programs.items():
