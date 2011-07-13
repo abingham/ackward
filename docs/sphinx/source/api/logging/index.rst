@@ -20,4 +20,5 @@ APIs.
    Logger <logger>
    LogRecord <log_record>
    Module-level functions <module>
+   NullHandler <null_handler>
    Extended examples <extended_examples>

@@ -24,9 +24,9 @@ TODO list
    * Logger.hpp **DONE**
    * LoggerAdapter.py
    * LoggerBase.py **DONE**
-   * Module.py
-   * NullHandler.cpp
-   * NullHandler.hpp
+   * Module.py **DONE**
+   * NullHandler.cpp **DONE**
+   * NullHandler.hpp **DONE**
    * SConscript
    * SocketHandler.cpp
    * SocketHandler.hpp
