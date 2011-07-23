@@ -21,4 +21,5 @@ APIs.
    LogRecord <log_record>
    Module-level functions <module>
    NullHandler <null_handler>
+   SocketHandler <socket_handler>
    Extended examples <extended_examples>

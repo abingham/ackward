@@ -20,6 +20,7 @@ programs = {
     'log_record_example': ['LogRecord.cpp'],
     'module_example': ['Module.cpp'],
     'null_handler_example': ['NullHandler.cpp'],
+    'socket_handler_example': ['SocketHandler.cpp'],
     }
 
 for name, sources in programs.items():

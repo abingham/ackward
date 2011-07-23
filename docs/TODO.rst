@@ -27,9 +27,8 @@ TODO list
    * Module.py **DONE**
    * NullHandler.cpp **DONE**
    * NullHandler.hpp **DONE**
-   * SConscript
-   * SocketHandler.cpp
-   * SocketHandler.hpp
+   * SocketHandler.cpp **DONE**
+   * SocketHandler.hpp **DONE**
    * StreamHandler.cpp
    * StreamHandler.hpp
    * Types.cpp
