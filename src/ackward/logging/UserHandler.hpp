@@ -16,9 +16,9 @@ public:
     UserHandler();
 
 private:
-    static void emit_(const UserHandler* h, const LogRecord& rec);
+    static void emit_(UserHandler* h, const LogRecord& rec);
     
-    virtual void emit_impl(const LogRecord& lr) const = 0;
+    virtual void emit_impl(const LogRecord& lr) = 0;
 };
 
 }

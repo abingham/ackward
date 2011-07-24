@@ -13,7 +13,7 @@ namespace ackward { namespace logging {
 class NullHandler : public UserHandler
 {
 private:
-    void emit_impl(const LogRecord&) const;
+    void emit_impl(const LogRecord&);
 };
 
 }}

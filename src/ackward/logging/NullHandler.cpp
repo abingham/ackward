@@ -5,7 +5,7 @@
 namespace ackward { 
 namespace logging {
 
-void NullHandler::emit_impl(const LogRecord&)  const {}
+void NullHandler::emit_impl(const LogRecord&) {}
 
 }
 }

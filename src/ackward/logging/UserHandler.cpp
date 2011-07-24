@@ -13,7 +13,7 @@ namespace logging {
 UserHandler::UserHandler() :
     Handler ( module().attr("Handler")() )
 {
-    boost::function<void(const UserHandler*, const LogRecord&)> f =
+    boost::function<void(UserHandler*, const LogRecord&)> f =
         &UserHandler::emit_;
     
     typedef boost::mpl::vector<
@@ -29,7 +29,7 @@ UserHandler::UserHandler() :
     obj().attr("emit") = func;
 }
 
-void UserHandler::emit_(const UserHandler* h, const LogRecord& lr)
+void UserHandler::emit_(UserHandler* h, const LogRecord& lr)
 {
     h->emit_impl(lr);
 }
