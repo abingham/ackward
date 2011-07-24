@@ -14,9 +14,10 @@ int main(int, char**)
     
     basicConfig();
     Logger log = getLogger();
-    log.addHandler(NullHandler());
+    NullHandler h;
+    log.addHandler(h);
 
-    log.info(L"snooze");
+    log.critical(L"snooze");
 
     return 0;
 }

@@ -10,10 +10,10 @@ namespace ackward { namespace logging {
 
     This is primarily just an example of how to use ``Handler_<T>``.
     \endrst */
-class NullHandler : public Handler_<NullHandler>
+class NullHandler : public UserHandler
 {
-public:
-    static void emit_(const LogRecord&);
+private:
+    void emit_impl(const LogRecord&) const;
 };
 
 }}

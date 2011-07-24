@@ -1,7 +1,11 @@
 #include <ackward/logging/NullHandler.hpp>
 
-namespace ackward { namespace logging {
+#include <iostream>
 
-void NullHandler::emit_(const LogRecord&) {}
+namespace ackward { 
+namespace logging {
 
-}}
+void NullHandler::emit_impl(const LogRecord&)  const {}
+
+}
+}
