@@ -12,7 +12,7 @@
 #include <ackward/logging/Logger.hpp>
 #include <ackward/logging/LogRecord.hpp>
 #include <ackward/logging/Module.hpp>
-#include <ackward/logging/StreamHandler.hpp>
+#include <ackward/logging/handlers/StreamHandler.hpp>
 
 #include "LoggerFixture.hpp"
 #include "util.hpp"
@@ -202,7 +202,7 @@ BOOST_AUTO_TEST_CASE( addHandler )
     LoggerFixture f;
 
     f.logger.addHandler(
-        StreamHandler());
+        handlers::StreamHandler());
 }
 
 BOOST_AUTO_TEST_CASE( removeHandler )
@@ -212,7 +212,7 @@ BOOST_AUTO_TEST_CASE( removeHandler )
     std::size_t initialCount = 
         f.logger.handlers().size();
     
-    Handler h = StreamHandler();
+    Handler h = handlers::StreamHandler();
 
     f.logger.addHandler(h);
 
@@ -232,7 +232,7 @@ BOOST_AUTO_TEST_CASE( handlers_size )
     for (int i = 0; i < 10; ++i)
     {
         f.logger.addHandler(
-            StreamHandler());
+            handlers::StreamHandler());
                 
         BOOST_CHECK(f.logger.handlers().size() == i + 1 + initCount);
     }

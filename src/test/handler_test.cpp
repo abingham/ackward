@@ -5,8 +5,8 @@
 #include <ackward/logging/Handler.hpp>
 #include <ackward/logging/Logger.hpp>
 #include <ackward/logging/NullHandler.hpp>
-#include <ackward/logging/StreamHandler.hpp>
 #include <ackward/logging/handlers/SocketHandler.hpp>
+#include <ackward/logging/handlers/StreamHandler.hpp>
 #include <ackward/logging/handlers/WatchedFileHandler.hpp>
 
 using namespace ackward::logging;

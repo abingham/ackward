@@ -20,9 +20,9 @@ sources = [
     'Initialize.cpp',
     'Logger.cpp',
     'NullHandler.cpp',
-    'StreamHandler.cpp',
     'Types.cpp',
     'handlers/SocketHandler.cpp',
+    'handlers/StreamHandler.cpp',
     'handlers/WatchedFileHandler.cpp',
     ]
 
@@ -31,10 +31,10 @@ headers = [
     'Initialize.hpp',
     'Logger.hpp',
     'NullHandler.hpp',
-    'StreamHandler.hpp',
     'Types.hpp',
     'UserHandler.hpp',
     'handlers/SocketHandler.hpp',
+    'handlers/StreamHandler.hpp',
     'handlers/WatchedFileHandler.hpp',
     ]
 
