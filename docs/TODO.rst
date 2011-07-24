@@ -29,10 +29,10 @@ TODO list
    * NullHandler.hpp **DONE**
    * SocketHandler.cpp **DONE**
    * SocketHandler.hpp **DONE**
-   * StreamHandler.cpp
-   * StreamHandler.hpp
-   * Types.cpp
-   * Types.hpp
+   * StreamHandler.cpp **DONE**
+   * StreamHandler.hpp **DONE**
+   * Types.cpp **DONE** 
+   * Types.hpp **DONE**
    * UserHandler.hpp
    * WatchedFileHandler.cpp
    * WatchedFileHandler.hpp

@@ -27,3 +27,8 @@ API
 .. doxygenfunction:: ackward::logging::setLoggerClass
 .. doxygenfunction:: ackward::logging::exception
 
+.. doxygenfunction:: ackward::logging::DEBUG
+.. doxygenfunction:: ackward::logging::INFO
+.. doxygenfunction:: ackward::logging::WARNING
+.. doxygenfunction:: ackward::logging::ERROR
+.. doxygenfunction:: ackward::logging::CRITICAL
