@@ -22,4 +22,5 @@ APIs.
    Module-level functions <module>
    NullHandler <null_handler>
    SocketHandler <socket_handler>
+   StreamHandler <stream_handler>
    Extended examples <extended_examples>

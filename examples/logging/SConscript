@@ -21,6 +21,7 @@ programs = {
     'module_example': ['Module.cpp'],
     'null_handler_example': ['NullHandler.cpp'],
     'socket_handler_example': ['SocketHandler.cpp'],
+    'stream_handler_example': ['StreamHandler.cpp'],
     }
 
 for name, sources in programs.items():
