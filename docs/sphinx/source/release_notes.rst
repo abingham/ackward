@@ -4,15 +4,18 @@ Release Notes
 
 **Contents**
 
-* :ref:`release_notes_CURRENT`
+* :ref:`release_notes_0_4`
 * :ref:`release_notes_0_3`
 * :ref:`release_notes_0_2`
 
-.. _release_notes_CURRENT:
+.. _release_notes_0_4:
 
-CURRENT
-=======
+0.4
+===
 
+* A large number of bug fixes.
+* ``logging`` is fully documented.
+* ``logging::UserHandler`` reworked to use template implementations.
 * ``ackward::core::import`` now relies more on ``boost::python::import()``.
 * ``ackward.Property`` now generates ``ackward::core::Property<T>``
   instead of getters and setters.
