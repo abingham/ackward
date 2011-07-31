@@ -21,7 +21,6 @@ sources = [
     'Logger.cpp',
     'NullHandler.cpp',
     'Types.cpp',
-    'UserHandler.cpp',
     'handlers/SocketHandler.cpp',
     'handlers/StreamHandler.cpp',
     'handlers/WatchedFileHandler.cpp',
