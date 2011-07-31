@@ -24,4 +24,5 @@ APIs.
    SocketHandler <socket_handler>
    StreamHandler <stream_handler>
    UserHandler <user_handler>
+   WatchedFileHandler <watched_file_handler>
    Extended examples <extended_examples>

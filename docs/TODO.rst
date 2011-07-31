@@ -34,8 +34,8 @@ TODO list
    * Types.cpp **DONE** 
    * Types.hpp **DONE**
    * UserHandler.hpp **DONE**
-   * WatchedFileHandler.cpp
-   * WatchedFileHandler.hpp
+   * WatchedFileHandler.cpp **DONE**
+   * WatchedFileHandler.hpp **DONE**
   * DateTime
   * Queue
   * Time
