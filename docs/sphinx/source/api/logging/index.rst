@@ -23,4 +23,5 @@ APIs.
    NullHandler <null_handler>
    SocketHandler <socket_handler>
    StreamHandler <stream_handler>
+   UserHandler <user_handler>
    Extended examples <extended_examples>

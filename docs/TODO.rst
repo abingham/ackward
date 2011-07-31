@@ -33,7 +33,7 @@ TODO list
    * StreamHandler.hpp **DONE**
    * Types.cpp **DONE** 
    * Types.hpp **DONE**
-   * UserHandler.hpp
+   * UserHandler.hpp **DONE**
    * WatchedFileHandler.cpp
    * WatchedFileHandler.hpp
   * DateTime
