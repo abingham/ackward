@@ -21,6 +21,7 @@ sources = [
     'formatter_test.cpp',
     'handler_test.cpp',
     'import_test.cpp',
+    'kwargs_test.cpp',
     'LoggerFixture.cpp',
     'logger_adapter_test.cpp',
     'logger_test.cpp',
@@ -41,11 +42,11 @@ sources = [
     ]
 
 build.program(
-    local_env, 
-    'ackward_test', 
-    sources, 
-    deps=['core', 
-          'datetime', 
+    local_env,
+    'ackward_test',
+    sources,
+    deps=['core',
+          'datetime',
           'logging',
           'queue',
           'time',
