@@ -2,6 +2,8 @@
 
 #include <boost/test/unit_test.hpp>
 
+#include <ackward/core/Kwargs.hpp>
+#include <ackward/logging/BasicConfig.hpp>
 #include <ackward/logging/Logger.hpp>
 #include <ackward/logging/Module.hpp>
 
@@ -24,7 +26,10 @@ BOOST_AUTO_TEST_CASE( basicConfig_default )
 
 BOOST_AUTO_TEST_CASE( basicConfig_args )
 {
-    // TODO
+    basicConfig(
+        ackward::core::kwargs
+        (L"filename", "unittest.log")
+        (L"filemode", 'w'));
 }
 
 BOOST_AUTO_TEST_SUITE_END()

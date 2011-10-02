@@ -1,5 +1,6 @@
 #include <Python.h>
 
+#include <ackward/logging/BasicConfig.hpp>
 #include <ackward/logging/Handler.hpp>
 #include <ackward/logging/Initialize.hpp>
 #include <ackward/logging/Logger.hpp>

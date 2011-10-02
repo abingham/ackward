@@ -1,5 +1,6 @@
 #include <Python.h>
 
+#include <ackward/logging/BasicConfig.hpp>
 #include <ackward/logging/FileHandler.hpp>
 #include <ackward/logging/Initialize.hpp>
 #include <ackward/logging/Logger.hpp>
@@ -11,7 +12,7 @@ int main(int, char**)
     ackward::logging::initialize();
 
     ackward::logging::basicConfig();
-    ackward::logging::Logger logger = 
+    ackward::logging::Logger logger =
         ackward::logging::getLogger();
     ackward::logging::FileHandler handler(
         L"logging_output",

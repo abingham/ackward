@@ -16,6 +16,7 @@ program.
 
 This is what's going on:
 
+ #. Include the header that gives us the ``basicConfig()`` method.
  #. Include the header for initializing the library. You must call
     ``ackward::logging::initialize()`` before using any other parts of the
     library.
@@ -48,7 +49,7 @@ Here's what's going on in this case:
     ``boost::python::object`` via the extension's API.
  #. This "wraps" the Python logger in a C++-level
     ``ackward::logging::Logger`` instance.
- #. This logs the message at the error severity level. 
+ #. This logs the message at the error severity level.
 
 This second bit of code just shows a basic use of the extension. This
 is really just included for completeness; there's nothing special

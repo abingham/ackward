@@ -16,6 +16,7 @@ akw_files = [
     ]
 
 sources = [
+    'BasicConfig.cpp',
     'FileHandler.cpp',
     'Initialize.cpp',
     'Logger.cpp',
@@ -27,6 +28,7 @@ sources = [
     ]
 
 headers = [
+    'BasicConfig.hpp',
     'FileHandler.hpp',
     'Initialize.hpp',
     'Logger.hpp',

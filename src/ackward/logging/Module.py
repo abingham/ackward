@@ -60,10 +60,6 @@ def functions():
         ('std::wstring getLevelName(Level l)',
          'Returns the textual representation of logging level lvl.'),
         # TODO: makeLogRecord
-        ('void basicConfig()',
-         'Does basic configuration for the logging system by creating a StreamHandler with a default Formatter and adding it to the root logger.'),
-        ('void basicConfig(boost::python::dict kwargs)',
-         basicConfig_doc),
         ('void shutdown()',
          'Informs the logging system to perform an orderly shutdown by flushing and closing all handlers. This should be called at application exit and no further use of the logging system should be made after this call.'),
         ('void setLoggerClass(boost::python::object klass)',
@@ -71,7 +67,7 @@ def functions():
         ('void exception(std::wstring msg)',
          'Logs a message with level ERROR on the root logger. Exception info is added to the logging message. This function should only be called from an exception handler.'),
         ]
-    
+
     for f in functions:
         function(f[0], doc=f[1])
 

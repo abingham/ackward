@@ -1,5 +1,6 @@
 #include <Python.h>
 
+#include <ackward/logging/BasicConfig.hpp>
 #include <ackward/logging/Initialize.hpp>
 #include <ackward/logging/Logger.hpp>
 #include <ackward/logging/LogRecord.hpp>
@@ -17,11 +18,11 @@ int main(int, char**)
 
     basicConfig();
     Logger logger = getLogger();
-    
+
     // Construct a new LogRecord
     LogRecord rec(
         L"my record",
-        ERROR(),          
+        ERROR(),
         L"some.path",
         100,
         L"my message",

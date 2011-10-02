@@ -10,6 +10,7 @@ sources = [
     'GetClass.cpp',
     'Import.cpp',
     'Initialize.cpp',
+    'Kwargs.cpp',
     'Object.cpp',
     'Util.cpp'
 ]
@@ -25,6 +26,7 @@ headers = [
     'Import.hpp',
     'Initialize.hpp',
     'Iterable.hpp',
+    'Kwargs.hpp',
     'Object.hpp',
     'PythonConverter.hpp',
     'Tuple.hpp',
