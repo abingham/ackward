@@ -12,7 +12,8 @@ sources = [
     'Initialize.cpp',
     'Kwargs.cpp',
     'Object.cpp',
-    'Util.cpp'
+    'Util.cpp',
+    'Version.cpp',
 ]
 
 headers = [
@@ -31,6 +32,7 @@ headers = [
     'PythonConverter.hpp',
     'Tuple.hpp',
     'Util.hpp',
+    'Version.hpp',
     ]
 
 build.shared_library(

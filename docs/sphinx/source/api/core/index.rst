@@ -25,3 +25,4 @@ general, the elements of ``core`` don't pertain to a particular Python module.
    Python version <python_version>
    Tuple <tuple>
    Utilities <util>
+   Version <version>

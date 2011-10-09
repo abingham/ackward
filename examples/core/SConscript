@@ -18,6 +18,7 @@ programs = {
     'python_version_example' : ['PythonVersion.cpp'],
     'tuple_explicit_example' : ['TupleExplicit.cpp'],
     'tuple_implicit_example' : ['TupleImplicit.cpp'],
+    'version_example' : ['Version.cpp'],
     }
 
 for name, sources in programs.items():

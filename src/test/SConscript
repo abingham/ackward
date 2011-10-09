@@ -39,6 +39,7 @@ sources = [
     'util.cpp',
     'util_test.cpp',
     'uuid_test.cpp',
+    'version_test.cpp',
     ]
 
 build.program(
