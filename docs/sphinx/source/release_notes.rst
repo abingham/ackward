@@ -4,9 +4,17 @@ Release Notes
 
 **Contents**
 
+* :ref:`release_notes_0_5`
 * :ref:`release_notes_0_4`
 * :ref:`release_notes_0_3`
 * :ref:`release_notes_0_2`
+
+.. _release_notes_0_5:
+
+0.5
+===
+
+* Added ``ackward::core::versionInfo()``.
 
 .. _release_notes_0_4:
 
