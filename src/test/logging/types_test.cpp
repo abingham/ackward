@@ -4,7 +4,8 @@
 
 using namespace ackward::logging;
 
-BOOST_AUTO_TEST_SUITE( Types_methods )
+BOOST_AUTO_TEST_SUITE( logging )
+BOOST_AUTO_TEST_SUITE( Types )
 
 BOOST_AUTO_TEST_CASE( levels )
 {
@@ -15,4 +16,5 @@ BOOST_AUTO_TEST_CASE( levels )
     l = CRITICAL();
 }
 
+BOOST_AUTO_TEST_SUITE_END()
 BOOST_AUTO_TEST_SUITE_END()

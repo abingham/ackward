@@ -8,7 +8,10 @@
 using namespace ackward::core;
 using namespace boost::python;
 
-BOOST_AUTO_TEST_SUITE( kwargs_test )
+BOOST_AUTO_TEST_SUITE( core )
+BOOST_AUTO_TEST_SUITE( Kwargs )
+
+using ackward::core::Kwargs;
 
 BOOST_AUTO_TEST_CASE( why_is_this_a_problem )
 {
@@ -22,4 +25,5 @@ BOOST_AUTO_TEST_CASE( why_is_this_a_problem )
         extract<int>(kw.getDict()[std::wstring(L"yak")]), 3);
 }
 
+BOOST_AUTO_TEST_SUITE_END()
 BOOST_AUTO_TEST_SUITE_END()

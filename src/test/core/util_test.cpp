@@ -8,7 +8,8 @@
 using namespace ackward::core;
 namespace bp=boost::python;
 
-BOOST_AUTO_TEST_SUITE( core_util_test )
+BOOST_AUTO_TEST_SUITE( core )
+BOOST_AUTO_TEST_SUITE( util )
 
 BOOST_AUTO_TEST_CASE( isInstance_test )
 {
@@ -41,12 +42,12 @@ BOOST_AUTO_TEST_CASE( iter_test )
     bp::list l;
     l.append(1);
     l.append(2);
-    
+
     // iter() creates a usable iterator
     bp::object i = iter(l);
     BOOST_CHECK( bp::extract<int>(next(i)) == 1);
     BOOST_CHECK( bp::extract<int>(next(i)) == 2);
-    
+
     BOOST_CHECK_THROW(
         next(i),
         StopIteration);
@@ -62,12 +63,12 @@ BOOST_AUTO_TEST_CASE( next_test )
     bp::list l;
     l.append(1);
     l.append(2);
-    
+
     // iter() creates a usable iterator
     bp::object i = iter(l);
     BOOST_CHECK( bp::extract<int>(next(i)) == 1);
     BOOST_CHECK( bp::extract<int>(next(i)) == 2);
-    
+
     BOOST_CHECK_THROW(
         next(i),
         StopIteration);
@@ -105,4 +106,5 @@ BOOST_AUTO_TEST_CASE( fromPythonConvertible_test )
 
 }
 
+BOOST_AUTO_TEST_SUITE_END()
 BOOST_AUTO_TEST_SUITE_END()

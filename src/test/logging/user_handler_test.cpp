@@ -7,7 +7,7 @@
 #include <ackward/logging/Logger.hpp>
 #include <ackward/logging/LogRecord.hpp>
 #include <ackward/logging/Module.hpp>
-#include <ackward/logging/Types.hpp> 
+#include <ackward/logging/Types.hpp>
 #include <ackward/logging/UserHandler.hpp>
 
 using namespace ackward::logging;
@@ -21,7 +21,7 @@ struct PushBackHandlerImpl
         {
             messages.push_back(lr.getMessage());
         }
-    
+
     std::vector<std::wstring> messages;
 };
 
@@ -29,6 +29,7 @@ typedef UserHandler<PushBackHandlerImpl> PushBackHandler;
 
 }
 
+BOOST_AUTO_TEST_SUITE( logging )
 BOOST_AUTO_TEST_SUITE( UserHandler )
 
 BOOST_AUTO_TEST_CASE( basic )
@@ -74,4 +75,5 @@ BOOST_AUTO_TEST_CASE( auto_disconnect )
     l.error(L"test2");
 }
 
+BOOST_AUTO_TEST_SUITE_END()
 BOOST_AUTO_TEST_SUITE_END()

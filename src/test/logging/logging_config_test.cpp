@@ -8,7 +8,7 @@
 
 #include <ackward/logging/config/Config.hpp>
 
-#include "util.hpp"
+#include "../util.hpp"
 
 using namespace ackward::logging::config;
 
@@ -30,17 +30,17 @@ struct FileConfigFixture
 
                 "[formatters]\n"
                 "keys=form01\n"
-                
+
                 "[logger_root]\n"
                 "level=NOTSET\n"
                 "handlers=hand01\n"
-                
+
                 "[handler_hand01]\n"
                 "class=StreamHandler\n"
                 "level=NOTSET\n"
                 "formatter=form01\n"
                 "args=(sys.stdout,)\n"
-                
+
                 "[formatter_form01]\n"
                 "format=F1 %(asctime)s %(levelname)s %(message)s\n"
                 "datefmt=\n"
@@ -58,7 +58,8 @@ struct FileConfigFixture
 }
 
 // logging.config methods
-BOOST_AUTO_TEST_SUITE( Logging_config_methods )
+BOOST_AUTO_TEST_SUITE( logging )
+BOOST_AUTO_TEST_SUITE( Config )
 
 BOOST_AUTO_TEST_CASE( fileConfig_1 )
 {
@@ -74,4 +75,5 @@ BOOST_AUTO_TEST_CASE( fileConfig_2 )
         boost::python::dict());
 }
 
+BOOST_AUTO_TEST_SUITE_END()
 BOOST_AUTO_TEST_SUITE_END()

@@ -13,7 +13,8 @@ using namespace ackward::logging;
 using namespace ackward::logging::handlers;
 using namespace boost::python;
 
-BOOST_AUTO_TEST_SUITE( Handlers )
+BOOST_AUTO_TEST_SUITE( logging )
+BOOST_AUTO_TEST_SUITE( Handler )
 
 // Handler(boost::python::object);
 // void setLevel(Level l);
@@ -76,4 +77,5 @@ BOOST_AUTO_TEST_CASE( NullHandler_test )
     }
 }
 
+BOOST_AUTO_TEST_SUITE_END()
 BOOST_AUTO_TEST_SUITE_END()

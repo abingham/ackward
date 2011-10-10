@@ -8,7 +8,10 @@
 
 using namespace ackward::logging;
 
-BOOST_AUTO_TEST_SUITE( Filter_methods )
+BOOST_AUTO_TEST_SUITE( logging )
+BOOST_AUTO_TEST_SUITE( Filter )
+
+using ackward::logging::Filter;
 
 BOOST_AUTO_TEST_CASE( empty_constructor )
 {
@@ -20,4 +23,5 @@ BOOST_AUTO_TEST_CASE( object_constructor )
     Filter f(boost::python::import("logging").attr("Filter")());
 }
 
+BOOST_AUTO_TEST_SUITE_END()
 BOOST_AUTO_TEST_SUITE_END()

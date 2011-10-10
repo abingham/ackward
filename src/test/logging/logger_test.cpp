@@ -15,13 +15,16 @@
 #include <ackward/logging/handlers/StreamHandler.hpp>
 
 #include "LoggerFixture.hpp"
-#include "util.hpp"
+#include "../util.hpp"
 
 using namespace ackward::logging;
 namespace bfs=boost::filesystem;
 
 // Logger method
-BOOST_AUTO_TEST_SUITE( Logger_methods )
+BOOST_AUTO_TEST_SUITE( logging )
+BOOST_AUTO_TEST_SUITE( Logger )
+
+using ackward::logging::Logger;
 
 BOOST_AUTO_TEST_CASE( propagate )
 {
@@ -150,12 +153,12 @@ BOOST_AUTO_TEST_CASE( log )
     LoggerFixture f;
 
     BOOST_CHECK(::lineCount(f.filename) == 0);
-    
+
     f.logger.setLevel(ERROR());
     f.logger.log(INFO(), L"info");
     f.handler.flush();
     BOOST_CHECK(::lineCount(f.filename) == 0);
-    
+
     f.logger.setLevel(DEBUG());
     f.logger.log(INFO(), L"info");
     f.handler.flush();
@@ -165,7 +168,7 @@ BOOST_AUTO_TEST_CASE( log )
 BOOST_AUTO_TEST_CASE( addFilter )
 {
     LoggerFixture f;
-    
+
     Filter filter;
     f.logger.addFilter(filter);
 }
@@ -173,7 +176,7 @@ BOOST_AUTO_TEST_CASE( addFilter )
 BOOST_AUTO_TEST_CASE( filters )
 {
     LoggerFixture f;
-    
+
     BOOST_CHECK(f.logger.filters().size() == 0);
 
     for (unsigned int i = 0; i < 10; ++i)
@@ -186,7 +189,7 @@ BOOST_AUTO_TEST_CASE( filters )
 BOOST_AUTO_TEST_CASE( filter )
 {
     LoggerFixture f;
-    
+
     f.logger.filter(
         LogRecord(
             L"foo",
@@ -209,9 +212,9 @@ BOOST_AUTO_TEST_CASE( removeHandler )
 {
     LoggerFixture f;
 
-    std::size_t initialCount = 
+    std::size_t initialCount =
         f.logger.handlers().size();
-    
+
     Handler h = handlers::StreamHandler();
 
     f.logger.addHandler(h);
@@ -226,14 +229,14 @@ BOOST_AUTO_TEST_CASE( removeHandler )
 BOOST_AUTO_TEST_CASE( handlers_size )
 {
     LoggerFixture f;
-    
+
     std::size_t initCount = f.logger.handlers().size();
 
     for (int i = 0; i < 10; ++i)
     {
         f.logger.addHandler(
             handlers::StreamHandler());
-                
+
         BOOST_CHECK(f.logger.handlers().size() == i + 1 + initCount);
     }
 }
@@ -250,7 +253,7 @@ BOOST_AUTO_TEST_CASE( handlers_iteration )
 BOOST_AUTO_TEST_CASE( handle )
 {
     LoggerFixture f;
-    
+
     LogRecord r(
         L"foo",
         DEBUG(),
@@ -262,4 +265,5 @@ BOOST_AUTO_TEST_CASE( handle )
     f.logger.handle(r);
 }
 
+BOOST_AUTO_TEST_SUITE_END()
 BOOST_AUTO_TEST_SUITE_END()

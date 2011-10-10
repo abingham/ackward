@@ -11,7 +11,8 @@ using namespace ackward::logging;
 
 // Module-level methods
 
-BOOST_AUTO_TEST_SUITE( Module_level_methods )
+BOOST_AUTO_TEST_SUITE( logging )
+BOOST_AUTO_TEST_SUITE( Module )
 
 BOOST_AUTO_TEST_CASE( getLogger_test )
 {
@@ -32,4 +33,5 @@ BOOST_AUTO_TEST_CASE( basicConfig_args )
         (L"filemode", 'w'));
 }
 
+BOOST_AUTO_TEST_SUITE_END()
 BOOST_AUTO_TEST_SUITE_END()

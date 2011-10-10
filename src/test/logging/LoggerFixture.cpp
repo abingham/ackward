@@ -9,7 +9,7 @@
 #include <ackward/logging/Handler.hpp>
 #include <ackward/logging/Module.hpp>
 
-#include "util.hpp"
+#include "../util.hpp"
 
 namespace bfs=boost::filesystem;
 
@@ -36,7 +36,7 @@ LoggerFixture::LoggerFixture() :
             "a", "", false))
 {
     logger.addHandler(handler);
-    
+
     BOOST_REQUIRE(::lineCount(filename) == 0);
 }
 
@@ -46,11 +46,11 @@ LoggerFixture::~LoggerFixture()
     {
         logger.removeFilter(f);
     }
-    
+
     BOOST_FOREACH(Handler h, logger.handlers())
     {
         logger.removeHandler(h);
     }
-    
+
     boost::filesystem::remove(filename);
 }

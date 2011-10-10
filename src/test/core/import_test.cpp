@@ -6,7 +6,10 @@
 using namespace ackward::core;
 namespace bp=boost::python;
 
-BOOST_AUTO_TEST_SUITE( core_import_test )
+BOOST_AUTO_TEST_SUITE( core )
+BOOST_AUTO_TEST_SUITE( import )
+
+using ackward::core::import;
 
 BOOST_AUTO_TEST_CASE( import_test )
 {
@@ -25,9 +28,9 @@ BOOST_AUTO_TEST_CASE( import_template_test )
 {
     std::vector<std::string> name;
     name.push_back("os");
-    
+
     bp::object mod = import(name.begin(), name.end());
-    
+
     name.push_back("path");
     mod = import(name.begin(), name.end());
 
@@ -42,7 +45,7 @@ BOOST_AUTO_TEST_CASE( findObject_test )
     findObject("os.path",
                "split");
     findObject("", "str");
-    findObject("logging.config", 
+    findObject("logging.config",
                "fileConfig");
 
     BOOST_CHECK_THROW(
@@ -69,4 +72,5 @@ BOOST_AUTO_TEST_CASE( findObject_fullname_test )
         ImportError);
 }
 
+BOOST_AUTO_TEST_SUITE_END()
 BOOST_AUTO_TEST_SUITE_END()

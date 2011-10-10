@@ -16,16 +16,16 @@
 #include <ackward/logging/Module.hpp>
 
 #include "LoggerFixture.hpp"
-#include "util.hpp"
+#include "../util.hpp"
 
 using namespace ackward::logging;
 namespace bfs=boost::filesystem;
 
 struct Fixture : LoggerFixture
 {
-    Fixture() : 
+    Fixture() :
         adapter (
-            logger, 
+            logger,
             boost::python::dict())
         {}
 
@@ -33,7 +33,8 @@ struct Fixture : LoggerFixture
 };
 
 // Logger method
-BOOST_AUTO_TEST_SUITE( LoggerAdapter_methods )
+BOOST_AUTO_TEST_SUITE( logging )
+BOOST_AUTO_TEST_SUITE( LoggerAdapter )
 
 BOOST_AUTO_TEST_CASE( debug )
 {
@@ -130,16 +131,17 @@ BOOST_AUTO_TEST_CASE( log )
     Fixture f;
 
     BOOST_CHECK(::lineCount(f.filename) == 0);
-    
+
     f.logger.setLevel(ERROR());
     f.adapter.log(INFO(), L"info");
     f.handler.flush();
     BOOST_CHECK(::lineCount(f.filename) == 0);
-    
+
     f.logger.setLevel(DEBUG());
     f.adapter.log(INFO(), L"info");
     f.handler.flush();
     BOOST_CHECK(::lineCount(f.filename) == 1);
 }
 
+BOOST_AUTO_TEST_SUITE_END()
 BOOST_AUTO_TEST_SUITE_END()

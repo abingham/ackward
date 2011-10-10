@@ -7,14 +7,17 @@
 using namespace ackward::core;
 namespace bp=boost::python;
 
-BOOST_AUTO_TEST_SUITE( ExceptionTranslator_tests )
+BOOST_AUTO_TEST_SUITE( core )
+BOOST_AUTO_TEST_SUITE( ExceptionTranslator )
+
+using ackward::core::ExceptionTranslator;
 
 BOOST_AUTO_TEST_CASE( add )
 {
     ExceptionTranslator e;
-    e.add( builtins().attr("IndexError"), 
+    e.add( builtins().attr("IndexError"),
            throw_with_python_info<IndexError> );
-    
+
     bp::list l;
 
 
@@ -27,16 +30,16 @@ BOOST_AUTO_TEST_CASE( add )
         BOOST_CHECK_THROW(
             e.translate(getExceptionInfo()),
             IndexError);
-                        
+
     }
 }
 
 BOOST_AUTO_TEST_CASE( remove )
 {
     ExceptionTranslator e;
-    e.add( builtins().attr("IndexError"), 
+    e.add( builtins().attr("IndexError"),
            throw_with_python_info<IndexError> );
-    
+
     bp::list l;
 
     try {
@@ -48,21 +51,22 @@ BOOST_AUTO_TEST_CASE( remove )
         BOOST_CHECK_THROW(
             e.translate(getExceptionInfo()),
             IndexError);
-                        
+
     }
 
     e.remove(builtins().attr("IndexError"));
-    
+
     try {
 
         l[5];
 
     } catch (const bp::error_already_set&) {
-        
+
         e.translate(getExceptionInfo());
         BOOST_ASSERT(true);
-                        
+
     }
 }
 
-BOOST_AUTO_TEST_SUITE_END() 
+BOOST_AUTO_TEST_SUITE_END()
+BOOST_AUTO_TEST_SUITE_END()

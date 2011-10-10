@@ -10,7 +10,10 @@ using namespace boost::python;
 
 #include <iostream>
 
-BOOST_AUTO_TEST_SUITE( Formatter_methods )
+BOOST_AUTO_TEST_SUITE( logging )
+BOOST_AUTO_TEST_SUITE( Formatter )
+
+using ackward::logging::Formatter;
 
 BOOST_AUTO_TEST_CASE( constructor )
 {
@@ -37,7 +40,7 @@ BOOST_AUTO_TEST_CASE( formatTime )
     // TODO: Complete when LogRecord is constructible
     // LogRecord r;
     // f.formatTime(r);
-    // f.formatTime(r, 
+    // f.formatTime(r,
 };
 
 BOOST_AUTO_TEST_CASE( formatException )
@@ -57,4 +60,5 @@ BOOST_AUTO_TEST_CASE( formatException )
     }
 }
 
+BOOST_AUTO_TEST_SUITE_END()
 BOOST_AUTO_TEST_SUITE_END()

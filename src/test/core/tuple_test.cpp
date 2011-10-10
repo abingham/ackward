@@ -17,7 +17,10 @@ typedef boost::tuple<int, float, std::string> Tuple;
 
 }
 
-BOOST_AUTO_TEST_SUITE( Core_tuple )
+BOOST_AUTO_TEST_SUITE( core )
+BOOST_AUTO_TEST_SUITE( Tuple )
+
+using ::Tuple;
 
 BOOST_AUTO_TEST_CASE( register_converter )
 {
@@ -41,4 +44,5 @@ BOOST_AUTO_TEST_CASE( round_trip )
     BOOST_CHECK(boost::get<2>(t2) == "hola bili!");
 }
 
+BOOST_AUTO_TEST_SUITE_END()
 BOOST_AUTO_TEST_SUITE_END()

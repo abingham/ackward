@@ -4,7 +4,10 @@
 
 using namespace ackward::core;
 
-BOOST_AUTO_TEST_SUITE( version_test )
+BOOST_AUTO_TEST_SUITE( core )
+BOOST_AUTO_TEST_SUITE( versionInfo )
+
+using ackward::core::versionInfo;
 
 BOOST_AUTO_TEST_CASE( version_info )
 {
@@ -15,4 +18,5 @@ BOOST_AUTO_TEST_CASE( version_info )
 
 }
 
+BOOST_AUTO_TEST_SUITE_END()
 BOOST_AUTO_TEST_SUITE_END()

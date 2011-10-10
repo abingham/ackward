@@ -9,7 +9,10 @@
 
 using namespace ackward::logging;
 
-BOOST_AUTO_TEST_SUITE( LogRecord_methods )
+BOOST_AUTO_TEST_SUITE( logging )
+BOOST_AUTO_TEST_SUITE( LogRecord )
+
+using ackward::logging::LogRecord;
 
 BOOST_AUTO_TEST_CASE( constructor )
 {
@@ -19,7 +22,7 @@ BOOST_AUTO_TEST_CASE( constructor )
               101,
               L"Message",
               boost::python::tuple());
-  
+
     LogRecord(L"foo",
               DEBUG(),
               L"/some/path/name",
@@ -43,4 +46,5 @@ BOOST_AUTO_TEST_CASE( getMessage )
     BOOST_CHECK(r.getMessage() == L"Message");
 }
 
+BOOST_AUTO_TEST_SUITE_END()
 BOOST_AUTO_TEST_SUITE_END()
