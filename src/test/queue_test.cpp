@@ -40,7 +40,9 @@ BOOST_AUTO_TEST_CASE( queue_makeQueue )
 {
     BOOST_FOREACH(int t, ::qTypes) {
         Queue q = ::makeQ(t, 100);
-        BOOST_CHECK_EQUAL(q.qsize(), 0);
+        BOOST_CHECK_EQUAL(
+            q.qsize(),
+            static_cast<unsigned int>(0));
     }
 }
 
@@ -51,7 +53,9 @@ BOOST_AUTO_TEST_CASE( queue_put )
 
         for (int i = 0; i < 100; ++i)
         {
-            BOOST_CHECK_EQUAL(q.qsize(), i);
+            BOOST_CHECK_EQUAL(
+                q.qsize(),
+                static_cast<unsigned int>(i));
             q.put(i);
         }
 
@@ -70,15 +74,17 @@ BOOST_AUTO_TEST_CASE( queue_get )
 {
     BOOST_FOREACH(int t, ::qTypes) {
         Queue q = ::makeQ(t, 100);
-        
+
         for (int i = 0; i < 100; ++i)
         {
              q.put(i);
         }
-        
+
         for (int i = 0; i < 100; ++i)
         {
-            BOOST_CHECK_EQUAL(q.qsize(), 100 - i);
+            BOOST_CHECK_EQUAL(
+                q.qsize(),
+                static_cast<unsigned int>(100 - i));
             int val = q.get<int>();
             BOOST_CHECK_EQUAL(val, i);
         }
