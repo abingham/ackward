@@ -6,11 +6,13 @@
 
 using namespace ackward::time;
 
-BOOST_AUTO_TEST_SUITE( Time_module )
+BOOST_AUTO_TEST_SUITE( time_module )
+BOOST_AUTO_TEST_SUITE( module )
 
-BOOST_AUTO_TEST_CASE( time_time )
+BOOST_AUTO_TEST_CASE( ctor )
 {
     time();
 }
 
+BOOST_AUTO_TEST_SUITE_END()
 BOOST_AUTO_TEST_SUITE_END()
