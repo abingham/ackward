@@ -8,9 +8,7 @@ using namespace ackward::core;
 namespace bp=boost::python;
 
 BOOST_AUTO_TEST_SUITE( core )
-BOOST_AUTO_TEST_SUITE( ExceptionTranslator )
-
-using ackward::core::ExceptionTranslator;
+BOOST_AUTO_TEST_SUITE( exceptionTranslator )
 
 BOOST_AUTO_TEST_CASE( add )
 {

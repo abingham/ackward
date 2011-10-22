@@ -30,7 +30,7 @@ typedef UserHandler<PushBackHandlerImpl> PushBackHandler;
 }
 
 BOOST_AUTO_TEST_SUITE( logging )
-BOOST_AUTO_TEST_SUITE( UserHandler )
+BOOST_AUTO_TEST_SUITE( userHandler )
 
 BOOST_AUTO_TEST_CASE( basic )
 {

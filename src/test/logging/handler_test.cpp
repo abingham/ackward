@@ -14,7 +14,7 @@ using namespace ackward::logging::handlers;
 using namespace boost::python;
 
 BOOST_AUTO_TEST_SUITE( logging )
-BOOST_AUTO_TEST_SUITE( Handler )
+BOOST_AUTO_TEST_SUITE( handler )
 
 // Handler(boost::python::object);
 // void setLevel(Level l);

@@ -12,9 +12,7 @@ using namespace ackward::core;
 namespace bp=boost::python;
 
 BOOST_AUTO_TEST_SUITE( core )
-BOOST_AUTO_TEST_SUITE( ByteArray )
-
-using ackward::core::ByteArray;
+BOOST_AUTO_TEST_SUITE( bytearray )
 
 BOOST_AUTO_TEST_CASE( existing_ctor )
 {

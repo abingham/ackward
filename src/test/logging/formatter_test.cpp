@@ -11,9 +11,7 @@ using namespace boost::python;
 #include <iostream>
 
 BOOST_AUTO_TEST_SUITE( logging )
-BOOST_AUTO_TEST_SUITE( Formatter )
-
-using ackward::logging::Formatter;
+BOOST_AUTO_TEST_SUITE( formatter )
 
 BOOST_AUTO_TEST_CASE( constructor )
 {

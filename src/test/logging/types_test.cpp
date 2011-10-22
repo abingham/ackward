@@ -5,7 +5,7 @@
 using namespace ackward::logging;
 
 BOOST_AUTO_TEST_SUITE( logging )
-BOOST_AUTO_TEST_SUITE( Types )
+BOOST_AUTO_TEST_SUITE( types )
 
 BOOST_AUTO_TEST_CASE( levels )
 {

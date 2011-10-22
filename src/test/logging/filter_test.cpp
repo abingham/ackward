@@ -9,9 +9,7 @@
 using namespace ackward::logging;
 
 BOOST_AUTO_TEST_SUITE( logging )
-BOOST_AUTO_TEST_SUITE( Filter )
-
-using ackward::logging::Filter;
+BOOST_AUTO_TEST_SUITE( filter )
 
 BOOST_AUTO_TEST_CASE( empty_constructor )
 {

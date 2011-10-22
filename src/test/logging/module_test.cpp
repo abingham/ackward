@@ -12,7 +12,7 @@ using namespace ackward::logging;
 // Module-level methods
 
 BOOST_AUTO_TEST_SUITE( logging )
-BOOST_AUTO_TEST_SUITE( Module )
+BOOST_AUTO_TEST_SUITE( module )
 
 BOOST_AUTO_TEST_CASE( getLogger_test )
 {

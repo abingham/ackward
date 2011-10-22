@@ -22,9 +22,7 @@ namespace bfs=boost::filesystem;
 
 // Logger method
 BOOST_AUTO_TEST_SUITE( logging )
-BOOST_AUTO_TEST_SUITE( Logger )
-
-using ackward::logging::Logger;
+BOOST_AUTO_TEST_SUITE( logger )
 
 BOOST_AUTO_TEST_CASE( propagate )
 {

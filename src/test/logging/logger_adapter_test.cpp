@@ -34,7 +34,7 @@ struct Fixture : LoggerFixture
 
 // Logger method
 BOOST_AUTO_TEST_SUITE( logging )
-BOOST_AUTO_TEST_SUITE( LoggerAdapter )
+BOOST_AUTO_TEST_SUITE( loggerAdapter )
 
 BOOST_AUTO_TEST_CASE( debug )
 {

@@ -10,9 +10,7 @@
 using namespace ackward::logging;
 
 BOOST_AUTO_TEST_SUITE( logging )
-BOOST_AUTO_TEST_SUITE( LogRecord )
-
-using ackward::logging::LogRecord;
+BOOST_AUTO_TEST_SUITE( logRecord )
 
 BOOST_AUTO_TEST_CASE( constructor )
 {

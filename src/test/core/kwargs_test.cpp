@@ -9,9 +9,7 @@ using namespace ackward::core;
 using namespace boost::python;
 
 BOOST_AUTO_TEST_SUITE( core )
-BOOST_AUTO_TEST_SUITE( Kwargs )
-
-using ackward::core::Kwargs;
+BOOST_AUTO_TEST_SUITE( kwargs )
 
 BOOST_AUTO_TEST_CASE( why_is_this_a_problem )
 {

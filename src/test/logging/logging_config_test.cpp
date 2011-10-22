@@ -59,7 +59,7 @@ struct FileConfigFixture
 
 // logging.config methods
 BOOST_AUTO_TEST_SUITE( logging )
-BOOST_AUTO_TEST_SUITE( Config )
+BOOST_AUTO_TEST_SUITE( config )
 
 BOOST_AUTO_TEST_CASE( fileConfig_1 )
 {
