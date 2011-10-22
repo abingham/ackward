@@ -39,7 +39,7 @@ sources = [
     'timedelta_test.cpp',
     'tzinfo_test.cpp',
     'util.cpp',
-    'uuid_test.cpp',
+    'uuid/uuid_test.cpp',
     ]
 
 build.program(

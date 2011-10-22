@@ -12,14 +12,14 @@
 #include <ackward/uuid/Module.hpp>
 #include <ackward/uuid/UUID.hpp>
 
-#include "disable_signal.hpp"
+#include "../disable_signal.hpp"
 
 #include <iostream>
 
 using namespace ackward::core;
 using namespace ackward::uuid;
 
-BOOST_AUTO_TEST_SUITE( UUID_methods )
+BOOST_AUTO_TEST_SUITE( uuid )
 
 BOOST_AUTO_TEST_CASE( uuid_fromHex )
 {
@@ -27,7 +27,7 @@ BOOST_AUTO_TEST_CASE( uuid_fromHex )
     values.push_back("{12345678-1234-5678-1234-567812345678}");
     values.push_back("12345678123456781234567812345678");
     values.push_back("urn:uuid:12345678-1234-5678-1234-567812345678");
-    
+
     BOOST_FOREACH(const std::string& value, values)
     {
         UUID uuid = UUID::fromHex(value);
@@ -59,13 +59,13 @@ BOOST_AUTO_TEST_CASE( uuid_fromBytes_LE )
 BOOST_AUTO_TEST_CASE( uuid_fromFields )
 {
     Fields f = boost::make_tuple(
-        0x12345678, 
-        0x1234, 
-        0x5678, 
-        0x12, 
-        0x34, 
+        0x12345678,
+        0x1234,
+        0x5678,
+        0x12,
+        0x34,
         0x567812345678);
-    
+
     UUID uuid = UUID::fromFields(f);
 
     Fields f2 = uuid.fields;
@@ -78,11 +78,11 @@ BOOST_AUTO_TEST_CASE( uuid_fromFields )
     // BOOST_CHECK_THROW(
     //     UUID::fromFields(
     //         boost::make_tuple(
-    //             0x12345678, 
-    //             0x1234, 
-    //             0x5678, 
-    //             0x12, 
-    //             0x34, 
+    //             0x12345678,
+    //             0x1234,
+    //             0x5678,
+    //             0x12,
+    //             0x34,
     //             0xFFFFFFFFFFFF)),
     //     ValueError);
 }
@@ -109,11 +109,11 @@ BOOST_AUTO_TEST_CASE( uuid_version )
     BOOST_CHECK(
         UUID::fromFields(
             boost::make_tuple(
-                0x12345678, 
-                0x1234, 
-                0x5678, 
-                0x12, 
-                0x34, 
+                0x12345678,
+                0x1234,
+                0x5678,
+                0x12,
+                0x34,
                 0x567812345678)).version() == 0);
 }
 
@@ -175,11 +175,11 @@ BOOST_AUTO_TEST_CASE( uuid_version_bytes_le )
 BOOST_AUTO_TEST_CASE( uuid_version_fields )
 {
     Fields f = boost::make_tuple(
-        0x12345678, 
-        0x1234, 
-        0x5678, 
-        0x12, 
-        0x34, 
+        0x12345678,
+        0x1234,
+        0x5678,
+        0x12,
+        0x34,
         0x567812345678);
 
     for (uint8_t i = 1; i < 6; ++i)
@@ -235,7 +235,7 @@ BOOST_AUTO_TEST_CASE( uuid_uuid1_2 )
 
 BOOST_AUTO_TEST_CASE( uuid_uuid3 )
 {
-    const std::list<UUID> namespaces = 
+    const std::list<UUID> namespaces =
         boost::assign::list_of
         (NAMESPACE_DNS())
         (NAMESPACE_URL())
@@ -258,7 +258,7 @@ BOOST_AUTO_TEST_CASE( uuid_uuid4 )
 
 BOOST_AUTO_TEST_CASE( uuid_uuid5 )
 {
-    const std::list<UUID> namespaces = 
+    const std::list<UUID> namespaces =
         boost::assign::list_of
         (NAMESPACE_DNS())
         (NAMESPACE_URL())
@@ -316,13 +316,13 @@ BOOST_AUTO_TEST_CASE( uuid_example_test )
     // ignored)
     UUID x = UUID::fromHex("{00010203-0405-0607-0809-0a0b0c0d0e0f}");
     BOOST_CHECK( ackward::core::str(x) == L"00010203-0405-0607-0809-0a0b0c0d0e0f" );
-    
+
     x = UUID::fromBytes(b);
     BOOST_CHECK( Bytes(x.bytes) == b );
 
     // make a UUID from a 16-byte string
     UUID::fromBytes(Bytes(x.bytes));
-    
+
     UUID::fromHex("00010203-0405-0607-0809-0a0b0c0d0e0f");
 }
 
