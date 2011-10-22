@@ -18,7 +18,8 @@ using namespace ackward::core;
 using namespace ackward::datetime;
 using namespace boost::python;
 
-BOOST_AUTO_TEST_SUITE( Date_methods )
+BOOST_AUTO_TEST_SUITE( datetime )
+BOOST_AUTO_TEST_SUITE( date )
 
 BOOST_AUTO_TEST_CASE( objectConstructor)
 {
@@ -55,11 +56,11 @@ BOOST_AUTO_TEST_CASE( normalConstructor)
     // year too small
     if (MINYEAR() > 0)
     {
-        BOOST_CHECK_THROW(         
+        BOOST_CHECK_THROW(
             Date d(MINYEAR() - 1, 1, 1),
             ValueError);
     }
-    
+
     // year too big
     if (MAXYEAR() < std::numeric_limits<unsigned int>::max())
     {
@@ -87,7 +88,7 @@ BOOST_AUTO_TEST_CASE( normalConstructor)
     BOOST_CHECK_THROW(
         Date d(MINYEAR(), 1, 32),
         ValueError);
-    
+
 }
 
 BOOST_AUTO_TEST_CASE( today )
@@ -110,7 +111,7 @@ BOOST_AUTO_TEST_CASE( fromordinal )
 
     d = Date::fromordinal(Date::max().toordinal() / 2);
     BOOST_ASSERT(d.toordinal() == Date::max().toordinal() / 2);
-    
+
     BOOST_CHECK_THROW(
         d = Date::fromordinal(0),
         ValueError);
@@ -199,4 +200,5 @@ BOOST_AUTO_TEST_CASE( strftime_test )
     // TODO: A more realistic test?
 }
 
+BOOST_AUTO_TEST_SUITE_END()
 BOOST_AUTO_TEST_SUITE_END()

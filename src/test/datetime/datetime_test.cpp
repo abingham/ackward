@@ -9,7 +9,8 @@ using namespace ackward::core;
 using namespace ackward::datetime;
 using namespace boost::python;
 
-BOOST_AUTO_TEST_SUITE( DateTime_methods )
+BOOST_AUTO_TEST_SUITE( datetime )
+BOOST_AUTO_TEST_SUITE( datetime )
 
 BOOST_AUTO_TEST_CASE( objectConstructor)
 {
@@ -37,4 +38,5 @@ BOOST_AUTO_TEST_CASE( fromtimestamp )
     DateTime d = DateTime::fromtimestamp(ackward::time::time());
 }
 
+BOOST_AUTO_TEST_SUITE_END()
 BOOST_AUTO_TEST_SUITE_END()

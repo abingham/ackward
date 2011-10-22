@@ -9,7 +9,8 @@
 
 using namespace ackward::datetime;
 
-BOOST_AUTO_TEST_SUITE( TimeDelta_methods )
+BOOST_AUTO_TEST_SUITE( datetime )
+BOOST_AUTO_TEST_SUITE( timedelta )
 
 BOOST_AUTO_TEST_CASE( constructor )
 {
@@ -126,7 +127,7 @@ BOOST_AUTO_TEST_CASE( equal )
     TimeDelta td1(123, 456);
     TimeDelta td2(123, 456);
     TimeDelta td3(456, 123);
-    
+
     BOOST_ASSERT(td1 == td2);
     BOOST_ASSERT(!(td1 == td3));
 }
@@ -136,7 +137,7 @@ BOOST_AUTO_TEST_CASE( not_equal )
     TimeDelta td1(123, 456);
     TimeDelta td2(123, 456);
     TimeDelta td3(456, 123);
-    
+
     BOOST_ASSERT(td1 != td3);
     BOOST_ASSERT(!(td1 != td2));
 }
@@ -155,7 +156,7 @@ BOOST_AUTO_TEST_CASE( less_than_equal )
     TimeDelta td1(123, 456);
     TimeDelta td2(123, 456);
     TimeDelta td3(456, 123);
-    
+
     BOOST_ASSERT(td1 <= td2);
     BOOST_ASSERT(td1 <= td3);
     BOOST_ASSERT(!(td3 <= td1));
@@ -175,10 +176,11 @@ BOOST_AUTO_TEST_CASE( greater_than_equal )
     TimeDelta td1(123, 456);
     TimeDelta td2(123, 456);
     TimeDelta td3(456, 123);
-    
+
     BOOST_ASSERT(td1 >= td2);
     BOOST_ASSERT(td3 >= td1);
     BOOST_ASSERT(!(td1 >= td3));
 }
 
+BOOST_AUTO_TEST_SUITE_END()
 BOOST_AUTO_TEST_SUITE_END()

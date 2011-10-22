@@ -9,7 +9,8 @@
 using namespace ackward::core;
 using namespace ackward::datetime;
 
-BOOST_AUTO_TEST_SUITE( DateTime_Time_methods )
+BOOST_AUTO_TEST_SUITE( timedelta )
+BOOST_AUTO_TEST_SUITE( time )
 
 BOOST_AUTO_TEST_CASE( constructor )
 {
@@ -107,8 +108,9 @@ BOOST_AUTO_TEST_CASE( isoformat )
 BOOST_AUTO_TEST_CASE( strftime )
 {
     Time t(1,2,3,4);
-    std::wstring s = 
+    std::wstring s =
         t.strftime(L"%c");
 }
 
+BOOST_AUTO_TEST_SUITE_END()
 BOOST_AUTO_TEST_SUITE_END()

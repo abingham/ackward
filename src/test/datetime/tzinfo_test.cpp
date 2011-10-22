@@ -16,25 +16,25 @@ namespace
 struct TZImpl
 {
 
-    static TimeDelta 
+    static TimeDelta
     dst(const DateTime& datetime)
         {
             return TimeDelta();
         }
 
-    static DateTime 
+    static DateTime
     fromutc(const DateTime& dt)
         {
             return DateTime::now();
         }
 
-    static std::wstring 
+    static std::wstring
     tzname()
         {
             return L"test_tzinfo";
         }
 
-    static TimeDelta 
+    static TimeDelta
     utcoffset(const DateTime& dt)
         {
             return TimeDelta();
@@ -43,7 +43,8 @@ struct TZImpl
 
 }
 
-BOOST_AUTO_TEST_SUITE( TZInfo_suite )
+BOOST_AUTO_TEST_SUITE( datetime )
+BOOST_AUTO_TEST_SUITE( tzinfo )
 
 BOOST_AUTO_TEST_CASE( constructor_test )
 {
@@ -58,4 +59,5 @@ BOOST_AUTO_TEST_CASE( dst_test )
     // tzi.dst(dt);
 }
 
+BOOST_AUTO_TEST_SUITE_END()
 BOOST_AUTO_TEST_SUITE_END()
