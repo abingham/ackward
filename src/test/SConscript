@@ -33,7 +33,7 @@ sources = [
     'logging/module_test.cpp',
     'logging/types_test.cpp',
     'logging/user_handler_test.cpp',
-    'queue_test.cpp',
+    'queue/queue_test.cpp',
     'test.cpp',
     'time/time_test.cpp',
     'timedelta_test.cpp',

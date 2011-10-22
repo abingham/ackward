@@ -34,7 +34,7 @@ Queue makeQ(int t, int maxsize)
 
 }
 
-BOOST_AUTO_TEST_SUITE( Queue_methods )
+BOOST_AUTO_TEST_SUITE( queue )
 
 BOOST_AUTO_TEST_CASE( queue_makeQueue )
 {
