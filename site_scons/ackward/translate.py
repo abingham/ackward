@@ -1,4 +1,4 @@
-import imp, sys
+import imp, sys, threading
 
 class Cache:
     '''Imported module cache.
@@ -7,25 +7,27 @@ class Cache:
     '''
     cache = {}
     count = 0
+    load_lock = threading.Lock()
 
     @staticmethod
     def load(infile):
-        try:
-            mod = Cache.cache[infile]
-        except KeyError:
-            pass
+        with Cache.load_lock:
+            try:
+                mod = Cache.cache[infile]
+            except KeyError:
+                pass
 
-        with open(infile, 'r') as f:
-            mod = imp.load_module(
-                'akw_input_{0}'.format(Cache.count), 
-                f, 
-                infile, 
-                ('', 'r', imp.PY_SOURCE))
+            with open(infile, 'r') as f:
+                mod = imp.load_module(
+                    'akw_input_{0}'.format(Cache.count),
+                    f,
+                    infile,
+                    ('', 'r', imp.PY_SOURCE))
 
-        Cache.count += 1
-        Cache.cache[infile] = mod
+            Cache.count += 1
+            Cache.cache[infile] = mod
 
-        return mod
+            return mod
 
 def process_header(elem, mod, symbols={}):
     symbols = dict(symbols)
@@ -58,23 +60,25 @@ def process_impl(elem, mod, symbols={}):
     for line in elem.close_impl(mod, symbols):
         yield line
 
+translate_lock = threading.Lock()
 def _translate(env, processor, infile, outfile=None):
     mod = Cache.load(infile)
 
-    body = []
+    with translate_lock:
+        body = []
 
-    top_elem = mod.definition(env)
+        top_elem = mod.definition(env)
 
-    def proc(f):
-        for line in processor(top_elem, mod):
-            f.write(line)
-            f.write('\n')
+        def proc(f):
+            for line in processor(top_elem, mod):
+                f.write(line)
+                f.write('\n')
 
-    if outfile:
-        with open(outfile, 'w') as f:
-            proc(f)
-    else:
-        proc(sys.stdout)
+        if outfile:
+            with open(outfile, 'w') as f:
+                proc(f)
+        else:
+            proc(sys.stdout)
 
 def translate_header(env, infile, outfile=None):
     _translate(env, process_header, infile, outfile)
