@@ -7,10 +7,10 @@ def init_variables(vars):
     '''
     vars.Add('BOOST_INCLUDE_DIR', 'Location of boost headers', '/usr/include')
     vars.Add('BOOST_LIB_DIR', 'Location of boost libraries', '/usr/lib')
-    vars.Add('BOOST_LIBS', 
-             'Boost libraries to link', 
+    vars.Add('BOOST_LIBS',
+             'Boost libraries to link',
              ['boost_filesystem', 'boost_python', 'boost_system'])
-    
+
     vars.Add('PYTHON_INCLUDE_DIR', 'Location of Python headers', '/usr/include/python2.6')
     vars.Add('PYTHON_LIB_DIR', 'Location of Python libraries', '/usr/lib')
     vars.Add('PYTHON_LIBS', 'Python libraries to link', ['python2.6'])
@@ -22,11 +22,11 @@ def init_variables(vars):
 
     vars.Add('BUILD_DIR', 'Build-product directory', None)
 
-    vars.Add('VERBOSE', 'Print extra info about the build', 0)
+    vars.Add('LOG_LEVEL', 'Print extra info about the build', 'warning')
 
     vars.Add('INSTALL_DIR', 'Installation directory',
              os.path.join('#', 'install', '$VARIANT'))
-    
+
     return vars
 
 def check_python_version(v):

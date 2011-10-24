@@ -7,14 +7,25 @@ import bygg
 from .variables import init_variables, check_config
 
 def _init_logging(env):
-    if int(env['VERBOSE']) == 1:
-        level = logging.INFO
-    else:
-        level = logging.WARNING
-    
-    logging.basicConfig(stream=sys.stdout,
-                        level=level,
-                        format='[%(name)s] %(message)s')
+    levels = {
+        'debug': logging.DEBUG,
+        'info': logging.INFO,
+        'warning': logging.WARNING,
+        'error': logging.ERROR,
+        'critical': logging.CRITICAL
+        }
+
+    try:
+        level = levels[env['LOG_LEVEL']]
+    except KeyError:
+        raise KeyError(
+            'Illegal LOG_LEVEL: {}'.format(
+                env['LOG_LEVEL']))
+
+    logging.basicConfig(
+        stream=sys.stdout,
+        level=level,
+        format='[%(name)s] %(message)s')
 
 def _init_compiler(env):
     if 'g++' in env['TOOLS']:
@@ -45,7 +56,7 @@ def shared_library(env,
         sources=sources,
         headers=headers,
         lib_name='ackward_{0}-{1}'.format(
-            name, 
+            name,
             bygg.variant.active_variant().name),
         lib_dir=os.path.join('$INSTALL_DIR', 'lib'),
         include_dir=os.path.join('$INSTALL_DIR', 'include'),
