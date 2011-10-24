@@ -17,12 +17,12 @@ int main(int, char**)
 
     // Set the logging level
     log.setLevel(DEBUG());
-    
+
     // Query the effective level of the logger
     Level lvl = log.getEffectiveLevel();
 
     // Log a message to the logger
-    log.log(ERROR(), L"The roof is on fire!");
+    log.log(lvl, L"The roof is on fire!");
 
     return 0;
 }

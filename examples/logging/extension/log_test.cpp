@@ -1,3 +1,4 @@
+#include <Python.h>
 #include <string>
 
 #include <boost/python.hpp>
@@ -9,7 +10,7 @@ namespace bp=boost::python;
 namespace
 {
 
-void log_message(bp::object logger,         // 2 
+void log_message(bp::object logger,         // 2
                  const std::wstring& msg)
 {
     ackward::logging::Logger l(logger);     // 3

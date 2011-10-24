@@ -12,12 +12,12 @@ int main(int argc, char** argv)
 {
     // Create some test data
     std::vector<unsigned char> data(100, 0xab);
-    
+
     // Construct a ByteArray from the test data.
     ac::ByteArray arr(data.begin(), data.end());
 
     // Check the data in the ByteArray.
-    assert(arr.size() == data.size());
+    assert(static_cast<std::size_t>(arr.size()) == data.size());
 
     BOOST_FOREACH(unsigned char c, arr)
     {
