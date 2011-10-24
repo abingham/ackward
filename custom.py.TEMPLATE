@@ -1,5 +1,5 @@
 # Use this file to customize your build. Each value specified in here
-# controls some aspect of your build, and each value has a default. 
+# controls some aspect of your build, and each value has a default.
 
 # To set some value, just uncomment the appropriate line and set the
 # value.
@@ -17,5 +17,5 @@
 
 # VARIANT='release' # options: debug, release
 
-# VERBOSE=None
+# LOG_LEVEL='warning'
 # BUILD_DIR=None
