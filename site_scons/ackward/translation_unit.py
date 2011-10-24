@@ -4,6 +4,7 @@ from itertools import chain
 from .element import Element
 from .trace import trace
 
+@trace
 def _declare(decl):
     '''Generate a single forward declaration statement.
     '''
@@ -19,7 +20,8 @@ def _declare(decl):
             _declare(decl[1:]))
 
 class TranslationUnit(Element):
-    def __init__(self, 
+    @trace
+    def __init__(self,
                  guard=None,
                  *args,
                  **kwargs):
@@ -32,7 +34,7 @@ class TranslationUnit(Element):
         if not guard:
             mod_name = mod.__file__.replace(os.path.sep, '_')
             mod_name = mod_name.replace('.', '_')
-            guard = 'INCLUDE_{0}'.format(mod_name.upper())        
+            guard = 'INCLUDE_{0}'.format(mod_name.upper())
 
         # generate include guard
         yield '#ifndef {0}'.format(guard)
@@ -62,4 +64,4 @@ class TranslationUnit(Element):
         # usings
         for using in set(chain(*[e.using for e in self])):
             yield 'using {0};'.format(using)
-        
+

@@ -22,7 +22,9 @@ void $name($impl_signature) {
 class Function(SigTemplateElement):
     '''A basic free function.
     '''
-    def __init__(self, 
+
+    @trace
+    def __init__(self,
                  name,
                  return_type='void',
                  signature=[],

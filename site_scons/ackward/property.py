@@ -32,7 +32,7 @@ class Property(SigTemplateElement):
               read-write.
         '''
         header = header_const if read_only else header_non_const
-            
+
         SigTemplateElement.__init__(
             self,
             header_includes=[
@@ -47,6 +47,7 @@ class Property(SigTemplateElement):
                 },
             **kwargs)
 
+    @trace
     def initializers(self):
         return [
             '{0}(obj(), "{1}")'.format(self.symbols['property_name'],

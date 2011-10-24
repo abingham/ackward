@@ -1,6 +1,7 @@
 import string
 
 from .signature import build_signature
+from .trace import trace
 
 class Element:
     '''An Element represents a concept in an ackward mapping.
@@ -35,10 +36,11 @@ class Element:
       * symbols: The symbols defined in the overall symbol map when
         this Element is active.
     '''
-    
+
     _stack = []
 
-    def __init__(self, 
+    @trace
+    def __init__(self,
                  children=None,
                  header_includes=None,
                  impl_includes=None,
@@ -53,12 +55,13 @@ class Element:
         self.forward_declarations = list(forward_declarations or [])
         self.using = list(using or [])
         self.symbols = symbols or {}
-        
+
         self.doc = doc
 
         if Element._stack:
             Element._stack[-1] += self
 
+    @trace
     def open_header(self, mod, symbols):
         '''Called before processing `children` when generating a
         header.
@@ -74,6 +77,7 @@ class Element:
 
         return ['']
 
+    @trace
     def close_header(self, mod, symbols):
         '''Called after processing `children` when generating a
         header.
@@ -88,6 +92,7 @@ class Element:
         '''
         return ['']
 
+    @trace
     def open_impl(self, mod, symbols):
         '''Called before processing `children` when generating an
         implementation file.
@@ -102,6 +107,7 @@ class Element:
         '''
         return ['']
 
+    @trace
     def close_impl(self, mod, symbols):
         '''Called after processing `children` when generating an
         implementation file.
@@ -116,8 +122,9 @@ class Element:
         '''
         return ['']
 
+    @trace
     def __iter__(self):
-        '''Iterate of the Element tree rooted at `self`. 
+        '''Iterate of the Element tree rooted at `self`.
 
         This includes iteration of `self`.
 
@@ -129,12 +136,14 @@ class Element:
             for e in c:
                 yield e
 
+    @trace
     def __iadd__(self, child):
         '''Append a child to the Element.
         '''
         self.children.append(child)
         return self
 
+    @trace
     def __enter__(self):
         '''Make this the auto-parent for Elements created inside the
         associated with-statement:
@@ -142,11 +151,13 @@ class Element:
         Element._stack.append(self)
         return self
 
+    @trace
     def __exit__(self, t, v, tb):
         '''Stop using this as the auto-parent target.
         '''
         Element._stack.pop()
 
+    @trace
     def render_doc(self):
         '''Return the text to be used for the element's documentation.
         '''
@@ -154,8 +165,9 @@ class Element:
             yield '''/**
                      {0}
                      */'''.format(self.doc)
-        
+
 class TemplateElement(Element):
+    @trace
     def __init__(self,
                  open_header_template='',
                  close_header_template='',
@@ -168,25 +180,30 @@ class TemplateElement(Element):
         self.close_header_template = close_header_template
         self.open_impl_template = open_impl_template
         self.close_impl_template = close_impl_template
-        
+
+    @trace
     def open_header(self, mod, symbols):
         t = string.Template(self.open_header_template)
         yield t.substitute(symbols)
 
+    @trace
     def close_header(self, mod, symbols):
         t = string.Template(self.close_header_template)
         yield t.substitute(symbols)
 
+    @trace
     def open_impl(self, mod, symbols):
         t = string.Template(self.open_impl_template)
         yield t.substitute(symbols)
 
+    @trace
     def close_impl(self, mod, symbols):
         t = string.Template(self.close_impl_template)
         yield t.substitute(symbols)
 
 
 class SigTemplateElement(TemplateElement):
+    @trace
     def __init__(self,
                  symbols,
                  header_includes=None,

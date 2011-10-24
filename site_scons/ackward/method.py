@@ -22,7 +22,7 @@ void $class_name::$method_name($impl_signature) $const {
 class Method(SigTemplateElement):
     '''A basic method of a class.
     '''
-    
+
     VIRTUAL=1
     ABSTRACT=2
 
@@ -53,7 +53,7 @@ class Method(SigTemplateElement):
         elif return_type == 'void':
             implt = impl_void_template
         else:
-            implt = impl_template 
+            implt = impl_template
 
         SigTemplateElement.__init__(
             self,
@@ -73,6 +73,7 @@ class Method(SigTemplateElement):
                 },
             doc=doc)
 
+@trace
 def method(sig, doc=None):
     '''Produce a Method object based on a string description of a method.
 

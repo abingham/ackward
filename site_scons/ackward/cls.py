@@ -75,13 +75,14 @@ class Class(TemplateElement):
             impl_includes=[
                 ('ackward','core','GetClass.hpp'),
                 ],
-            symbols={ 
+            symbols={
                 'class_name' : name,
                 'wrapped_class' : wrapped_class,
                 'bases' : bases,
                 },
             doc=doc)
 
+    @trace
     def open_impl(self, mod, symbols):
         # Gather up any constructor initializers that the class
         # children might have.

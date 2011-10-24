@@ -1,4 +1,5 @@
 from .element import TemplateElement
+from .trace import trace
 
 header_template = 'boost::python::object $module_function();'
 
@@ -21,7 +22,9 @@ boost::python::object $module_function()
 class Module(TemplateElement):
     '''Generates a method that returns a python module object.
     '''
-    def __init__(self, 
+
+    @trace
+    def __init__(self,
                  name,
                  function_name='module'):
         '''Create a new Module object.

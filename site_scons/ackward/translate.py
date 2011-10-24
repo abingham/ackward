@@ -1,4 +1,5 @@
 import imp, sys, threading
+from .trace import trace
 
 class Cache:
     '''Imported module cache.
@@ -10,6 +11,7 @@ class Cache:
     load_lock = threading.Lock()
 
     @staticmethod
+    @trace
     def load(infile):
         with Cache.load_lock:
             try:
@@ -29,6 +31,7 @@ class Cache:
 
             return mod
 
+@trace
 def process_header(elem, mod, symbols={}):
     symbols = dict(symbols)
     symbols.update(elem.symbols)
@@ -46,6 +49,7 @@ def process_header(elem, mod, symbols={}):
     for line in elem.close_header(mod, symbols):
         yield line
 
+@trace
 def process_impl(elem, mod, symbols={}):
     symbols = dict(symbols)
     symbols.update(elem.symbols)
@@ -61,6 +65,8 @@ def process_impl(elem, mod, symbols={}):
         yield line
 
 translate_lock = threading.Lock()
+
+@trace
 def _translate(env, processor, infile, outfile=None):
     mod = Cache.load(infile)
 
@@ -80,8 +86,10 @@ def _translate(env, processor, infile, outfile=None):
         else:
             proc(sys.stdout)
 
+@trace
 def translate_header(env, infile, outfile=None):
     _translate(env, process_header, infile, outfile)
 
+@trace
 def translate_impl(env, infile, outfile=None):
     _translate(env, process_impl, infile, outfile)

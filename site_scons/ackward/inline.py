@@ -1,8 +1,11 @@
 from .element import TemplateElement
+from .trace import trace
 
 class InlineFunction(TemplateElement):
     '''Simple, verbatim inline code for a header file.
     '''
+
+    @trace
     def __init__(self,
                  code,
                  *args,
