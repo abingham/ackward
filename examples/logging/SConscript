@@ -31,5 +31,4 @@ for name, sources in programs.items():
         env,
         name,
         sources,
-        deps=['core',
-              'logging'])
+        deps=['logging'])

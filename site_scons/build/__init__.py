@@ -55,6 +55,7 @@ def shared_library(env,
         name=name,
         sources=sources,
         headers=headers,
+        deps=deps,
         lib_name='ackward_{0}-{1}'.format(
             name,
             bygg.variant.active_variant().name),
