@@ -22,6 +22,7 @@ programs = {
     'null_handler_example': ['NullHandler.cpp'],
     'socket_handler_example': ['SocketHandler.cpp'],
     'stream_handler_example': ['StreamHandler.cpp'],
+    'user_filter_example': ['UserFilter.cpp'],
     'user_handler_example' : ['UserHandler.cpp'],
     'watche_file_handler_example': ['WatchedFileHandler.cpp'],
     }
