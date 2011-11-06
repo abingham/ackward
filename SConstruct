@@ -1,4 +1,4 @@
-import imp, os
+import imp, logging, os
 
 import bygg
 import build
@@ -58,15 +58,15 @@ subdirs = [
 
 for subdir in subdirs:
     try:
-        vdir = os.path.join(env['BUILD_DIR'], 
-                            env['VARIANT'], 
+        vdir = os.path.join(env['BUILD_DIR'],
+                            env['VARIANT'],
                             subdir)
     except KeyError:
         vdir = None
 
     env.SConscript(
-        os.path.join(subdir, 
-                     'SConscript'), 
+        os.path.join(subdir,
+                     'SConscript'),
         exports='env',
         variant_dir=vdir)
 
