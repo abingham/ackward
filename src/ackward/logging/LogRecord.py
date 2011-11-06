@@ -2,6 +2,7 @@ from ackward import (Class,
                      Constructor,
                      method,
                      Namespace,
+                     Property,
                      TranslationUnit)
 
 log_record_doc='''\\rst
@@ -20,9 +21,9 @@ return the actual format string to be used.
 def tunit():
     return TranslationUnit(
         guard = 'INCLUDE_ACKWARD_LOGGING_LOG_RECORD_HPP',
-        forward_declarations = [('boost', 'python', 'class tuple')],
         header_includes=[
             ('string',),
+            ('boost', 'python', 'tuple.hpp'),
             ('ackward', 'logging', 'Types.hpp'),
             ],
         impl_includes=[
@@ -52,5 +53,40 @@ def definition(env):
 
                 method('std::wstring getMessage() const',
                        doc=get_message_doc)
+
+                properties = [
+                    ('args', 'boost::python::tuple'),
+                    ('asctime', 'std::wstring',
+                     'Only exists after the LogRecord is emitted.'),
+                    ('created', 'float'),
+                    ('exc_info', 'boost::python::tuple',
+                     'Will be "None" if there is not exception info.'),
+                    ('filename', 'std::wstring'),
+                    ('funcName', 'std::wstring',
+                     'Will be "None" prior to being emitted.'),
+                    ('levelname', 'std::wstring'),
+                    ('levelno', 'int'),
+                    ('lineno', 'int'),
+                    ('module', 'std::wstring'),
+                    ('msecs', 'float'),
+                    ('message', 'std::wstring',
+                     'Will be "None" prior to being emitted.'),
+                    ('msg', 'std::wstring'),
+                    ('name', 'std::wstring'),
+                    ('pathname', 'std::wstring'),
+                    ('process', 'int'),
+                    ('processName', 'std::wstring'),
+                    ('relativeCreated', 'float'),
+                    ('stack_info', 'boost::python::object'),
+                    ('thread', 'unsigned long'),
+                    ('threadName', 'std::wstring')
+                    ]
+
+                for prop in properties:
+                    if len(prop) == 3:
+                        prop_name,prop_type,doc = prop
+                    else:
+                        prop_name,prop_type,doc = prop + (None,)
+                    Property(prop_name, prop_type, read_only=True,doc=doc)
 
     return t
