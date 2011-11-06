@@ -13,12 +13,12 @@
 #include <ackward/logging/LogRecord.hpp>
 #include <ackward/logging/Module.hpp>
 
-namespace ackward { 
+namespace ackward {
 namespace logging {
 
 /** \rst
 
-    A ``Handler`` subclass that allows you to define new ``Handler``\ s 
+    A ``Handler`` subclass that allows you to define new ``Handler``\ s
     in C++.
 
     ``UserHandler`` forwards "emit" calls to a user-defined type which
@@ -34,7 +34,7 @@ namespace logging {
       }
 
     Then, create the UserHandler instance::
-    
+
       typedef UserHandler<MyHandlerImpl> MyHandler;
 
       Logger l = getLogger();
@@ -49,15 +49,18 @@ class UserHandler : public Handler
 public:
 
     /** The pimpl-body for a UserHandler.
-     */ 
+     */
     struct Body
     {
         Body(boost::python::object);
         ~Body();
 
         static void emit(
-            UserHandler<T>::Body* b, 
+            UserHandler<T>::Body* b,
             const LogRecord& lr);
+
+        static void null(
+            const LogRecord& lr) {}
 
         T impl_;
 
@@ -88,35 +91,55 @@ UserHandler<T>::Body::Body(boost::python::object hdlr) :
     // Grab a pointer to the static emit() method.
     boost::function<void(Body*, const LogRecord&)> f =
         &UserHandler<T>::Body::emit;
-    
+
     // These args tell make_function() the signature of emit() after
     // "this" is bound to the first argument.
     typedef boost::mpl::vector<
         void,
         const LogRecord&> EmitArgs;
-    
+
     // This makes a python callable which calls the static emit
     // method.
-    boost::python::object func = 
+    boost::python::object func =
         boost::python::make_function(
             boost::bind(f, this, _1),
             boost::python::default_call_policies(),
             EmitArgs());
-    
-    // Assign the python callable we just constructed to the "emit"
-    // attribute of the handler.
+
     hdlr_.attr("emit") = func;
 }
 
 template <typename T>
 UserHandler<T>::Body::~Body()
 {
+    // Reset the "emit" function to one which does nothing.
+
+    // Grab a pointer to the static null() method.
+    boost::function<void(const LogRecord&)> f =
+        &UserHandler<T>::Body::null;
+
+    // These args tell make_function() the signature of emit() after
+    // "this" is bound to the first argument.
+    typedef boost::mpl::vector<
+        void,
+        const LogRecord&> EmitArgs;
+
+    // This makes a python callable which calls the static null
+    // method.
+    boost::python::object func =
+        boost::python::make_function(
+            boost::bind(f, _1),
+            boost::python::default_call_policies(),
+            EmitArgs());
+
+    hdlr_.attr("emit") = func;
+
     hdlr_.attr("close")();
 }
 
 template <typename T>
 void UserHandler<T>::Body::emit(
-    UserHandler<T>::Body* b, 
+    UserHandler<T>::Body* b,
     const LogRecord& lr)
 {
     // Body::emit() just forwards the call to the user-supplied impl.
