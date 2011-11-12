@@ -1,4 +1,4 @@
-from ackward import (Class, 
+from ackward import (Class,
                      method,
                      Namespace,
                      Property,
@@ -38,7 +38,7 @@ def methods():
         ('void handle(LogRecord r) const',
          'Handles a record by passing it to all handlers associated with this logger and its ancestors (until a false value of propagate is found).'),
         ('void exception(std::wstring msg) const',
-         '''Logs a message with level ``ERROR`` on this logger. 
+         '''Logs a message with level ``ERROR`` on this logger.
 
             Exception info is added to the logging message. This method
             should only be called from an exception handler.''')
@@ -60,10 +60,10 @@ def definition(env):
         with Namespace('ackward', 'logging'):
             with Class(name='LoggerBase',
                        wrapped_class='logging.Logger'):
-    
+
                 # TODO: docstring for propagate
                 Property(name='propagate', type='bool').doc='If this evaluates to false, logging messages are not passed by this logger or by its child loggers to the handlers of higher level (ancestor) loggers.'
                 methods()
 
     return t
-                
+
