@@ -34,6 +34,7 @@ sources = [
     'logging/logging_config_test.cpp',
     'logging/module_test.cpp',
     'logging/types_test.cpp',
+    'logging/user_filter_test.cpp',
     'logging/user_handler_test.cpp',
     'queue/queue_test.cpp',
     'test.cpp',
