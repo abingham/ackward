@@ -1,33 +1,14 @@
 #include <Python.h>
 
-#include <vector>
-
 #include <boost/test/unit_test.hpp>
 
 #include <ackward/logging/Logger.hpp>
-#include <ackward/logging/LogRecord.hpp>
 #include <ackward/logging/Module.hpp>
 #include <ackward/logging/Types.hpp>
-#include <ackward/logging/UserHandler.hpp>
+
+#include "PushBackHandler.hpp"
 
 using namespace ackward::logging;
-
-namespace
-{
-
-struct PushBackHandlerImpl
-{
-    void emit(const LogRecord& lr)
-        {
-            messages.push_back(lr.getMessage());
-        }
-
-    std::vector<std::wstring> messages;
-};
-
-typedef UserHandler<PushBackHandlerImpl> PushBackHandler;
-
-}
 
 BOOST_AUTO_TEST_SUITE( logging )
 BOOST_AUTO_TEST_SUITE( userHandler )
