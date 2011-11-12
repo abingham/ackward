@@ -23,8 +23,6 @@ class SharedLib(object):
         env.AppendUnique(LIBPATH=[self.lib_dir])
         env.AppendUnique(CPPPATH=[self.include_dir])
 
-        print(self.lib_name, self.deps)
-
         for dep in self.deps:
             products(env)[dep].configure(env)
 
