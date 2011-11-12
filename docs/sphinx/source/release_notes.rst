@@ -14,6 +14,7 @@ Release Notes
 0.5
 ===
 
+* Switched repository from mercurial to git.
 * Added ``ackward::core::versionInfo()``.
 
 .. _release_notes_0_4:
