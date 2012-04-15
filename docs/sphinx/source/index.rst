@@ -3,10 +3,10 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-ackward: A C++ interface to Python's standard library
+Ackward: A C++ interface to Python's standard library
 =====================================================
 
-ackward provides a C++ interface to some of the standard Python
+Ackward provides a C++ interface to some of the standard Python
 modules. This was initially started to make Python's ``logging`` module
 more accessible from C++ programs which embed Python. It could (and
 should) be expanded to include any modules which might be useful from
@@ -22,8 +22,8 @@ Contents
    Requirements <requirements>
    Building <building>
    API + Examples <api/api>
-   Release Notes <release_notes>   
-   
+   Release Notes <release_notes>
+
 
 Indices and tables
 ==================
