@@ -1,8 +1,11 @@
 from .element import SigTemplateElement
+from .include import ImplInclude
 from .signature import parse
 from .trace import trace
 
-header_template = '$virtual $return_type $method_name($header_signature) $const $virtual_tail;'
+
+header_template = '$virtual $return_type $method_name($header_signature) \
+$const $virtual_tail;'
 
 impl_template = '''
 $return_type $class_name::$method_name($impl_signature) $const {
@@ -19,12 +22,13 @@ void $class_name::$method_name($impl_signature) $const {
     } TRANSLATE_PYTHON_EXCEPTION()
 }'''
 
+
 class Method(SigTemplateElement):
     '''A basic method of a class.
     '''
 
-    VIRTUAL=1
-    ABSTRACT=2
+    VIRTUAL = 1
+    ABSTRACT = 2
 
     @trace
     def __init__(self,
@@ -57,21 +61,25 @@ class Method(SigTemplateElement):
 
         SigTemplateElement.__init__(
             self,
-            open_header_template=header_template,
-            open_impl_template=implt,
-            impl_includes=[
-                ('ackward', 'core', 'ExceptionTranslation.hpp'),
-                ],
+            open_templates={
+                'header': header_template,
+                'impl': implt,
+            },
             symbols={
-                'method_name' : name,
-                'return_type' : return_type,
-                'signature' : signature,
-                'python_name' : name if python_name is None else python_name,
-                'const' : 'const' if const else '',
-                'virtual' : '' if virtual is None else 'virtual',
-                'virtual_tail' : '= 0' if virtual == Method.ABSTRACT else ''
+                'method_name': name,
+                'return_type': return_type,
+                'signature': signature,
+                'python_name': name if python_name is None else python_name,
+                'const': 'const' if const else '',
+                'virtual': '' if virtual is None else 'virtual',
+                'virtual_tail': '= 0' if virtual == Method.ABSTRACT else ''
                 },
             doc=doc)
+
+        self.add_child(
+            ImplInclude(
+                ('ackward', 'core', 'ExceptionTranslation.hpp')))
+
 
 @trace
 def method(sig, doc=None):
