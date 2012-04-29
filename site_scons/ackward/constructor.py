@@ -1,4 +1,5 @@
 from .element import SigTemplateElement
+from .include import ImplInclude
 from .trace import trace
 
 header_template = '${class_name}($header_signature);'
@@ -18,8 +19,9 @@ class Constructor(SigTemplateElement):
     '''
 
     @trace
-    def __init__(self, 
+    def __init__(self,
                  signature=[],
+                 parent=None,
                  doc=None):
         '''
         Args:
@@ -28,12 +30,16 @@ class Constructor(SigTemplateElement):
         '''
         SigTemplateElement.__init__(
             self,
-            open_header_template = header_template,
-            open_impl_template = impl_template,
-            impl_includes=[
-                ('ackward', 'core', 'ExceptionTranslation.hpp'),
-                ],
+            open_templates={
+                'header': header_template,
+                'impl': impl_template,
+            },
             symbols = {
                 'signature' : signature,
                 },
+            parent=parent,
             doc=doc)
+
+        self.add_child(
+            ImplInclude(
+                ('ackward', 'core', 'ExceptionTranslation.hpp')))

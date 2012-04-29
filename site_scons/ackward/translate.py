@@ -28,46 +28,16 @@ class Cache:
 
             Cache.count += 1
             Cache.cache[infile] = mod
-
-            return mod
-
-@trace
-def process_header(elem, mod, symbols={}):
-    symbols = dict(symbols)
-    symbols.update(elem.symbols)
-
-    for line in elem.render_doc():
-        yield line
-
-    for line in elem.open_header(mod, symbols):
-        yield line
-
-    for e in elem.children:
-        for line in process_header(e, mod, symbols):
-            yield line
-
-    for line in elem.close_header(mod, symbols):
-        yield line
-
-@trace
-def process_impl(elem, mod, symbols={}):
-    symbols = dict(symbols)
-    symbols.update(elem.symbols)
-
-    for line in elem.open_impl(mod, symbols):
-        yield line
-
-    for e in elem.children:
-        for line in process_impl(e, mod, symbols):
-            yield line
-
-    for line in elem.close_impl(mod, symbols):
-        yield line
+        return mod
 
 translate_lock = threading.Lock()
 
 @trace
-def _translate(env, processor, infile, outfile=None):
+def translate(
+    env,
+    phases,
+    infile,
+    outfile=None):
     mod = Cache.load(infile)
 
     with translate_lock:
@@ -76,9 +46,10 @@ def _translate(env, processor, infile, outfile=None):
         top_elem = mod.definition(env)
 
         def proc(f):
-            for line in processor(top_elem, mod):
-                f.write(line)
-                f.write('\n')
+            for phase in phases:
+                for line in top_elem.process(mod, phase):
+                    f.write(line)
+                    f.write('\n')
 
         if outfile:
             with open(outfile, 'w') as f:
@@ -88,8 +59,16 @@ def _translate(env, processor, infile, outfile=None):
 
 @trace
 def translate_header(env, infile, outfile=None):
-    _translate(env, process_header, infile, outfile)
+    translate(
+        env,
+        ['forward_decl', 'header'],
+        infile,
+        outfile)
 
 @trace
 def translate_impl(env, infile, outfile=None):
-    _translate(env, process_impl, infile, outfile)
+    translate(
+        env,
+        ['impl_include', 'using', 'impl'],
+        infile,
+        outfile)

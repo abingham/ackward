@@ -25,6 +25,8 @@ void $class_name::$method_name($impl_signature) $const {
 
 class Method(SigTemplateElement):
     '''A basic method of a class.
+
+    Requires that 'class_name' symbol is defined or expansion.
     '''
 
     VIRTUAL = 1
@@ -38,6 +40,7 @@ class Method(SigTemplateElement):
                  const=False,
                  python_name=None,
                  virtual=None,
+                 parent=None,
                  doc=None):
         '''Create a new method on a class.
 
@@ -74,6 +77,7 @@ class Method(SigTemplateElement):
                 'virtual': '' if virtual is None else 'virtual',
                 'virtual_tail': '= 0' if virtual == Method.ABSTRACT else ''
                 },
+            parent=parent,
             doc=doc)
 
         self.add_child(
@@ -82,7 +86,7 @@ class Method(SigTemplateElement):
 
 
 @trace
-def method(sig, doc=None):
+def method(sig, parent=None, doc=None):
     '''Produce a Method object based on a string description of a method.
 
     This is a convenience method for generated simple Methods.
@@ -100,4 +104,5 @@ def method(sig, doc=None):
         return_type=rtype,
         signature=args,
         const=bool(const),
+        parent=parent,
         doc=doc)

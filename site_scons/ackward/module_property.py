@@ -1,4 +1,5 @@
 from .element import TemplateElement
+from .include import ImplInclude
 from .trace import trace
 
 header_template = '$type $module_property_name();'
@@ -7,7 +8,7 @@ impl_template = '''
 $type $module_property_name() {
     using namespace boost::python;
     try {
-        object prop = 
+        object prop =
             $module_function().attr("$python_name");
         return extract<$type>(prop);
     } TRANSLATE_PYTHON_EXCEPTION()
@@ -21,7 +22,7 @@ class ModuleProperty(TemplateElement):
     '''
 
     @trace
-    def __init__(self, 
+    def __init__(self,
                  name,
                  type,
                  python_name=None,
@@ -37,16 +38,18 @@ class ModuleProperty(TemplateElement):
         '''
 
         impl_includes = impl_includes or []
+        impl_includes.extend([
+            ('boost', 'python', 'extract.hpp'),
+            ('boost', 'python', 'object.hpp'),
+            ('ackward', 'core', 'ExceptionTranslation.hpp'),
+        ])
 
         TemplateElement.__init__(
             self,
-            open_header_template=header_template,
-            open_impl_template=impl_template,
-            impl_includes=impl_includes + [
-                ('boost', 'python', 'extract.hpp'),
-                ('boost', 'python', 'object.hpp'),
-                ('ackward', 'core', 'ExceptionTranslation.hpp'),
-                ],
+            open_templates={
+                'header': header_template,
+                'impl': impl_template,
+            },
             symbols={
                 'module_property_name' : name,
                 'type' : type,
@@ -54,3 +57,7 @@ class ModuleProperty(TemplateElement):
                 },
             *args,
             **kwargs)
+
+        for h in impl_includes:
+            self.add_child(
+                ImplInclude(h))

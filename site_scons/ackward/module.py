@@ -1,4 +1,5 @@
 from .element import TemplateElement
+from .include import HeaderInclude, ImplInclude
 from .trace import trace
 
 header_template = 'boost::python::object $module_function();'
@@ -26,7 +27,8 @@ class Module(TemplateElement):
     @trace
     def __init__(self,
                  name,
-                 function_name='module'):
+                 function_name='module',
+                 parent=None):
         '''Create a new Module object.
 
         Args:
@@ -36,11 +38,20 @@ class Module(TemplateElement):
         '''
         TemplateElement.__init__(
             self,
-            open_header_template=header_template,
-            open_impl_template=impl_template,
-            header_includes=[('boost', 'python', 'object.hpp')],
-            impl_includes=[('ackward', 'core', 'Import.hpp')],
+            open_templates={
+                'header': header_template,
+                'impl': impl_template,
+            },
             symbols={
                 'module_name' : name,
                 'module_function' : function_name,
-                })
+                },
+            parent=parent)
+
+        self.add_child(
+            ImplInclude(
+                ('ackward', 'core', 'Import.hpp')))
+
+        self.add_child(
+            HeaderInclude(
+                ('boost', 'python', 'object.hpp')))

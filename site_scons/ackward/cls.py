@@ -1,5 +1,7 @@
 from .element import TemplateElement
+from .include import HeaderInclude, ImplInclude
 from .trace import trace
+
 
 open_header_template = '''
 class $class_name $bases {
@@ -47,6 +49,7 @@ class Class(TemplateElement):
                  name,
                  wrapped_class,
                  bases=['private core::Object'],
+                 parent=None,
                  doc=None):
         '''Create a new Class object.
 
@@ -66,34 +69,40 @@ class Class(TemplateElement):
 
         TemplateElement.__init__(
             self,
-            open_header_template=open_header_template,
-            close_header_template=close_header_template,
-            open_impl_template=open_impl_template,
-            header_includes=[
-                ('ackward', 'core', 'Object.hpp'),
-                ],
-            impl_includes=[
-                ('ackward','core','GetClass.hpp'),
-                ],
+            open_templates={
+                'header': open_header_template,
+                'impl': open_impl_template,
+            },
+            close_templates={
+                'header':close_header_template,
+            },
             symbols={
                 'class_name' : name,
                 'wrapped_class' : wrapped_class,
                 'bases' : bases,
                 },
+            parent=parent,
             doc=doc)
 
+        self.add_child(
+            HeaderInclude(
+                ('ackward', 'core', 'Object.hpp')))
+
+        self.add_child(
+            ImplInclude(
+                ('ackward','core','GetClass.hpp')))
+
     @trace
-    def open_impl(self, mod, symbols):
-        # Gather up any constructor initializers that the class
-        # children might have.
-        initializers = []
-        for child in self.children:
-            try:
-                initializers.extend(child.initializers())
-            except AttributeError:
-                pass
-        initializers = '\n'.join([', {0}'.format(i) for i in initializers])
+    def open_phase(self, mod, phase, symbols):
+        # If this is the impl phase, gather constructor-initializers
+        # from any children that need to get initialized.
+        if phase == 'impl':
+            initializers = list(
+                self.process(mod, 'constructor_initializer', symbols))
 
-        symbols['constructor_initializers'] = initializers
+            initializers = '\n'.join([', {0}'.format(i) for i in initializers])
 
-        return TemplateElement.open_impl(self, mod, symbols)
+            symbols['constructor_initializers'] = initializers
+
+        for line in TemplateElement.open_phase(self, mod, phase, symbols):
+            yield line

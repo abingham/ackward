@@ -26,136 +26,95 @@ class Element:
 
     Args:
       * children: child Elements of the Element.
-      * header_includes: A sequence of tuples describing the headers
-        that this Element needs in the header.
-      * impl_includes: A sequence of tuples describing the headers
-        that this Element needs in the implementation file.
-      * forward_declarations: A sequence of tuples describing
-      * using: A sequence of using statements to include in the
-        implementation file.
       * symbols: The symbols defined in the overall symbol map when
         this Element is active.
     '''
 
-    _stack = []
-
     @trace
     def __init__(self,
-                 children=None,
-                 header_includes=None,
-                 impl_includes=None,
-                 forward_declarations=None,
-                 using=None,
+                 parent=None,
                  symbols=None,
                  doc=None):
-        self.children = list(children or [])
+        if parent is not None:
+            parent.children.append(self)
 
-        self.header_includes = list(header_includes or [])
-        self.impl_includes = list(impl_includes or [])
-        self.forward_declarations = list(forward_declarations or [])
-        self.using = list(using or [])
+        self.children = []
+
         self.symbols = symbols or {}
-
         self.doc = doc
 
-        if Element._stack:
-            Element._stack[-1] += self
+    @trace
+    def process(self, mod, phase, symbols={}):
+        symbols = dict(symbols)
+        symbols.update(self.symbols)
+
+        for line in self.open_phase(mod, phase, symbols):
+            yield line
+
+        for e in self.children:
+            for line in e.process(mod, phase, symbols):
+                yield line
+
+        for line in self.close_phase(mod, phase, symbols):
+            yield line
 
     @trace
-    def open_header(self, mod, symbols):
-        '''Called before processing `children` when generating a
-        header.
+    def open_phase(self, mod, phase, symbols):
+        '''Called before processing `children` when generating
+        the output for a phase.
 
         Args:
           * mod: The module object from which the Element comes.
+          * phase: The phase currently being processed.
           * symbols: The active symbol table. This includes the
             Element's own symbols.
 
         Returns:
-          An iterable of lines to include in the output.
+          An iterable of lines to include in the output for the
+          current phase.
         '''
 
         return ['']
 
     @trace
-    def close_header(self, mod, symbols):
-        '''Called after processing `children` when generating a
-        header.
+    def close_phase(self, mod, phase, symbols):
+        '''Called after processing `children` when generating
+        the output for a phase.
 
         Args:
           * mod: The module object from which the Element comes.
+          * phase: The phase currently being processed.
           * symbols: The active symbol table. This includes the
             Element's own symbols.
 
         Returns:
-          An iterable of lines to include in the output.
+          An iterable of lines to include in the output for the
+          current phase.
         '''
+
         return ['']
 
-    @trace
-    def open_impl(self, mod, symbols):
-        '''Called before processing `children` when generating an
-        implementation file.
+    # TODO: This may be unused. Remove it if so.
+    # @trace
+    # def __iter__(self):
+    #     '''Iterate over the Element tree rooted at `self`.
 
-        Args:
-          * mod: The module object from which the Element comes.
-          * symbols: The active symbol table. This includes the
-            Element's own symbols.
+    #     This includes iteration of `self`.
 
-        Returns:
-          An iterable of lines to include in the output.
-        '''
-        return ['']
-
-    @trace
-    def close_impl(self, mod, symbols):
-        '''Called after processing `children` when generating an
-        implementation file.
-
-        Args:
-          * mod: The module object from which the Element comes.
-          * symbols: The active symbol table. This includes the
-            Element's own symbols.
-
-        Returns:
-          An iterable of lines to include in the output.
-        '''
-        return ['']
+    #     Returns:
+    #       An iterable over Elements.
+    #     '''
+    #     yield self
+    #     for c in self.children:
+    #         for e in c:
+    #             yield e
 
     @trace
-    def __iter__(self):
-        '''Iterate of the Element tree rooted at `self`.
-
-        This includes iteration of `self`.
-
-        Returns:
-          An iterable over Elements.
-        '''
-        yield self
-        for c in self.children:
-            for e in c:
-                yield e
-
-    @trace
-    def __iadd__(self, child):
+    def add_child(self, child):
         '''Append a child to the Element.
         '''
         self.children.append(child)
         return self
-
-    @trace
-    def __enter__(self):
-        '''Make this the auto-parent for Elements created inside the
-        associated with-statement:
-        '''
-        Element._stack.append(self)
-        return self
-
-    @trace
-    def __exit__(self, t, v, tb):
-        '''Stop using this as the auto-parent target.
-        '''
-        Element._stack.pop()
 
     @trace
     def render_doc(self):
@@ -169,49 +128,52 @@ class Element:
 class TemplateElement(Element):
     @trace
     def __init__(self,
-                 open_header_template='',
-                 close_header_template='',
-                 open_impl_template='',
-                 close_impl_template='',
+                 open_templates=None,
+                 close_templates=None,
                  *args,
                  **kwargs):
         Element.__init__(self, *args, **kwargs)
-        self.open_header_template = open_header_template
-        self.close_header_template = close_header_template
-        self.open_impl_template = open_impl_template
-        self.close_impl_template = close_impl_template
+        self.open_templates = open_templates or {}
+        self.close_templates = close_templates or {}
 
     @trace
-    def open_header(self, mod, symbols):
-        t = string.Template(self.open_header_template)
-        yield t.substitute(symbols)
+    def open_phase(self, mod, phase, symbols):
+        '''
+        Raise:
+          KeyError: If the template needs an undefined symbol.
+        '''
+        t = self.open_templates.get(phase)
+        if t is not None:
+            t = string.Template(t)
+            yield t.substitute(symbols)
 
     @trace
-    def close_header(self, mod, symbols):
-        t = string.Template(self.close_header_template)
-        yield t.substitute(symbols)
+    def close_phase(self, mod, phase, symbols):
+        '''
+        Raise:
+          KeyError: If the template needs an undefined symbol.
+        '''
+        t = self.close_templates.get(phase)
+        if t is not None:
+            t = string.Template(t)
+            yield t.substitute(symbols)
 
-    @trace
-    def open_impl(self, mod, symbols):
-        t = string.Template(self.open_impl_template)
-        yield t.substitute(symbols)
-
-    @trace
-    def close_impl(self, mod, symbols):
-        t = string.Template(self.close_impl_template)
-        yield t.substitute(symbols)
-
-
+# TODO: This should probably just be a factory function since it could
+# really apply to any sort of Element...the use of the TemplateElement
+# as a base is essentially just laziness.
 class SigTemplateElement(TemplateElement):
+    '''An Element that includes some sort of C++ signature in it.
+
+    If the ``symbols`` argument includes the key "signature" then the
+    keys "header_signature", "impl_signature", and "parameters" are
+    automatically generated from it.
+    '''
+
     @trace
     def __init__(self,
                  symbols,
-                 header_includes=None,
                  *args,
                  **kwargs):
-        header_includes = header_includes or []
-        header_includes.append(('boost', 'call_traits.hpp'))
-
         try:
             sig = symbols['signature']
             symbols = dict(symbols)
@@ -225,6 +187,5 @@ class SigTemplateElement(TemplateElement):
         TemplateElement.__init__(
             self,
             symbols=symbols,
-            header_includes=header_includes,
             *args,
             **kwargs)

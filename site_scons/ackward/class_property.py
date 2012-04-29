@@ -1,4 +1,5 @@
 from .element import SigTemplateElement
+from .include import ImplInclude
 from .trace import trace
 
 header_getter = 'static $type $property_name();'
@@ -9,7 +10,7 @@ impl_getter = '''
 $type $class_name::$property_name() {
     using namespace boost::python;
     try {
-        object prop = 
+        object prop =
             $class_name::cls().attr("$property_name");
         return extract<$type>(prop);
     } TRANSLATE_PYTHON_EXCEPTION()
@@ -19,14 +20,15 @@ impl_setter = '''
 void $class_name::$property_name($impl_signature) {
     using namespace boost::python;
     try {
-        object prop = 
+        object prop =
             $class_name::cls().attr("$property_name");
         prop = val;
     } TRANSLATE_PYTHON_EXCEPTION()
 }'''
 
+
 class ClassProperty(SigTemplateElement):
-    '''A static property on a class. 
+    '''A static property on a class.
 
     Args:
       * name: The name of the property.
@@ -38,7 +40,8 @@ class ClassProperty(SigTemplateElement):
     def __init__(self,
                  name,
                  type,
-                 read_only=False):
+                 read_only=False,
+                 parent=None):
         header = header_getter
         impl = impl_getter
 
@@ -48,13 +51,17 @@ class ClassProperty(SigTemplateElement):
 
         SigTemplateElement.__init__(
             self,
-            open_header_template=header,
-            open_impl_template=impl,
-            impl_includes=[
-                ('ackward', 'core', 'ExceptionTranslation.hpp'),
-                ],
+            open_templates={
+                'header': header,
+                'impl': impl,
+            },
             symbols={
-                'property_name' : name,
-                'type' : type,
-                'signature' : [(type, 'val')]
-                })
+                'property_name': name,
+                'type': type,
+                'signature': [(type, 'val')]
+            },
+            parent=parent)
+
+        self.add_child(
+            ImplInclude(
+                ('ackward', 'core', 'ExceptionTranslation.hpp')))

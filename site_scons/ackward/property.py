@@ -1,13 +1,12 @@
 from .element import SigTemplateElement
+from .include import HeaderInclude
 from .trace import trace
 
-header_const = '''
-ackward::core::ROProperty<$type> $property_name;
-'''
+header_const = 'ackward::core::ROProperty<$type> $property_name;'
 
-header_non_const = '''
-ackward::core::Property<$type> $property_name;
-'''
+header_non_const = 'ackward::core::Property<$type> $property_name;'
+
+constructor_initializer = '$property_name(obj(), "$python_name")'
 
 class Property(SigTemplateElement):
     '''A "property" in a C++ class.
@@ -35,10 +34,10 @@ class Property(SigTemplateElement):
 
         SigTemplateElement.__init__(
             self,
-            header_includes=[
-                ('ackward', 'core', 'Property.hpp'),
-                ],
-            open_header_template=header,
+            open_templates={
+                'header': header,
+                'constructor_initializer': constructor_initializer,
+            },
             symbols={
                 'property_name' : name,
                 'type' : type,
@@ -47,9 +46,6 @@ class Property(SigTemplateElement):
                 },
             **kwargs)
 
-    @trace
-    def initializers(self):
-        return [
-            '{0}(obj(), "{1}")'.format(self.symbols['property_name'],
-                                       self.symbols['python_name']),
-            ]
+        self.add_child(
+            HeaderInclude(
+                ('ackward', 'core', 'Property.hpp')))

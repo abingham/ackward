@@ -12,7 +12,9 @@ class InlineFunction(TemplateElement):
                  **kwargs):
         TemplateElement.__init__(
             self,
-            open_header_template=code,
+            open_templates={
+                'header': code,
+            },
             *args,
             **kwargs)
 

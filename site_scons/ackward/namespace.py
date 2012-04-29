@@ -9,22 +9,16 @@ def to_close(ns):
 
 class Namespace(Element):
     @trace
-    def __init__(self, *args):
-        Element.__init__(self)
+    def __init__(self, *args, **kwargs):
+        Element.__init__(self, **kwargs)
         self.ns = list(args)
 
     @trace
-    def open_header(self, mod, symbols):
-        yield to_open(self.ns)
+    def open_phase(self, mod, phase, symbols):
+        if phase in ('header', 'impl'):
+            yield to_open(self.ns)
 
     @trace
-    def close_header(self, mod, symbols):
-        yield to_close(self.ns)
-
-    @trace
-    def open_impl(self, mod, symbols):
-        yield to_open(self.ns)
-
-    @trace
-    def close_impl(self, mod, symbols):
-        yield to_close(self.ns)
+    def close_phase(self, mod, phase, symbols):
+        if phase in ('header', 'impl'):
+            yield to_close(self.ns)
