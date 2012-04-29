@@ -15,7 +15,7 @@ def tunit():
                        ('ackward', 'logging', 'Handler.hpp'),
                        ('ackward', 'logging', 'LogRecord.hpp')])
 
-def methods():
+def methods(parent):
     methods = [
         ('void setLevel(Level l)',
          'Sets the threshold for this logger.'),
@@ -53,17 +53,20 @@ def methods():
         docstring='''\\rst
                      {0}
                      \\endrst'''.format(m[1])
-        method(m[0], doc=docstring)
+        method(m[0], parent=parent, doc=docstring)
 
 def definition(env):
-    with tunit() as t:
-        with Namespace('ackward', 'logging'):
-            with Class(name='LoggerBase',
-                       wrapped_class='logging.Logger'):
+    t = tunit()
+    ns = Namespace('ackward', 'logging', parent=t)
+    cls = Class(name='LoggerBase',
+                wrapped_class='logging.Logger',
+                parent=ns)
 
-                # TODO: docstring for propagate
-                Property(name='propagate', type='bool').doc='If this evaluates to false, logging messages are not passed by this logger or by its child loggers to the handlers of higher level (ancestor) loggers.'
-                methods()
+    # TODO: docstring for propagate
+    Property(name='propagate',
+             type='bool',
+             parent=cls).doc='If this evaluates to false, logging messages are not passed by this logger or by its child loggers to the handlers of higher level (ancestor) loggers.'
+    methods(parent=cls)
 
     return t
 

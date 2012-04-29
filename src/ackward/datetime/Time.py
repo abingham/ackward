@@ -37,75 +37,87 @@ def tunit():
             ('ackward', 'datetime', 'Time.hpp'),
             ])
 
-def time_class():
-    with Class(name='Time',
-               wrapped_class='datetime.time'):
-        Constructor(
-            signature=[('unsigned int', 'hour'),
-                       ('unsigned int', 'minute', '0'),
-                       ('unsigned int', 'second', '0'),
-                       ('unsigned int', 'microsecond', '0'),
-                       #[, tzinfo]]]])
-                       ])
+def time_class(parent):
+    cls = Class(name='Time',
+                wrapped_class='datetime.time',
+                parent=parent)
 
-        ClassProperty(
-            name='min',
-            type='Time',
-            read_only=True)
+    Constructor(
+        signature=[('unsigned int', 'hour'),
+                   ('unsigned int', 'minute', '0'),
+                   ('unsigned int', 'second', '0'),
+                   ('unsigned int', 'microsecond', '0'),
+                   #[, tzinfo]]]])
+               ],
+        parent=cls)
 
-        ClassProperty(
-            name='max',
-            type='Time',
-            read_only=True)
+    ClassProperty(
+        name='min',
+        type='Time',
+        read_only=True,
+        parent=cls)
 
-        ClassProperty(
-            name='resolution',
-            type='TimeDelta',
-            read_only=True)
-        
-        Property(
-            name='hour',
-            type='unsigned int',
-            read_only=True)
-        
-        Property(
-            name='minute',
-            type='unsigned int',
-            read_only=True)
-        
-        Property(
-            name='second',
-            type='unsigned int',
-            read_only=True)
-                
-        Property(
-            name='microsecond',
-            type='unsigned int',
-            read_only=True)
+    ClassProperty(
+        name='max',
+        type='Time',
+        read_only=True,
+        parent=cls)
 
-        #     # TODO:
-        #     # time.tzinfo
-        #     # The object passed as the tzinfo argument to the time
-        #     # constructor, or None if none was passed.
-        
-        # # Instance methods:
-        
-        Method(
-            name='_replace',
-            python_name='replace',
-            signature=[('unsigned int', 'hour'),
-                       ('unsigned int', 'minute'),
-                       ('unsigned int', 'second'),
-                       ('unsigned int', 'microsecond')],
-            return_type='Time',
-            const=True)
+    ClassProperty(
+        name='resolution',
+        type='TimeDelta',
+        read_only=True,
+        parent=cls)
 
-        InlineFunction(
-            code=replace_method)
+    Property(
+        name='hour',
+        type='unsigned int',
+        read_only=True,
+        parent=cls)
 
-        method('std::string isoformat() const')
-        method('std::wstring strftime(std::wstring fmt) const')
-        
+    Property(
+        name='minute',
+        type='unsigned int',
+        read_only=True,
+        parent=cls)
+
+    Property(
+        name='second',
+        type='unsigned int',
+        read_only=True,
+        parent=cls)
+
+    Property(
+        name='microsecond',
+        type='unsigned int',
+        read_only=True,
+        parent=cls)
+
+    #     # TODO:
+    #     # time.tzinfo
+    #     # The object passed as the tzinfo argument to the time
+    #     # constructor, or None if none was passed.
+
+    # # Instance methods:
+
+    Method(
+        name='_replace',
+        python_name='replace',
+        signature=[('unsigned int', 'hour'),
+                   ('unsigned int', 'minute'),
+                   ('unsigned int', 'second'),
+                   ('unsigned int', 'microsecond')],
+        return_type='Time',
+        const=True,
+        parent=cls)
+
+    InlineFunction(
+        code=replace_method,
+        parent=cls)
+
+    method('std::string isoformat() const', parent=cls)
+    method('std::wstring strftime(std::wstring fmt) const', parent=cls)
+
         # # time.strftime(format)
         # # Return a string representing the time, controlled by an explicit format string. See section strftime() Behavior.
         # # time.utcoffset()
@@ -114,18 +126,20 @@ def time_class():
         # # If tzinfo is None, returns None, else returns self.tzinfo.dst(None), and raises an exception if the latter doesn't return None, or a timedelta object representing a whole number of minutes with magnitude less than one day.
         # # time.tzname()
         # # If tzinfo is None, returns None, else returns self.tzinfo.tzname(None), or raises an exception if the latter doesn't return None or a string object.
-        
+
 #     return c
 
-        InlineFunction(
-            code=lt_operator)
+    InlineFunction(
+        code=lt_operator,
+        parent=cls)
 
-        InlineFunction(
-            code=eq_operator)    
+    InlineFunction(
+        code=eq_operator,
+        parent=cls)
 
 def definition(env):
-    with tunit() as t:
-        with Namespace('ackward', 'datetime'):
-            time_class()
+    t = tunit()
+    ns = Namespace('ackward', 'datetime', parent=t)
+    time_class(parent=ns)
 
     return t

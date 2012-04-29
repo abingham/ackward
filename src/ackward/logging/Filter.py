@@ -1,12 +1,12 @@
 from ackward import (Class,
-                     Constructor, 
+                     Constructor,
                      Namespace,
                      TranslationUnit)
 
 filter_doc='''\\rst
 A wrapper around Python `logging.Filter
 <http://docs.python.org/py3k/library/logging.html#filter-objects>`_
-objects. 
+objects.
 \\endrst'''
 
 def tunit():
@@ -22,13 +22,17 @@ def tunit():
             ])
 
 def definition(env):
-    with tunit() as t:
-        with Namespace('ackward', 'logging'):
-            with Class(name='Filter', 
-                       wrapped_class='logging.Filter',
-                       doc=filter_doc):
-                Constructor(
-                    doc='Create a new Filter.')
-                # Constructor(
-                #     signature=[('std::wstring', 'name')])
+    t = tunit()
+    ns = Namespace('ackward', 'logging', parent=t)
+    cls = Class(name='Filter',
+                wrapped_class='logging.Filter',
+                parent=ns,
+                doc=filter_doc)
+    Constructor(
+        parent=cls,
+        doc='Create a new Filter.')
+
+    # Constructor(
+    #     signature=[('std::wstring', 'name')])
+
     return t

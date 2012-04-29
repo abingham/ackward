@@ -140,10 +140,12 @@ BOOST_AUTO_TEST_CASE( relateveCreated )
     float rc = rec.relativeCreated;
 }
 
+#if PYTHON_MAJOR_VERSION == 3
 BOOST_AUTO_TEST_CASE( stack_info )
 {
     boost::python::object si = rec.stack_info;
 }
+#endif
 
 BOOST_AUTO_TEST_CASE( thread )
 {

@@ -8,8 +8,7 @@ def tunit():
         guard='INCLUDE_ACKWARD_LOGGING_HANDLERS_MODULE_HPP')
 
 def definition(env):
-    with tunit() as t:
-        with Namespace('ackward', 'logging', 'handlers'):
-            with Module(name='logging.handlers'):
-                pass
+    t = tunit()
+    ns = Namespace('ackward', 'logging', 'handlers', parent=t)
+    m = Module(name='logging.handlers', parent=ns)
     return t

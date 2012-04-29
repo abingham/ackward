@@ -14,29 +14,31 @@ def tunit():
             ('ackward', 'datetime', 'TZInfo.hpp'),
             ])
 
-def datetime_class():
-    with Class(name='DateTime',
-               wrapped_class='datetime.datetime'):
+def datetime_class(parent):
+    cls = Class(name='DateTime',
+                wrapped_class='datetime.datetime',
+                parent=parent)
 
-        Constructor(
-            signature=[('unsigned int', 'year'),
-                       ('unsigned int', 'month'),
-                       ('unsigned int', 'day'),
-                       ('unsigned int', 'hour', '0'),
-                       ('unsigned int', 'minute', '0'),
-                       ('unsigned int', 'second', '0'),
-                       ('unsigned int', 'microsecond', '0'),
-                       #[, tzinfo
-                       ])
-        
-        class_method('DateTime today()')
-        class_method('DateTime now()')
-        class_method('DateTime now(TZInfo tz)')
-        class_method('DateTime utcnow()')
-        class_method('DateTime fromtimestamp(float timestamp)')
+    Constructor(
+        signature=[('unsigned int', 'year'),
+                   ('unsigned int', 'month'),
+                   ('unsigned int', 'day'),
+                   ('unsigned int', 'hour', '0'),
+                   ('unsigned int', 'minute', '0'),
+                   ('unsigned int', 'second', '0'),
+                   ('unsigned int', 'microsecond', '0'),
+                   #[, tzinfo
+               ],
+        parent=cls)
+
+    class_method('DateTime today()', parent=cls)
+    class_method('DateTime now()', parent=cls)
+    class_method('DateTime now(TZInfo tz)', parent=cls)
+    class_method('DateTime utcnow()', parent=cls)
+    class_method('DateTime fromtimestamp(float timestamp)', parent=cls)
 
 def definition(env):
-    with tunit() as t:
-        with Namespace('ackward', 'datetime'):
-            datetime_class()
+    t = tunit()
+    n = Namespace('ackward', 'datetime', parent=t)
+    datetime_class(parent=n)
     return t

@@ -13,24 +13,30 @@ def tunit():
         impl_includes=[('ackward', 're', 'MatchObject.hpp')])
 
 def definition(env):
-    with tunit() as t:
-        with Namespace('ackward', 're'):
-            with Class(name='MatchObject',
-                       wrapped_class='_sre.SRE_Match'):
-                
-                method('std::wstring expand(std::wstring tmpl) const')
+    t = tunit()
+    ns = Namespace('ackward', 're', parent=t)
+    cls = Class(name='MatchObject',
+                wrapped_class='_sre.SRE_Match',
+                parent=ns)
 
-                # TODO
-                # MatchObject.group([group1, ...])
+    method('std::wstring expand(std::wstring tmpl) const',
+           parent=cls)
 
-                method('boost::python::tuple groups() const')
-                method('boost::python::tuple groups(boost::python::object dflt) const')
+    # TODO
+    # MatchObject.group([group1, ...])
 
-                method('boost::python::dict groupdict() const')
-                method('boost::python::dict groupdict(boost::python::object dflt) const')
+    method('boost::python::tuple groups() const',
+           parent=cls)
+    method('boost::python::tuple groups(boost::python::object dflt) const',
+           parent=cls)
 
-                # MatchObject.start([group])
-                # MatchObject.end([group])
+    method('boost::python::dict groupdict() const',
+           parent=cls)
+    method('boost::python::dict groupdict(boost::python::object dflt) const',
+           parent=cls)
+
+    # MatchObject.start([group])
+    # MatchObject.end([group])
 
 #     Return the indices of the start and end of the substring matched by group; group defaults to zero (meaning the whole matched substring). Return -1 if group exists but did not contribute to the match. For a match object m, and a group g that did contribute to the match, the substring matched by group g (equivalent to m.group(g)) is
 

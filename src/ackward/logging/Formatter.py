@@ -7,7 +7,7 @@ from ackward import (Class,
                      TranslationUnit)
 
 formatter_doc = '''\\rst
-Wrapper around ``logging.Formatter`` objects. See `<http://docs.python.org/py3k/library/logging.html#formatter-objects>`_ for more information. 
+Wrapper around ``logging.Formatter`` objects. See `<http://docs.python.org/py3k/library/logging.html#formatter-objects>`_ for more information.
 \\endrst'''
 
 def tunit():
@@ -26,22 +26,23 @@ def tunit():
             ('boost', 'python', 'tuple.hpp'),
             ])
 
-def methods():
+def methods(parent):
     m = [
         'std::wstring format(LogRecord record) const',
         'std::wstring formatTime(LogRecord record) const',
         'std::wstring formatTime(LogRecord record, std::wstring datefmt) const',
         'std::wstring formatException(boost::python::tuple exc) const'
         ]
-    list(map(method, m))
+    list(map(lambda m: method(m, parent=parent), m))
 
 def definition(env):
-    with tunit() as t:
-        with Namespace('ackward', 'logging'):
-            with Class(name='Formatter',
-                       wrapped_class='logging.Formatter',
-                       doc=formatter_doc):
-                Constructor()
-                methods()
-    
+    t = tunit()
+    ns = Namespace('ackward', 'logging', parent=t)
+    cls = Class(name='Formatter',
+                wrapped_class='logging.Formatter',
+                parent=ns,
+                doc=formatter_doc)
+    Constructor(parent=cls)
+    methods(parent=cls)
+
     return t

@@ -12,21 +12,30 @@ def tunit():
                        ('ackward', 're', 'MatchObject.hpp')])
 
 def definition(env):
-    with tunit() as t:
-        with Namespace('ackward', 're'):
-            with Class(name='RegexObject',
-                       wrapped_class='_sre.SRE_Pattern'):
-            
-                method('MatchObject match(std::wstring s) const')
-                method('MatchObject match(std::wstring s, int pos)')
-                method('MatchObject match(std::wstring s, int pos, int endpos)')
-                
-                method('MatchObject search(std::wstring s) const')
-                method('MatchObject search(std::wstring s, int pos)')
-                method('MatchObject search(std::wstring s, int pos, int endpos)')
-                
-                method('boost::python::list split(std::wstring s) const')
-                method('boost::python::list split(std::wstring s, int maxsplit) const')
+    t = tunit()
+    ns = Namespace('ackward', 're', parent=t)
+    cls =  Class(name='RegexObject',
+                 wrapped_class='_sre.SRE_Pattern',
+                 parent=ns)
+
+    method('MatchObject match(std::wstring s) const',
+           parent=cls)
+    method('MatchObject match(std::wstring s, int pos)',
+           parent=cls)
+    method('MatchObject match(std::wstring s, int pos, int endpos)',
+           parent=cls)
+
+    method('MatchObject search(std::wstring s) const',
+           parent=cls)
+    method('MatchObject search(std::wstring s, int pos)',
+           parent=cls)
+    method('MatchObject search(std::wstring s, int pos, int endpos)',
+           parent=cls)
+
+    method('boost::python::list split(std::wstring s) const',
+           parent=cls)
+    method('boost::python::list split(std::wstring s, int maxsplit) const',
+           parent=cls)
 
 # RegexObject.findall(string[, pos[, endpos]])
 #     Identical to the findall() function, using the compiled pattern.

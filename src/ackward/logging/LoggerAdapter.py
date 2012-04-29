@@ -19,7 +19,7 @@ def tunit():
             ('ackward', 'logging', 'LoggerAdapter.hpp'),
             ('ackward', 'logging', 'Logger.hpp')])
 
-def methods():
+def methods(parent):
     m = [
         'void debug(std::wstring msg) const',
         'void info(std::wstring msg) const',
@@ -29,15 +29,17 @@ def methods():
         'void log(Level l, std::wstring msg) const',
         'void process(std::wstring msg, boost::python::dict kwargs) const',
         ]
-    list(map(method, m))
+    list(map(lambda m: method(m, parent=parent), m))
 
 def definition(env):
-    with tunit() as t:
-        with Namespace('ackward', 'logging'):
-            with Class(name='LoggerAdapter',
-                       wrapped_class='logging.LoggerAdapter'):
-                Constructor(
-                    signature=[('Logger', 'l'),
-                               ('boost::python::dict', 'd')])
-                methods()
+    t = tunit()
+    ns = Namespace('ackward', 'logging', parent=t)
+    cls = Class(name='LoggerAdapter',
+                wrapped_class='logging.LoggerAdapter',
+                parent=ns)
+    Constructor(
+        signature=[('Logger', 'l'),
+                   ('boost::python::dict', 'd')],
+        parent=cls)
+    methods(cls)
     return t

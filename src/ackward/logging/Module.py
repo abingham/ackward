@@ -43,7 +43,7 @@ def tunit():
             ],
         using=['namespace boost::python'])
 
-def functions():
+def functions(parent):
     functions = [
         ('Logger getLogger()',
          'Return the root logger.'),
@@ -69,15 +69,16 @@ def functions():
         ]
 
     for f in functions:
-        function(f[0], doc=f[1])
+        function(f[0], parent=parent, doc=f[1])
 
     for lvl in ['debug', 'info', 'warning', 'error', 'critical']:
         function('void {0}(std::wstring msg)'.format(lvl),
+                 parent=parent,
                  doc='Logs a message with level {0} on the root logger.'.format(lvl.upper()))
 
 def definition(env):
-    with tunit() as t:
-        with Namespace('ackward', 'logging'):
-            with Module(name='logging'):
-                functions()
+    t = tunit()
+    n = Namespace('ackward', 'logging', parent=t)
+    m = Module(name='logging', parent=n)
+    functions(parent=m)
     return t

@@ -21,7 +21,7 @@ See `<http://docs.python.org/py3k/library/queue.html#queue.Queue.qsize>`_.
 '''
 
 put_doc = '''
-Put item into the queue. 
+Put item into the queue.
 
 \\rst
 See `<http://docs.python.org/py3k/library/queue.html#queue.Queue.put>`_.
@@ -56,83 +56,94 @@ def tunit():
         impl_includes=[('ackward', 'queue', 'Queue.hpp')],
         )
 
-def queueClass(env, qtype):
-    with Class(name=qtype,
-               wrapped_class='{0}.{1}'.format(modname(env), qtype),
-               doc=queue_doc.format(qtype)):
+def queueClass(env, qtype, parent):
+    cls = Class(name=qtype,
+                wrapped_class='{0}.{1}'.format(modname(env), qtype),
+                parent=parent,
+                doc=queue_doc.format(qtype))
 
-        method('unsigned int qsize() const').doc = qsize_doc
-        # method('bool empty() const')
+    method('unsigned int qsize() const',
+           parent=cls).doc = qsize_doc
+    # method('bool empty() const')
 
-        # put
-        InlineFunction('''
-template <typename T> 
-void put(const T& t) { 
-  try { obj().attr("put")(t); } 
-  TRANSLATE_PYTHON_EXCEPTION() 
-}''').doc = put_doc.format('') 
+    # put
+    InlineFunction('''
+template <typename T>
+void put(const T& t) {
+  try { obj().attr("put")(t); }
+  TRANSLATE_PYTHON_EXCEPTION()
+}''',
+    parent=cls).doc = put_doc.format('')
 
-        InlineFunction('''
-template <typename T> 
-void put(const T& t, bool block) { 
-  try { obj().attr("put")(t, block); } 
-  TRANSLATE_PYTHON_EXCEPTION() 
-}''').doc = put_doc.format(
-            '@param block Whether to block until the queue has space.')
+    InlineFunction('''
+template <typename T>
+void put(const T& t, bool block) {
+  try { obj().attr("put")(t, block); }
+  TRANSLATE_PYTHON_EXCEPTION()
+}''',
+    parent=cls).doc = put_doc.format(
+        '@param block Whether to block until the queue has space.')
 
-        InlineFunction('''
-template <typename T> 
-void put(const T& t, bool block, unsigned int timeout) { 
-  try { obj().attr("put")(t, block, timeout); } 
-  TRANSLATE_PYTHON_EXCEPTION() 
-}''').doc = put_doc.format(
-            '''@param block Whether to block until the queue has space.
-               @param timeout How long to wait for queue to have space.''')
-        
+    InlineFunction('''
+template <typename T>
+void put(const T& t, bool block, unsigned int timeout) {
+  try { obj().attr("put")(t, block, timeout); }
+  TRANSLATE_PYTHON_EXCEPTION()
+}''',
+    parent=cls).doc = put_doc.format(
+        '''@param block Whether to block until the queue has space.
+        @param timeout How long to wait for queue to have space.''')
 
         # get
-        InlineFunction('''
+    InlineFunction('''
 template <typename T>
 T get() {
   try { return boost::python::extract<T>(obj().attr("get")()); }
   TRANSLATE_PYTHON_EXCEPTION()
-}''').doc = get_doc.format('')
+}''',
+    parent=cls).doc = get_doc.format('')
 
-        InlineFunction('''
+    InlineFunction('''
 template <typename T>
 T get(bool block) {
   try { return boost::python::extract<T>(obj().attr("get")(block)); }
   TRANSLATE_PYTHON_EXCEPTION()
-}''').doc = get_doc.format(
-            '@param block Whether to block until there\'s an item in the queue.')
+}''',
+    parent=cls).doc = get_doc.format(
+        '@param block Whether to block until there\'s an item in the queue.')
 
-        InlineFunction('''
+    InlineFunction('''
 template <typename T>
 T get(bool block, unsigned int timeout) {
   try { return boost::python::extract<T>(obj().attr("get")(block, timeout)); }
   TRANSLATE_PYTHON_EXCEPTION()
-}''').doc = get_doc.format(
-            '''@param block Whether to block until there\'s an item in the queue.
-               @param timeout How long to wait until there's an item in the queue.''')
+}''',
+    parent=cls).doc = get_doc.format(
+        '''@param block Whether to block until there\'s an item in the queue.
+        @param timeout How long to wait until there's an item in the queue.''')
 
-        method('bool full() const').doc = 'Return True if the queue is full, False otherwise.'
-        method('void task_done()').doc = 'Indicate that a formerly enqueued task is complete.'
-        method('void join()').doc = 'Blocks until all items in the queue have been gotten and processed.'
+    method('bool full() const',
+           parent=cls).doc = 'Return True if the queue is full, False otherwise.'
+    method('void task_done()',
+           parent=cls).doc = 'Indicate that a formerly enqueued task is complete.'
+    method('void join()',
+           parent=cls).doc = 'Blocks until all items in the queue have been gotten and processed.'
 
 def definition(env):
-    with tunit() as t:
-        with Namespace('ackward', 'queue'):
-            
-            Module(name=modname(env))
+    t = tunit()
+    ns = Namespace('ackward', 'queue', parent=t)
 
-            for qtype in ['Queue', 'LifoQueue', 'PriorityQueue']:
+    Module(name=modname(env), parent=ns)
 
-                queueClass(env, qtype)
+    for qtype in ['Queue', 'LifoQueue', 'PriorityQueue']:
 
-                Function(
-                    name='make{0}'.format(qtype),
-                    return_type='Queue',
-                    signature=[('int', 'maxsize')],
-                    python_name='Queue')
+        queueClass(env, qtype, parent=ns)
+
+        Function(
+            name='make{0}'.format(qtype),
+            return_type='Queue',
+            signature=[('int', 'maxsize')],
+            python_name='Queue',
+            parent=ns)
 
     return t

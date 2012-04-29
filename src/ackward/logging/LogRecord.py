@@ -32,61 +32,71 @@ def tunit():
             ])
 
 def definition(env):
-    with tunit() as t:
-        with Namespace('ackward', 'logging'):
+    t = tunit()
+    ns = Namespace('ackward', 'logging', parent=t)
 
-            with Class(name='LogRecord',
-                       wrapped_class='logging.LogRecord',
-                       doc=log_record_doc):
+    cls = Class(name='LogRecord',
+                wrapped_class='logging.LogRecord',
+                parent=ns,
+                doc=log_record_doc)
 
-                Constructor(
-                    signature=[
-                        ('std::wstring', 'name'),
-                        ('Level', 'lvl'),
-                        ('std::wstring', 'pathname'),
-                        ('int', 'lineno'),
-                        ('std::wstring', 'msg'),
-                        ('boost::python::tuple', 'args'),
-                        ('boost::python::object', 'exc_info', 'boost::python::object()'),
-                        ],
-                    doc='Create a new LogRecord.')
+    Constructor(
+        signature=[
+            ('std::wstring', 'name'),
+            ('Level', 'lvl'),
+            ('std::wstring', 'pathname'),
+            ('int', 'lineno'),
+            ('std::wstring', 'msg'),
+            ('boost::python::tuple', 'args'),
+            ('boost::python::object', 'exc_info', 'boost::python::object()'),
+        ],
+        parent=cls,
+        doc='Create a new LogRecord.')
 
-                method('std::wstring getMessage() const',
-                       doc=get_message_doc)
+    method('std::wstring getMessage() const',
+           parent=cls,
+           doc=get_message_doc)
 
-                properties = [
-                    ('args', 'boost::python::tuple'),
-                    ('asctime', 'std::wstring',
-                     'Only exists after the LogRecord is emitted.'),
-                    ('created', 'float'),
-                    ('exc_info', 'boost::python::tuple',
-                     'Will be "None" if there is not exception info.'),
-                    ('filename', 'std::wstring'),
-                    ('funcName', 'std::wstring',
-                     'Will be "None" prior to being emitted.'),
-                    ('levelname', 'std::wstring'),
-                    ('levelno', 'int'),
-                    ('lineno', 'int'),
-                    ('module', 'std::wstring'),
-                    ('msecs', 'float'),
-                    ('message', 'std::wstring',
-                     'Will be "None" prior to being emitted.'),
-                    ('msg', 'std::wstring'),
-                    ('name', 'std::wstring'),
-                    ('pathname', 'std::wstring'),
-                    ('process', 'int'),
-                    ('processName', 'std::wstring'),
-                    ('relativeCreated', 'float'),
-                    ('stack_info', 'boost::python::object'),
-                    ('thread', 'unsigned long'),
-                    ('threadName', 'std::wstring')
-                    ]
+    properties = [
+        ('args', 'boost::python::tuple'),
+        ('asctime', 'std::wstring',
+         'Only exists after the LogRecord is emitted.'),
+        ('created', 'float'),
+        ('exc_info', 'boost::python::tuple',
+         'Will be "None" if there is not exception info.'),
+        ('filename', 'std::wstring'),
+        ('funcName', 'std::wstring',
+         'Will be "None" prior to being emitted.'),
+        ('levelname', 'std::wstring'),
+        ('levelno', 'int'),
+        ('lineno', 'int'),
+        ('module', 'std::wstring'),
+        ('msecs', 'float'),
+        ('message', 'std::wstring',
+         'Will be "None" prior to being emitted.'),
+        ('msg', 'std::wstring'),
+        ('name', 'std::wstring'),
+        ('pathname', 'std::wstring'),
+        ('process', 'int'),
+        ('processName', 'std::wstring'),
+        ('relativeCreated', 'float'),
+        ('thread', 'unsigned long'),
+        ('threadName', 'std::wstring')
+    ]
 
-                for prop in properties:
-                    if len(prop) == 3:
-                        prop_name,prop_type,doc = prop
-                    else:
-                        prop_name,prop_type,doc = prop + (None,)
-                    Property(prop_name, prop_type, read_only=True,doc=doc)
+    if env['PYTHON_VERSION'] == 3:
+        properties.append(
+            ('stack_info', 'boost::python::object'))
+
+    for prop in properties:
+        if len(prop) == 3:
+            prop_name,prop_type,doc = prop
+        else:
+            prop_name,prop_type,doc = prop + (None,)
+        Property(prop_name,
+                 prop_type,
+                 read_only=True,
+                 parent=cls,
+                 doc=doc)
 
     return t

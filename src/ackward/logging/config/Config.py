@@ -6,7 +6,7 @@ from ackward import (function,
 
 fileConfig1_doc = '''
     Read the logging configuration from a ConfigParser-format file.
-    
+
     This can be called several times from an application, allowing an end user
     the ability to select from various pre-canned configurations (if the
     developer provides a mechanism to present the choices and load the chosen
@@ -19,7 +19,7 @@ fileConfig1_doc = '''
 
 fileConfig2_doc = '''
     Read the logging configuration from a ConfigParser-format file.
-    
+
     This can be called several times from an application, allowing an end user
     the ability to select from various pre-canned configurations (if the
     developer provides a mechanism to present the choices and load the chosen
@@ -28,7 +28,7 @@ fileConfig2_doc = '''
     This disables existing loggers which are not named in the logging
     configuration.
 
-    @param filename The filename to read from. 
+    @param filename The filename to read from.
     @param defaults Defaults to be passed to the ConfigParser.'''
 
 # TODO: These require some sort of wrapper for the thread that's returned
@@ -58,26 +58,26 @@ def tunit():
             ('ackward', 'logging', 'config', 'Module.hpp'),
             ])
 
-def functions():
-    funcs = [ 
+def functions(parent):
+    funcs = [
         (fileConfig1_doc,
          'void fileConfig(std::wstring filename)'),
-        (fileConfig2_doc, 
+        (fileConfig2_doc,
          'void fileConfig(std::wstring filename, boost::python::dict defaults)'),
-        # (listen1_doc, 
+        # (listen1_doc,
         #  'void listen()'),
-        # (listen2_doc, 
+        # (listen2_doc,
         #  'void listen(unsigned int port)'),
-        # (stopListening_doc, 
+        # (stopListening_doc,
         #  'void stopListening()'),
         ]
 
     for d,f in funcs:
-        func = function(f)
+        func = function(f, parent=parent)
         if d: func.doc = d
 
 def definition(env):
-    with tunit() as t:
-        with  Namespace('ackward', 'logging', 'config'):
-            functions()
+    t = tunit()
+    ns = Namespace('ackward', 'logging', 'config', parent=t)
+    functions(ns)
     return t

@@ -57,7 +57,7 @@ inline TimeDelta operator/(const TimeDelta& lhs, long rhs)
 '''
 
 neg_operator='''
-inline TimeDelta operator-(const TimeDelta& td) 
+inline TimeDelta operator-(const TimeDelta& td)
 { return td.obj().attr("__neg__")(); }
 '''
 
@@ -72,65 +72,74 @@ def tunit():
             ('ackward', 'datetime', 'TimeDelta.hpp')
             ])
 
-def timedelta_class():
-    with Class(name='TimeDelta',
-               wrapped_class='datetime.timedelta'):
-        
-        Constructor(
-            signature=[('double', 'days', '0'),
-                       ('double', 'seconds', '0'),
-                       ('double', 'microseconds', '0'),
-                       ('double', 'milliseconds', '0'),
-                       ('double', 'minutes', '0'),
-                       ('double', 'hours', '0'),
-                       ('double', 'weeks', '0')])
+def timedelta_class(parent):
+    cls = Class(name='TimeDelta',
+                wrapped_class='datetime.timedelta',
+                parent=parent)
 
-        Property(
-            type='int',
-            name='days',
-            read_only=True)
+    Constructor(
+        signature=[('double', 'days', '0'),
+                   ('double', 'seconds', '0'),
+                   ('double', 'microseconds', '0'),
+                   ('double', 'milliseconds', '0'),
+                   ('double', 'minutes', '0'),
+                   ('double', 'hours', '0'),
+                   ('double', 'weeks', '0')],
+        parent=cls)
 
-        Property(
-            type='unsigned int',
-            name='seconds',
-            read_only=True)
+    Property(
+        type='int',
+        name='days',
+        read_only=True,
+        parent=cls)
 
-        Property(
-            type='unsigned int',
-            name='microseconds',
-            read_only=True)
-        
-        ClassProperty(
-            type='TimeDelta',
-            name='min',
-            read_only=True)
-        
-        ClassProperty(
-            type='TimeDelta',
-            name='max',
-            read_only=True)
-        
-        ClassProperty(
-            type='TimeDelta',
-            name='resolution',
-            read_only=True)
-        
-        InlineFunction(code=eq_operator)
-        InlineFunction(code=ne_operator)
-        InlineFunction(code=lt_operator)
-        InlineFunction(code=le_operator)
-        InlineFunction(code=gt_operator)
-        InlineFunction(code=ge_operator)
-        
+    Property(
+        type='unsigned int',
+        name='seconds',
+        read_only=True,
+        parent=cls)
+
+    Property(
+        type='unsigned int',
+        name='microseconds',
+        read_only=True,
+        parent=cls)
+
+    ClassProperty(
+        type='TimeDelta',
+        name='min',
+        read_only=True,
+        parent=cls)
+
+    ClassProperty(
+        type='TimeDelta',
+        name='max',
+        read_only=True,
+        parent=cls)
+
+    ClassProperty(
+        type='TimeDelta',
+        name='resolution',
+        read_only=True,
+        parent=cls)
+
+    InlineFunction(code=eq_operator, parent=cls)
+    InlineFunction(code=ne_operator, parent=cls)
+    InlineFunction(code=lt_operator, parent=cls)
+    InlineFunction(code=le_operator, parent=cls)
+    InlineFunction(code=gt_operator, parent=cls)
+    InlineFunction(code=ge_operator, parent=cls)
+
 def definition(env):
-    with tunit() as t:
-        with Namespace('ackward', 'datetime'):
-            timedelta_class()
+    t = tunit()
+    n = Namespace('ackward', 'datetime', parent=t)
+    timedelta_class(parent=n)
 
-            InlineFunction(code=add_operator)
-            InlineFunction(code=sub_operator)
-            InlineFunction(code=mul_operator)
-            InlineFunction(code=div_operator)
-            InlineFunction(code=neg_operator)
-            InlineFunction(code=abs_function)
+    InlineFunction(code=add_operator, parent=n)
+    InlineFunction(code=sub_operator, parent=n)
+    InlineFunction(code=mul_operator, parent=n)
+    InlineFunction(code=div_operator, parent=n)
+    InlineFunction(code=neg_operator, parent=n)
+    InlineFunction(code=abs_function, parent=n)
+
     return t
