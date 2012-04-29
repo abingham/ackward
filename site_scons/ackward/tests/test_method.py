@@ -1,16 +1,18 @@
 import unittest
 
 from ..method import Method, method
-from ..translate import process
 
 from . import scratch
 
 class MethodTest(unittest.TestCase):
     def _process(self, m):
-        list(process(m, scratch, 'header',
-                     {'class_name': 'MethodTest'}))
-        list(process(m, scratch, 'impl',
-                     {'class_name': 'MethodTest'}))
+        list(m.process(
+            scratch, 'header',
+            {'class_name': 'MethodTest'}))
+        list(m.process(
+            scratch, 'impl',
+            {'class_name': 'MethodTest'}))
+
     def test_simple(self):
         '''Verify that it runs at all.'''
         m = Method('testMethod')
